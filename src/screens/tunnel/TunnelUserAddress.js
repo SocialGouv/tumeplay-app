@@ -1,70 +1,95 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
     View,
+    Image,
     TouchableOpacity,
     TextInput,
-    YellowBox,
+	YellowBox,
+	Dimensions,
+	ScrollView
 	} from 'react-native';
 
-/*import AsyncStorage from '@react-native-community/async-storage';
-*/
 
+import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
+const screenWidth = Math.round(Dimensions.get('window').width);
+
+if (screenWidth <= 420) {
+	var flexstyletext = {
+		flex: 0.10
+	}
+	var flexstyle = {
+		flex: 0.16
+	}
+
+} else {
+	var flexstyletext = {
+		flex: 0.15
+	}
+	var flexstyle = {
+		flex: 0.15
+	}	
+}
 
 export default class TunnelUserAddress extends React.Component {
-	static navigationOptions = {
-		title: 'Oh oui !',	
-		//headerLeft: null
-	};
-	
+
     constructor(props) {
-         super(props);
-		 this.state = {
-		   loading: true,
-		   dataSource:[]
-		  };
+        super(props);
+         
         YellowBox.ignoreWarnings([
             'Warning: componentWillMount is deprecated',
             'Warning: componentWillReceiveProps is deprecated',
         ]);
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1/api/contents")
-			.then(response => response.json())
-			.then((responseJson)=> 
-			{
-			  this.setState({
-			  	loading: false,
-			  	dataSource: responseJson
-			  })
-			})
-		.catch(error=>console.log(error)) //to catch the errors if any
-	}    
+    componentDidMount() 
+    {
+    }    
 
-    componentWillUnmount() {
-        //LoginManager.getInstance().off('onConnectionClosed', this._connectionClosed);
+    componentWillUnmount() 
+    {
     }
     
     _onDone = () => 
   	{
     	this.props.navigation.navigate("TunnelCartSummary");
   	}
+  	
+  	_goBack = () => 
+  	{
+    	this.props.navigation.navigate("TunnelDeliverySelect");
+  	}
+  	
 	render()
 	{
 		return (
-			<View style={ Styles.flexOne }>
-				<View style={{ flex: 0.05, paddingLeft: 10, paddingRight: 10 }} >
-					<Text style={ Styles.textLeft }>Etape 3</Text>
+			<ScrollView style={ [Styles.flexOne, { backgroundColor: Colors.backgroundColor, paddingLeft: 15, paddingRight: 15, paddingTop: 15 } ]}>
+				<View style={{ flex: 0.06 }} >
+					<TouchableOpacity
+						style={{  flex:1, paddingTop: 2, paddingBottom: 2, width: '100%', maxHeight: 70, flexDirection: 'row',  justifyContent: 'flex-start' }}
+						onPress={this._goBack}
+					>
+	                    
+							<Image 
+						    	style={{ 
+							    	width: 17,
+							    	height: 17,
+							    	marginRight: 10,
+									resizeMode: 'contain' 
+								}}
+								source={require('../../assets/pictures/left-arrow.png')} />
+								
+							<Text style={{ color: '#FFFFFF' }}>Etape 3</Text>
+							
+						
+					</TouchableOpacity>
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={flexstyletext}>
 					<Text style={ Styles.tunnelTitle }>Complète tes informations</Text>
 				</View>
 				
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={ flexstyle }>
 					<Text style={ Styles.labelText }>Prénom *</Text>
 					<TextInput
 						placeholder="Ton Prénom"
@@ -72,14 +97,14 @@ export default class TunnelUserAddress extends React.Component {
 					/>
 				</View>
 				
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={flexstyle }>
 					<Text style={ Styles.labelText }>Nom *</Text>
 					<TextInput
 						placeholder="Ton Nom"
 						style={ Styles.inputTypeText }
 					/>
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={flexstyle}>
 					<Text style={ Styles.labelText }>E-Mail *</Text>
 					<TextInput
 						placeholder="Ton adresse e-mail"
@@ -87,7 +112,7 @@ export default class TunnelUserAddress extends React.Component {
 						style={ Styles.inputTypeText }
 					/>
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={flexstyle}>
 					<Text style={ Styles.labelText }>Adresse *</Text>
 					<TextInput
 						placeholder="Ton adresse"
@@ -102,20 +127,13 @@ export default class TunnelUserAddress extends React.Component {
 					justifyContent	: 'flex-start',
 					flexDirection	: 'column',
  				}}>
- 					<View style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
+ 					<View style={{ flex: 1 }}>
  						<Text style={ Styles.placeholderText }>* Champs Obligatoire</Text>
  					</View>
 				</View>
-				<View style={{ 
-					flex: 0.08, 
-					paddingTop: 2, 
-					paddingBottom: 2, 
-					alignItems		: 'center',
-					justifyContent	: 'center',
-					flexDirection	: 'column',
- 				}}>
+				<View style={Styles.viewopacitytunneletap3}>
 					<TouchableOpacity
-						style={{ flex: 1, paddingTop: 2, paddingBottom: 2, width: '50%' }}
+						style={{ flex: 1,paddingTop: 15, paddingBottom: 2, width: '40%',height:75}}
 						onPress={this._onDone}
 					>
 						<View style={ Styles.tunnelButton }>
@@ -123,7 +141,7 @@ export default class TunnelUserAddress extends React.Component {
 						</View>
 					</TouchableOpacity>
 				</View>
-			</View>
+			</ScrollView>
 
 		);
 	}

@@ -3,6 +3,7 @@ const THEME_1 = {
   textFont				: "Abel-Regular",
   textFontBold 			: "Abel-Regular",
   
+  backgroundColor		: '#FFFFFF',
   mainColor 	 		: '#F2C791',
   secondaryColor 		: '#4C55B8',
   
@@ -22,6 +23,7 @@ const THEME_2 = {
   textFont				: "Abel-Regular",
   textFontBold 			: "Abel-Regular",
   
+  backgroundColor		: '#FFFFFF',
   mainColor 	 		: '#B8406B',
   secondaryColor 		: '#4C55B8',
   
@@ -41,6 +43,7 @@ const THEME_3 = {
   textFont				: "Abel-Regular",
   textFontBold 			: "Abel-Regular",
   
+  backgroundColor		: '#FFFFFF',
   mainColor 	 		: '#A0CBC9',
   secondaryColor 		: '#4C55B8',
   
@@ -55,6 +58,26 @@ const THEME_3 = {
   secondaryButton		: '#4C55B8',
 }
 
-const Colors = THEME_3;
+const THEME_4 = {
+  appTitleFont			: "CroissantOne-Regular",
+  textFont				: "Abel-Regular",
+  textFontBold 			: "Abel-Regular",
+  
+  backgroundColor		: 'rgba(17, 7, 11, 1)',
+  mainColor 	 		: '#FFFFFF',
+  secondaryColor 		: '#4C55B8',
+  
+  inactiveDot 	 		: '#888385',
+  activeDot 	 		: '#FFFFFF',
+  
+  titleText 	 		: '#FFFFFF',
+  secondaryText  		: '#FFFFFF',
+  
+  mainButton 	 		: '#C80652',
+  
+  secondaryButton		: '#C80652',  
+}
+
+const Colors = THEME_4;
 
 export default Colors;

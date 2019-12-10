@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
@@ -9,8 +7,7 @@ import {
 	Image,
 	} from 'react-native';
 
-/*import AsyncStorage from '@react-native-community/async-storage';
-*/
+import Colors from '../../styles/Color';
 
 import Styles from '../../styles/Styles';
 
@@ -51,37 +48,29 @@ export default class TunnelOrderConfirm extends React.Component {
     
     _onDone = () => 
   	{
-    	this.props.navigation.navigate("SecondQuestion");
+    	this.props.navigation.navigate("LandingScreen");
   	}
+
 	render()
 	{
-		const item = {
-		    image: require('../../assets/pictures/order_confirm.png'),
-		};
-		return (
-			<View style={ Styles.flexOne }>
-				<View style={{ flex: 0.25}}></View>
-				<View style={{ flex: 0.2, paddingLeft: 10, paddingRight: 10 }}>
-					<View style={{ flex : 1, marginTop: 0,paddingTop: 0,  justifyContent: 'space-around', alignItems: 'center', }}>
-					    <Image 
-					    	style={ Styles.contentPicture }
-					    	
-							source={item.image} />
-					</View>
-						
-				</View>
-				<View style={{ flex: 0.1	}}></View>
 
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10, paddingTop: 0 }}>
+		return (
+			<View style={ [Styles.flexOne, { backgroundColor: Colors.backgroundColor, paddingLeft: 15, paddingRight: 15, paddingTop: 15 } ]}>
+				<View style={{ flex: 0.5	}}>
+                    <Image style={ Styles.contentPicture } source={ require('../../assets/pictures/boarding/boarding-6.jpeg') } />
+
+				</View>
+
+				<View style={{ flex: 0.15 }}>
 					<Text style={[ Styles.tunnelTitle, Styles.textCenter ]}>Ta commande a bien été prise en compte !</Text>
 					
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
-					<Text style={[ Styles.text, Styles.textCenter ]}>A bientôt !</Text>
+				<View style={{ flex: 0.15 }}>
+					<Text style={[ Styles.text, Styles.textCenter, { color: Colors.mainButton, fontSize: 26} ]}>A bientôt !</Text>
 					
 				</View>
 				<View style={{ 
-					flex: 0.08, 
+					flex: 0.13, 
 					paddingTop: 2, 
 					paddingBottom: 2, 
 					alignItems		: 'center',
@@ -89,11 +78,11 @@ export default class TunnelOrderConfirm extends React.Component {
 					flexDirection	: 'column',
  				}}>
  					<TouchableOpacity
-						style={{ flex: 1, paddingTop: 2, paddingBottom: 2, width: '50%' }}
+						style={{ flex: 1, paddingTop: 2, paddingBottom: 2, width: '40%' }}
 						onPress={this._onDone}
 					>
 						<View style={ Styles.tunnelButton }>
-							<Text style={ Styles.tunnelButtonText }>Suivant</Text>
+							<Text style={ Styles.tunnelButtonText }>Fermer</Text>
 						</View>
 					</TouchableOpacity>
 				</View>

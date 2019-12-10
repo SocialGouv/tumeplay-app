@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
@@ -8,83 +6,120 @@ import {
     FlatList,
     TouchableOpacity,
     SafeAreaView,
-    YellowBox, ScrollView
+    YellowBox, 
+    ScrollView,
+    Dimensions
     } from 'react-native';
+ 
+import CustomFooter	from './CustomFooter';
+import Styles 		from '../styles/Styles';
+import Colors 		from '../styles/Color';
 
-import Styles from '../styles/Styles';
-
+const screenHeight = Math.round(Dimensions.get('window').height);
+const screenWidth  = Math.round(Dimensions.get('window').width);
 
 YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested'
 ]);
+
 export default class LandingScreen extends React.Component {
-    
-    constructor(props){
+   
+    constructor(props) {
         super(props);
-        this.state = {};
+        
+		this.state = {
+			
+		};
+        
+        YellowBox.ignoreWarnings([
+            'Warning: componentWillMount is deprecated',
+            'Warning: componentWillReceiveProps is deprecated',
+        ]);
+    }
+    
+
+    _onSelectedTheme = (themeObject)=> 
+    {
+	    this.props.navigation.navigate("ContentScreen");
     }
 
-    _onSelectedTheme = (themeObject)=> {
-        console.info('Selected a theme: ',themeObject);
-    }
+    _onSelected_lieuxUtiles = ()=>
+    {
 
-    _onSelected_lieuxUtiles = ()=>{
-        console.info('Selected Lieux utiles...');
-    }
+	}
 
 
-    _onSelected_echangeProfessionnel = ()=>{
-        console.info('Selected echange professionnel...');
+    _onSelected_echangeProfessionnel = ()=>
+    {
+    	this.props.navigation.navigate("ContentScreen");
     }
+    
     
     render(){
         var that = this;
 
         function Grid(props) {
             // Setting up images objects
-            const themeList = [
-                {
-                    themeName: "wTest1",
-                    image: require('../assets/pictures/pass3.png')
-                },
-                {
-                    themeName: "Test2",
-                    image: require('../assets/pictures/pass3.png')
-                }
-            ];
-
+            
             const data = [
-                {id: 'a', value: 'This is text 1', imageObj:  require('../assets/pictures/landing/corps.png')},
-                {id: 'b', value: 'This is text 2', imageObj:  require('../assets/pictures/landing/premieres_fois.png')},
-                {id: 'c', value: 'This is text 1', imageObj:  require('../assets/pictures/landing/corps.png')},
-                {id: 'd', value: 'This is text 2', imageObj:  require('../assets/pictures/landing/premieres_fois.png')},
+                {id: 'a', value: 'Découvre ton corps', imageObj:  require('../assets/pictures/landing/discover.png')},
+                {id: 'b', value: 'This is text 2', imageObj:  require('../assets/pictures/landing/first-time.png')},
+                {id: 'c', value: 'This is text 1', imageObj:  require('../assets/pictures/landing/discover-sexuality.png')},
+                {id: 'd', value: 'This is text 2', imageObj:  require('../assets/pictures/landing/sos.png')},
             ];
             const numColumns = 2;
             const themeGridStyles = StyleSheet.create({
-                itemContainer: {
-                    flex: 0.5,
-                    width: '100%'
+                container	: {
+                    flex			: 1,
+                    width			: '100%',
+                    marginLeft		: 15,
+                    marginRight		: 15,
+                    marginBottom	: 15,
+                    backgroundColor	: '#000000',
+                    flexDirection 	: 'column',
+                    maxWidth 		: 550,
                     // maxHeight: 50
                     // backgroundColor: '#BBBBB'
                 },
-                item: {
-                    flex: 1,
-                    margin: 3,
-                    backgroundColor: 'lightblue',
+                itemButton	: {
+                	
+                },
+                itemPicture	: {
+					borderTopLeftRadius : 7,  
+					borderTopRightRadius: 7, 
+					height		 : 150,
+					flex		 : 1
+					
+                },
+                itemTextContainer : {
+	                padding					: 7,
+	                paddingLeft 			: 15, 
+	                borderBottomLeftRadius	: 7, 
+	                backgroundColor			: '#FFFFFF',  
+	                borderBottomRightRadius	: 7, 
+	                width					: '100%'
+                },
+                itemText	: {
+                    margin					: 0,
+                    color 					: Colors.mainButton,
+                    fontSize 				: 22,
                 }
             });
             return (
                 <FlatList
                 scrollEnabled={true}
                 data={data}
+                
                 renderItem={({item}) => (
-                    <View style={themeGridStyles.itemContainer}>
-                        <TouchableOpacity onPress={()=>{that._onSelectedTheme(item)}}>
-                            <Image source={item.imageObj} style={{ width: '95%', resizeMode: 'contain'}}></Image>
-                            {/* Note: Uncomment below if text to be dynamic */}
-                            {/* <View style={{position: 'absolute', top: 150, left: 0, right: 70, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={themeGridStyles.item}>{item.value}</Text>
-                            </View> */}
+                    <View style={themeGridStyles.container}>
+                        <TouchableOpacity style={ themeGridStyles.itemButton } onPress={()=>{that._onSelectedTheme(item)}}>
+                        	<View style={{ flex: 1, flexDirection: 'row' }}>
+                            	<Image source={item.imageObj} style={ themeGridStyles.itemPicture } />
+                            </View>
+                            
+                            <View style={ themeGridStyles.itemTextContainer }>
+                            	<Text style={themeGridStyles.itemText}>{item.value}</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -94,47 +129,59 @@ export default class LandingScreen extends React.Component {
         }
 
         const item = {
-            arrow: require('../assets/pictures/right-arrow.png'),
-            title: 'Quel est le thème que tu veux découvrir ?',
-            bottom_title1: 'Trouve les lieux utiles à tes besoins',
-            bottom_title2: 'Échange avec un professionnel'
+            arrow		: require('../assets/pictures/right-arrow.png'),
+            title		: 'Quel est le thème que tu veux découvrir ?',
+            subtitle	: 'Explore nos thématiques, découvre les questions réponses associées et réponds aux quizz pour gagner des box !',
+            bottomTitle1: 'Trouve les lieux utiles à tes besoins',
+            bottomTitle2: 'Échange avec un professionnel'
         }
+        
+        // @TODO : REMOVE DAT, IT'S JUST FOR DEBUG /!\
+         
 
-        return <SafeAreaView>
-                <ScrollView>
-                    {/* Title and grid */}
-                    <View>
-                        <Text style={Styles.landingScreenTitle}>{item.title}</Text>
-                        <Grid></Grid>
-                    </View>
-                    
-                    {/* Bottom part */}
-                    <View style={{flex: 0.25, marginLeft: 10, marginRight: 10}}>
-                        
-                        <TouchableOpacity style={[Styles.landingBottomWrapper]} onPress={this._onSelected_lieuxUtiles}>
-                            <Text style={Styles.landingBottomText}>{item.bottom_title1}</Text>
-                            <View style={{flex: 0.25, flexDirection: 'row'}}>
-                                <Text style={Styles.landingBottomButtonNext}>
-                                    Voir
-                                </Text>
-                                <Image style={{ width: 10, height: 10, paddingTop: 25, resizeMode: 'contain'}} source={item.arrow}/>
-                            </View>
-                            
-                        </TouchableOpacity> 
-                        
-                        <TouchableOpacity style={[Styles.landingBottomWrapper]} onPress={this._onSelected_echangeProfessionnel}>
-                            <Text style={Styles.landingBottomText}>{item.bottom_title2}</Text>
-                            <View style={{flex: 0.25, flexDirection: 'row'}}>
-                                <Text style={Styles.landingBottomButtonNext}>
-                                    Accéder
-                                </Text>
-                                <Image style={{ width: 10, height: 10, paddingTop: 25, resizeMode: 'contain'}} source={item.arrow}/>
-                            </View>
-                        </TouchableOpacity> 
-                        
-                    </View>
-                </ScrollView>
-      
-            </SafeAreaView>
+        return <SafeAreaView style={ Styles.safeAreaView }>
+        		
+	            <ScrollView>
+	                {/* Title and grid */}
+	                <View style={{ flex: 0.75 }}>
+	                    <Text style={Styles.landingScreenTitle}>{item.title}</Text>
+	                    <Text style={Styles.landingScreenSubtitle}>{item.subtitle}</Text>
+	                    <View style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row' }}>
+	                    	<Grid></Grid>
+	                    </View>
+	                </View>
+	                
+	                {/* Bottom part */}
+	                <View style={{flex: 0.25, marginLeft: 15, marginRight: 15}}>
+	                    
+	                    <TouchableOpacity style={[Styles.landingBottomWrapper]} onPress={this._onSelected_lieuxUtiles}>
+	                        <Text style={Styles.landingBottomText}>
+	                        	{item.bottomTitle1}
+	                        </Text>
+	                        <View style={{flex: 0.25, flexDirection: 'row', alignItems: 'center'}}>
+	                            <Image style={{ marginLeft: 10, marginRight: 10, width: 10, height: 10, resizeMode: 'contain'}} source={item.arrow}/>
+	                            <Text style={Styles.landingBottomButtonNext}>
+	                                Voir
+	                            </Text>
+	                        </View>
+	                        
+	                    </TouchableOpacity> 
+	                    
+	                    <TouchableOpacity style={[Styles.landingBottomWrapper]} onPress={this._onSelected_echangeProfessionnel}>
+	                        <Text style={Styles.landingBottomText}>
+	                        	{item.bottomTitle2}
+	                        </Text>
+	                        <View style={{flex: 0.25, flexDirection: 'row', alignItems: 'center'}}>
+	                            <Image style={{ marginLeft: 10, marginRight: 10, width: 10, height: 10, resizeMode: 'contain'}} source={item.arrow}/>
+	                            <Text style={Styles.landingBottomButtonNext}>
+	                                Accéder
+	                            </Text>
+	                        </View>
+	                    </TouchableOpacity> 
+	                    
+	                </View>
+	                <CustomFooter />
+	            </ScrollView>
+	        </SafeAreaView>
     }
 }

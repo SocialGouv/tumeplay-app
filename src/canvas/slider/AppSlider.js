@@ -8,15 +8,12 @@ import {
   Image,
   TouchableOpacity,
   Platform,
-  StatusBar,
   I18nManager,
 } from 'react-native';
 
-import DefaultSlide from './DefaultSlide';
 import Colors 		from '../../styles/Color';
 import Styles 		from '../../styles/Styles';
 
-const slideHeight 	= 0;
 const { width, height } = Dimensions.get('window');
 
 const isIphoneX 	= Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS && (height === 812 || width === 812);
@@ -50,8 +47,7 @@ export default class AppSlider extends React.Component
   {
     width,
     height,
-    activeIndex: 0,
-    slideHeight,
+    activeIndex: 0
   };
 
   goToSlide = pageNum => {
@@ -82,16 +78,12 @@ export default class AppSlider extends React.Component
   };
 
   _renderItem = flatListArgs => {
-    const { width, height, slideHeight } = this.state;
+    const { width, height } = this.state;
     const props = { ...flatListArgs, dimensions: { width, height } };
     
     return (
-      <View style={{ width }}>
-        {this.props.renderItem ? (
-          this.props.renderItem(props)
-        ) : (
-          <DefaultSlide bottomButton={this.props.bottomButton} {...props} />
-        )}
+      <View style={{ width, flex: 1 }}>
+        { this.props.renderItem(props) }
       </View>
     );
   };
@@ -154,10 +146,8 @@ export default class AppSlider extends React.Component
   _renderPagination = () => {
     const isLastSlide = this.state.activeIndex === this.props.slides.length - 1;
     const isFirstSlide = this.state.activeIndex === 0;
-
-    const skipBtn =
-      (!isFirstSlide && this._renderPrevButton()) || (!isLastSlide && this._renderSkipButton());
-    const btn = isLastSlide ? this._renderDoneButton() : this._renderNextButton();
+                                                                                                
+    const skipBtn = this._renderSkipButton();
 
     return (
       <View style={[styles.paginationContainer, this.props.paginationStyle]}>
@@ -176,7 +166,6 @@ export default class AppSlider extends React.Component
               />
             ))}
         </View>
-        {btn}
         {skipBtn}
       </View>
     );
@@ -205,9 +194,7 @@ export default class AppSlider extends React.Component
     if (width !== this.state.width || height !== this.state.height) {
       // Set new width to update rendering of pages
       
-      let slideHeight = height * 0.8;
-      
-      this.setState({ width, height, slideHeight });
+      this.setState({ width, height });
       // Set new scroll position
       const func = () => {
         this.flatList.scrollToOffset({
@@ -238,7 +225,13 @@ export default class AppSlider extends React.Component
 
     return (
       <View style={ Styles.flexOne }>
-      	<View style={{ flex: 6 }}>
+      	<View style={{ flex: 1, backgroundColor: Colors.backgroundColor, justifyContent: 'center', alignItems: 'center', }}>
+      		<Image
+		        source={ require('../../assets/pictures/full-logo.png')}
+		        style={{ marginTop: 25, width: 150, height: 32 }}
+		    />
+      	</View>
+      	<View style={{ flex: 6, backgroundColor: Colors.backgroundColor }}>
 	        <FlatList
 	          ref={ref => (this.flatList = ref)}
 	          data={this.props.slides}
@@ -251,10 +244,11 @@ export default class AppSlider extends React.Component
 	          onMomentumScrollEnd={this._onMomentumScrollEnd}
 	          extraData={this.state.width}
 	          onLayout={this._onLayout}
+			  contentContainerStyle={{ }}
 	          //{...otherProps}
 	        />
         </View>
-        <View style={{ flex : 2 }}>
+        <View style={{ flex : 2, backgroundColor: Colors.backgroundColor }}>
         	{!hidePagination && this._renderPagination()}
         </View>
       </View>
@@ -265,7 +259,7 @@ export default class AppSlider extends React.Component
 const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'column',   
   },
   flatList: {
     flex: 1,
@@ -273,7 +267,7 @@ const styles = StyleSheet.create({
     flexBasis: 1,
     flexShrink: 0,
     flexDirection: isAndroidRTL ? 'row-reverse' : 'row',  
-    //height: '100%',
+    //height: '100%',         
   },
   paginationContainer: {
 	flex: 1,
@@ -281,7 +275,7 @@ const styles = StyleSheet.create({
 	position: 'absolute',
     bottom: 36 + (isIphoneX ? 34 : 0),
     left: 16,
-    right: 16,
+    right: 16,                
   },
   paginationDots: {
     height: 16,

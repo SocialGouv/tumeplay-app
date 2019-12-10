@@ -1,82 +1,111 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
+    Image,
     View,
     TouchableOpacity,
     YellowBox,
 	} from 'react-native';
 
-/*import AsyncStorage from '@react-native-community/async-storage';
-*/
 
+
+import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
+const { detect } = require('detect-browser');
+const browser = detect();
 
-export default class TunnelPickupSelect extends React.Component {
-	static navigationOptions = {
-		title: 'Oh oui !',	
-		headerLeft: null
-	};
+if (browser) {
+
+var stylevalide={ 
+	flex:1,
+	position		: 'absolute',
+	top			: 430,
+	left			: 15,
+	width			: '100%',
+	alignItems		: 'center',
+	justifyContent	: 'center',
+ }
+
+} else {
+	var stylevalide={ 
+		flex:1,
+		position		: 'absolute',
+		bottom			: 45,
+		left			: 15,
+		width			: '100%',
+		alignItems		: 'center',
+		justifyContent	: 'center',
+	 }
 	
-    constructor(props) {
-         super(props);
-		 this.state = {
-		   loading: true,
-		   dataSource:[]
-		  };
+	
+}
+export default class TunnelPickupSelect extends React.Component {
+
+    constructor(props) 
+    {
+        super(props);
+		 
         YellowBox.ignoreWarnings([
             'Warning: componentWillMount is deprecated',
             'Warning: componentWillReceiveProps is deprecated',
         ]);
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1/api/contents")
-			.then(response => response.json())
-			.then((responseJson)=> 
-			{
-			  this.setState({
-			  	loading: false,
-			  	dataSource: responseJson
-			  })
-			})
-		.catch(error=>console.log(error)) //to catch the errors if any
+    componentDidMount() 
+    {
+
 	}    
 
-    componentWillUnmount() {
-        //LoginManager.getInstance().off('onConnectionClosed', this._connectionClosed);
+    componentWillUnmount() 
+    {
     }
     
     _onDone = () => 
   	{
     	this.props.navigation.navigate("TunnelUserAddress");
   	}
+  	
+  	_goBack = () => 
+  	{
+    	this.props.navigation.navigate("TunnelDeliverySelect");
+  	}
+  	
 	render()
 	{
 		return (
-			<View style={ Styles.flexOne }>
-				<View style={{ flex: 0.05, paddingLeft: 10, paddingRight: 10 }} >
-					<Text style={ Styles.textLeft }>Etape 2</Text>
+			<View style={ [Styles.flexOne, { backgroundColor: Colors.backgroundColor, paddingLeft: 15, paddingRight: 15, paddingTop: 15 } ]}>
+				<View style={{ flex: 0.05 }} >
+					<TouchableOpacity
+						style={{  flex:1, paddingTop: 2, paddingBottom: 2, width: '100%', maxHeight: 70 }}
+						onPress={this._goBack}
+					>
+	                    <View style={{flex: 1, flexDirection: 'row',  justifyContent: 'flex-start'}}>
+
+							<Image 
+						    	style={{ 
+							    	width: 17,
+							    	height: 17,
+							    	marginRight: 10,
+									resizeMode: 'contain' 
+								}}
+								source={require('../../assets/pictures/left-arrow.png')} />
+								
+							<Text style={{ color: '#FFFFFF' }}>Etape 2</Text>
+							
+						</View>
+					</TouchableOpacity>
 				</View>
-				<View style={{ flex: 0.3, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={{ flex: 0.3 ,paddingTop:15}}>
 					<Text style={ Styles.tunnelTitle }>Choisis le lieu de livraison</Text>
 					<Text style={ Styles.textLeft }>Affichage de la carte</Text>
 				</View>
-				<View style={{ 
-					flex: 0.16, 
-					paddingTop: 2, 
-					paddingBottom: 2, 
-					alignItems		: 'center',
-					justifyContent	: 'center',
-					flexDirection	: 'column',
- 				}}>
+				<View style={stylevalide}>
 					<TouchableOpacity
-						style={{ flex: 1, paddingTop: 2, paddingBottom: 2, width: '50%' }}
+						style={[Styles.bottomButton, { borderRadius: 25 }]}
 						onPress={this._onDone}
 					>
 						<View style={ Styles.tunnelButton }>
-							<Text style={ Styles.tunnelButtonText }>A Domicile</Text>
+							<Text style={ Styles.tunnelButtonText }>Valider</Text>
 						</View>
 					</TouchableOpacity>
 				</View>

@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
@@ -9,92 +7,105 @@ import {
 	Image,
 	} from 'react-native';
 
-/*import AsyncStorage from '@react-native-community/async-storage';
-*/
 
+import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
+const { detect } = require('detect-browser');
+const browser = detect();
+
+if (browser) {
+
+	var tumetitlestyle={ flex: 0.40, paddingLeft: 10, paddingRight: 10 ,paddingTop:30,paddingBottom: 30,};
+	var infostyle={ flex: 1, paddingLeft: 10, paddingRight: 10,paddingBottom: 15, };
+
+} else {
+	var tumetitlestyle={ flex: 0.10, paddingLeft: 10, paddingRight: 10 };
+	var infostyle={ flex: 0.12, paddingLeft: 10, paddingRight: 10 };
+	
+}
 
 export default class TunnelCartSummary extends React.Component {
-	static navigationOptions = {
-		title: 'Oh oui !',	
-		headerLeft: null
-	};
-	
+
     constructor(props) {
-         super(props);
-		 this.state = {
-		   loading: true,
-		   dataSource:[]
-		  };
+        super(props);
+
         YellowBox.ignoreWarnings([
             'Warning: componentWillMount is deprecated',
             'Warning: componentWillReceiveProps is deprecated',
         ]);
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1/api/contents")
-			.then(response => response.json())
-			.then((responseJson)=> 
-			{
-			  this.setState({
-			  	loading: false,
-			  	dataSource: responseJson
-			  })
-			})
-		.catch(error=>console.log(error)) //to catch the errors if any
-	}    
+    componentDidMount() 
+    {
+    }    
 
-    componentWillUnmount() {
-        //LoginManager.getInstance().off('onConnectionClosed', this._connectionClosed);
+    componentWillUnmount() 
+    {
     }
     
     _onDone = () => 
   	{
     	this.props.navigation.navigate("TunnelOrderConfirm");
   	}
+  	
+  	_goBack = () => 
+  	{
+    	this.props.navigation.navigate("TunnelUserAddress");
+  	}
+  	
 	render()
 	{
 		return (
-			<View style={ Styles.flexOne }>
-				<View style={{ flex: 0.05, paddingLeft: 10, paddingRight: 10 }} >
-					<Text style={ Styles.textLeft }>Etape 4</Text>
+			<View style={ [Styles.flexOne, { backgroundColor: Colors.backgroundColor, paddingLeft: 15, paddingRight: 15, paddingTop: 15 } ]}>
+				<View style={{ flex: 0.06 }} >
+					<TouchableOpacity
+						style={{  flex:1, paddingTop: 2, paddingBottom: 2, width: '100%', maxHeight: 70 }}
+						onPress={this._goBack}
+					>
+	                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start'}}>
+
+							<Image 
+						    	style={{ 
+							    	width: 17,
+							    	height: 17,
+							    	marginRight: 10,
+									resizeMode: 'contain' 
+								}}
+								source={require('../../assets/pictures/left-arrow.png')} />
+								
+							<Text style={{ color: '#FFFFFF' }}>Etape 4</Text>
+							
+						</View>
+					</TouchableOpacity>
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={tumetitlestyle}>
 					<Text style={ Styles.tunnelTitle }>Ton récapitulatif</Text>
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={infostyle}>
 					<Text style={ Styles.labelText }>Tes articles</Text>
 					
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={infostyle}>
 					<Text style={ Styles.labelText }>Adresse de livraison</Text>
 					
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={infostyle}>
 					
 				</View>
-				<View style={{ flex: 0.15, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={infostyle}>
 					<Text style={ Styles.labelText }>Nous t'enverrons un mail pour t'informer de l'expédition de ta commande à :</Text>
 					<Text style={ Styles.labelText }>john@mail.com</Text>
 				</View>
-				<View style={{ 
-					flex: 0.16, 
-					paddingTop: 2, 
-					paddingBottom: 2, 
-					alignItems		: 'center',
-					justifyContent	: 'center',
-					flexDirection	: 'column',
- 				}}>
- 					<View style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
+				<View style={Styles.viewopacitytunneletap4}>
+ 					<View style={{ flex: 0.5, paddingLeft: 10, paddingRight: 10,paddingTop:40 }}>
  						<Text style={ Styles.placeholderText }>* Livraison prévue entre le XX et le XX</Text>
  					</View>
 					<TouchableOpacity
-						style={{ flex: 1, paddingTop: 2, paddingBottom: 2, width: '50%' }}
+						style={{ flex: 1, paddingBottom: 2, width: '50%' }}
 						onPress={this._onDone}
 					>
 						<View style={ Styles.tunnelButton }>
-							<Text style={ Styles.tunnelButtonText }>Suivant</Text>
+							<Text style={ Styles.tunnelButtonText }>Valider</Text>
 						</View>
 					</TouchableOpacity>
 				</View>

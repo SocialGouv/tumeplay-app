@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {
     Text,
@@ -10,8 +8,6 @@ import {
 	FlatList,
 	} from 'react-native';
 
-/*import AsyncStorage from '@react-native-community/async-storage';
-*/
 
 import COLOR from '../styles/Color';
 /*import COLOR_SCHEME from '../styles/ColorScheme';*/

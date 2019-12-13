@@ -13,7 +13,7 @@
 		"type": "image/png"
 	}
 	],
-	"start_url": "./index.html",
+	"start_url": "./index-pwa.html",
 	"display": "standalone",
 	"theme_color": "#11070B",
 	"background_color": "#11070B"

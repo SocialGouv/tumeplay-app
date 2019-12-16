@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -14,6 +14,9 @@ import Styles from '../../styles/Styles';
 import TunnelUserAdressStyle from '../../styles/components/TunnelUserAdress';
 
 import Backlink from '../components/tunnel/Backlink';
+import CustomTextInput from '../components/tunnel/CustomTextInput';
+
+import useIsMounted from '../../hooks/isMounted';
 
 // @TODO : Need to find a cleaner way to test email.
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -30,80 +33,91 @@ if (screenWidth <= 420) {
   };
 }
 
-ProductSelectHeader.propTypes = {
+TunnelUserAddress.propTypes = {
   navigation: PropTypes.object,
 };
 
 // @TODO : Review this entire file to clean it up - so messy.
-export default function ProductSelectHeader(props) {
+export default function TunnelUserAddress(props) {
+  var defaultUserAdress = {
+	firstName : '',
+	lastName : '',
+	emailAdress : '',
+	adress : '',  
+  };
+  
+  var defaultIsValid = {
+	  firstName : true,
+	  lastName : true,
+	  emailAdress : true,
+	  adress : true,
+  }
+  const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [emailAdress, setEmailAdress] = useState('');
-  const [adress, setAdress] = useState('');
-  const [invalidFirstName, setInvalidFirstName] = useState(false);
-  const [invalidLastName, setInvalidLastName] = useState(false);
-  const [invalidEmailAdress, setInvalidEmailAdress] = useState(false);
-  const [invalidAdress, setInvalidAdress] = useState(false);
+  
+  const [localAdress, setLocalAdress] = useState(defaultUserAdress);
+  const [localValid, setLocalValid] = useState(defaultIsValid);
+                               
+  useEffect(() => {
+    if (props.navigation.state.params.userAdress) 
+    {
+	    const userAdress = props.navigation.state.params.userAdress;
+	    let   newAdress  = {
+			firstName : userAdress.firstName,
+			lastName : userAdress.lastName,
+			emailAdress : userAdress.emailAdress,
+			adress : userAdress.adress,  
+		  };
+		  
+		setLocalAdress(newAdress);	                                         
+	  }
 
-  // @TODO : That's ... so dirty.
-  if (props.navigation.state.params.userAdress) {
-    const userAdress = props.navigation.state.params.userAdress;
-    setFirstName(userAdress.firstName);
-    setLastName(userAdress.lastName);
-    setEmailAdress(userAdress.emailAdress);
-    setAdress(userAdress.adress);
-  }
+  }, [isMounted]);
 
-  function _onDone() {
-    const userAdress = {
-      firstName: firstName,
-      lastName: lastName,
-      emailAdress: emailAdress,
-      adress: adress,
-    };
-
-    let isValid = true;
-    const invalidFields = {
-      invalidFirstName: false,
-      invalidLastName: false,
-      invalidEmailAdress: false,
-      invalidAdress: false,
-    };
-    if (userAdress.firstName == '') {
-      invalidFields.invalidFirstName = true;
+  function _validateFields()
+  {
+  	let isValid = true;
+    
+    // Reset all validations
+    let checkedIsValid = defaultIsValid;
+    
+    if (localAdress.firstName == '') {
+      checkedIsValid.firstName = false;
       isValid = false;
     }
 
-    if (userAdress.lastName == '') {
-      invalidFields.invalidLastName = true;
+    if (localAdress.lastName == '') {
+      checkedIsValid.lastName = false;
       isValid = false;
     }
 
     if (
-      userAdress.emailAdress == '' ||
-      !emailRegex.test(userAdress.emailAdress)
+      localAdress.emailAdress == '' ||
+      !emailRegex.test(localAdress.emailAdress)
     ) {
-      invalidFields.invalidEmailAdress = true;
+      checkedIsValid.emailAdress = false;
       isValid = false;
     }
 
-    if (userAdress.adress == '' && deliveryType == 'home') {
-      invalidFields.invalidAdress = true;
+    if (localAdress.adress == '' && deliveryType == 'home') {
+      checkedIsValid.adress = false;
       isValid = false;
     }
-
+	
+	setLocalValid(checkedIsValid);
+	
+	return isValid;
+  }
+  
+  function _onDone() {
+    const isValid = _validateFields();
+    
     if (isValid) {
       props.navigation.navigate('TunnelCartSummary', {
         selectedItem: selectedItem,
-        userAdress: userAdress,
+        userAdress: localAdress,
       });
-    } else {
-      setInvalidFirstName(invalidFields.invalidFirstName);
-      setInvalidLastName(invalidFields.invalidLastName);
-      setInvalidEmailAdress(invalidFields.invalidEmailAdress);
-      setInvalidAdress(invalidFields.invalidAdress);
     }
   }
 
@@ -120,7 +134,11 @@ export default function ProductSelectHeader(props) {
   }
 
   function _handleChange(name, value) {
-    name(value);
+    localAdress[`${name}`] = value;
+                                  
+    setLocalAdress(localAdress);  
+                                       
+    return value;
   }
 
   return (
@@ -134,67 +152,19 @@ export default function ProductSelectHeader(props) {
           paddingTop: 15,
         },
       ]}>
+      
       <Backlink step={3} onPress={_goBack} />
 
       <View style={flexstyletext}>
         <Text style={Styles.tunnelTitle}>Complète tes informations</Text>
       </View>
 
-      <View style={TunnelUserAdressStyle.inputWrapper}>
-        <Text style={[Styles.labelText]}>Prénom *</Text>
-        <TextInput
-          placeholder="Ton Prénom"
-          style={[
-            Styles.inputTypeText,
-            invalidFirstName ? TunnelUserAdressStyle.invalidTextField : false,
-          ]}
-          name="firstName"
-          onChangeText={val => _handleChange('setFirstName', val)}
-          value={firstName}
-        />
-      </View>
-
-      <View style={TunnelUserAdressStyle.inputWrapper}>
-        <Text style={Styles.labelText}>Nom *</Text>
-        <TextInput
-          placeholder="Ton Nom"
-          style={[
-            Styles.inputTypeText,
-            invalidLastName ? TunnelUserAdressStyle.invalidTextField : false,
-          ]}
-          name="lastName"
-          onChangeText={val => _handleChange('setLastName', val)}
-          value={lastName}
-        />
-      </View>
-
-      <View style={TunnelUserAdressStyle.inputWrapper}>
-        <Text style={Styles.labelText}>E-Mail *</Text>
-        <TextInput
-          placeholder="Ton adresse e-mail"
-          style={[
-            Styles.inputTypeText,
-            invalidEmailAdress ? TunnelUserAdressStyle.invalidTextField : false,
-          ]}
-          name="emailAdress"
-          onChangeText={val => _handleChange('setEmailAdress', val)}
-        />
-      </View>
-      {deliveryType == 'home' && (
-        <View style={TunnelUserAdressStyle.inputWrapper}>
-          <Text style={Styles.labelText}>Adresse *</Text>
-          <TextInput
-            placeholder="Ton adresse"
-            style={[
-              Styles.inputTypeText,
-              invalidAdress ? TunnelUserAdressStyle.invalidTextField : false,
-            ]}
-            name="adress"
-            onChangeText={val => _handleChange('setAdress', val)}
-            value={adress}
-          />
-        </View>
-      )}
+      <CustomTextInput inputLabel="Ton Prénom" inputPlaceholder="Ton Prénom" onChangeText={val => _handleChange('firstName', val)} isValid={localValid.firstName} currentValue={localAdress.firstName} /> 
+      <CustomTextInput inputLabel="Ton Nom" inputPlaceholder="Ton Nom" onChangeText={val => _handleChange('lastName', val)} isValid={localValid.lastName}  currentValue={localAdress.lastName} /> 
+      <CustomTextInput inputLabel="Ton adresse e-mail" inputPlaceholder="Ton adresse e-mail" onChangeText={val => _handleChange('emailAdress', val)} isValid={localValid.emailAdress}  currentValue={localAdress.emailAdress} /> 
+      
+      {deliveryType == 'home' && ( <CustomTextInput inputLabel="Ton adresse" inputPlaceholder="Ton adresse" onChangeText={val => _handleChange('adress', val)} isValid={localValid.adress}  currentValue={localAdress.adress} />  ) }
+      
       <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
         <View style={{flex: 1}}>
           <Text

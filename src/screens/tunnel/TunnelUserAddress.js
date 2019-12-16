@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
   Dimensions,
   ScrollView,
 } from 'react-native';
@@ -40,48 +39,45 @@ TunnelUserAddress.propTypes = {
 // @TODO : Review this entire file to clean it up - so messy.
 export default function TunnelUserAddress(props) {
   var defaultUserAdress = {
-	firstName : '',
-	lastName : '',
-	emailAdress : '',
-	adress : '',  
+    firstName: '',
+    lastName: '',
+    emailAdress: '',
+    adress: '',
   };
-  
+
   var defaultIsValid = {
-	  firstName : true,
-	  lastName : true,
-	  emailAdress : true,
-	  adress : true,
-  }
+    firstName: true,
+    lastName: true,
+    emailAdress: true,
+    adress: true,
+  };
   const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
-  
+
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
   const [localValid, setLocalValid] = useState(defaultIsValid);
-                               
+
   useEffect(() => {
-    if (props.navigation.state.params.userAdress) 
-    {
-	    const userAdress = props.navigation.state.params.userAdress;
-	    let   newAdress  = {
-			firstName : userAdress.firstName,
-			lastName : userAdress.lastName,
-			emailAdress : userAdress.emailAdress,
-			adress : userAdress.adress,  
-		  };
-		  
-		setLocalAdress(newAdress);	                                         
-	  }
+    if (props.navigation.state.params.userAdress) {
+      const userAdress = props.navigation.state.params.userAdress;
+      const newAdress = {
+        firstName: userAdress.firstName,
+        lastName: userAdress.lastName,
+        emailAdress: userAdress.emailAdress,
+        adress: userAdress.adress,
+      };
 
-  }, [isMounted]);
+      setLocalAdress(newAdress);
+    }
+  }, [isMounted, props.navigation.state.params.userAdress]);
 
-  function _validateFields()
-  {
-  	let isValid = true;
-    
+  function _validateFields() {
+    let isValid = true;
+
     // Reset all validations
-    let checkedIsValid = defaultIsValid;
-    
+    const checkedIsValid = defaultIsValid;
+
     if (localAdress.firstName == '') {
       checkedIsValid.firstName = false;
       isValid = false;
@@ -104,15 +100,15 @@ export default function TunnelUserAddress(props) {
       checkedIsValid.adress = false;
       isValid = false;
     }
-	
-	setLocalValid(checkedIsValid);
-	
-	return isValid;
+
+    setLocalValid(checkedIsValid);
+
+    return isValid;
   }
-  
+
   function _onDone() {
     const isValid = _validateFields();
-    
+
     if (isValid) {
       props.navigation.navigate('TunnelCartSummary', {
         selectedItem: selectedItem,
@@ -135,9 +131,9 @@ export default function TunnelUserAddress(props) {
 
   function _handleChange(name, value) {
     localAdress[`${name}`] = value;
-                                  
-    setLocalAdress(localAdress);  
-                                       
+
+    setLocalAdress(localAdress);
+
     return value;
   }
 
@@ -152,19 +148,44 @@ export default function TunnelUserAddress(props) {
           paddingTop: 15,
         },
       ]}>
-      
       <Backlink step={3} onPress={_goBack} />
 
       <View style={flexstyletext}>
         <Text style={Styles.tunnelTitle}>Complète tes informations</Text>
       </View>
 
-      <CustomTextInput inputLabel="Ton Prénom" inputPlaceholder="Ton Prénom" onChangeText={val => _handleChange('firstName', val)} isValid={localValid.firstName} currentValue={localAdress.firstName} /> 
-      <CustomTextInput inputLabel="Ton Nom" inputPlaceholder="Ton Nom" onChangeText={val => _handleChange('lastName', val)} isValid={localValid.lastName}  currentValue={localAdress.lastName} /> 
-      <CustomTextInput inputLabel="Ton adresse e-mail" inputPlaceholder="Ton adresse e-mail" onChangeText={val => _handleChange('emailAdress', val)} isValid={localValid.emailAdress}  currentValue={localAdress.emailAdress} /> 
-      
-      {deliveryType == 'home' && ( <CustomTextInput inputLabel="Ton adresse" inputPlaceholder="Ton adresse" onChangeText={val => _handleChange('adress', val)} isValid={localValid.adress}  currentValue={localAdress.adress} />  ) }
-      
+      <CustomTextInput
+        inputLabel="Ton Prénom"
+        inputPlaceholder="Ton Prénom"
+        onChangeText={val => _handleChange('firstName', val)}
+        isValid={localValid.firstName}
+        currentValue={localAdress.firstName}
+      />
+      <CustomTextInput
+        inputLabel="Ton Nom"
+        inputPlaceholder="Ton Nom"
+        onChangeText={val => _handleChange('lastName', val)}
+        isValid={localValid.lastName}
+        currentValue={localAdress.lastName}
+      />
+      <CustomTextInput
+        inputLabel="Ton adresse e-mail"
+        inputPlaceholder="Ton adresse e-mail"
+        onChangeText={val => _handleChange('emailAdress', val)}
+        isValid={localValid.emailAdress}
+        currentValue={localAdress.emailAdress}
+      />
+
+      {deliveryType == 'home' && (
+        <CustomTextInput
+          inputLabel="Ton adresse"
+          inputPlaceholder="Ton adresse"
+          onChangeText={val => _handleChange('adress', val)}
+          isValid={localValid.adress}
+          currentValue={localAdress.adress}
+        />
+      )}
+
       <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
         <View style={{flex: 1}}>
           <Text

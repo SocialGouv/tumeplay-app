@@ -75,11 +75,11 @@ var Styles = {
     fontSize: 17,
   },
   labelText: {
-    fontSize: 18,
+    fontSize: 16,
   },
   inputTypeText: {
-    height: 40,
-    fontSize: 18,
+    height: 35,
+    fontSize: 16,
   },
   placeholderText: {
     fontSize: 18,

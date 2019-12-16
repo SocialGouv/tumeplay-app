@@ -1,4 +1,4 @@
-import {NavigationActions} from 'react-navigation';
+import {NavigationActions} from 'react-navigation'; // PACKAGE Error for now
 
 let _navigator;
 

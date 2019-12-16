@@ -1,119 +1,109 @@
-import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  YellowBox,
-  StyleSheet,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 import Styles from '../../../styles/Styles';
 import Colors from '../../../styles/Color';
+import PropTypes from 'prop-types';
 
-export default class TopMenu extends React.Component {
-  constructor(props) {
-    super(props);
+TopMenu.propTypes = {
+  selectedTheme: PropTypes.object,
+  onPress: PropTypes.func,
+};
 
-    this.state = {};
+export default function TopMenu(props) {
+  const [activeFilter, setActiveFilter] = useState(0);
+  const [selectedTheme] = useState(props.selectedTheme);
 
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-    ]);
+  function _onDone(key) {
+    setActiveFilter(key);
+    props.onPress(key);
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  const menuStyle = StyleSheet.create({
+    itemButton: {
+      marginLeft: 0,
+      marginRight: 0,
+      marginBottom: 0,
+      flexShrink: 1,
+      flexGrow: 1,
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+      paddingTop: 4,
+      paddingBottom: 4,
+    },
+    itemText: {
+      color: '#FFFFFF',
+      textAlign: 'center',
+      textDecorationLine: 'underline',
+      fontFamily: Colors.textFont,
+    },
+    normalItemButton: {
+      backgroundColor: Colors.backgroundColor,
+    },
+    activeItemButton: {
+      backgroundColor: Colors.mainButton,
+    },
+    activeItemText: {
+      textDecorationLine: 'none',
+      fontFamily: Colors.textFontBold,
+    },
+  });
 
-  _onReadMoreClick = () => {
-    const content = this.state.content;
+  const _menuItems = [
+    {id: 0, key: 0, text: 'A poils'},
+    {id: 1, key: 0, text: 'Les WTF'},
+    {id: 2, key: 0, text: 'Sexploration'},
+    {id: 3, key: 0, text: 'Nos droits'},
+    {id: 4, key: 0, text: 'Sexysanté'},
+  ];
 
-    if (content.numberOfLines == 0) {
-      content.numberOfLines = 3;
-    } else {
-      content.numberOfLines = 0;
-    }
-
-    this.setState({content: content});
-  };
-
-  render() {
-    const menuStyle = StyleSheet.create({
-      itemButton: {
-        marginLeft: 0,
-        marginRight: 0,
-        marginBottom: 0,
-        flexShrink: 1,
-        flexGrow: 1,
-      },
-      itemText: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-      },
-      normalItemButton: {
-        backgroundColor: Colors.backgroundColor,
-      },
-      activeItemButton: {
-        backgroundColor: Colors.mainButton,
-      },
-      activeItemText: {},
-    });
-
-    const _menuItems = [
-      {id: 0, key: 0, text: 'A poils'},
-      {id: 1, key: 0, text: 'Les WTF'},
-      {id: 2, key: 0, text: 'Sexploration'},
-      {id: 3, key: 0, text: 'Nos droits'},
-      {id: 4, key: 0, text: 'Sexysanté'},
-    ];
-
-    const _currentActive = this.state.activeFilter;
-
-    const _menuButtons = _menuItems.map((item, key) => {
-      return (
-        <TouchableOpacity
-          key={key}
-          style={[
-            menuStyle.itemButton,
-            _currentActive == key
-              ? menuStyle.activeItemButton
-              : menuStyle.normalItemButton,
-            {alignSelf: 'flex-start'},
-          ]}
-          onPress={this._onDone}>
-          <Text style={menuStyle.itemText}>{item.text}</Text>
-        </TouchableOpacity>
-      );
-    });
-
+  const _menuButtons = _menuItems.map((item, key) => {
     return (
-      <View style={{flex: 0.1, maxHeight: 60}}>
-        <View style={{flex: 0.7}}>
-          <Text style={Styles.tunnelTitle}>Tes premières fois</Text>
-        </View>
+      <TouchableOpacity
+        key={key}
+        style={[
+          menuStyle.itemButton,
+          activeFilter == key
+            ? menuStyle.activeItemButton
+            : menuStyle.normalItemButton,
+          {alignSelf: 'flex-start'},
+        ]}
+        onPress={() => {
+          _onDone(key);
+        }}>
+        <Text
+          style={[
+            menuStyle.itemText,
+            activeFilter == key ? menuStyle.activeItemText : false,
+          ]}>
+          {item.text}
+        </Text>
+      </TouchableOpacity>
+    );
+  });
+
+  return (
+    <View style={{flex: 0.2, maxHeight: 80}}>
+      <View style={{flex: 0.65, maxHeight: 40}}>
+        <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
+      </View>
+      <View
+        style={{
+          flex: 0.35,
+          flexDirection: 'column',
+        }}>
         <View
           style={{
-            flex: 0.3,
-            flexDirection: 'column',
-            backgroundColor: '#FFFFFF',
+            flex: 1,
+            paddingTop: 8,
+            marginBottom: 15,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            flexWrap: 'nowrap',
+            alignContent: 'stretch',
           }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              flexWrap: 'nowrap',
-              alignContent: 'stretch',
-            }}>
-            {_menuButtons}
-          </View>
+          {_menuButtons}
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }

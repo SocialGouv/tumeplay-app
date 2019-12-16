@@ -15,9 +15,29 @@ const User = {
           return localUser.availableTokens;
         }
 
-        return 100;
+        return 0;
       } else {
         return User.localUser.availableTokens;
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
+
+  addTokens: async addedTokens => {
+    try {
+      let localUser = null;
+
+      if (!User.localUser) {
+        localUser = await User.load();
+      }
+      console.log(localUser);
+      // Not an "else".
+      if (User.localUser) {
+        User.localUser.availableTokens =
+          User.localUser.availableTokens + addedTokens;
+
+        await User.save();
       }
     } catch (e) {
       throw Error(e);
@@ -41,7 +61,7 @@ const User = {
       throw Error(e);
     }
   },
-
+  //@TODO: Cant' put promlise in JS file ?
   isUserRegistered: async (): Promise<null> => {
     return new Promise((resolve, reject) => {
       try {
@@ -79,7 +99,7 @@ const User = {
 
         return localUser;
       } else {
-        return null;
+        return await User.init();
       }
     } catch (e) {
       throw Error(e);

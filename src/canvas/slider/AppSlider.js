@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -10,6 +10,9 @@ import {
   Platform,
   I18nManager,
 } from 'react-native';
+import PropTypes from 'prop-types';
+
+import SliderPagination from '../../screens/components/slider/SliderPagination';
 
 import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
@@ -23,262 +26,173 @@ const isIphoneX =
   (height === 812 || width === 812);
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 
-export default class AppSlider extends React.Component {
-  static defaultProps = {
-    activeDotStyle: {
-      backgroundColor: Colors.activeDot,
-    },
-    dotStyle: {
-      backgroundColor: Colors.inactiveDot,
-    },
-    skipLabel: 'Passer',
-    doneLabel: 'Terminer',
-    nextLabel: 'Suivant',
-    prevLabel: 'Retour',
-    buttonStyle: null,
-    buttonTextStyle: null,
-    paginationStyle: null,
-    showDoneButton: true,
-    showNextButton: true,
-    showSkipButton: true,
-  };
+AppSlider.propTypes = {
+  slides: PropTypes.array,
+  onSlideChange: PropTypes.func,
+  onSkip: PropTypes.func,
+  renderItem: PropTypes.func,
+  buttonTextStyle: PropTypes.object,
+  bottomButton: PropTypes.bool,
+  buttonStyle: PropTypes.object,
+};
 
-  state = {
-    width,
-    height,
-    activeIndex: 0,
-  };
+export default function AppSlider(props) {
+  const [dimensions, setDimensions] = useState({width: 0, height: 0});
+  const [flatList, setFlatList] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  goToSlide = pageNum => {
-    this.setState({activeIndex: pageNum});
-    this.flatList.scrollToOffset({
-      offset: this._rtlSafeIndex(pageNum) * this.state.width,
+  function goToSlide(pageNum) {
+    setActiveIndex(pageNum);
+    flatList.scrollToOffset({
+      offset: _rtlSafeIndex(pageNum) * dimensions.width,
     });
-  };
+  }
 
-  // Get the list ref
-  getListRef = () => this.flatList;
+  function _onPaginationPress(index) {
+    const activeIndexBeforeChange = activeIndex;
+    goToSlide(index);
+    props.onSlideChange && props.onSlideChange(index, activeIndexBeforeChange);
+  }
 
-  _onNextPress = () => {
-    this.goToSlide(this.state.activeIndex + 1);
-    this.props.onSlideChange &&
-      this.props.onSlideChange(
-        this.state.activeIndex + 1,
-        this.state.activeIndex,
-      );
-  };
-  _onPrevPress = () => {
-    this.goToSlide(this.state.activeIndex - 1);
-    this.props.onSlideChange &&
-      this.props.onSlideChange(
-        this.state.activeIndex - 1,
-        this.state.activeIndex,
-      );
-  };
+  function _renderItem(flatListArgs) {
+    const localProps = {...flatListArgs, dimensions: {width, height}};
+    const localStyle =
+      Platform.OS == 'web'
+        ? {
+            width: dimensions.width,
+            height: dimensions.height,
+            minHeight: 700,
+            marginBottom: 70,
+            flex: 1,
+          }
+        : {width, flex: 1};
 
-  _onPaginationPress = index => {
-    const activeIndexBeforeChange = this.state.activeIndex;
-    this.goToSlide(index);
-    this.props.onSlideChange &&
-      this.props.onSlideChange(index, activeIndexBeforeChange);
-  };
+    return <View style={localStyle}>{props.renderItem(localProps)}</View>;
+  }
 
-  _renderItem = flatListArgs => {
-    const {width, height} = this.state;
-    const props = {...flatListArgs, dimensions: {width, height}};
+  function _renderButton(name, onPress) {
+    const show = props[`show${name}Button`];
+    const content = props[`render${name}Button`]
+      ? props[`render${name}Button`]()
+      : _renderDefaultButton(name);
 
-    return <View style={{width, flex: 1}}>{this.props.renderItem(props)}</View>;
-  };
+    return show && _renderOuterButton(content, name, onPress);
+  }
 
-  _renderButton = (name, onPress) => {
-    const show = this.props[`show${name}Button`];
-    const content = this.props[`render${name}Button`]
-      ? this.props[`render${name}Button`]()
-      : this._renderDefaultButton(name);
-
-    return show && this._renderOuterButton(content, name, onPress);
-  };
-
-  _renderDefaultButton = name => {
+  function _renderDefaultButton(name) {
     let content = (
-      <Text style={[Styles.bottomButtonText, this.props.buttonTextStyle]}>
-        {this.props[`${name.toLowerCase()}Label`]}
+      <Text style={[Styles.bottomButtonText, props.buttonTextStyle]}>
+        {props[`${name.toLowerCase()}Label`]}
       </Text>
     );
-    if (this.props.bottomButton) {
+    if (props.bottomButton) {
       content = (
-        <View style={[Styles.bottomButton, this.props.buttonStyle]}>
-          {content}
-        </View>
+        <View style={[Styles.bottomButton, props.buttonStyle]}>{content}</View>
       );
     }
     return content;
-  };
+  }
 
-  _renderOuterButton = (content, name, onPress) => {
+  function _renderOuterButton(content, name, onPress) {
     return (
-      <View style="">
-        <TouchableOpacity
-          onPress={onPress}
-          //style={this.props.bottomButton ? styles.flexOne : this.props.buttonStyle}
-          //style={ styles.flexOne }
-        >
-          {content}
-        </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={onPress}>{content}</TouchableOpacity>
       </View>
     );
-  };
+  }
 
-  _renderNextButton = () => this._renderButton('Next', this._onNextPress);
-
-  _renderPrevButton = () => this._renderButton('Prev', this._onPrevPress);
-
-  _renderDoneButton = () =>
-    this._renderButton('Done', this.props.onDone && this.props.onDone);
-
-  _renderSkipButton = () =>
+  function _renderSkipButton() {
     // scrollToEnd does not work in RTL so use goToSlide instead
-    this._renderButton('Skip', () =>
-      this.props.onSkip
-        ? this.props.onSkip()
-        : this.goToSlide(this.props.slides.length - 1),
+    return _renderButton('Skip', () =>
+      props.onSkip ? props.onSkip() : goToSlide(props.slides.length - 1),
     );
-
-  _renderPagination = () => {
-    const skipBtn = this._renderSkipButton();
+  }
+  function _renderPagination() {
+    const skipBtn = _renderSkipButton();
 
     return (
-      <View style={[styles.paginationContainer, this.props.paginationStyle]}>
-        <View style={styles.paginationDots}>
-          {this.props.slides.length > 1 &&
-            this.props.slides.map((_, i) => (
-              <TouchableOpacity
-                key={i}
-                style={[
-                  styles.dot,
-                  this._rtlSafeIndex(i) === this.state.activeIndex
-                    ? this.props.activeDotStyle
-                    : this.props.dotStyle,
-                ]}
-                onPress={() => this._onPaginationPress(i)}
-              />
-            ))}
-        </View>
-        {skipBtn}
-      </View>
+      <SliderPagination
+        isIphoneX={isIphoneX}
+        activeIndex={activeIndex}
+        skipBtn={skipBtn}
+        slides={props.slides}
+        onPress={_onPaginationPress}
+      />
     );
-  };
+  }
 
-  _rtlSafeIndex = i => (isAndroidRTL ? this.props.slides.length - 1 - i : i);
+  function _rtlSafeIndex(i) {
+    return isAndroidRTL ? props.slides.length - 1 - i : i;
+  }
 
-  _onMomentumScrollEnd = e => {
+  function _onMomentumScrollEnd(e) {
     const offset = e.nativeEvent.contentOffset.x;
     // Touching very very quickly and continuous brings about
     // a variation close to - but not quite - the width.
     // That's why we round the number.
     // Also, Android phones and their weird numbers
-    const newIndex = this._rtlSafeIndex(Math.round(offset / this.state.width));
-    if (newIndex === this.state.activeIndex) {
+    const newIndex = _rtlSafeIndex(Math.round(offset / width));
+    if (newIndex === activeIndex) {
       // No page change, don't do anything
       return;
     }
-    const lastIndex = this.state.activeIndex;
-    this.setState({activeIndex: newIndex});
-    this.props.onSlideChange && this.props.onSlideChange(newIndex, lastIndex);
-  };
-
-  _onLayout = () => {
-    const {width, height} = Dimensions.get('window');
-    if (width !== this.state.width || height !== this.state.height) {
-      // Set new width to update rendering of pages
-
-      this.setState({width, height});
-      // Set new scroll position
-      const func = () => {
-        this.flatList.scrollToOffset({
-          offset: this._rtlSafeIndex(this.state.activeIndex) * width,
-          animated: false,
-        });
-      };
-      Platform.OS === 'android' ? setTimeout(func, 0) : func();
-    }
-  };
-
-  render() {
-    // Separate props used by the component to props passed to FlatList
-    const {hidePagination} = this.props;
-
-    return (
-      <View style={Styles.flexOne}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: Colors.backgroundColor,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            source={require('../../assets/pictures/full-logo.png')}
-            style={{marginTop: 25, width: 150, height: 32}}
-          />
-        </View>
-        <View style={{flex: 6, backgroundColor: Colors.backgroundColor}}>
-          <FlatList
-            ref={ref => (this.flatList = ref)}
-            data={this.props.slides}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            bounces={false}
-            style={styles.flatList}
-            renderItem={this._renderItem}
-            onMomentumScrollEnd={this._onMomentumScrollEnd}
-            extraData={this.state.width}
-            onLayout={this._onLayout}
-            contentContainerStyle={{}}
-            //{...otherProps}
-          />
-        </View>
-        <View style={{flex: 2, backgroundColor: Colors.backgroundColor}}>
-          {!hidePagination && this._renderPagination()}
-        </View>
-      </View>
-    );
+    const lastIndex = activeIndex;
+    setActiveIndex(newIndex);
+    props.onSlideChange && props.onSlideChange(newIndex, lastIndex);
   }
+
+  return (
+    <View style={styles.flexOne}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: Colors.backgroundColor,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image
+          source={require('../../assets/pictures/boarding-logo.png')}
+          style={{marginTop: 20, width: 200, height: 55, resizeMode: 'contain'}}
+        />
+      </View>
+      <View style={{flex: 6, backgroundColor: Colors.backgroundColor}}>
+        <FlatList
+          ref={ref => setFlatList(ref)}
+          data={props.slides}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          style={styles.flatList}
+          renderItem={_renderItem}
+          onMomentumScrollEnd={_onMomentumScrollEnd}
+          extraData={(width, height)}
+          onLayout={event => {
+            const {width, height} = event.nativeEvent.layout;
+            setDimensions({width: width, height: height});
+          }}
+          contentContainerStyle={{}}
+          //{...otherProps}
+        />
+      </View>
+      <View style={{flex: 1.5}}>{_renderPagination()}</View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
     flexDirection: 'column',
+    height: '100%',
+    flexBasis: '100%',
+    backgroundColor: Colors.backgroundColor,
   },
   flatList: {
     flex: 1,
-    flexGrow: 1,
-    flexBasis: 1,
-    flexShrink: 0,
+    flexBasis: '100%',
+
     flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
     //height: '100%',
-  },
-  paginationContainer: {
-    flex: 1,
-    //flexDirection: 'column',
-    position: 'absolute',
-    bottom: 36 + (isIphoneX ? 34 : 0),
-    left: 16,
-    right: 16,
-  },
-  paginationDots: {
-    height: 16,
-    margin: 16,
-    flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 4,
   },
 });

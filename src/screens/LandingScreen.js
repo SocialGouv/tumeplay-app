@@ -3,16 +3,18 @@ import {
   Text,
   View,
   Image,
-  StyleSheet,
-  FlatList,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
+
+import useIsMounted from '../hooks/isMounted';
+import LandingThemeGrid from './components/landing/LandingThemeGrid';
+
 import CustomFooter from './CustomFooter';
 import Styles from '../styles/Styles';
-import Colors from '../styles/Color';
+
 import RemoteApi from '../services/RemoteApi';
 
 LandingScreen.propTypes = {
@@ -20,7 +22,7 @@ LandingScreen.propTypes = {
 };
 export default function LandingScreen(props) {
   const [localThemes, setLocalThemes] = useState({});
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
 
   const item = {
     arrow: require('../assets/pictures/right-arrow.png'),
@@ -35,97 +37,24 @@ export default function LandingScreen(props) {
     async function _fetchThemes() {
       const _themes = await RemoteApi.fetchThemes();
 
-      if (isMounted) {
+      if (isMounted.current) {
         setLocalThemes(_themes);
       }
     }
 
-    setIsMounted(true);
     _fetchThemes();
   }, [isMounted]);
 
-  useEffect(() => {
-    return () => {
-      setIsMounted(false);
-    };
-  }, []);
-
-  function _onSelectedTheme() {
-    props.navigation.navigate('ContentScreen');
+  function _onSelectedTheme(selectedTheme) {
+    props.navigation.navigate('ContentScreen', {selectedTheme: selectedTheme});
   }
 
   function _onSelected_lieuxUtiles() {
-    props.navigation.navigate('ContentScreen');
+    props.navigation.navigate('TunnelProductSelect');
   }
 
   function _onSelected_echangeProfessionnel() {
     props.navigation.navigate('ContentScreen');
-  }
-
-  function Grid() {
-    // Setting up images objects
-
-    const numColumns = 2;
-    const themeGridStyles = StyleSheet.create({
-      container: {
-        flex: 1,
-        width: '100%',
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 15,
-        backgroundColor: '#000000',
-        flexDirection: 'column',
-        maxWidth: 550,
-      },
-      itemButton: {},
-      itemPicture: {
-        borderTopLeftRadius: 7,
-        borderTopRightRadius: 7,
-        height: 150,
-        flex: 1,
-      },
-      itemTextContainer: {
-        padding: 7,
-        paddingLeft: 15,
-        borderBottomLeftRadius: 7,
-        backgroundColor: '#FFFFFF',
-        borderBottomRightRadius: 7,
-        width: '100%',
-      },
-      itemText: {
-        margin: 0,
-        color: Colors.mainButton,
-        fontSize: 22,
-      },
-    });
-    return (
-      <FlatList
-        scrollEnabled={true}
-        data={localThemes}
-        renderItem={({item}) => (
-          <View style={themeGridStyles.container}>
-            <TouchableOpacity
-              style={themeGridStyles.itemButton}
-              onPress={() => {
-                _onSelectedTheme(item);
-              }}>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image
-                  source={item.imageObj}
-                  style={themeGridStyles.itemPicture}
-                />
-              </View>
-
-              <View style={themeGridStyles.itemTextContainer}>
-                <Text style={themeGridStyles.itemText}>{item.value}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
-        keyExtractor={item => item.id}
-        numColumns={numColumns}
-      />
-    );
   }
 
   return (
@@ -136,7 +65,9 @@ export default function LandingScreen(props) {
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
           <Text style={Styles.landingScreenSubtitle}>{item.subtitle}</Text>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
-            <Grid></Grid>
+            <LandingThemeGrid
+              onPress={_onSelectedTheme}
+              themes={localThemes}></LandingThemeGrid>
           </View>
         </View>
 

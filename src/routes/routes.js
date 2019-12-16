@@ -1,4 +1,7 @@
 import React from 'react';
+
+import {Platform} from 'react-native';
+
 import {createStackNavigator} from 'react-navigation-stack';
 import Colors from '../styles/Color';
 import CustomHeaderLeft from '../screens/components/header/CustomHeaderLeft';
@@ -58,19 +61,30 @@ const AppStack = createStackNavigator(
   {
     initialRouteName: 'LandingScreen',
     headerLayoutPreset: 'center',
-    defaultNavigationOptions: {
+    defaultNavigationOptions: ({navigation}) => ({
       headerLeft: <CustomHeaderLeft />,
-      headerRight: <CustomHeaderRight />,
-      headerStyle: {
-        backgroundColor: '#000000',
-        borderBottomWidth: 1,
-        borderBottomColor: '#3D1D0B',
-      },
+      headerRight: <CustomHeaderRight navigation={navigation} />,
+      headerStyle:
+        Platform.OS == 'web'
+          ? {
+              backgroundColor: '#000000',
+              borderBottomWidth: 1,
+              borderBottomColor: '#3D1D0B',
+              maxWidth: 900,
+
+              alignItems: 'center',
+              justifyContent: 'center',
+            }
+          : {
+              backgroundColor: '#000000',
+              borderBottomWidth: 1,
+              borderBottomColor: '#3D1D0B',
+            },
       headerTintColor: Colors.backgroundColor,
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    },
+    }),
   },
 );
 

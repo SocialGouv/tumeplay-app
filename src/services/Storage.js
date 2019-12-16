@@ -1,7 +1,7 @@
 import {AsyncStorage} from 'react-native';
 
 const Storage = {
-  get: async (key: string) => {
+  get: async key => {
     try {
       const localValue = AsyncStorage.getItem(key);
 
@@ -11,7 +11,7 @@ const Storage = {
     }
   },
 
-  set: async (key: string, value: string) => {
+  set: async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (e) {
@@ -19,6 +19,7 @@ const Storage = {
     }
   },
 
+  //@TODO: Cant' put promlise in JS file ?
   clear: async (): Promise<null> => {
     try {
       await AsyncStorage.clear();
@@ -27,7 +28,7 @@ const Storage = {
     }
   },
 
-  remove: async (key: string) => {
+  remove: async key => {
     try {
       await AsyncStorage.remove(key);
     } catch (e) {

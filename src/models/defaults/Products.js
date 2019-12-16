@@ -8,22 +8,27 @@ const products = [
     products: [
       {
         title: 'Préservatifs internes ( ou "féminins" ) en nitrile',
+        shortTitle: 'Préservatifs féminins',
         qty: 3,
       },
       {
         title: 'Préservatifs Durex Classic Jeans',
+        shortTitle: 'Préservatifs Durex Classic Jeans',
         qty: 3,
       },
       {
         title: 'Préservatifs Manix King Size ( préservatifs grande taille )',
+        shortTitle: 'Préservatifs Manix King Size',
         qty: 3,
       },
       {
         title: "Des dosettes de lubrifiant à base d'eau",
+        shortTitle: "Lubrifiant à base d'eau",
         qty: false,
       },
       {
         title: 'Miroir',
+        shortTitle: 'Miroir',
         qty: 1,
       },
     ],
@@ -39,18 +44,22 @@ const products = [
     products: [
       {
         title: 'Préservatifs internes ( ou "féminins" ) en nitrile',
+        shortTitle: 'Préservatifs féminins',
         qty: 3,
       },
       {
         title: 'Préservatifs Durex Pleasure Me ( texture perlée stimulante )',
+        shortTitle: 'Préservatifs Durex Pleasure Me',
         qty: 3,
       },
       {
         title: 'Préservatifs Manix Skyn ( ultra-fins )',
+        shortTitle: 'Préservatifs Manix Skyn',
         qty: 2,
       },
       {
         title: "Des dosettes de lubrifiant à base d'eau",
+        shortTitle: "Lubrifiant à base d'eau",
         qty: false,
       },
     ],
@@ -66,18 +75,22 @@ const products = [
     products: [
       {
         title: 'Préservatifs internes ( ou "féminins" ) en nitrile',
+        shortTitle: 'Préservatifs féminins',
         qty: 3,
       },
       {
         title: 'Préservatifs Manix Skyn ( ultra-fins )',
+        shortTitle: 'Préservatifs Manix Skyn',
         qty: 2,
       },
       {
         title: 'Boite de carrés de latex',
+        shortTitle: 'Boite de carrés de latex',
         qty: 1,
       },
       {
         title: 'Des dosettes de lubrifiant aromatisé',
+        shortTitle: 'Lubrifiant aromatisé',
         qty: false,
       },
     ],

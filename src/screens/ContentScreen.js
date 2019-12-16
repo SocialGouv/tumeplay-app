@@ -1,191 +1,185 @@
-import React from 'react';
-import {
-  ScrollView,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  YellowBox,
-  Image,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, SafeAreaView, View, Platform} from 'react-native';
 import Modal from 'react-native-modal';
+import PropTypes from 'prop-types';
 
 import CustomFooter from './CustomFooter';
 import QuizzScreen from './QuizzScreen';
 import QuizzFinishScreen from './QuizzFinishScreen';
 import ContactButton from './components/global/ContactButton';
-import ContentCard from './components/content/ContentCard';
+import ContentCards from './components/content/ContentCards';
 import TopMenu from './components/content/TopMenu';
 import QuizzButton from './components/content/QuizzButton';
+import ModalCloseButton from './components/global/ModalCloseButton';
 import RemoteApi from '../services/RemoteApi';
+import UserService from '../services/User';
+
+import useIsMounted from '../hooks/isMounted';
 
 import Styles from '../styles/Styles';
 
-export default class ContentPage extends React.Component {
-  constructor(props) {
-    super(props);
+ContentScreen.propTypes = {
+  navigation: PropTypes.object,
+};
 
-    this.state = {
-      activeFilter: 0,
-      isQuizzModalVisible: false,
-      isResultModalVisible: false,
-      needResultModal: false,
-      localContents: [],
-      localQuestion: [],
-    };
+export default function ContentScreen(props) {
+  const [isQuizzModalVisible, setIsQuizzModalVisible] = useState(false);
+  const [isResultModalVisible, setIsResultModalVisible] = useState(false);
+  const [needResultModal, setNeedResultModal] = useState(false);
+  const [localContents, setLocalContents] = useState([]);
+  const [fullContents, setFullContents] = useState([]);
+  const [fullQuestions, setFullQuestions] = useState([]);
+  const [localQuestions, setLocalQuestions] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(false);
+  const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
 
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-    ]);
-  }
+  const isMounted = useIsMounted();
 
-  componentDidMount() {
-    this._isMounted = true;
-    this._fetchContents();
-    this._fetchQuestions();
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  _fetchContents = async () => {
-    const _contents = await RemoteApi.fetchContents();
-
-    if (this._isMounted) {
-      this.setState({localContents: _contents});
+  useEffect(() => {
+    async function _fetchContents() {
+      const _contents = await RemoteApi.fetchContents(selectedTheme);
+      if (isMounted.current) {
+        setFullContents(_contents);
+        _filterContent(0);
+      }
     }
-  };
 
-  _fetchQuestions = async () => {
-    const _questions = await RemoteApi.fetchQuestions();
-
-    if (this._isMounted) {
-      this.setState({localQuestions: _questions});
+    async function _fetchQuestions() {
+      const _questions = await RemoteApi.fetchQuestions(selectedTheme);
+      if (isMounted.current) {
+        setFullQuestions(_questions);
+      }
     }
-  };
 
-  _toggleQuizzModal = () => {
-    this.setState({isResultModalVisible: !this.state.isQuizzModalVisible});
-  };
+    _fetchContents();
+    _fetchQuestions();
+  }, [isMounted, selectedTheme]);
 
-  _toggleResultModal = () => {
-    this.setState({isResultModalVisible: !this.state.isResultModalVisible});
-  };
+  // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
+  // So we clear it up, and then filter using a very small timer.
+  // Sooooo @TODO : Fix this mess.
+  useEffect(() => {
+    setLocalContents([]);
 
-  _toggleResultModalIfNeeded = () => {
-    console.log('Closing.');
+    setTimeout(() => {
+      var _filtered = fullContents.filter(
+        content => content.category == currentCategory,
+      );
 
-    if (this.state.needResultModal) {
-      this.setState({needResultModal: false});
+      setLocalContents(_filtered);
+    }, 1);
+  }, [currentCategory, fullContents]);
 
-      this._toggleResultModal();
-    }
-  };
-
-  _onFinishedQuizz = responses => {
-    this._toggleQuizzModal();
-
-    this.setState({needResultModal: true});
-  };
-
-  _onOrder = () => {
-    this._toggleResultModal();
-    this.props.navigation.navigate('TunnelProductSelect');
-  };
-
-  _renderContentCards = () => {
-    return this.state.localContents.map((item, key) => {
-      return <ContentCard key={key} item={item} />;
-    });
-  };
-
-  render() {
-    return (
-      <SafeAreaView style={Styles.safeAreaView}>
-        <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
-          <TopMenu />
-
-          <ScrollView style={{flex: 0.9}}>
-            {this._renderContentCards()}
-
-            <ContactButton />
-
-            <CustomFooter />
-          </ScrollView>
-
-          <QuizzButton onClick={this._toggleQuizzModal} />
-        </View>
-        <Modal
-          visible={this.state.isQuizzModalVisible}
-          isVisible={this.state.isQuizzModalVisible}
-          style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
-          onModalHide={this._toggleResultModalIfNeeded}
-          onDismiss={this._toggleResultModalIfNeeded}
-          animationType="slide"
-          transparent={true}>
-          <View
-            style={{
-              flex: 1,
-              marginBottom: 25,
-              marginRight: 25,
-              marginLeft: 25,
-              marginTop: 35,
-              borderRadius: 7,
-              borderColor: '#000000',
-              position: 'relative',
-            }}>
-            <TouchableOpacity
-              style={{position: 'absolute', right: 10, top: 10, zIndex: 10}}
-              onPress={this._toggleQuizzModal}>
-              <View style={{}}>
-                <Image
-                  style={{width: 25, height: 25, resizeMode: 'contain'}}
-                  source={require('../assets/pictures/close.png')}
-                />
-              </View>
-            </TouchableOpacity>
-
-            <QuizzScreen
-              onFinishedQuizz={this._onFinishedQuizz}
-              questions={this.state.localQuestions}
-            />
-          </View>
-        </Modal>
-        <Modal
-          visible={this.state.isResultModalVisible}
-          isVisible={this.state.isResultModalVisible}
-          onModalHide={this._toggleResultModalIfNeeded}
-          onDismiss={this._toggleResultModalIfNeeded}
-          style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
-          animationType="slide"
-          transparent={true}>
-          <View
-            style={{
-              flex: 1,
-              marginBottom: 25,
-              marginRight: 25,
-              marginLeft: 25,
-              marginTop: 35,
-              borderRadius: 7,
-              borderColor: '#000000',
-              position: 'relative',
-            }}>
-            <TouchableOpacity
-              style={{position: 'absolute', right: 10, top: 10, zIndex: 10}}
-              onPress={this._toggleResultModal}>
-              <View style={{}}>
-                <Image
-                  style={{width: 25, height: 25, resizeMode: 'contain'}}
-                  source={require('../assets/pictures/close.png')}
-                />
-              </View>
-            </TouchableOpacity>
-
-            <QuizzFinishScreen onOrder={this._onOrder} />
-          </View>
-        </Modal>
-      </SafeAreaView>
+  // @TODO : Double check for category ID on backend when going online, and remove that dirty " -1"
+  useEffect(() => {
+    var _filtered = fullQuestions.filter(
+      question => question.category - 1 == currentCategory,
     );
+    setLocalQuestions(_filtered);
+  }, [currentCategory, fullQuestions]);
+
+  useEffect(() => {
+    async function _addTokens() {
+      await UserService.addTokens(200);
+    }
+
+    function _toggleResultModal() {
+      setIsResultModalVisible(!isResultModalVisible);
+    }
+
+    if (needResultModal) {
+      if (needResultModal) {
+        _addTokens();
+        setNeedResultModal(false);
+        _toggleResultModal();
+      }
+    }
+  }, [isResultModalVisible, needResultModal]);
+
+  function _toggleQuizzModal() {
+    setIsQuizzModalVisible(!isQuizzModalVisible);
   }
+
+  function _toggleResultModal() {
+    setIsResultModalVisible(!isResultModalVisible);
+  }
+
+  function _filterContent(selectedCategory) {
+    setCurrentCategory(selectedCategory);
+  }
+
+  function _onFinishedQuizz() {
+    _toggleQuizzModal();
+    setNeedResultModal(true);
+  }
+
+  function _onOrder() {
+    _toggleResultModal();
+    props.navigation.navigate('TunnelProductSelect');
+  }
+
+  // @TODO : Need to improve this. A LOT.
+  function _getModalStyle() {
+    const isWeb = Platform.OS == 'web';
+
+    return {
+      flex: 1,
+      marginBottom: 25,
+      marginRight: isWeb ? 'auto' : 25,
+      marginLeft: isWeb ? 'auto' : 25,
+      marginTop: 35,
+      borderRadius: 7,
+      borderColor: '#000000',
+      position: 'relative',
+      maxWidth: isWeb ? 900 : undefined,
+      maxHeight: isWeb ? 700 : undefined,
+    };
+  }
+
+  return (
+    <SafeAreaView style={Styles.safeAreaView}>
+      <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
+        <TopMenu selectedTheme={selectedTheme} onPress={_filterContent} />
+
+        <ScrollView style={{flex: 0.9}}>
+          <ContentCards localContents={localContents} />
+
+          <ContactButton />
+
+          <CustomFooter />
+        </ScrollView>
+
+        <QuizzButton onClick={_toggleQuizzModal} />
+      </View>
+      <Modal
+        visible={isQuizzModalVisible}
+        isVisible={isQuizzModalVisible}
+        style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
+        animationType="slide"
+        backdropColor="black"
+        backdropOpacity={0.55}
+        transparent={true}>
+        <View style={_getModalStyle()}>
+          <ModalCloseButton onClose={_toggleQuizzModal} />
+
+          <QuizzScreen
+            onFinishedQuizz={_onFinishedQuizz}
+            questions={localQuestions}
+          />
+        </View>
+      </Modal>
+      <Modal
+        visible={isResultModalVisible}
+        isVisible={isResultModalVisible}
+        style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
+        animationType="slide"
+        transparent={true}>
+        <View style={_getModalStyle()}>
+          <ModalCloseButton onClose={_toggleResultModal} />
+
+          <QuizzFinishScreen onOrder={_onOrder} />
+        </View>
+      </Modal>
+    </SafeAreaView>
+  );
 }

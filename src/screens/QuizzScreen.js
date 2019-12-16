@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, View, ImageBackground} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../styles/Styles';
-import Colors from '../styles/Color';
+
+import AnswerScreen from './components/quizz/AnswerScreen';
+import NextButton from './components/quizz/NextButton';
+import AnswerButton from './components/quizz/AnswerButton';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
+  onFinishedQuizz: PropTypes.func,
 };
 
 export default function QuizzScreen(props) {
@@ -23,8 +21,10 @@ export default function QuizzScreen(props) {
 
   const _currentQuestion = questions[currentIndex];
 
-  setQuestions(props.questions);
-  setTotal(props.questions.length);
+  useEffect(() => {
+    setQuestions(props.questions);
+    setTotal(props.questions.length);
+  }, [props.questions]);
 
   function _answerQuestion(key) {
     const currentQuestion = questions[currentIndex];
@@ -45,133 +45,22 @@ export default function QuizzScreen(props) {
     }
   }
 
-  function _renderAnswer(currentQuestion) {
-    const _rightAnswer =
-      currentQuestion.answers[currentQuestion.rightAnswer].text;
-    return (
-      <View style={{flex: 2}}>
-        <View style={Styles.rightAnswerButton}>
-          <View style={Styles.wrongAnswerButtonInnerWrapper}>
-            <View style={Styles.rightAnswerButtonIconWrapper}>
-              <Image
-                style={{
-                  width: 25,
-                  height: 25,
-                  resizeMode: 'contain',
-                  marginLeft: 2,
-                }}
-                source={require('../assets/pictures/check.png')}
-              />
-            </View>
-            <Text style={Styles.rightAnswerButtonText}>{_rightAnswer}</Text>
-          </View>
-        </View>
-        <View
-          style={{flex: 1, width: '100%', paddingLeft: 15, paddingRight: 15}}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: '#FFFFFF',
-              borderRadius: 7,
-              padding: 20,
-            }}>
-            <Text style={{flex: 1.5, flexWrap: 'wrap', fontSize: 16}}>
-              {currentQuestion.explanation}
-            </Text>
-            <TouchableOpacity
-              style={{
-                flex: 0.5,
-                marginBottom: 10,
-                marginTop: 10,
-                paddingLeft: 15,
-                padding: 5,
-                flexDirection: 'row',
-                borderWidth: 0,
-                borderRadius: 7,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                }}>
-                <Image
-                  style={{
-                    marginRight: 5,
-                    width: 30,
-                    height: 30,
-                    marginTop: -4,
-                    paddingTop: 0,
-                    resizeMode: 'contain',
-                  }}
-                  source={require('../assets/pictures/plus.png')}
-                />
-                <Text
-                  style={{
-                    fontSize: 16,
-                    textDecorationLine: 'underline',
-                    color: Colors.mainButton,
-                  }}>
-                  En savoir plus
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
   function _renderAnswersButtons(answers) {
     return answers.map((item, key) => {
       return (
-        <TouchableOpacity
+        <AnswerButton
+          item={item}
+          questionKey={key}
           key={key}
-          style={{flex: 2, paddingTop: 2, paddingBottom: 2, maxHeight: 55}}
-          onPress={_answerQuestion(key)}>
-          <View style={Styles.bottomButton}>
-            <Text style={Styles.bottomButtonText}>{item.text}</Text>
-          </View>
-        </TouchableOpacity>
+          onPress={() => _answerQuestion(key)}
+        />
       );
     });
   }
 
-  function _renderNextButton() {
-    return (
-      <TouchableOpacity
-        style={{
-          flex: 2,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingTop: 2,
-          paddingBottom: 2,
-          maxHeight: 55,
-          marginBottom: 20,
-        }}
-        onPress={_nextQuestion}>
-        <View
-          style={{
-            width: 46,
-            height: 46,
-            paddingLeft: 12,
-            paddingTop: 12,
-            borderRadius: 25,
-            backgroundColor: Colors.mainButton,
-          }}>
-          <Image
-            style={{
-              width: 23,
-              height: 23,
-              resizeMode: 'contain',
-            }}
-            source={require('../assets/pictures/right-arrow.png')}
-          />
-        </View>
-      </TouchableOpacity>
-    );
+  if (_currentQuestion === undefined) {
+    return <View></View>;
   }
-
   return (
     <ImageBackground
       imageStyle={{borderRadius: 7}}
@@ -201,14 +90,14 @@ export default function QuizzScreen(props) {
               <View style={Styles.flexOne}></View>
             )}
 
-            {displayAnswer && _renderAnswer(_currentQuestion)}
+            {displayAnswer && <AnswerScreen question={_currentQuestion} />}
           </View>
         </View>
 
         <View style={{flex: 2}}></View>
 
         <View style={{position: 'absolute', bottom: 15, width: '100%'}}>
-          {displayAnswer && _renderNextButton()}
+          {displayAnswer && <NextButton onPress={_nextQuestion} />}
 
           <Text
             style={{

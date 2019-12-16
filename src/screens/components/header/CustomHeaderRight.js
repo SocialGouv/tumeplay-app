@@ -1,83 +1,76 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
+import PropTypes from 'prop-types';
 
 import User from '../../../services/User';
 import Colors from '../../../styles/Color';
 
-export default class CustomHeaderRight extends React.Component {
-  _isMounted = false;
+import useIsMounted from '../../../hooks/isMounted';
 
-  constructor(props) {
-    super(props);
+CustomHeaderRight.propTypes = {
+  navigation: PropTypes.object,
+};
 
-    this.state = {
-      availableTokens: 0,
-    };
-  }
+export default function CustomHeaderRight(props) {
+  const [availableTokens, setAvailableTokens] = useState(0);
 
-  componentDidMount() {
-    this._isMounted = true;
+  const isMounted = useIsMounted();
 
-    this._fetchTokens();
-  }
+  const headerStyle = StyleSheet.create({
+    container: {},
+    textContainer: {
+      position: 'relative',
+      paddingRight: 0,
+      marginRight: 15,
+      borderColor: '#123321',
+      backgroundColor: 'transparent',
+    },
+    text: {
+      borderRadius: 15,
+      padding: 5,
+      paddingTop: 8,
+      paddingBottom: 3,
+      marginRight: 20,
+      textAlign: 'right',
+      width: 85,
+      paddingLeft: 5,
+      paddingRight: 25,
+      backgroundColor: '#FFFFFF',
+      borderWidth: 2,
+      borderColor: Colors.mainButton,
+      color: Colors.mainButton,
+      fontFamily: Colors.textFont,
+      overflow: 'hidden',
+    },
+    picture: {
+      position: 'absolute',
+      right: 0,
+      top: -3,
+      width: 38,
+      height: 38,
+    },
+  });
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  _fetchTokens = async () => {
-    const _tokens = await User.getTokensAmount();
-
-    if (this._isMounted) {
-      this.setState({availableTokens: _tokens});
+  useEffect(() => {
+    async function _fetchTokens() {
+      const _tokens = await User.getTokensAmount();
+      if (isMounted.current) {
+        setAvailableTokens(_tokens);
+      }
     }
-  };
 
-  render() {
-    const headerStyle = StyleSheet.create({
-      container: {},
-      textContainer: {
-        position: 'relative',
-        paddingRight: 0,
-        marginRight: 15,
-        borderColor: '#123321',
-        backgroundColor: 'transparent',
-      },
-      text: {
-        borderRadius: 15,
-        padding: 5,
-        paddingTop: 6,
-        paddingBottom: 3,
-        marginRight: 20,
-        textAlign: 'right',
-        width: 85,
-        paddingLeft: 5,
-        paddingRight: 25,
-        backgroundColor: '#FFFFFF',
-        borderWidth: 2,
-        borderColor: Colors.mainButton,
-        color: Colors.mainButton,
-        overflow: 'hidden',
-      },
-      picture: {
-        position: 'absolute',
-        right: 0,
-        top: -3,
-        width: 38,
-        height: 38,
-      },
-    });
+    _fetchTokens();
+  }, [isMounted]);
 
-    return (
-      <View style={headerStyle.container}>
-        <View style={headerStyle.textContainer}>
-          <Text style={headerStyle.text}>{this.state.availableTokens}</Text>
-          <Image
-            source={require('../../../assets/pictures/header-right.png')}
-            style={headerStyle.picture}
-          />
-        </View>
+  return (
+    <View style={headerStyle.container}>
+      <View style={headerStyle.textContainer}>
+        <Text style={headerStyle.text}>{availableTokens}</Text>
+        <Image
+          source={require('../../../assets/pictures/header-right.png')}
+          style={headerStyle.picture}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }

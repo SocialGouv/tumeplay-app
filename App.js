@@ -6,8 +6,8 @@
  * @flow
  */
 
-import {createAppContainer} from 'react-navigation';
-import React from 'react';
+import {createAppContainer} from 'react-navigation'; //@TODO : Check package lint error
+import React, {useState} from 'react';
 import {View, Text, Image, Dimensions} from 'react-native';
 
 import AppStack from './src/routes/routes';
@@ -42,12 +42,10 @@ const slides = [
 ];
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-export default class App extends React.Component {
-  state = {
-    showRealApp: false,
-  };
+export default function App() {
+  const [showRealApp, setShowRealApp] = useState(false);
 
-  _renderItem = ({item}) => {
+  function _renderItem({item}) {
     if (screenWidth <= 320) {
       return (
         <View style={Styles.slide}>
@@ -87,30 +85,30 @@ export default class App extends React.Component {
         </View>
       );
     }
-  };
-  _onDone = () => {
-    this.setState({showRealApp: true});
-  };
-  render() {
-    if (this.state.showRealApp) {
-      return <AppContainer />;
-    } else {
-      return (
-        <AppSlider
-          renderItem={this._renderItem}
-          slides={slides}
-          onDone={this._onDone}
-          showSkipButton
-          showPrevButton
-          bottomButton
-          nextLabel="Suivant"
-          skipLabel="Passer"
-          doneLabel="Terminer"
-          prevLabel="Retour"
-          onSkip={this._onDone}
-        />
-      );
-    }
+  }
+
+  function _onDone() {
+    setShowRealApp(true);
+  }
+
+  if (showRealApp) {
+    return <AppContainer />;
+  } else {
+    return (
+      <AppSlider
+        renderItem={_renderItem}
+        slides={slides}
+        onDone={_onDone}
+        showSkipButton
+        showPrevButton
+        bottomButton
+        nextLabel="Suivant"
+        skipLabel="Passer"
+        doneLabel="Terminer"
+        prevLabel="Retour"
+        onSkip={_onDone}
+      />
+    );
   }
 }
 

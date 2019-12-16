@@ -1,69 +1,34 @@
-import {createAppContainer} from 'react-navigation';
-import React from 'react';
+import {createAppContainer} from 'react-navigation'; //@TODO : Check package lint error
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, Dimensions} from 'react-native';
 import AppStack from './routes/routes';
 import AppSlider from './canvas/slider/AppSlider';
 import Styles from './styles/Styles';
+import RemoteApi from './services/RemoteApi';
+
+import useIsMounted from './hooks/isMounted';
+
 const AppContainer = createAppContainer(AppStack);
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+export default function App() {
+  const [showRealApp, setShowRealApp] = useState(false);
+  const [slides, setSlides] = useState([]);
+  const isMounted = useIsMounted();
 
-    this.state = {
-      showRealApp: false,
-      slides: [],
-    };
-  }
-  componentDidMount() {
-    this._fetchSlides();
-  }
+  useEffect(() => {
+    async function _fetchSlides() {
+      const _questions = await RemoteApi.fetchBoarding();
 
-  _fetchSlides = async () => {
-    // @TODO : Enable / add BoardingContent to backend
-    //const _questions = await RemoteApi.fetchBoarding();
-    const _questions = [
-      {
-        key: 'boarding-1',
-        title: 'Bienvenue !',
-        text:
-          "L'application qui te permet d'en apprendre plus sur la sexualité.",
-        picture: require('./assets/pictures/boarding/boarding-4.jpeg'),
-      },
-      {
-        key: 'boarding-2',
-        title: 'Informe toi !',
-        text: 'Choisis ta thématique et consulte nos contenus pensés pour toi.',
-        picture: require('./assets/pictures/boarding/boarding-3.jpeg'),
-      },
-      {
-        key: 'boarding-3',
-        title: 'Teste toi !',
-        text:
-          'Réponds à nos quizz pour tester tes connaissances et gagne des points.',
-        picture: require('./assets/pictures/boarding/boarding-2.jpeg'),
-      },
-      {
-        key: 'boarding-4',
-        title: 'Reçois ta box !',
-        text:
-          'Commande une de nos box remplie de préservatifs et autres accessoires gratuitement.',
-        picture: require('./assets/pictures/boarding/boarding-1.jpeg'),
-      },
-      {
-        key: 'boarding-5',
-        title: "Besoin d'aide ?",
-        text:
-          "Nous sommes aussi là pour t'orienter au bon endroit en cas de besoin.",
-        picture: require('./assets/pictures/boarding/boarding-5.jpeg'),
-      },
-    ];
+      if (isMounted.current) {
+        setSlides(_questions);
+      }
+    }
 
-    this.setState({slides: _questions});
-  };
+    _fetchSlides();
+  }, [isMounted]);
 
-  _renderItem = ({item}) => {
+  function _renderItem({item}) {
     if (screenWidth <= 320) {
       return (
         <View style={Styles.slide}>
@@ -98,32 +63,29 @@ export default class App extends React.Component {
         </View>
       );
     }
-  };
+  }
 
-  _onDone = () => {
-    this.setState({showRealApp: true});
-  };
+  function _onDone() {
+    setShowRealApp(true);
+  }
 
-  render() {
-    console.log('Entering App.');
-    if (this.state.showRealApp) {
-      return <AppContainer style={{flex: 1, flexBasis: '100%'}} />;
-    } else {
-      console.log('ENTERING');
+  if (showRealApp) {
+    return <AppContainer style={{flex: 1, flexBasis: '100%'}} />;
+  } else {
+    console.log('ENTERING');
 
-      return (
-        <AppSlider
-          renderItem={this._renderItem}
-          slides={this.state.slides}
-          onDone={this._onDone}
-          showSkipButton
-          bottomButton
-          skipLabel="Commencer"
-          doneLabel="Commencer"
-          onSkip={this._onDone}
-          style={{flex: 1, flexBasis: '100%'}}
-        />
-      );
-    }
+    return (
+      <AppSlider
+        renderItem={_renderItem}
+        slides={slides}
+        onDone={_onDone}
+        showSkipButton
+        bottomButton
+        skipLabel="Commencer"
+        doneLabel="Commencer"
+        onSkip={_onDone}
+        style={{flex: 1, flexBasis: '100%'}}
+      />
+    );
   }
 }

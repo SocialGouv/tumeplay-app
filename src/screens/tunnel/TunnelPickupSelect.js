@@ -1,8 +1,11 @@
 import React from 'react';
-import {Text, Image, View, TouchableOpacity, YellowBox} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
+import Backlink from '../components/tunnel/Backlink';
+
 const {detect} = require('detect-browser');
 const browser = detect();
 let stylevalide;
@@ -28,22 +31,29 @@ if (browser) {
     justifyContent: 'center',
   };
 }
+
+/*TunnelPickupSelect.propTypes = {
+  navigation: PropTypes.object,
+};*/
 export default class TunnelPickupSelect extends React.Component {
   constructor(props) {
     super(props);
 
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-    ]);
+    this.state = {
+      selectedItem: this.props.navigation.state.params.selectedItem,
+    };
   }
 
   _onDone = () => {
-    this.props.navigation.navigate('TunnelUserAddress');
+    this.props.navigation.navigate('TunnelUserAddress', {
+      selectedItem: this.state.selectedItem,
+    });
   };
 
   _goBack = () => {
-    this.props.navigation.navigate('TunnelDeliverySelect');
+    this.props.navigation.navigate('TunnelDeliverySelect', {
+      selectedItem: this.state.selectedItem,
+    });
   };
 
   render() {
@@ -58,36 +68,8 @@ export default class TunnelPickupSelect extends React.Component {
             paddingTop: 15,
           },
         ]}>
-        <View style={{flex: 0.05}}>
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              paddingTop: 2,
-              paddingBottom: 2,
-              width: '100%',
-              maxHeight: 70,
-            }}
-            onPress={this._goBack}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-              }}>
-              <Image
-                style={{
-                  width: 17,
-                  height: 17,
-                  marginRight: 10,
-                  resizeMode: 'contain',
-                }}
-                source={require('../../assets/pictures/left-arrow.png')}
-              />
+        <Backlink step={2} onPress={this._goBack} />
 
-              <Text style={{color: '#FFFFFF'}}>Etape 2</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
         <View style={{flex: 0.3, paddingTop: 15}}>
           <Text style={Styles.tunnelTitle}>Choisis le lieu de livraison</Text>
           <Text style={Styles.textLeft}>Affichage de la carte</Text>
@@ -96,7 +78,7 @@ export default class TunnelPickupSelect extends React.Component {
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={this._onDone}>
-            <View style={Styles.tunnelButton}>
+            <View style={{paddingTop: 8, paddingBottom: 8}}>
               <Text style={Styles.tunnelButtonText}>Valider</Text>
             </View>
           </TouchableOpacity>

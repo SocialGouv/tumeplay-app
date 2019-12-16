@@ -62,6 +62,13 @@ var Styles = {
     justifyContent: 'center',
     flexDirection: 'column',
   },
+  withShadow: {
+    shadowColor: Colors.mainButton,
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
+    elevation: 1,
+  },
   tunnelButton: {
     flex: 1,
     width: '100%',
@@ -72,12 +79,8 @@ var Styles = {
     marginBottom: 10,
     borderRadius: 20,
     alignSelf: 'center',
-    shadowColor: Colors.mainButton,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.8,
-    shadowRadius: 6,
-    elevation: 1,
   },
+
   tunnelButtonText: {
     color: '#FFFFFF',
     fontSize: 18,
@@ -92,6 +95,9 @@ var Styles = {
     paddingTop: 0,
     textAlign: 'center',
     flex: 1,
+    textShadowColor: '#303030',
+    textShadowOffset: {width: -1, height: 0},
+    textShadowRadius: 10,
   },
 
   finishText: {
@@ -154,7 +160,7 @@ var Styles = {
     height: 170,
     resizeMode: 'contain',
     marginTop: 10,
-    marginBottom: -10,
+    marginBottom: -5,
     zIndex: 1,
   },
   PictureFinishCom: {
@@ -278,7 +284,7 @@ var Styles = {
   },
   rightAnswerButton: {
     flex: 1,
-    width: '50%',
+    width: '70%',
     borderWidth: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -357,9 +363,10 @@ var Styles = {
   },
   labelText: {
     fontWeight: 'bold',
-    color: '#B90740',
-    fontFamily: Colors.textFontBold,
-    fontSize: 18,
+    color: Colors.labelColor,
+    fontFamily: Colors.textFont,
+    fontSize: 16,
+    marginBottom: 2,
   },
   inputTypeText: {
     backgroundColor: '#FFFFFF',
@@ -367,14 +374,15 @@ var Styles = {
     borderRadius: 5,
     borderWidth: 1,
     borderColor: Colors.mainButton,
-    padding: 5,
-    fontSize: 18,
+    padding: 3,
+    paddingLeft: 15,
+    fontSize: 16,
   },
   placeholderText: {
     fontWeight: 'bold',
     color: '#B7B7B7',
     fontFamily: Colors.textFont,
-    fontSize: 18,
+    fontSize: 16,
   },
   landingBottomWrapper: {
     flex: 0.5,
@@ -408,7 +416,7 @@ var Styles = {
   },
   landingScreenSubtitle: {
     color: Colors.mainColor,
-    fontFamily: Colors.appTitleFont,
+    fontFamily: Colors.textFont,
     fontSize: 16,
     marginLeft: 15,
     marginRight: 15,
@@ -443,7 +451,7 @@ if (browser) {
 }
 
 {
-  Object.keys(Styles).map((key, index) => {
+  Object.keys(Styles).map(key => {
     if (key in _conditionalStyle) {
       Styles[key] = {...Styles[key], ..._conditionalStyle[key]};
     }

@@ -2,6 +2,7 @@ import DefaultThemes from '../models/defaults/Themes';
 import DefaultContents from '../models/defaults/Contents';
 import DefaultQuestions from '../models/defaults/Questions';
 import DefaultProducts from '../models/defaults/Products';
+import DefaultBoarding from '../models/defaults/Boarding';
 
 // @TODO : Set this in environment
 const BaseRemoteApi = 'http://10.0.2.2:5000/api/';
@@ -51,10 +52,15 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchContents: async () => {
+  fetchContents: async selectedTheme => {
     try {
       if (LOCAL_MODE) {
-        return DefaultContents;
+        const contents = DefaultContents;
+        const filtered = contents.filter(
+          content => content.theme == selectedTheme.id,
+        );
+
+        return filtered;
       } else {
         const contents = await RemoteApi.fetch(ContentsRemoteApi);
 
@@ -64,10 +70,15 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchQuestions: async () => {
+  fetchQuestions: async selectedTheme => {
     try {
       if (LOCAL_MODE) {
-        return DefaultQuestions;
+        const questions = DefaultQuestions;
+        const filtered = questions.filter(
+          question => question.theme == selectedTheme.id,
+        );
+
+        return filtered;
       } else {
         const contents = await RemoteApi.fetch(QuizzRemoteApi);
 
@@ -79,9 +90,13 @@ const RemoteApi = {
   },
   fetchBoarding: async () => {
     try {
-      const contents = await RemoteApi.fetch(BoardingRemoteApi);
+      if (LOCAL_MODE) {
+        return DefaultBoarding;
+      } else {
+        const contents = await RemoteApi.fetch(BoardingRemoteApi);
 
-      return contents.contents;
+        return contents.contents;
+      }
     } catch (e) {
       throw Error(e);
     }

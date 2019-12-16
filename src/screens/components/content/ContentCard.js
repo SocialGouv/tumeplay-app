@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+
+ContentCard.propTypes = {
+  item: PropTypes.object,
+};
 
 export default function ContentCard(props) {
   const [content, setContent] = useState(props.item);
@@ -50,9 +55,20 @@ export default function ContentCard(props) {
       position: 'absolute',
       right: 15,
       bottom: 15,
+      flex: 1,
+      flexDirection: 'row',
     },
     readMore: {
       color: '#F1732C',
+      textDecorationLine: 'underline',
+    },
+    plusPicture: {
+      marginRight: 3,
+      width: 16,
+      height: 16,
+      marginTop: 3,
+      paddingTop: 0,
+      resizeMode: 'contain',
     },
   });
 
@@ -73,6 +89,10 @@ export default function ContentCard(props) {
         </View>
 
         <View style={cardStyle.readMoreWrapper}>
+          <Image
+            style={cardStyle.plusPicture}
+            source={require('../../../assets/pictures/plus-orange.png')}
+          />
           <Text style={cardStyle.readMore}>Plus d infos</Text>
         </View>
       </TouchableOpacity>

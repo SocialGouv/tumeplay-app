@@ -1,100 +1,107 @@
-import React from 'react';
-import {Text, View, TouchableOpacity, YellowBox, Image} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Colors from '../../styles/Color';
 
 import Styles from '../../styles/Styles';
 
-export default class TunnelOrderConfirm extends React.Component {
-  static navigationOptions = {
-    title: 'Oh oui !',
-    //headerLeft: null
-  };
+TunnelOrderConfirm.navigationOptions = {
+  title: 'Oh oui !',
+  //headerLeft: null
+};
+TunnelOrderConfirm.propTypes = {
+  navigation: PropTypes.object,
+};
+// TODO: Use loading and dataSource
+export default function TunnelOrderConfirm(props) {
+  const [, setLoading] = useState(true);
+  const [, setDataSource] = useState([]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      dataSource: [],
-    };
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-    ]);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch('http://127.0.0.1/api/contents')
       .then(response => response.json())
       .then(responseJson => {
-        this.setState({
-          loading: false,
-          dataSource: responseJson,
-        });
+        setLoading(false);
+        setDataSource(responseJson);
       })
-      .catch(error => console.log(error)); //to catch the errors if any
+      .catch(error => console.log(error));
+  });
+
+  function _onDone() {
+    props.navigation.navigate('LandingScreen');
   }
 
-  componentWillUnmount() {
-    //LoginManager.getInstance().off('onConnectionClosed', this._connectionClosed);
-  }
+  return (
+    <View
+      style={[
+        Styles.flexOne,
+        {
+          backgroundColor: Colors.backgroundColor,
+          paddingLeft: 15,
+          paddingRight: 15,
+          paddingTop: 15,
+        },
+      ]}>
+      <View style={{flex: 0.5}}>
+        <Image
+          style={Styles.contentPicture}
+          source={require('../../assets/pictures/boarding/boarding-6.jpeg')}
+        />
+      </View>
 
-  _onDone = () => {
-    this.props.navigation.navigate('LandingScreen');
-  };
-
-  render() {
-    return (
       <View
-        style={[
-          Styles.flexOne,
-          {
-            backgroundColor: Colors.backgroundColor,
-            paddingLeft: 15,
-            paddingRight: 15,
-            paddingTop: 15,
-          },
-        ]}>
-        <View style={{flex: 0.5}}>
-          <Image
-            style={Styles.contentPicture}
-            source={require('../../assets/pictures/boarding/boarding-6.jpeg')}
-          />
-        </View>
-
-        <View style={{flex: 0.15}}>
-          <Text style={[Styles.tunnelTitle, Styles.textCenter]}>
-            Ta commande a bien été prise en compte !
-          </Text>
-        </View>
-        <View style={{flex: 0.15}}>
-          <Text
-            style={[
-              Styles.text,
-              Styles.textCenter,
-              {color: Colors.mainButton, fontSize: 26},
-            ]}>
-            A bientôt !
-          </Text>
-        </View>
-        <View
+        style={{flex: 0.15, alignItems: 'center', justifyContent: 'center'}}>
+        <Text
+          style={[
+            Styles.tunnelTitle,
+            Styles.textCenter,
+            {zIndex: 4, fontSize: 33},
+          ]}>
+          Ta commande a bien été prise en compte !
+        </Text>
+        <Image
           style={{
-            flex: 0.13,
+            width: '90%',
+            marginTop: -12,
+          }}
+          source={require('../../assets/pictures/line.png')}
+        />
+      </View>
+      <View style={{flex: 0.15, marginTop: 30}}>
+        <Text
+          style={[
+            Styles.text,
+            Styles.textCenter,
+            {color: Colors.mainButton, fontSize: 26},
+          ]}>
+          A bientôt !
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 0.12,
+          paddingTop: 2,
+          paddingBottom: 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          height: 60,
+        }}>
+        <TouchableOpacity
+          style={{
+            flex: 1,
             paddingTop: 2,
             paddingBottom: 2,
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}>
-          <TouchableOpacity
-            style={{flex: 1, paddingTop: 2, paddingBottom: 2, width: '40%'}}
-            onPress={this._onDone}>
-            <View style={Styles.tunnelButton}>
-              <Text style={Styles.tunnelButtonText}>Fermer</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+            width: '40%',
+            height: 60,
+          }}
+          onPress={_onDone}>
+          <View style={Styles.tunnelButton}>
+            <Text style={Styles.tunnelButtonText}>Fermer</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    );
-  }
+    </View>
+  );
 }

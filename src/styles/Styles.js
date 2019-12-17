@@ -277,11 +277,6 @@ var Styles = {
     fontSize: 18,
     padding: 12,
   },
-  wrongAnswerButtonInnerWrapper: {
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-  },
   rightAnswerButton: {
     flex: 1,
     width: '70%',

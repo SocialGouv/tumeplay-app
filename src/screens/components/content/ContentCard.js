@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+
+import ExpandableText from '../global/ExpandableText';
 
 ContentCard.propTypes = {
   item: PropTypes.object,
@@ -8,6 +10,7 @@ ContentCard.propTypes = {
 
 export default function ContentCard(props) {
   const [content, setContent] = useState(props.item);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   function _onReadMoreClick() {
     if (content.numberOfLines == 0) {
@@ -19,6 +22,7 @@ export default function ContentCard(props) {
         return {...old, numberOfLines: 0};
       });
     }
+    setIsExpanded(!isExpanded);
   }
 
   const cardStyle = StyleSheet.create({
@@ -81,20 +85,12 @@ export default function ContentCard(props) {
         }}>
         <Image source={content.picture} style={cardStyle.picture} />
 
-        <View style={cardStyle.textContainer}>
-          <Text style={cardStyle.title}>{content.title}</Text>
-          <Text numberOfLines={content.numberOfLines} style={cardStyle.text}>
-            {content.text}
-          </Text>
-        </View>
-
-        <View style={cardStyle.readMoreWrapper}>
-          <Image
-            style={cardStyle.plusPicture}
-            source={require('../../../assets/pictures/plus-orange.png')}
-          />
-          <Text style={cardStyle.readMore}>Plus d infos</Text>
-        </View>
+        <ExpandableText
+          content={content}
+          isExpanded={isExpanded}
+          lessPicture={'minus-orange.png'}
+          morePicture={'plus-orange.png'}
+        />
       </TouchableOpacity>
     </View>
   );

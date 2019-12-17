@@ -15,6 +15,7 @@ import ProductContentList from './ProductContentList';
 
 import ModalCloseButton from '../global/ModalCloseButton';
 import Styles from '../../../styles/Styles';
+import ModalStyle from '../../../styles/components/Modal';
 
 ProductModal.propTypes = {
   item: PropTypes.object,
@@ -41,6 +42,8 @@ export default function ProductModal(props) {
     picture: {
       height: 250,
       width: '100%',
+      borderTopLeftRadius: 7,
+      borderTopRightRadius: 7,
     },
     textContainer: {
       padding: 15,
@@ -74,30 +77,29 @@ export default function ProductModal(props) {
     <Modal
       visible={showModal}
       isVisible={showModal}
-      style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
-      animationType="slide"
+      style={ModalStyle.modal}
+      animationType="fade"
+      backdropOpacity={0}
       transparent={true}>
+      <View style={ModalStyle.backdrop}></View>
       <View
-        style={{
-          flex: 1,
-          marginBottom: 0,
-          marginRight: 0,
-          marginLeft: 0,
-          marginTop: 50,
-          borderRadius: 0,
-          backgroundColor: '#FFFFFF',
-          borderColor: '#000000',
-          position: 'relative',
-        }}>
+        style={[
+          ModalStyle.innerModal,
+          {
+            backgroundColor: '#FFFFFF',
+            marginBottom: 10,
+            marginTop: 10,
+            borderRadius: 7,
+          },
+        ]}>
         <ModalCloseButton onClose={props.onClose} />
 
         <ScrollView style={{flex: 1}}>
-          <View style={{flex: 0.4}}>
+          <View>
             <Image style={cardStyle.picture} source={productBox.picture} />
           </View>
           <View
             style={{
-              flex: 0.25,
               marginTop: 15,
               paddingLeft: 15,
               paddingRight: 15,
@@ -106,7 +108,7 @@ export default function ProductModal(props) {
             <Text style={cardStyle.text}>{productBox.description}</Text>
           </View>
 
-          <View style={{flex: 0.3, paddingLeft: 15, paddingRight: 15}}>
+          <View style={{paddingLeft: 15, paddingRight: 15}}>
             <Text style={cardStyle.subtitle}>
               Ce que tu trouveras dans ta box :
             </Text>
@@ -114,7 +116,7 @@ export default function ProductModal(props) {
             <ProductContentList item={productBox} />
           </View>
 
-          <View style={{flex: 0.1, marginTop: 15, marginBottom: 15}}>
+          <View style={{marginTop: 15, marginBottom: 15}}>
             <TouchableOpacity
               style={[Styles.bottomButton, {borderRadius: 25}]}
               onPress={props.onOrder}>

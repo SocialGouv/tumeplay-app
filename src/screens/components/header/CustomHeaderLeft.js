@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 CustomHeaderLeft.propTypes = {
   navigation: PropTypes.object,
-  withBack: PropTypes.object,
+  withBack: PropTypes.bool,
 };
 
 export default function CustomHeaderLeft(props) {
@@ -15,6 +15,9 @@ export default function CustomHeaderLeft(props) {
   const _backPicture = require('../../../assets/pictures/header-left-arrow.png');
   const _logoPicture = require('../../../assets/pictures/header-left-logo.png');
   const _localStyle = StyleSheet.create({
+    container: {
+      flex: 0.5,
+    },
     logo: {
       marginLeft: 15,
       width: 160,
@@ -31,13 +34,13 @@ export default function CustomHeaderLeft(props) {
   //@TODO : Improve this part. A lot.
   if (props.withBack) {
     return (
-      <View style={{flex: 1}}>
+      <View style={_localStyle.container}>
         <TouchableOpacity
           onPress={_goBackToContent}
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
-            alignContent: 'center',
+            justifyContent: 'flex-start',
+            alignContent: 'flex-start',
             alignItems: 'center',
           }}>
           <Image source={_backPicture} style={_localStyle.back} />
@@ -50,6 +53,10 @@ export default function CustomHeaderLeft(props) {
       </View>
     );
   } else {
-    return <Image source={_logoPicture} style={_localStyle.logo} />;
+    return (
+      <View style={_localStyle.container}>
+        <Image source={_logoPicture} style={_localStyle.logo} />
+      </View>
+    );
   }
 }

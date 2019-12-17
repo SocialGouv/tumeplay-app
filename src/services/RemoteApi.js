@@ -101,6 +101,20 @@ const RemoteApi = {
       throw Error(e);
     }
   },
+  confirmOrder: async selectedItem => {
+    try {
+      if (LOCAL_MODE) {
+        return true;
+      } else {
+        return false;
+        /*const contents = await RemoteApi.fetch(ProductsRemoteApi);
+
+        return contents.contents;*/
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
 };
 
 export default RemoteApi;

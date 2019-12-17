@@ -22,7 +22,9 @@ export default function CustomTextInput(props) {
         placeholder={props.inputPlaceholder}
         style={[
           Styles.inputTypeText,
-          props.isValid ? false : TunnelUserAdressStyle.invalidTextField,
+          props.isValid !== undefined && !props.isValid
+            ? TunnelUserAdressStyle.invalidTextField
+            : false,
         ]}
         name="lastName"
         onChangeText={props.onChangeText}

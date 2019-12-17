@@ -46,17 +46,17 @@ export default function TunnelUserAddress(props) {
   };
 
   var defaultIsValid = {
-    firstName: true,
-    lastName: true,
-    emailAdress: true,
-    adress: true,
+    firstName: -1,
+    lastName: -1,
+    emailAdress: -1,
+    adress: -1,
   };
   const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
 
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
-  const [localValid, setLocalValid] = useState(defaultIsValid);
+  const [localValid, setLocalValid] = useState({});
 
   useEffect(() => {
     if (props.navigation.state.params.userAdress) {
@@ -71,6 +71,9 @@ export default function TunnelUserAddress(props) {
       setLocalAdress(newAdress);
     }
   }, [isMounted, props.navigation.state.params.userAdress]);
+
+  /*useEffect(() => {
+  }, [localValid]);*/
 
   function _validateFields() {
     let isValid = true;

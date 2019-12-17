@@ -23,8 +23,9 @@ module.exports = function override(config, env) {
   addModuleToMainRule(config, 'react-native-gesture-handler');
   addModuleToMainRule(config, 'react-native-screens');
   addModuleToMainRule(config, 'react-native-animatable'),
-    addModuleToMainRule(config, '@react-navigation');
+  addModuleToMainRule(config, '@react-navigation');
   addModuleToMainRule(config, '@react-native-community/async-storage');
+  addModuleToMainRule(config, 'react-native-event-listeners');
 
   for (const plugin of config.plugins) {
     if (plugin.constructor.name === 'DefinePlugin') {
@@ -32,10 +33,10 @@ module.exports = function override(config, env) {
       defs.__DEV__ = env === 'development';
       plugin.definitions = defs;
     }
-  }
-
+  }             
+  
   config.module.rules[2].oneOf[1].options.sourceType = 'unambiguous';
   config.resolve.alias['react-native-modal'] = 'modal-react-native-web';
 
   return config;
-};
+};                              

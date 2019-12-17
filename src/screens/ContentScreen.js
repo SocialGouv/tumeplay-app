@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, SafeAreaView, View, Platform} from 'react-native';
+import {ScrollView, SafeAreaView, View} from 'react-native';
+import {EventRegister} from 'react-native-event-listeners';
+
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 
@@ -17,6 +19,7 @@ import UserService from '../services/User';
 import useIsMounted from '../hooks/isMounted';
 
 import Styles from '../styles/Styles';
+import ModalStyle from '../styles/components/Modal';
 
 ContentScreen.propTypes = {
   navigation: PropTypes.object,
@@ -32,7 +35,7 @@ export default function ContentScreen(props) {
   const [localQuestions, setLocalQuestions] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(false);
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
-
+  const [availableTokens, setAvailableTokens] = useState(0);
   const isMounted = useIsMounted();
 
   useEffect(() => {
@@ -80,7 +83,11 @@ export default function ContentScreen(props) {
 
   useEffect(() => {
     async function _addTokens() {
-      await UserService.addTokens(200);
+      const _newTokens = await UserService.addTokens(200);
+
+      setAvailableTokens(_newTokens);
+
+      EventRegister.emit('tokensAmountChanged', _newTokens);
     }
 
     function _toggleResultModal() {
@@ -118,48 +125,30 @@ export default function ContentScreen(props) {
     props.navigation.navigate('TunnelProductSelect');
   }
 
-  // @TODO : Need to improve this. A LOT.
-  function _getModalStyle() {
-    const isWeb = Platform.OS == 'web';
-
-    return {
-      flex: 1,
-      marginBottom: 25,
-      marginRight: isWeb ? 'auto' : 25,
-      marginLeft: isWeb ? 'auto' : 25,
-      marginTop: 35,
-      borderRadius: 7,
-      borderColor: '#000000',
-      position: 'relative',
-      maxWidth: isWeb ? 900 : undefined,
-      maxHeight: isWeb ? 700 : undefined,
-    };
-  }
-
   return (
-    <SafeAreaView style={Styles.safeAreaView}>
+    <SafeAreaView style={[Styles.safeAreaView, {}]}>
       <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
         <TopMenu selectedTheme={selectedTheme} onPress={_filterContent} />
 
-        <ScrollView style={{flex: 0.9}}>
-          <ContentCards localContents={localContents} />
+        <ScrollView style={{flex: 0.8}}>
+          <ContentCards style={{flex: 0.8}} localContents={localContents} />
 
           <ContactButton />
 
-          <CustomFooter />
+          <CustomFooter style={{flex: 0.1}} />
         </ScrollView>
-
-        <QuizzButton onClick={_toggleQuizzModal} />
       </View>
+      <QuizzButton onClick={_toggleQuizzModal} />
       <Modal
         visible={isQuizzModalVisible}
         isVisible={isQuizzModalVisible}
-        style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
-        animationType="slide"
-        backdropColor="black"
-        backdropOpacity={0.55}
+        style={ModalStyle.modal}
+        animationType="fade"
+        backdropOpacity={0}
         transparent={true}>
-        <View style={_getModalStyle()}>
+        {/* Because backdrop is not available for web, just a little trick ... */}
+        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.innerModal}>
           <ModalCloseButton onClose={_toggleQuizzModal} />
 
           <QuizzScreen
@@ -171,13 +160,18 @@ export default function ContentScreen(props) {
       <Modal
         visible={isResultModalVisible}
         isVisible={isResultModalVisible}
-        style={{margin: 0, alignItems: undefined, justifyContent: undefined}}
-        animationType="slide"
+        style={ModalStyle.modal}
+        animationType="fade"
         transparent={true}>
-        <View style={_getModalStyle()}>
+        {/* Because backdrop is not available for web, just a little trick ... */}
+        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.innerModal}>
           <ModalCloseButton onClose={_toggleResultModal} />
 
-          <QuizzFinishScreen onOrder={_onOrder} />
+          <QuizzFinishScreen
+            availableTokens={availableTokens}
+            onOrder={_onOrder}
+          />
         </View>
       </Modal>
     </SafeAreaView>

@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
+
 import PropTypes from 'prop-types';
 
 import Colors from '../../styles/Color';
 
 import Styles from '../../styles/Styles';
 
-TunnelOrderConfirm.navigationOptions = {
-  title: 'Oh oui !',
-  //headerLeft: null
-};
 TunnelOrderConfirm.propTypes = {
   navigation: PropTypes.object,
 };
@@ -45,7 +42,7 @@ export default function TunnelOrderConfirm(props) {
       ]}>
       <View style={{flex: 0.5}}>
         <Image
-          style={Styles.contentPicture}
+          style={[Styles.contentPicture, {minHeight: 250}]}
           source={require('../../assets/pictures/boarding/boarding-6.jpeg')}
         />
       </View>

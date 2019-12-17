@@ -19,6 +19,7 @@ TunnelProductSelect.propTypes = {
 };
 export default function TunnelProductSelect(props) {
   const [selectedItem, setSelectedItem] = useState(false);
+  const [localScroll, setLocalScroll] = useState(null);
   const [localProducts, setLocalProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useIsMounted();
@@ -29,11 +30,13 @@ export default function TunnelProductSelect(props) {
 
       if (isMounted.current) {
         setLocalProducts(_products);
+
+        localScroll.scrollTo({x: 0, y: -200, animated: true});
       }
     }
 
     _fetchProducts();
-  }, [isMounted]);
+  }, [isMounted, localScroll]);
 
   function _onProductClicked(selectedItem) {
     setSelectedItem(selectedItem);
@@ -75,7 +78,7 @@ export default function TunnelProductSelect(props) {
   return (
     <SafeAreaView style={Styles.safeAreaView}>
       <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
-        <ScrollView style={{flex: 0.9}}>
+        <ScrollView ref={ref => setLocalScroll(ref)} style={{flex: 0.9}}>
           <ProductSelectHeader />
 
           {_renderProductsCards()}

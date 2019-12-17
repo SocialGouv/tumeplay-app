@@ -18,5 +18,5 @@ export default function ContentCards(props) {
     });
   }
 
-  return <View>{_mapThem(props.localContents)}</View>;
+  return _mapThem(props.localContents);
 }

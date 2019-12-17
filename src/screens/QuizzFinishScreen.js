@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {EventRegister} from 'react-native-event-listeners';
 
 import Colors from '../styles/Color';
 import Styles from '../styles/Styles';
@@ -11,10 +12,12 @@ import PropTypes from 'prop-types';
 
 QuizzFinishScreen.propTypes = {
   onOrder: PropTypes.func,
+  availableTokens: PropTypes.number,
 };
 
 export default function QuizzFinishScreen(props) {
-  const [availableTokens, setAvailableToken] = useState(0);
+  const [availableTokens, setAvailableTokens] = useState(props.availableTokens);
+  const [eventListener, setEventListener] = useState(false);
 
   const isMounted = useIsMounted();
 
@@ -22,12 +25,24 @@ export default function QuizzFinishScreen(props) {
     async function _fetchTokens() {
       const _tokens = await User.getTokensAmount();
       if (isMounted.current) {
-        setAvailableToken(_tokens);
+        setAvailableTokens(_tokens);
+
+        const _listener = EventRegister.addEventListener(
+          'tokensAmountChanged',
+          data => {
+            setAvailableTokens(data);
+          },
+        );
+        setEventListener(_listener);
       }
+
+      return () => {
+        EventRegister.removeEventListener(eventListener);
+      };
     }
 
     _fetchTokens();
-  }, [isMounted]);
+  }, [eventListener, isMounted]);
 
   const headerStyle = StyleSheet.create({
     container: {},
@@ -107,7 +122,9 @@ export default function QuizzFinishScreen(props) {
           style={Styles.PictureFinish}
           source={require('../assets/pictures/header-right.png')}
         />
-        <Text style={headerStyle.text}>{availableTokens} points !</Text>
+        <Text style={[headerStyle.text, {height: 40, minHeight: 40}]}>
+          {availableTokens} points !
+        </Text>
       </View>
 
       <View style={{flex: 0.2}}></View>

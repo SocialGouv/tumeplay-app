@@ -16,32 +16,6 @@ import Styles from './src/styles/Styles';
 
 const AppContainer = createAppContainer(AppStack);
 
-const slides = [
-  {
-    key: 'somethun',
-    title: 'Bienvenue sur Oh! Oui',
-    text:
-      "L'application qui t'accompagne sur les questions que tu n'oses poser à personne.",
-    image: require('./assets/pictures/pass.png'),
-    backgroundColor: '#59b2ab',
-  },
-  {
-    key: 'somethun-dos',
-    title: 'Bienvenue #2',
-    text: 'Deuxième description',
-    image: require('./assets/pictures/pass3.png'),
-    backgroundColor: '#febe29',
-  },
-  {
-    key: 'somethun1',
-    title: 'Bienvenue #3',
-    text: 'Une troisième description\nLorem ipsum',
-    image: require('./assets/pictures/pass2.png'),
-    backgroundColor: '#22bcb5',
-  },
-];
-const screenWidth = Math.round(Dimensions.get('window').width);
-
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
 

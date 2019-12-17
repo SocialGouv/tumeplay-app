@@ -67,8 +67,8 @@ export default function QuizzScreen(props) {
       style={{width: '100%', height: '100%'}}
       source={_currentQuestion.background}>
       <View style={Styles.flexOne}>
-        <View style={{flex: 1}}></View>
-        <View style={{flex: 2}}>
+        <View style={{flex: 0.5}}></View>
+        <View style={{flex: 1.75}}>
           <View
             style={{
               paddingLeft: 20,

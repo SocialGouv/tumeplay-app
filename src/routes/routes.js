@@ -1,11 +1,8 @@
 import React from 'react';
 
-import {Platform} from 'react-native';
-
 import {createStackNavigator} from 'react-navigation-stack';
 import Colors from '../styles/Color';
-import CustomHeaderLeft from '../screens/components/header/CustomHeaderLeft';
-import CustomHeaderRight from '../screens/components/header/CustomHeaderRight';
+import CustomHeader from '../screens/components/header/CustomHeader';
 import ContentScreen from '../screens/ContentScreen';
 import TunnelDeliverySelect from '../screens/tunnel/TunnelDeliverySelect';
 import TunnelProductSelect from '../screens/tunnel/TunnelProductSelect';
@@ -25,9 +22,7 @@ const AppStack = createStackNavigator(
       screen: ContentScreen,
       navigationOptions: ({navigation}) => ({
         params: navigation.state.params,
-        headerLeft: (
-          <CustomHeaderLeft navigation={navigation} withBack={true} />
-        ),
+        header: <CustomHeader navigation={navigation} withBack={true} />,
       }),
     },
     QuizzFinishScreen: {
@@ -37,9 +32,7 @@ const AppStack = createStackNavigator(
       screen: TunnelProductSelect,
       navigationOptions: ({navigation}) => ({
         params: navigation.state.params,
-        headerLeft: (
-          <CustomHeaderLeft navigation={navigation} withBack={true} />
-        ),
+        header: <CustomHeader navigation={navigation} withBack={true} />,
       }),
     },
     TunnelDeliverySelect: {
@@ -62,24 +55,7 @@ const AppStack = createStackNavigator(
     initialRouteName: 'LandingScreen',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: ({navigation}) => ({
-      headerLeft: <CustomHeaderLeft />,
-      headerRight: <CustomHeaderRight navigation={navigation} />,
-      headerStyle:
-        Platform.OS == 'web'
-          ? {
-              backgroundColor: '#000000',
-              borderBottomWidth: 1,
-              borderBottomColor: '#3D1D0B',
-              maxWidth: 900,
-
-              alignItems: 'center',
-              justifyContent: 'center',
-            }
-          : {
-              backgroundColor: '#000000',
-              borderBottomWidth: 1,
-              borderBottomColor: '#3D1D0B',
-            },
+      header: <CustomHeader navigation={navigation} />,
       headerTintColor: Colors.backgroundColor,
       headerTitleStyle: {
         fontWeight: 'bold',

@@ -79,7 +79,7 @@ export default function LandingScreen(props) {
             <Text style={Styles.landingBottomText}>{item.bottomTitle1}</Text>
             <View
               style={{
-                flex: 0.25,
+                flex: 0.2,
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>

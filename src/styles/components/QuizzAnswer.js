@@ -2,12 +2,6 @@ import {StyleSheet} from 'react-native';
 import Colors from '../Color';
 
 var Styles = {
-  checkPicture: {
-    width: 25,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 2,
-  },
   plusPicture: {
     marginRight: 5,
     width: 30,
@@ -21,17 +15,15 @@ var Styles = {
     width: '100%',
     paddingLeft: 15,
     paddingRight: 15,
+    flexWrap: 'wrap',
   },
   explanationInnerWrapper: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 7,
-    padding: 15,
+    padding: 0,
     paddingBottom: 0,
   },
   explanationTextWrapper: {
     flex: 1.5,
-    flexWrap: 'wrap',
     fontSize: 16,
   },
   nextButtonWrapper: {
@@ -58,13 +50,12 @@ var Styles = {
   },
   pictureAndTextWrapper: {
     flex: 1,
-    paddingTop: 2,
-    paddingBottom: 2,
+    paddingTop: 0,
+    paddingBottom: 0,
     width: '100%',
     maxHeight: 70,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    flexWrap: 'wrap',
   },
   pictureAndTextPicture: {
     marginRight: 10,
@@ -72,6 +63,13 @@ var Styles = {
     resizeMode: 'contain',
     width: 25,
     height: 25,
+  },
+  checkPicture: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+    marginLeft: 2,
+    alignSelf: 'center',
   },
 };
 

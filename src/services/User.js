@@ -23,6 +23,27 @@ const User = {
       throw Error(e);
     }
   },
+  subTokens: async substractedTokens => {
+    try {
+      let localUser = null;
+
+      if (!User.localUser) {
+        localUser = await User.load();
+      }
+
+      // Not an "else".
+      if (User.localUser) {
+        User.localUser.availableTokens =
+          User.localUser.availableTokens - substractedTokens;
+
+        await User.save();
+
+        return User.localUser.availableTokens;
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
 
   addTokens: async addedTokens => {
     try {
@@ -31,13 +52,15 @@ const User = {
       if (!User.localUser) {
         localUser = await User.load();
       }
-      console.log(localUser);
+
       // Not an "else".
       if (User.localUser) {
         User.localUser.availableTokens =
           User.localUser.availableTokens + addedTokens;
 
         await User.save();
+
+        return User.localUser.availableTokens;
       }
     } catch (e) {
       throw Error(e);
@@ -80,8 +103,6 @@ const User = {
       _localUser.uniqueId = uniqueId;
 
       User.localUser = _localUser;
-
-      console.log(uniqueId);
 
       return await User.save();
     } catch (e) {

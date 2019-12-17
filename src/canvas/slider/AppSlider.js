@@ -186,6 +186,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: '100%',
     flexBasis: '100%',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
     backgroundColor: Colors.backgroundColor,
   },
   flatList: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -32,58 +32,50 @@ if (browser) {
   };
 }
 
-/*TunnelPickupSelect.propTypes = {
+TunnelPickupSelect.propTypes = {
   navigation: PropTypes.object,
-};*/
-export default class TunnelPickupSelect extends React.Component {
-  constructor(props) {
-    super(props);
+};
+export default function TunnelPickupSelect(props) {
+  const [selectedItem] = useState(props.navigation.state.params.selectedItem);
 
-    this.state = {
-      selectedItem: this.props.navigation.state.params.selectedItem,
-    };
+  function _onDone() {
+    props.navigation.navigate('TunnelUserAddress', {
+      selectedItem: selectedItem,
+    });
   }
 
-  _onDone = () => {
-    this.props.navigation.navigate('TunnelUserAddress', {
-      selectedItem: this.state.selectedItem,
+  function _goBack() {
+    props.navigation.navigate('TunnelDeliverySelect', {
+      selectedItem: selectedItem,
     });
-  };
+  }
 
-  _goBack = () => {
-    this.props.navigation.navigate('TunnelDeliverySelect', {
-      selectedItem: this.state.selectedItem,
-    });
-  };
+  return (
+    <View
+      style={[
+        Styles.flexOne,
+        {
+          backgroundColor: Colors.backgroundColor,
+          paddingLeft: 15,
+          paddingRight: 15,
+          paddingTop: 15,
+        },
+      ]}>
+      <Backlink step={2} onPress={_goBack} />
 
-  render() {
-    return (
-      <View
-        style={[
-          Styles.flexOne,
-          {
-            backgroundColor: Colors.backgroundColor,
-            paddingLeft: 15,
-            paddingRight: 15,
-            paddingTop: 15,
-          },
-        ]}>
-        <Backlink step={2} onPress={this._goBack} />
-
-        <View style={{flex: 0.3, paddingTop: 15}}>
-          <Text style={Styles.tunnelTitle}>Choisis le lieu de livraison</Text>
-          <Text style={Styles.textLeft}>Affichage de la carte</Text>
-        </View>
-        <View style={stylevalide}>
-          <TouchableOpacity
-            style={[Styles.bottomButton, {borderRadius: 25}]}
-            onPress={this._onDone}>
-            <View style={{paddingTop: 8, paddingBottom: 8}}>
-              <Text style={Styles.tunnelButtonText}>Valider</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+      <View style={{flex: 0.3, paddingTop: 15}}>
+        <Text style={Styles.tunnelTitle}>Choisis le lieu de livraison</Text>
+        <Text style={Styles.textLeft}>Affichage de la carte</Text>
       </View>
-    );
-  }
+      <View style={stylevalide}>
+        <TouchableOpacity
+          style={[Styles.bottomButton, {borderRadius: 25}]}
+          onPress={_onDone}>
+          <View style={{paddingTop: 8, paddingBottom: 8}}>
+            <Text style={Styles.tunnelButtonText}>Valider</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }

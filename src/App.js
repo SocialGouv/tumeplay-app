@@ -1,6 +1,8 @@
 import {createAppContainer} from 'react-navigation'; //@TODO : Check package lint error
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, Dimensions} from 'react-native';
+import {View, Text, Image} from 'react-native';
+import PropTypes from 'prop-types';
+
 import AppStack from './routes/routes';
 import AppSlider from './canvas/slider/AppSlider';
 import Styles from './styles/Styles';
@@ -9,12 +11,16 @@ import RemoteApi from './services/RemoteApi';
 import useIsMounted from './hooks/isMounted';
 
 const AppContainer = createAppContainer(AppStack);
-const screenWidth = Math.round(Dimensions.get('window').width);
+
+App.propTypes = {
+  item: PropTypes.object,
+};
 
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
   const [slides, setSlides] = useState([]);
   const isMounted = useIsMounted();
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     async function _fetchSlides() {
@@ -29,40 +35,19 @@ export default function App() {
   }, [isMounted]);
 
   function _renderItem({item}) {
-    if (screenWidth <= 320) {
-      return (
-        <View style={Styles.slide}>
-          <View
-            style={{
-              flex: 8,
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}>
-            <Image style={Styles.contentPicture} source={item.picture} />
-          </View>
-          <View style={{flex: 1, alignSelf: 'center'}}>
-            <Text style={Styles.appTitle}>{item.title}</Text>
-          </View>
-          <View style={{flex: 4, alignSelf: 'center'}}>
-            <Text style={Styles.text}>{item.text}</Text>
-          </View>
+    return (
+      <View style={Styles.slide}>
+        <View style={{flex: 8, alignItems: 'center'}}>
+          <Image style={Styles.contentPicture} source={item.picture} />
         </View>
-      );
-    } else {
-      return (
-        <View style={Styles.slide}>
-          <View style={{flex: 8, alignItems: 'center'}}>
-            <Image style={Styles.contentPicture} source={item.picture} />
-          </View>
-          <View style={{flex: 1, alignSelf: 'center'}}>
-            <Text style={Styles.appTitle}>{item.title}</Text>
-          </View>
-          <View style={{flex: 3, alignSelf: 'center'}}>
-            <Text style={Styles.text}>{item.text}</Text>
-          </View>
+        <View style={{flex: 1, alignSelf: 'center'}}>
+          <Text style={Styles.appTitle}>{item.title}</Text>
         </View>
-      );
-    }
+        <View style={{flex: 3, alignSelf: 'center'}}>
+          <Text style={Styles.text}>{item.text}</Text>
+        </View>
+      </View>
+    );
   }
 
   function _onDone() {
@@ -70,10 +55,8 @@ export default function App() {
   }
 
   if (showRealApp) {
-    return <AppContainer style={{flex: 1, flexBasis: '100%'}} />;
+    return <AppContainer style={{flex: 1, flexGrow: 1}} />;
   } else {
-    console.log('ENTERING');
-
     return (
       <AppSlider
         renderItem={_renderItem}
@@ -84,7 +67,16 @@ export default function App() {
         skipLabel="Commencer"
         doneLabel="Commencer"
         onSkip={_onDone}
-        style={{flex: 1, flexBasis: '100%'}}
+        style={{
+          flex: 1,
+          height: height,
+          alignItems: 'stretch',
+          alignSelf: 'stretch',
+        }}
+        onLayout={event => {
+          const {height} = event.nativeEvent.layout;
+          setHeight(height);
+        }}
       />
     );
   }

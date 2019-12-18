@@ -138,7 +138,7 @@ export default function ContentScreen(props) {
           <CustomFooter style={{flex: 0.1}} />
         </ScrollView>
       </View>
-      <QuizzButton onClick={_toggleQuizzModal} />
+         
       <Modal
         visible={isQuizzModalVisible}
         isVisible={isQuizzModalVisible}
@@ -174,6 +174,7 @@ export default function ContentScreen(props) {
           />
         </View>
       </Modal>
+      <QuizzButton onClick={_toggleQuizzModal} />
     </SafeAreaView>
   );
 }

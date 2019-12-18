@@ -45,17 +45,35 @@
 		margin: 0 auto;
 	}
 	
+	#root,
+	.web-quizz-button > div
+	{
+		width: 100%;
+	}
+	
+	.web-quizz-button > div
+	{
+		margin-left: 0 !important;
+		left: 0 !important;
+	}
 	       
 	@media (min-width : 768px) {
-		#root {
+		#root
+		{
 			width: 75%;
-		}
+		}          
 	}
 	
 	@media (min-width : 1024px) {
-		#root {
+		#root,
+		.web-quizz-button > div {
 			width: 50%;
 		}
+		.web-quizz-button > div 
+		{
+			margin-left: -25% !important;
+			left: 50% !important;	
+		}   
 	}
 	
 	@font-face {
@@ -73,6 +91,12 @@
 	@font-face {
 		font-family: 'Chivo-Bold';
 		src: url('./assets/fonts/Chivo-Bold.ttf');
+	}
+	
+	/* ReactNative does not allow "fixed" position ... */
+	.web-quizz-button > div
+	{
+		position: fixed;
 	}
 </style>
 </head>

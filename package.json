@@ -10,7 +10,7 @@
     "nativeLint": "eslint .",
     "webStart": "EXTEND_ESLINT=true react-app-rewired start",
     "build": "react-app-rewired build",
-    "postinstall": "sed -i 's/module.exports = /export default /g' node_modules/react-native-device-info/src/web/index.js && sed -i 's/module.exports=/export default /g' node_modules/react-native-device-info/lib/module/web/index.js"
+    "postinstall": "sed -i.bak 's/module.exports = /export default /g' node_modules/react-native-device-info/src/web/index.js && sed -i.bak 's/module.exports=/export default /g' node_modules/react-native-device-info/lib/module/web/index.js && rm node_modules/react-native-device-info/src/web/index.js.bak"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.7.6",

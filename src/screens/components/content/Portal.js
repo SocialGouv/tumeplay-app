@@ -1,8 +1,9 @@
 /* 
 Shamelessly taken from "react-native-web-modal"" : as "fixed" does not work on web
 due to relative upper containers, we extract component and set it on body.
-*/ 
-import { Component } from 'react';
+*/
+
+import {Component} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -18,11 +19,11 @@ export default class Portal extends Component {
 
   componentDidMount() {
     this.setState(
-      { el: document.createElement('div'), target: document.body },
+      {el: document.createElement('div'), target: document.body},
       () => {
         this.state.el.className = 'web-quizz-button';
         this.state.target.appendChild(this.state.el);
-      }
+      },
     );
   }
 
@@ -31,7 +32,7 @@ export default class Portal extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const {children} = this.props;
 
     if (this.state.el) {
       return ReactDOM.createPortal(children, this.state.el);

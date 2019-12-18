@@ -138,7 +138,7 @@ export default function ContentScreen(props) {
           <CustomFooter style={{flex: 0.1}} />
         </ScrollView>
       </View>
-         
+
       <Modal
         visible={isQuizzModalVisible}
         isVisible={isQuizzModalVisible}

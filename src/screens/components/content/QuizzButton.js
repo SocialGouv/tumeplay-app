@@ -12,46 +12,42 @@ QuizzButton.propTypes = {
 export default function QuizzButton(props) {
   // See QuizzPortal : on web, we cannot use fixed as it's won't scroll due to parent containers
   // So we extract it and set it on body.
-  const isWeb = ( Platform.OS == 'web' );
+  const isWeb = Platform.OS == 'web';
   const wrapperStyle = {
-	  bottom: 95,
-	  left: isWeb ? '50%' : 0,
-	  marginLeft: isWeb ? '-25%' : undefined,
-	  width: '100%',
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  position: isWeb ? undefined : 'absolute',
-  }
-                                               
-  if( Platform.OS == 'web' )
-  {
-	  return (
-	    <QuizzPortal>
-	      <View style={wrapperStyle}>
-	      <TouchableOpacity
-	      
-	        style={[Styles.bottomButton, {borderRadius: 25}]}
-	        onPress={props.onClick}>
-	        <View style={{paddingTop: 8, paddingBottom: 8}}>
-	          <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
-	        </View>
-	      </TouchableOpacity>
-	      </View>
-	    </QuizzPortal>
-	  );
-  }
-  else
-  {
-	  return (
-	    <View style={wrapperStyle}>
-	      <TouchableOpacity
-	        style={[Styles.bottomButton, {borderRadius: 25}]}
-	        onPress={props.onClick}>
-	        <View style={{paddingTop: 8, paddingBottom: 8}}>
-	          <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
-	        </View>
-	      </TouchableOpacity>
-	    </View>
-	  );
+    bottom: 95,
+    left: isWeb ? '50%' : 0,
+    marginLeft: isWeb ? '-25%' : undefined,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: isWeb ? undefined : 'absolute',
+  };
+
+  if (Platform.OS == 'web') {
+    return (
+      <QuizzPortal>
+        <View style={wrapperStyle}>
+          <TouchableOpacity
+            style={[Styles.bottomButton, {borderRadius: 25}]}
+            onPress={props.onClick}>
+            <View style={{paddingTop: 8, paddingBottom: 8}}>
+              <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </QuizzPortal>
+    );
+  } else {
+    return (
+      <View style={wrapperStyle}>
+        <TouchableOpacity
+          style={[Styles.bottomButton, {borderRadius: 25}]}
+          onPress={props.onClick}>
+          <View style={{paddingTop: 8, paddingBottom: 8}}>
+            <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
   }
 }

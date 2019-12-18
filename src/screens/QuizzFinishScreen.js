@@ -42,7 +42,7 @@ export default function QuizzFinishScreen(props) {
     }
 
     _fetchTokens();
-  }, [isMounted]);
+  }, [eventListener, isMounted]);
 
   const headerStyle = StyleSheet.create({
     container: {},

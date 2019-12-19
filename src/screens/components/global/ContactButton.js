@@ -17,7 +17,7 @@ export default function ContactButton() {
         style={[Styles.landingBottomWrapper]}
         onPress={_contactMail}>
         <Text style={Styles.landingBottomText}>
-          Tu te poses des questions ? Envoies-les nous, nous y répondrons !
+          Tu te poses des questions ? Envoie-les nous, nous y répondrons !
         </Text>
         <View
           style={{

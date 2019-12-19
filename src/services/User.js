@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Storage from './Storage';
 import UserModel from '../models/User';
@@ -6,6 +7,35 @@ const User = {
   localUserKey: 'local.user',
   localUser: null,
 
+  generateUniqueId: async () => {
+    let uniqueId = false;
+
+    if (Platform.OS == 'web') {
+      if (window.performance) {
+        var s = performance.timing.navigationStart;
+        var n = performance.now();
+        var base = Math.floor((s + Math.floor(n)) / 1000);
+      } else {
+        var n = new Date().getTime();
+        var base = Math.floor(n / 1000);
+      }
+      var ext = Math.floor((n % 1000) * 1000);
+      var now =
+        ('00000000' + base.toString(16)).slice(-8) +
+        ('000000' + ext.toString(16)).slice(-5);
+      if (now <= window.my_las_uid) {
+        now = (
+          parseInt(window.my_las_uid ? window.my_las_uid : now, 16) + 1
+        ).toString(16);
+      }
+
+      uniqueId = now;
+    } else {
+      uniqueId = DeviceInfo.getUniqueId();
+    }
+
+    return uniqueId;
+  },
   getTokensAmount: async () => {
     try {
       if (!User.localUser) {
@@ -66,41 +96,66 @@ const User = {
       throw Error(e);
     }
   },
+  getJWT: async () => {
+    let localUser = false;
 
+    if (!localUser) {
+      localUser = await User.load();
+    }
+    console.log(localUser);
+    if (localUser) {
+      return localUser.token;
+    }
+
+    return null;
+  },
+  setJWT: async token => {
+    let localUser = User.localUser;
+
+    if (!localUser) {
+      localUser = await User.load();
+    }
+    console.log(localUser);
+    if (localUser) {
+      localUser.token = token;
+
+      await User.save();
+
+      return localUser;
+    }
+
+    return null;
+  },
   getUniqueId: async () => {
     try {
       if (!User.localUser) {
-        var localUser = User.load();
+        var localUser = await User.load();
 
         if (localUser) {
+          if (localUser.uniqueId === undefined) {
+            localUser.uniqueId = await User.generateUniqueId();
+
+            await User.save();
+          }
+          console.log(localUser);
           return localUser.uniqueId;
         }
 
         return null;
       } else {
-        return User.localUser.tokens;
+        console.log('LOCAL USER');
+        return User.localUser.uniqueId;
       }
     } catch (e) {
       throw Error(e);
     }
   },
-  //@TODO: Cant' put promlise in JS file ?
-  isUserRegistered: async (): Promise<null> => {
-    return new Promise((resolve, reject) => {
-      try {
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
 
   init: async () => {
     try {
-      const uniqueId = DeviceInfo.getUniqueId();
       const _localUser = new UserModel();
 
-      _localUser.uniqueId = uniqueId;
+      _localUser.uniqueId = await User.generateUniqueId();
 
       User.localUser = _localUser;
 
@@ -109,7 +164,6 @@ const User = {
       throw Error(e);
     }
   },
-
   load: async () => {
     try {
       var localUser = await Storage.get(User.localUserKey);

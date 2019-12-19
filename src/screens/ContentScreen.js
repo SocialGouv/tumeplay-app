@@ -28,6 +28,7 @@ ContentScreen.propTypes = {
 export default function ContentScreen(props) {
   const [isQuizzModalVisible, setIsQuizzModalVisible] = useState(false);
   const [isResultModalVisible, setIsResultModalVisible] = useState(false);
+  const [isQuizzButtonVisible, setIsQuizzButtonVisible] = useState(false);
   const [needResultModal, setNeedResultModal] = useState(false);
   const [localContents, setLocalContents] = useState([]);
   const [fullContents, setFullContents] = useState([]);
@@ -37,7 +38,37 @@ export default function ContentScreen(props) {
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
   const isMounted = useIsMounted();
+  
+  const didFocusSubscription = props.navigation.addListener(
+    'didFocus',
+    () => {
+      window.scrollTo(0, 0);
+    },
+  );
 
+  // Listeners to fix QuizzButton display on web mode
+  const willFocusSubscription = props.navigation.addListener(
+    'willFocus',
+    () => {
+      console.log('Entering will focus');
+      setIsQuizzButtonVisible(true);
+    },
+  );
+
+  const willBlurSubscription = props.navigation.addListener(
+    'willBlur',
+    () => {
+      if (isQuizzButtonVisible) {
+        console.log('Entering will blur');
+        setIsQuizzButtonVisible(false);
+      }
+      
+      willFocusSubscription.remove();
+      didFocusSubscription.remove();
+      willBlurSubscription.remove();
+    },
+  );
+      
   useEffect(() => {
     async function _fetchContents() {
       const _contents = await RemoteApi.fetchContents(selectedTheme);
@@ -57,6 +88,9 @@ export default function ContentScreen(props) {
     _fetchContents();
     _fetchQuestions();
   }, [isMounted, selectedTheme]);
+  
+  // Remove the listener when you are done
+  //	didBlurSubscription.remove();
 
   // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
   // So we clear it up, and then filter using a very small timer.
@@ -95,13 +129,11 @@ export default function ContentScreen(props) {
     }
 
     if (needResultModal) {
-      if (needResultModal) {
-        _addTokens();
-        setNeedResultModal(false);
-        _toggleResultModal();
-      }
+       _addTokens();
+       setNeedResultModal(false);
+       _toggleResultModal();
     }
-  }, [isResultModalVisible, needResultModal]);
+  }, [needResultModal]);
 
   function _toggleQuizzModal() {
     setIsQuizzModalVisible(!isQuizzModalVisible);
@@ -135,7 +167,7 @@ export default function ContentScreen(props) {
 
           <ContactButton />
 
-          <CustomFooter style={{flex: 0.1}} />
+          <CustomFooter style={{flex: 0.1}} containerStyle={{ paddingLeft: 0, paddingRight: 0}}/>
         </ScrollView>
       </View>
 
@@ -174,7 +206,10 @@ export default function ContentScreen(props) {
           />
         </View>
       </Modal>
-      <QuizzButton onClick={_toggleQuizzModal} />
+      {/* Fix staying button on web */}
+      {isQuizzButtonVisible && !isQuizzModalVisible && (
+        <QuizzButton onClick={_toggleQuizzModal} />
+      )}
     </SafeAreaView>
   );
 }

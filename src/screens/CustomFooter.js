@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default function CustomFooter() {
+export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
   function _contactMail() {
     Linking.openURL(
@@ -32,23 +32,24 @@ export default function CustomFooter() {
       fontSize: 13,
     },
   });
+  const containerStyle = {	  
+    flex: 0.1,
+    flexDirection: 'column',
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginTop: 15,      
+  };
   return (
     <View
-      style={{
-        flex: 0.1,
-        flexDirection: 'column',
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: 15,
-      }}>
-      <View style={{flex: 1, flexDirection: 'row'}}>
+      style={[containerStyle, props.containerStyle]}>
+      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 0.2}}>
           <Image
             source={require('../assets/pictures/logo-ministere.png')}
             style={{marginRight: 15, width: 60, height: 60}}
           />
         </View>
-        <View style={{flex: 0.8}}>
+        <View style={{flex: 0.8, paddingLeft: 10}}>
           <View style={{flex: 1, flexDirection: 'column', paddingTop: 3}}>
             <View>
               <Image
@@ -58,8 +59,8 @@ export default function CustomFooter() {
             </View>
             <View>
               <Text style={footerStyle.text}>
-                Tumeplay est une initiative du Ministère de la santé autour de
-                la prévention sexuelle.
+                Tumeplay est une initiative du Ministère des Solidarités et de
+                la Santé autour de la prévention sexuelle.
               </Text>
             </View>
           </View>

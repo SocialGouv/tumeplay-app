@@ -29,7 +29,7 @@ export default function SliderPagination(props) {
       flex: 1,
       //flexDirection: 'column',
       position: 'absolute',
-      bottom: 36 + (props.isIphoneX ? 34 : 0),
+      bottom: 26 + (props.isIphoneX ? 34 : 0),
       left: 16,
       right: 16,
       backgroundColor: undefined,

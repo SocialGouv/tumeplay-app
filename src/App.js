@@ -69,9 +69,6 @@ export default function App() {
         onSkip={_onDone}
         style={{
           flex: 1,
-          height: height,
-          alignItems: 'stretch',
-          alignSelf: 'stretch',
         }}
         onLayout={event => {
           const {height} = event.nativeEvent.layout;

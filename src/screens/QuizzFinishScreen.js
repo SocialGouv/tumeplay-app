@@ -40,9 +40,9 @@ export default function QuizzFinishScreen(props) {
         EventRegister.removeEventListener(eventListener);
       };
     }
-
+    console.log('PASS');
     _fetchTokens();
-  }, [eventListener, isMounted]);
+  }, [isMounted]);
 
   const headerStyle = StyleSheet.create({
     container: {},

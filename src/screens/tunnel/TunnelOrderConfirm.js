@@ -10,21 +10,8 @@ import Styles from '../../styles/Styles';
 TunnelOrderConfirm.propTypes = {
   navigation: PropTypes.object,
 };
-// TODO: Use loading and dataSource
+
 export default function TunnelOrderConfirm(props) {
-  const [, setLoading] = useState(true);
-  const [, setDataSource] = useState([]);
-
-  useEffect(() => {
-    fetch('http://127.0.0.1/api/contents')
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
-        setDataSource(responseJson);
-      })
-      .catch(error => console.log(error));
-  });
-
   function _onDone() {
     props.navigation.navigate('LandingScreen');
   }

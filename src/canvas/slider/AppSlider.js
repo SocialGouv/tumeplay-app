@@ -56,12 +56,14 @@ export default function AppSlider(props) {
 
   function _renderItem(flatListArgs) {
     const localProps = {...flatListArgs, dimensions: {width, height}};
+    console.log('DIMENSIONS');
+    console.log(Dimensions.get('window').height);
     const localStyle =
       Platform.OS == 'web'
         ? {
             width: dimensions.width,
             height: dimensions.height,
-            minHeight: 700,
+            minHeight: Dimensions.get('window').height * 0.7,
             marginBottom: 70,
             flex: 1,
           }
@@ -126,12 +128,14 @@ export default function AppSlider(props) {
   }
 
   function _onMomentumScrollEnd(e) {
+    console.log('PASS');
     const offset = e.nativeEvent.contentOffset.x;
     // Touching very very quickly and continuous brings about
     // a variation close to - but not quite - the width.
     // That's why we round the number.
     // Also, Android phones and their weird numbers
     const newIndex = _rtlSafeIndex(Math.round(offset / width));
+
     if (newIndex === activeIndex) {
       // No page change, don't do anything
       return;
@@ -149,6 +153,7 @@ export default function AppSlider(props) {
           backgroundColor: Colors.backgroundColor,
           justifyContent: 'center',
           alignItems: 'center',
+          zIndex: 100,
         }}>
         <Image
           source={require('../../assets/pictures/boarding-logo.png')}
@@ -165,7 +170,7 @@ export default function AppSlider(props) {
           bounces={false}
           style={styles.flatList}
           renderItem={_renderItem}
-          onMomentumScrollEnd={_onMomentumScrollEnd}
+          onScrollEndDrag={_onMomentumScrollEnd}
           extraData={(width, height)}
           onLayout={event => {
             const {width, height} = event.nativeEvent.layout;
@@ -184,15 +189,15 @@ const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
     flexDirection: 'column',
-    height: '100%',
+    /*height: '100%',
     flexBasis: '100%',
     alignItems: 'stretch',
-    alignSelf: 'stretch',
+    alignSelf: 'stretch',*/
     backgroundColor: Colors.backgroundColor,
   },
   flatList: {
     flex: 1,
-    flexBasis: '100%',
+    /*flexBasis: '100%',*/
 
     flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
     //height: '100%',

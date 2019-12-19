@@ -16,6 +16,7 @@ import CustomFooter from './CustomFooter';
 import Styles from '../styles/Styles';
 
 import RemoteApi from '../services/RemoteApi';
+import UserService from '../services/User';
 
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
@@ -33,15 +34,47 @@ export default function LandingScreen(props) {
     bottomTitle2: 'Échange avec un professionnel',
   };
 
+  const didFocusSubscription = props.navigation.addListener(
+    'didFocus',
+    () => {
+      window.scrollTo(0, 0);
+    },
+  );
+  
+  const willBlurSubscription = props.navigation.addListener(
+    'willBlur',
+    () => {
+      didFocusSubscription.remove();
+      willBlurSubscription.remove();
+    },
+  );
+
   useEffect(() => {
     async function _fetchThemes() {
-      const _themes = await RemoteApi.fetchThemes();
-
       if (isMounted.current) {
+        const _themes = await RemoteApi.fetchThemes();
         setLocalThemes(_themes);
       }
     }
 
+    async function _fetchUserOrRegister() {
+      if (isMounted.current) {
+        const uniqId = await UserService.getUniqueId();
+
+        if (uniqId !== undefined && uniqId) {
+          console.log(uniqId);
+
+          const {user, token} = await RemoteApi.registerUser(uniqId);
+
+          console.log(token);
+          if (token) {
+            await UserService.setJWT(token);
+          }
+        }
+      }
+    }
+
+    _fetchUserOrRegister();
     _fetchThemes();
   }, [isMounted]);
 
@@ -80,6 +113,7 @@ export default function LandingScreen(props) {
             <View
               style={{
                 flex: 0.2,
+                paddingRight: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>
@@ -104,6 +138,7 @@ export default function LandingScreen(props) {
             <View
               style={{
                 flex: 0.25,
+                paddingRight: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>

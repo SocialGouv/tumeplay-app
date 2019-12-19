@@ -24,6 +24,21 @@ export default function TunnelProductSelect(props) {
   const [showModal, setShowModal] = useState(false);
   const isMounted = useIsMounted();
 
+  const didFocusSubscription = props.navigation.addListener(
+    'didFocus',
+    () => {
+      window.scrollTo(0, 0);
+    },
+  );
+  
+  const willBlurSubscription = props.navigation.addListener(
+    'willBlur',
+    () => {
+      didFocusSubscription.remove();
+      willBlurSubscription.remove();
+    },
+  );
+
   useEffect(() => {
     async function _fetchProducts() {
       const _products = await RemoteApi.fetchProducts();
@@ -83,9 +98,9 @@ export default function TunnelProductSelect(props) {
 
           {_renderProductsCards()}
 
-          <ContactButton />
+          <ContactButton/>
 
-          <CustomFooter />
+          <CustomFooter containerStyle={{ paddingLeft: 0, paddingRight: 0 }}/>
         </ScrollView>
         <ForwardedProductModal />
       </View>

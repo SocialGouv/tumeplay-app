@@ -8,7 +8,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-regles.jpg'),
     title: "Les règles, c'est quoi ?",
     text:
-      "Chaque mois à partir de la puberté, l'utérus se prépare à accueillir un oeuf fécondé. Pour ça, la muqueuse utérine s'épaissit. A la fin de chaque cycle, si la fécondation (rencontre spermatozoïde & ovule) n'a pas eu lieu, la partie superficielle de la muqueuse est évacuée : c'est ce qu'on appelle les règles. C'est un phénomène naturel qui dure en général entre 3 et 7 jours.",
+      "Chaque mois à partir de la puberté, l'utérus se prépare à accueillir un oeuf fécondé. Pour ça, la muqueuse utérine s'épaissit. À la fin de chaque cycle, si la fécondation (rencontre spermatozoïde & ovule) n'a pas eu lieu, la partie superficielle de la muqueuse est évacuée : c'est ce qu'on appelle les règles. C'est un phénomène naturel qui dure en général entre 3 et 7 jours.",
   },
   {
     key: 2,
@@ -105,7 +105,7 @@ const contents = [
     theme: 0,
     category: 0,
     picture: require('../../assets/pictures/contents/ETS-photocontenus-sodo.jpg'),
-    title: 'Une erection chez un homme, ça se passe comment ?',
+    title: 'Une érection chez un homme, ça se passe comment ?',
     text:
       'Une érection du pénis est un phénomène réflexe répondant le plus souvent à une excitation. Quand le pénis durcit et se dresse, il se remplit de sang et ça augmente sa taille et sa circonférence. Cette rigidité temporaire facilite la pénétration, la masturbation...\nLa pénis en érection mesure en moyenne 13 cm. Cependant, tous les pénis sont différents en termes de formes ou de tailles.',
   },
@@ -149,7 +149,7 @@ const contents = [
     theme: 0,
     category: 1,
     picture: require('../../assets/pictures/contents/DTC-photocontenu-masturbation.jpg'),
-    title: 'Je me masturbe, tu te masturbe, il et elle se masturbent ?',
+    title: 'Je me masturbe, tu te masturbes, il et elle se masturbent ?',
     text:
       'Les filles peuvent se masturber si elles en ont envie. La masturbation ce sont des caresses, de petits va-et-vient, des frottements, des pressions etc. au niveau des parties génitales internes ou externes qui procurent du plaisir. Elle peuvent le faire seule ou pas. 87% des femmes se sont masturbées au moins une fois dans leur vie.',
   },
@@ -271,7 +271,7 @@ const contents = [
     category: 3,
     picture: require('../../assets/pictures/contents/DTC-photocontenu-loiage.jpg'),
     title:
-      'À partir de quel age la lois autorise à avoir des rapports sexuels ?',
+      'À partir de quel âge la loi autorise à avoir des rapports sexuels ?',
     text:
       'Il n'y a pas d'âge légal à partir duquel on peut avoir des rapports sexuels. Cependant, un mineur de moins de 15 ans ne peut pas avoir de rapports sexuels avec un majeur de plus de 18 ans.',
   },
@@ -326,7 +326,7 @@ const contents = [
     theme: 0,
     category: 4,
     picture: require('../../assets/pictures/contents/DTC-photocontenu-IST.jpg'),
-    title: "Les mycose c'est une IST ?",
+    title: "Les mycoses c'est une IST ?",
     text:
       "Une mycose n'est pas une IST à proprement parler. C'est une infection des organes génitaux par un champignon, fréquente et banale. Plein de facteurs peuvent expliquer son apparition (pantalons serrés, VIH, traitement antibiotique, pilule, 3ème trimestre de la grossesse, trop d'hygiène, diabète, etc.). La mycose peut ressurgir après un rapport.",
   },
@@ -381,7 +381,7 @@ const contents = [
     theme: 1,
     category: 0,
     picture: require('../../assets/pictures/contents/ETS-photocontenu-vaginisme.jpg'),
-    title: 'Trop petit mon/ton vagin ?',
+    title: 'Trop petit le vagin ?',
     text:
       "Le vagin ne peut pas être trop petit car il s'adapte à toutes les tailles. Si on ressent une douleur ou si la pénétration est impossible, c'est souvent lié à la contraction des muscles du vagin ou au manque de lubrification naturelle. Ça peut venir du stress, de la peur, ou du manque de stimulation (du coup pas assez de mouille!).",
   },
@@ -403,7 +403,7 @@ const contents = [
     theme: 1,
     category: 1,
     picture: require('../../assets/pictures/contents/LPF-photocontenu-ejactorgasme.jpg'),
-    title: 'Ejaculation = orgasme ?',
+    title: 'Éjaculation = orgasme ?',
     text:
       "Et bien non, voyons ! un orgasme est un plaisir sexuel intense. Il n'est pas évident d'expliquer ce qu'est un orgasme car les sensations éprouvées dans tout le corps varient beaucoup d'un individu à l'autre, voire d'un moment à l'autre pour la même personne.\nUne éjaculation n'est pas forcément associée à un plaisir intense mais souvent à un plaisir qui variera en fonction de lui, du ou de la partenaire ou de l'environnement.",
   },
@@ -425,7 +425,7 @@ const contents = [
     theme: 1,
     category: 1,
     picture: require('../../assets/pictures/contents/DTC-photocontenu-nocturne.jpg'),
-    title: "Pas d'erection chez un garçon, ça veut dire pas d'envie ?",
+    title: "Pas d'érection chez un garçon, ça veut dire pas d'envie ?",
     text:
       "La relation qui se noue entre erection, envie, désir est beaucoup plus complexe que ça. Chez l'homme, il peut y avoir des pannes d'érection qui n'ont rien à voir avec l'excitation ou l'envie d'avoir des rapports. Le stress, l'anxiété ou la fatigue peuvent parfois expliquer ces \"pannes\". Si elles persistent, ne pas hésiter à contacter un médecin : il saura orienter :)",
   },
@@ -514,7 +514,7 @@ const contents = [
     theme: 1,
     category: 1,
     picture: require('../../assets/pictures/contents/ETS-photocontenu-payant.jpg'),
-    title: 'Où trouver des préservatifs gratuitement ?',
+    title: 'Où trouver des préservatifs gratuits ?',
     text:
       "Les préservatifs peuvent être achetés en pharmacie et supermarché, mais ils peuvent également être distribués gratuitement en demandant une prescription au médecin ou en allant en chercher dans les Centres de Planification et d'Education Familiale (CPEF) et Centres Gratuits d'Information, de Dépistage et de Diagonistic (CeGIDD), ou les associations.",
   },
@@ -558,7 +558,7 @@ const contents = [
     theme: 1,
     category: 2,
     picture: require('../../assets/pictures/contents/ETS-photocontenu-samedi.jpg'),
-    title: 'Il se passe quoi les samedi à 19h ?',
+    title: 'Il se passe quoi le samedi à 19h ?',
     text:
       "Il semblerair que 44% des couples feraient le plus souvent l'amour le samedi à 19h, juste avant de sortir en soirée. Mais chacun ses habitudes ;)",
   },
@@ -636,7 +636,7 @@ const contents = [
     category: 0,
     picture: require('../../assets/pictures/contents/LPF-photocontenu-erectionfille.jpg'),
     title:
-      "C'est normal d'avoir les petites lèvres plus longues que les longues lèves ?",
+      "C'est normal d'avoir les petites lèvres plus longues que les grandes lèves ?",
     text:
       'Tout est normal ! Selon les filles, les lèvres du sexe sont plus ou moins grandes, peuvent être asymétriques et de couleurs assez variées, du rose clair au marron plus ou moins foncé. Toutes les vulves sont belles, chacune à sa façon.',
   },
@@ -703,7 +703,7 @@ const contents = [
     theme: 2,
     category: 1,
     picture: require('../../assets/pictures/contents/LPF-photocontenu-trans.jpg'),
-    title: 'Être transsexuel, ça veut dire quoi ?',
+    title: 'Être transgenre, ça veut dire quoi ?',
     text:
       "Etre trans, c'est sentir que le sexe avec lequel on est né n'est pas le bon. C'est se sentir profondément fille alors que l'on est né garçon, ou se sentir profondément garçon alors que l'on est né en fille. A ne pas confondre avec le fait d'être homosexuel qui est le fait d'être attiré  (sexuelle ou sentimentale) pour une personne de son sexe.\nCe sont 2 choses différentes mais trop souvent confondues.",
   },
@@ -824,7 +824,7 @@ const contents = [
     theme: 2,
     category: 4,
     picture: require('../../assets/pictures/contents/ETS-photocontenu-sextoy.jpg'),
-    title: "Sextoy et preservatif, it's a match ?",
+    title: "Sextoy et preservatif, compatibles ?",
     text:
       "Si on utilise un ou des sex toys à plusieurs, il est important de mettre un préservatif par personne et par orifice. Il peut y avoir transmission d'IST. Si on l'utilise solo, on ne peut pas attraper d'IST mais des microbes s'il n'est pas bien lavé. Mieux vaut se laver après chaque usage, à l'eau et au savon. Et faire la même chose pour ses mains :)",
   },
@@ -980,7 +980,7 @@ const contents = [
     theme: 2,
     category: 4,
     picture: require('../../assets/pictures/contents/LPF-photocontenu-regles.jpg'),
-    title: "Rêgles, sexe et grossesse, c'est ok ?",
+    title: "Règles, sexe et grossesse, c'est ok ?",
     text:
       "il n'y a aucun problème hygiénique à faire l'amour lorsque l'on a ses règles. Il arrive même parfois que le flux s'ammenuise lors du rapport. On peut aussi faire l'amour sans pénétration vaginale si on préfère ;) ou ne pas le faire du tout si on ne se sent pas à l'aise. C'est une décision à prendre ensemble.Par contre faire l'amour lorsque l'on a ses rêgles ne veut pas dire qu'il n'y a aucun risque de tomber enseinte.\nLes saignements ne sont pas favorables aux spermatozoïdes mais il n'est pas impossible d'être enceinte à la suite. L'ovulation peut se déclencher très tôt après les règles et les spermatozoïdes ont une durée de vie de quelques jours : donc, c'est possible d'être enceinte suite à des rapports pendant les règles (sauf si on a un moyen de contraception)",
   },
@@ -991,7 +991,7 @@ const contents = [
     theme: 2,
     category: 4,
     picture: require('../../assets/pictures/contents/LPF-photocontenu-sida.jpg'),
-    title: "Le dépistage du VIH/SIDA se fait seulement à l'hopital ?",
+    title: "Le dépistage du VIH/SIDA se fait seulement à l'hôpital ?",
     text:
       "On peut faire un dépistage sans prescription ni passer par l'hôpital. C'est possible d'en faire dans les CeGIDD, dans certains centres de planification familiale ou dans un laboratoire de biologie médicale (avec ou sans ordonnance). On peut aussi faire un dépistage soi-même avec un auto-test acheté en pharmacie ou dans certaines associations avec un TROD.",
   },

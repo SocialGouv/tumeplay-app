@@ -8,7 +8,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-regles.jpg'),
     title: "Les règles, c'est quoi ?",
     text:
-      "Chaque mois à partir de la puberté, l\u0092utérus se prépare à accueillir un \u009cuf fécondé. Pour ça, la muqueuse utérine s\u0092épaissit. A la fin de chaque cycle, si la fécondation (rencontre spermatozoïde & ovule) n\u0092a pas eu lieu, la partie superficielle de la muqueuse est évacuée : c\u0092est ce qu\u0092on appelle les règles. C'est un phénomène naturel qui dure en général entre 3 et 7 jours.",
+      "Chaque mois à partir de la puberté, l'utérus se prépare à accueillir un oeuf fécondé. Pour ça, la muqueuse utérine s'épaissit. A la fin de chaque cycle, si la fécondation (rencontre spermatozoïde & ovule) n'a pas eu lieu, la partie superficielle de la muqueuse est évacuée : c'est ce qu'on appelle les règles. C'est un phénomène naturel qui dure en général entre 3 et 7 jours.",
   },
   {
     key: 2,
@@ -52,7 +52,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-pertesblanches.jpg'),
     title: "Les pertes blanches, c'est quoi ?",
     text:
-      'Le vagin est tapissé d\u0092une muqueuse qui ressemble à celle de l\u0092intérieur des joues. Comme toutes les muqueuses, la muqueuse vaginale produit un liquide en continu qui permet un auto-nettoyage constant et un maintien d\u0092une flore équilibrée. Il peut se manifester par des pertes blanches.',
+      'Le vagin est tapissé d'une muqueuse qui ressemble à celle de l'intérieur des joues. Comme toutes les muqueuses, la muqueuse vaginale produit un liquide en continu qui permet un auto-nettoyage constant et un maintien d'une flore équilibrée. Il peut se manifester par des pertes blanches.',
   },
   {
     key: 6,
@@ -63,7 +63,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-erectionfille.jpg'),
     title: "C'est grand comment un vagin ?",
     text:
-      "Le vagin mesure entre 8 et 12 cm. Il relie la vulve à l'utérus via le col de l'utérus. Il est extensible et sa dimension peut varier.Le vagin ne peut pas être trop petit car il s\u0092adapte à toutes les tailles de pénis ou de sex toys.",
+      "Le vagin mesure entre 8 et 12 cm. Il relie la vulve à l'utérus via le col de l'utérus. Il est extensible et sa dimension peut varier.Le vagin ne peut pas être trop petit car il s'adapte à toutes les tailles de pénis ou de sex toys.",
   },
   {
     key: 7,
@@ -74,7 +74,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenus-sodo.jpg'),
     title: 'Dessine moi un pénis',
     text:
-      'Le pénis est composé du gland qui lui, est entouré par le prépuce, pli de peau qui peut se retirer pour découvrir le gland et qui est supprimé si l\u0092on est circoncis. Le prépuce est relié au gland par une bande de peau, le frein. L\u0092urètre, se trouve au bout du gland. L\u0092urètre sert à la fois à uriner et à éjaculer.',
+      'Le pénis est composé du gland qui lui, est entouré par le prépuce, pli de peau qui peut se retirer pour découvrir le gland et qui est supprimé si l'on est circoncis. Le prépuce est relié au gland par une bande de peau, le frein. L'urètre, se trouve au bout du gland. L'urètre sert à la fois à uriner et à éjaculer.',
   },
   {
     key: 8,
@@ -184,7 +184,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-vaginisme.jpg'),
     title: "L'hymen, c'est quoi ?",
     text:
-      " L\u0092hymen est une petite membrane de forme et d\u0092épaisseur variables qui ferme plus ou moins partiellement le vagin. Cette membrane s'assouplit et s'ouvre davantage lors des premiers rapports sexuels. 1/3 des femmes n'ont jamais eu d'hymen. Une fille ne saigne pas forcément lors de la première pénétration.",
+      " L'hymen est une petite membrane de forme et d'épaisseur variables qui ferme plus ou moins partiellement le vagin. Cette membrane s'assouplit et s'ouvre davantage lors des premiers rapports sexuels. 1/3 des femmes n'ont jamais eu d'hymen. Une fille ne saigne pas forcément lors de la première pénétration.",
   },
   {
     key: 18,
@@ -195,7 +195,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-ejactorgasme.jpg'),
     title: 'Rêves et éjaculation',
     text:
-      "Rêver de choses érotiques, c\u0092est normal. Ça arrive à l\u0092adolescence mais ça continue après. Ces rêves peuvent déclencher un orgasme, une éjaculation. Dans un rêve érotique, on choisit pas le scénario, il s\u0092impose. Pas de panique ! Rêver de certaines choses même bizarres ne veut pas dire qu'on est pervers. Il ne faut pas prendre les rêves au premier degré.",
+      "Rêver de choses érotiques, c'est normal. Ça arrive à l'adolescence mais ça continue après. Ces rêves peuvent déclencher un orgasme, une éjaculation. Dans un rêve érotique, on choisit pas le scénario, il s'impose. Pas de panique ! Rêver de certaines choses même bizarres ne veut pas dire qu'on est pervers. Il ne faut pas prendre les rêves au premier degré.",
   },
   {
     key: 19,
@@ -206,7 +206,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-fantasme.jpg'),
     title: "Avoir des fantasmes, c'est ok ?",
     text:
-      'Les fantasmes, c\u0092est tout ce qu\u0092on peut imaginer et qui provoque notre excitation sexuelle. Des fantasmes, tout le monde peut en avoir. Ou pas. Pas de règle en la matière. On peut s\u0092imaginer dans telle ou telle position, dans tel ou tel lieu, avec tel\u0095le\u0095s partenaire\u0095s. Et ça n\u0092a rien de grave.',
+      'Les fantasmes, c'est tout ce qu'on peut imaginer et qui provoque notre excitation sexuelle. Des fantasmes, tout le monde peut en avoir. Ou pas. Pas de règle en la matière. On peut s'imaginer dans telle ou telle position, dans tel ou tel lieu, avec tel\u0095le\u0095s partenaire\u0095s. Et ça n'a rien de grave.',
   },
   {
     key: 20,
@@ -228,7 +228,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-nocturne.jpg'),
     title: "Les pollutions nocturnes, c'est quoi ?",
     text:
-      "Le sperme peut parfois sortir de manière incontrôlée. Ça arrive souvent durant le sommeil. Ça peut arriver pendant la journée mais plus rarement. C\u0092est ce qu\u0092on appelle l\u0092éjaculation ou la pollution nocturne (ou aussi le « rêve mouillé », le « wet dream »). Ça témoigne souvent du début de la puberté et c'est fréquent chez l\u0092ado. Ça existe aussi chez l\u0092homme adulte.",
+      "Le sperme peut parfois sortir de manière incontrôlée. Ça arrive souvent durant le sommeil. Ça peut arriver pendant la journée mais plus rarement. C'est ce qu'on appelle l'éjaculation ou la pollution nocturne (ou aussi le « rêve mouillé », le « wet dream »). Ça témoigne souvent du début de la puberté et c'est fréquent chez l'ado. Ça existe aussi chez l'homme adulte.",
   },
   {
     key: 22,
@@ -250,7 +250,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-taillepenis.jpg'),
     title: "Les pénis, c'est une question de proportion ?",
     text:
-      "Oh la légende urbaine ! La taille d'une personne ne donne aucune idée de la taille de son sexe. La seule façon de connaître la taille c\u0092est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
+      "Oh la légende urbaine ! La taille d'une personne ne donne aucune idée de la taille de son sexe. La seule façon de connaître la taille c'est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
   },
   {
     key: 24,
@@ -261,7 +261,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-taillepenis.jpg'),
     title: 'Pouce et pénis, meilleurs potes ?',
     text:
-      "On a tous déjà entendu que la taille du pénis pouvait être estimé en fonction de la taille du pouce. C'est évidement faux. La longueur des doigts ne donne aucune idée de la taille de son sexe. La seule façon de connaître la taille c\u0092est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
+      "On a tous déjà entendu que la taille du pénis pouvait être estimé en fonction de la taille du pouce. C'est évidement faux. La longueur des doigts ne donne aucune idée de la taille de son sexe. La seule façon de connaître la taille c'est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
   },
   {
     key: 25,
@@ -273,7 +273,7 @@ const contents = [
     title:
       'À partir de quel age la lois autorise à avoir des rapports sexuels ?',
     text:
-      'Il n\u0092y a pas d\u0092âge légal à partir duquel on peut avoir des rapports sexuels. Cependant, un mineur de moins de 15 ans ne peut pas avoir de rapports sexuels avec un majeur de plus de 18 ans.',
+      'Il n'y a pas d'âge légal à partir duquel on peut avoir des rapports sexuels. Cependant, un mineur de moins de 15 ans ne peut pas avoir de rapports sexuels avec un majeur de plus de 18 ans.',
   },
   {
     key: 26,
@@ -306,7 +306,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-bisou.jpg'),
     title: "Un bisou, c'est toujours ok ?",
     text:
-      "On ne peut pas faire des bisous à une personne qui ne le souhaite pas, même si c'est pour faire la bise. Chaque personne décide de ce dont elle a envie ou pas. À elle de choisir son\u0095sa partenaire. De refuser des bisous, des caresses ou d\u0092avoir des relations sexuelles non protégées. De dire « non » quand ce qu\u0092on lui propose ne lui plaît pas. Bref, d\u0092avoir la maîtrise de son corps. Et aux autres de respecter ses choix.",
+      "On ne peut pas faire des bisous à une personne qui ne le souhaite pas, même si c'est pour faire la bise. Chaque personne décide de ce dont elle a envie ou pas. À elle de choisir son\u0095sa partenaire. De refuser des bisous, des caresses ou d'avoir des relations sexuelles non protégées. De dire « non » quand ce qu'on lui propose ne lui plaît pas. Bref, d'avoir la maîtrise de son corps. Et aux autres de respecter ses choix.",
   },
   {
     key: 29,
@@ -317,7 +317,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-IST.jpg'),
     title: "IST, c'est quoi ?",
     text:
-      "C'est une Infection principalement Transmissible par voie Sexuelle (bucale, vaginale, anale, frottements intimes). On retrouve les chlamydia, la blennorragie, la syphilis, l\u0092hépatite B, l\u0092herpès génital, l'HPV, le VIH/SIDA... Les préservatifs (externes ou inernes) ou carrés de latex permettent de s'en protéger. En cas de doute, on passe par la case dépistage.",
+      "C'est une Infection principalement Transmissible par voie Sexuelle (bucale, vaginale, anale, frottements intimes). On retrouve les chlamydia, la blennorragie, la syphilis, l'hépatite B, l'herpès génital, l'HPV, le VIH/SIDA... Les préservatifs (externes ou inernes) ou carrés de latex permettent de s'en protéger. En cas de doute, on passe par la case dépistage.",
   },
   {
     key: 30,
@@ -383,7 +383,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-vaginisme.jpg'),
     title: 'Trop petit mon/ton vagin ?',
     text:
-      "Le vagin ne peut pas être trop petit car il s\u0092adapte à toutes les tailles. Si on ressent une douleur ou si la pénétration est impossible, c'est souvent lié à la contraction des muscles du vagin ou au manque de lubrification naturelle. Ça peut venir du stress, de la peur, ou du manque de stimulation (du coup pas assez de mouille!).",
+      "Le vagin ne peut pas être trop petit car il s'adapte à toutes les tailles. Si on ressent une douleur ou si la pénétration est impossible, c'est souvent lié à la contraction des muscles du vagin ou au manque de lubrification naturelle. Ça peut venir du stress, de la peur, ou du manque de stimulation (du coup pas assez de mouille!).",
   },
   {
     key: 36,
@@ -405,7 +405,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-ejactorgasme.jpg'),
     title: 'Ejaculation = orgasme ?',
     text:
-      "Et bien non, voyons ! un orgasme est un plaisir sexuel intense. Il n\u0092est pas évident d\u0092expliquer ce qu\u0092est un orgasme car les sensations éprouvées dans tout le corps varient beaucoup d\u0092un individu à l\u0092autre, voire d\u0092un moment à l\u0092autre pour la même personne.\nUne éjaculation n'est pas forcément associée à un plaisir intense mais souvent à un plaisir qui variera en fonction de lui, du ou de la partenaire ou de l'environnement.",
+      "Et bien non, voyons ! un orgasme est un plaisir sexuel intense. Il n'est pas évident d'expliquer ce qu'est un orgasme car les sensations éprouvées dans tout le corps varient beaucoup d'un individu à l'autre, voire d'un moment à l'autre pour la même personne.\nUne éjaculation n'est pas forcément associée à un plaisir intense mais souvent à un plaisir qui variera en fonction de lui, du ou de la partenaire ou de l'environnement.",
   },
   {
     key: 38,
@@ -416,7 +416,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-orgasme.jpg'),
     title: "Orgamse, c'est quoi ?",
     text:
-      "C'est un plaisir sexuel intense. Il n\u0092est pas évident d\u0092expliquer ce qu\u0092est un orgasme car les sensations éprouvées dans tout le corps varient beaucoup d\u0092un individu à l\u0092autre, voire d\u0092un moment à l\u0092autre pour la même personne.",
+      "C'est un plaisir sexuel intense. Il n'est pas évident d'expliquer ce qu'est un orgasme car les sensations éprouvées dans tout le corps varient beaucoup d'un individu à l'autre, voire d'un moment à l'autre pour la même personne.",
   },
   {
     key: 39,
@@ -494,7 +494,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-preservatifs.jpg'),
     title: "Les préservatifs internes, c'est quoi ?",
     text:
-      "Les préservatifs internes (dit \"féminin\") sont une gaine en nitrile ou en polyuréthane munie d\u0092un anneau souple aux deux extrémités. Il se place dans le vagin ou l'anus. Il peut être mis en place plusieurs heures avant le rapport sexuel ou juste avant. Il faut le changer à chaque rapport sexuel et entre chaque pénétration : on ne l'utilise qu'une seule fois !",
+      "Les préservatifs internes (dit \"féminin\") sont une gaine en nitrile ou en polyuréthane munie d'un anneau souple aux deux extrémités. Il se place dans le vagin ou l'anus. Il peut être mis en place plusieurs heures avant le rapport sexuel ou juste avant. Il faut le changer à chaque rapport sexuel et entre chaque pénétration : on ne l'utilise qu'une seule fois !",
   },
   {
     key: 46,
@@ -505,7 +505,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-ejactorgasme.jpg'),
     title: "C'est quoi une éjaculation précoce ?",
     text:
-      "On parle d'éjaculation précoce lorsque l'ejaculation survient trop vite chez le garçon. Il n\u0092y a pas de durée précise mais on en parle quand elle laisse la personne insatisfaite, avec la sensation qu\u0092elle n\u0092a aucun contrôle. Certaines situations (conflits avec son\u0095sa partenaire ou autre) créent une tension et empêchent de se détendre. Pas de honte, pas de panique : ça arrive.",
+      "On parle d'éjaculation précoce lorsque l'ejaculation survient trop vite chez le garçon. Il n'y a pas de durée précise mais on en parle quand elle laisse la personne insatisfaite, avec la sensation qu'elle n'a aucun contrôle. Certaines situations (conflits avec son\u0095sa partenaire ou autre) créent une tension et empêchent de se détendre. Pas de honte, pas de panique : ça arrive.",
   },
   {
     key: 47,
@@ -538,7 +538,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-fouamoureux.jpg'),
     title: 'Amour et première fois ?',
     text:
-      'L\u0092amour et la sexualité ne sont pas toujours liés. On peut désirer une personne et avoir envie d\u0092un rapport sexuel sans être amoureux-se. On peut aussi aimer énormement quelqu\u0092un mais ne pas avoir envie d\u0092être intime avec lui\u0095elle. L\u0092essentiel pour sa première fois, et toutes les autres, c\u0092est que les deux partenaires en aient envie.',
+      'L'amour et la sexualité ne sont pas toujours liés. On peut désirer une personne et avoir envie d'un rapport sexuel sans être amoureux-se. On peut aussi aimer énormement quelqu'un mais ne pas avoir envie d'être intime avec lui\u0095elle. L'essentiel pour sa première fois, et toutes les autres, c'est que les deux partenaires en aient envie.',
   },
   {
     key: 50,
@@ -549,7 +549,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-taillepenis.jpg'),
     title: 'Montre moi tes mains, je te dirais la taille de ton pénis',
     text:
-      "La taille des mains ou des pieds ne donne évidement aucune idée de la taille de son sexe. La seule façon de connaître la taille c\u0092est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
+      "La taille des mains ou des pieds ne donne évidement aucune idée de la taille de son sexe. La seule façon de connaître la taille c'est de mesurer le pénis en érection entre le bas du ventre et le bout du gland. La taille moyenne du pénis en érection est de 13 cm. Et pour le plaisir, ce n'est pas la taille qui compte ;)",
   },
   {
     key: 51,
@@ -604,7 +604,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-ejacfeminine.jpg'),
     title: 'Une fille peut éjaculer ?',
     text:
-      "On parle parfois de « femmes fontaines » (mais l'éjaculation féminine n'est pas forcément aussi abondante que dans les films.) L'éjaculation féminine, ce n\u0092est pas de l\u0092urine. La couleur, l\u0092odeur sont différentes (et le goût aussi aha!). Pourtant, le liquide sort un peu de la même manière. Chez certaines, cela se manifeste à chaque orgasme. Chez d\u0092autres, cela arrive de temps en temps, voire occasionnellement, ou pas du tout.",
+      "On parle parfois de « femmes fontaines » (mais l'éjaculation féminine n'est pas forcément aussi abondante que dans les films.) L'éjaculation féminine, ce n'est pas de l'urine. La couleur, l'odeur sont différentes (et le goût aussi aha!). Pourtant, le liquide sort un peu de la même manière. Chez certaines, cela se manifeste à chaque orgasme. Chez d'autres, cela arrive de temps en temps, voire occasionnellement, ou pas du tout.",
   },
   {
     key: 56,
@@ -615,7 +615,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-huile.jpg'),
     title: "Cyprine, c'est quoi ?",
     text:
-      "La cyprine c'est l'autre petit nom de la mouille. C'est le lubrifiant naturel du vagin qui facilite la pénétration lors d\u0092un rapport sexuel. Par contre, quand on utilise un préservatif masculin / externe, il faut ajouter du lubrifant, ça change la vie (en vrai, ça diminue les risques de rupture et augmente les sensations donc tout bénéf'!)",
+      "La cyprine c'est l'autre petit nom de la mouille. C'est le lubrifiant naturel du vagin qui facilite la pénétration lors d'un rapport sexuel. Par contre, quand on utilise un préservatif masculin / externe, il faut ajouter du lubrifant, ça change la vie (en vrai, ça diminue les risques de rupture et augmente les sensations donc tout bénéf'!)",
   },
   {
     key: 57,
@@ -727,7 +727,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-excite.jpg'),
     title: 'À quel moment on ne peut plus arrêter le rapport ?',
     text:
-      "On peut toujours arrêter si on ne veut plus, n'importe quand. L\u0092excitation sexuelle n\u0092a jamais « de point de non-retour », elle finit toujours par retomber et ne crée aucune séquelle sur le corps. Arrêter un rapport qui a commencé peut cependant générer de la frustration qu'il faut apprendre à gérer pour respecter la volonté du ou de la partenaire.",
+      "On peut toujours arrêter si on ne veut plus, n'importe quand. L'excitation sexuelle n'a jamais « de point de non-retour », elle finit toujours par retomber et ne crée aucune séquelle sur le corps. Arrêter un rapport qui a commencé peut cependant générer de la frustration qu'il faut apprendre à gérer pour respecter la volonté du ou de la partenaire.",
   },
   {
     key: 67,
@@ -749,7 +749,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-erectionfille.jpg'),
     title: "Un pet vaginal, c'est quoi ?",
     text:
-      "Le pet vaginal, c'est de l'air qui sort du vagin. C'est surprenant ! et parfois gênant... lorsqu'on a un rapport. Le vagin n\u0092est pas en lien avec l\u0092appareil digestif. Le pet vaginal n\u0092a pas d\u0092odeur ;). Il survient lorsqu\u0092il y a eu une entrée d\u0092air dans le vagin lors d\u0092un rapport sexuel. Certaines positions le favorisent.",
+      "Le pet vaginal, c'est de l'air qui sort du vagin. C'est surprenant ! et parfois gênant... lorsqu'on a un rapport. Le vagin n'est pas en lien avec l'appareil digestif. Le pet vaginal n'a pas d'odeur ;). Il survient lorsqu'il y a eu une entrée d'air dans le vagin lors d'un rapport sexuel. Certaines positions le favorisent.",
   },
   {
     key: 69,
@@ -771,7 +771,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-couple.jpg'),
     title: 'Un couple est forcément consentant ?',
     text:
-      "Un couple n'est pas une entité, il est composé de deux partenaires avec des envies parfait différentes. Un couple n'est donc pas consentant par défaut. Le viol entre époux est possible (oui, c'est dans le code pénal, article 222-22). Dans un couple marié on présume qu'il y a consentement à l\u0092acte sexuel jusqu\u0092à preuve du contraire.",
+      "Un couple n'est pas une entité, il est composé de deux partenaires avec des envies parfait différentes. Un couple n'est donc pas consentant par défaut. Le viol entre époux est possible (oui, c'est dans le code pénal, article 222-22). Dans un couple marié on présume qu'il y a consentement à l'acte sexuel jusqu'à preuve du contraire.",
   },
   {
     key: 71,
@@ -782,7 +782,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-fraise.jpg'),
     title: "On doit toujours finir ce que l'on commence ?",
     text:
-      "Le consentement est donné pour un acte mais il peut à tout moment être retiré. Si on est au bord d'avoir fini le rapport sexuel mais que le patenaire n'en a plus envie, continuer le rapport sexuel est constitutif d\u0092un viol. Si un partenaire veut arrêter, à n'importe quel moment, quelle que ce soit la raison, on arrête. En cas de violences sexuelles, on peut appeler le 3919 pour recevoir conseils, aide et information.",
+      "Le consentement est donné pour un acte mais il peut à tout moment être retiré. Si on est au bord d'avoir fini le rapport sexuel mais que le patenaire n'en a plus envie, continuer le rapport sexuel est constitutif d'un viol. Si un partenaire veut arrêter, à n'importe quel moment, quelle que ce soit la raison, on arrête. En cas de violences sexuelles, on peut appeler le 3919 pour recevoir conseils, aide et information.",
   },
   {
     key: 72,
@@ -793,7 +793,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-fraise.jpg'),
     title: 'Un oui bourré\u0095e = un oui sobre ?',
     text:
-      "Tous les oui, ne sont pas toujours des oui. Une personne peut consentir mais sans être en capacité de le faire en raison de son état d\u0092ébriété (parce qu'elle est trop bourré.e). Dans ce cas, c\u0092est comme si il n\u0092y avait pas eu de consentement et le rapport est un viol. En cas de violences sexuelles, on peut appeler le 3919 pour recevoir conseils, aide et info.",
+      "Tous les oui, ne sont pas toujours des oui. Une personne peut consentir mais sans être en capacité de le faire en raison de son état d'ébriété (parce qu'elle est trop bourré.e). Dans ce cas, c'est comme si il n'y avait pas eu de consentement et le rapport est un viol. En cas de violences sexuelles, on peut appeler le 3919 pour recevoir conseils, aide et info.",
   },
   {
     key: 73,
@@ -804,7 +804,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-consentement.jpg'),
     title: "Si il y a orgasme, c'est que le rapport était consenti ?",
     text:
-      "L\u0092orgasme peut être un moyen de défense adopté par le corps lors du rapport sexuel non consenti. Un orgasme n'est donc en aucun cas la preuve d'un rapport consentit. Si la personne avait dit \"non\" et même si elle a eu un orgasme, si elle a mouillé ou eu une erection, etc. c'est considéré comme du viol. En cas de violences sexuelle, on peut appeler le 3919 pour recevoir conseils, aide et info.",
+      "L'orgasme peut être un moyen de défense adopté par le corps lors du rapport sexuel non consenti. Un orgasme n'est donc en aucun cas la preuve d'un rapport consentit. Si la personne avait dit \"non\" et même si elle a eu un orgasme, si elle a mouillé ou eu une erection, etc. c'est considéré comme du viol. En cas de violences sexuelle, on peut appeler le 3919 pour recevoir conseils, aide et info.",
   },
   {
     key: 74,
@@ -837,7 +837,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-traitement.jpg'),
     title: "TPE, c'est quoi ?",
     text:
-      "Si on pense avoir été exposé.e au VIH, on peut prendre un traitement qui empêche la multiplication du virus. Ce traitement, appelé TPE (traitement post-exposition), doit être pris le plus tôt possible, dans les 48h après la prise de risque, pour diminuer la probabilité d\u0092une contamination. On le trouve aux urgences de l'hôpital ou en CeGIDD.",
+      "Si on pense avoir été exposé.e au VIH, on peut prendre un traitement qui empêche la multiplication du virus. Ce traitement, appelé TPE (traitement post-exposition), doit être pris le plus tôt possible, dans les 48h après la prise de risque, pour diminuer la probabilité d'une contamination. On le trouve aux urgences de l'hôpital ou en CeGIDD.",
   },
   {
     key: 77,
@@ -859,7 +859,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-sida.jpg'),
     title: "Un TROD, c'est quoi ?",
     text:
-      "Le test rapide d'orientation diagnostique (TROD) est anonyme et gratuit. Il est proposé par des associations habilitées au dépistage. Avec une goutte de sang recueillie au bout du doigt, le TROD permet d\u0092obtenir un résultat en 30 min. Attention : son résultat est valable 3 mois après la dernière prise du risque.",
+      "Le test rapide d'orientation diagnostique (TROD) est anonyme et gratuit. Il est proposé par des associations habilitées au dépistage. Avec une goutte de sang recueillie au bout du doigt, le TROD permet d'obtenir un résultat en 30 min. Attention : son résultat est valable 3 mois après la dernière prise du risque.",
   },
   {
     key: 79,
@@ -881,7 +881,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-IST.jpg'),
     title: 'Comment ça se transmet le HPV ?',
     text:
-      "Contrairement au VIH, il ne se transmet pas par le sang. Le HPV peut se transmettre lors de rapports sexuels ou par contacts directs peau à peau (se toucher, s\u0092embrasser). Il est contagieux et fréquent. Le plus souvent, nos défenses l'éliminent seules. Mais il peut parfois créer des lésions (condylomes). Le mieux, c'est de consulter un médecin en cas de doute ;)",
+      "Contrairement au VIH, il ne se transmet pas par le sang. Le HPV peut se transmettre lors de rapports sexuels ou par contacts directs peau à peau (se toucher, s'embrasser). Il est contagieux et fréquent. Le plus souvent, nos défenses l'éliminent seules. Mais il peut parfois créer des lésions (condylomes). Le mieux, c'est de consulter un médecin en cas de doute ;)",
   },
   {
     key: 81,
@@ -892,7 +892,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/ETS-photocontenu-herpes.jpg'),
     title: 'Les chlamydia peuvent rendre stérile ?',
     text:
-      "Une infection à chlamydia non soignée peut provoquer la stérilité chez les femmes ET les hommes. C\u0092est l\u0092IST la plus fréquente chez les jeunes et est souvent sans symptômes, d'où l'importance du dépistage (eh ouaaais!). Pas de panique, détectée tôt, le traitement est efficace (à faire chez les deux partenaires). Elle se transmet lors de rapports non protégés.",
+      "Une infection à chlamydia non soignée peut provoquer la stérilité chez les femmes ET les hommes. C'est l'IST la plus fréquente chez les jeunes et est souvent sans symptômes, d'où l'importance du dépistage (eh ouaaais!). Pas de panique, détectée tôt, le traitement est efficace (à faire chez les deux partenaires). Elle se transmet lors de rapports non protégés.",
   },
   {
     key: 82,
@@ -926,7 +926,7 @@ const contents = [
     title:
       '1 préservatif interne + 1 préservatif externe = 2x plus de protection ?',
     text:
-      'Il ne faut jamais utiliser 2 preservatifs en même temps que ce soit un ou deux préservatifs exterrne ("masculin") et un préservatif interne ("féminin") en même temps. Ça risquerait de les déchirer. Petite astuce pour le préservatif interne : bien frotter l\'emballage entre les mains avant de l\u0092ouvrir pour bien répartir le lubrifiant.',
+      'Il ne faut jamais utiliser 2 preservatifs en même temps que ce soit un ou deux préservatifs exterrne ("masculin") et un préservatif interne ("féminin") en même temps. Ça risquerait de les déchirer. Petite astuce pour le préservatif interne : bien frotter l\'emballage entre les mains avant de l'ouvrir pour bien répartir le lubrifiant.',
   },
   {
     key: 85,
@@ -937,7 +937,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-enceinte.jpg'),
     title: "Si pas d'éjaculation, pas de risque de grossesse ?",
     text:
-      'A l\u0092état naturel, le liquide pré-séminal ne contient pas de spermatozoïdes. MAIS, il peut entraîner avec lui des spermatozoïdes qui étaient présents dans l\u0092urètre après une précédente éjaculation. De ce fait, une pénétration, même sans éjaculation peut parfois entraîner une grossesse.',
+      'A l'état naturel, le liquide pré-séminal ne contient pas de spermatozoïdes. MAIS, il peut entraîner avec lui des spermatozoïdes qui étaient présents dans l'urètre après une précédente éjaculation. De ce fait, une pénétration, même sans éjaculation peut parfois entraîner une grossesse.',
   },
   {
     key: 86,
@@ -959,7 +959,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-IST.jpg'),
     title: "La chaude pisse et la chtouille, c'est quoi ?",
     text:
-      "La chaude pisse, la chtouille les autres noms de la blennorragie. La blennorragie est une infection d\u0092origine bactérienne. Elle provoque des brûlures ou un écoulement jaune par la verge, le vagin ou l'anus. Cette infection se transmet lors de rapports sexuels, bucco-génitaux (bouche-parties génitales), vaginaux ou anaux. Un traitement par antibiotiques permet une guérison rapide.",
+      "La chaude pisse, la chtouille les autres noms de la blennorragie. La blennorragie est une infection d'origine bactérienne. Elle provoque des brûlures ou un écoulement jaune par la verge, le vagin ou l'anus. Cette infection se transmet lors de rapports sexuels, bucco-génitaux (bouche-parties génitales), vaginaux ou anaux. Un traitement par antibiotiques permet une guérison rapide.",
   },
   {
     key: 88,
@@ -1004,7 +1004,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/LPF-photocontenu-sida.jpg'),
     title: 'VIH = SIDA ?',
     text:
-      "Le VIH (Virus de l'Immunodéficience Humaine) attaque nos défenses. Au fil du temps, peuvent apparaitre des maladies de plus en plus graves qu'on appelle le SIDA (Syndrome d'Immuno Déficience Acquis). Une personne qui a le SIDA a forcément le VIH. Toutes les personnes infectées par le VIH n\u0092ont pas forcément développé le SIDA.",
+      "Le VIH (Virus de l'Immunodéficience Humaine) attaque nos défenses. Au fil du temps, peuvent apparaitre des maladies de plus en plus graves qu'on appelle le SIDA (Syndrome d'Immuno Déficience Acquis). Une personne qui a le SIDA a forcément le VIH. Toutes les personnes infectées par le VIH n'ont pas forcément développé le SIDA.",
   },
 ];
 

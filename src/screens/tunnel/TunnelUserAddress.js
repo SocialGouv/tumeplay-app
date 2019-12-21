@@ -54,6 +54,9 @@ export default function TunnelUserAddress(props) {
   const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
+  const [selectedProducts] = useState(
+    props.navigation.state.params.selectedProducts,
+  );
 
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
   const [localValid, setLocalValid] = useState({});
@@ -71,9 +74,6 @@ export default function TunnelUserAddress(props) {
       setLocalAdress(newAdress);
     }
   }, [isMounted, props.navigation.state.params.userAdress]);
-
-  /*useEffect(() => {
-  }, [localValid]);*/
 
   function _validateFields() {
     let isValid = true;
@@ -115,6 +115,8 @@ export default function TunnelUserAddress(props) {
     if (isValid) {
       props.navigation.navigate('TunnelCartSummary', {
         selectedItem: selectedItem,
+        selectedProducts: selectedProducts,
+        deliveryType: deliveryType,
         userAdress: localAdress,
       });
     }
@@ -124,10 +126,12 @@ export default function TunnelUserAddress(props) {
     if (deliveryType == 'home') {
       props.navigation.navigate('TunnelDeliverySelect', {
         selectedItem: selectedItem,
+        selectedProducts: selectedProducts,
       });
     } else {
       props.navigation.navigate('TunnelPickupSelect', {
         selectedItem: selectedItem,
+        selectedProducts: selectedProducts,
       });
     }
   }

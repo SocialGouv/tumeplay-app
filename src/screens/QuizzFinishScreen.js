@@ -40,7 +40,7 @@ export default function QuizzFinishScreen(props) {
         EventRegister.removeEventListener(eventListener);
       };
     }
-    console.log('PASS');
+
     _fetchTokens();
   }, [isMounted]);
 

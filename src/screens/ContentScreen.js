@@ -16,6 +16,7 @@ import ModalCloseButton from './components/global/ModalCloseButton';
 import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 
+import autoScrollToTop from '../hooks/autoScrollToTop';
 import useIsMounted from '../hooks/isMounted';
 
 import Styles from '../styles/Styles';
@@ -38,43 +39,33 @@ export default function ContentScreen(props) {
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
   const isMounted = useIsMounted();
-  
-  const didFocusSubscription = props.navigation.addListener(
-    'didFocus',
-    () => {
-      window.scrollTo(0, 0);
-    },
-  );
+
+  autoScrollToTop(props);
 
   // Listeners to fix QuizzButton display on web mode
   const willFocusSubscription = props.navigation.addListener(
     'willFocus',
     () => {
-      console.log('Entering will focus');
       setIsQuizzButtonVisible(true);
     },
   );
 
-  const willBlurSubscription = props.navigation.addListener(
-    'willBlur',
-    () => {
-      if (isQuizzButtonVisible) {
-        console.log('Entering will blur');
-        setIsQuizzButtonVisible(false);
-      }
-      
-      willFocusSubscription.remove();
-      didFocusSubscription.remove();
-      willBlurSubscription.remove();
-    },
-  );
-      
+  const willBlurSubscription = props.navigation.addListener('willBlur', () => {
+    if (isQuizzButtonVisible) {
+      setIsQuizzButtonVisible(false);
+    }
+
+    willFocusSubscription.remove();
+    willBlurSubscription.remove();
+  });
+
   useEffect(() => {
     async function _fetchContents() {
       const _contents = await RemoteApi.fetchContents(selectedTheme);
+      console.log(_contents);
       if (isMounted.current) {
         setFullContents(_contents);
-        _filterContent(0);
+        _filterContent(1);
       }
     }
 
@@ -88,7 +79,7 @@ export default function ContentScreen(props) {
     _fetchContents();
     _fetchQuestions();
   }, [isMounted, selectedTheme]);
-  
+
   // Remove the listener when you are done
   //	didBlurSubscription.remove();
 
@@ -107,10 +98,10 @@ export default function ContentScreen(props) {
     }, 1);
   }, [currentCategory, fullContents]);
 
-  // @TODO : Double check for category ID on backend when going online, and remove that dirty " -1"
   useEffect(() => {
+    console.log(currentCategory);
     var _filtered = fullQuestions.filter(
-      question => question.category - 1 == currentCategory,
+      question => question.category == currentCategory,
     );
     setLocalQuestions(_filtered);
   }, [currentCategory, fullQuestions]);
@@ -129,9 +120,9 @@ export default function ContentScreen(props) {
     }
 
     if (needResultModal) {
-       _addTokens();
-       setNeedResultModal(false);
-       _toggleResultModal();
+      _addTokens();
+      setNeedResultModal(false);
+      _toggleResultModal();
     }
   }, [needResultModal]);
 
@@ -167,7 +158,10 @@ export default function ContentScreen(props) {
 
           <ContactButton />
 
-          <CustomFooter style={{flex: 0.1}} containerStyle={{ paddingLeft: 0, paddingRight: 0}}/>
+          <CustomFooter
+            style={{flex: 0.1}}
+            containerStyle={{paddingLeft: 0, paddingRight: 0}}
+          />
         </ScrollView>
       </View>
 

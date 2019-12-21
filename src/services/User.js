@@ -102,7 +102,7 @@ const User = {
     if (!localUser) {
       localUser = await User.load();
     }
-    console.log(localUser);
+
     if (localUser) {
       return localUser.token;
     }
@@ -115,7 +115,7 @@ const User = {
     if (!localUser) {
       localUser = await User.load();
     }
-    console.log(localUser);
+
     if (localUser) {
       localUser.token = token;
 
@@ -137,13 +137,12 @@ const User = {
 
             await User.save();
           }
-          console.log(localUser);
+
           return localUser.uniqueId;
         }
 
         return null;
       } else {
-        console.log('LOCAL USER');
         return User.localUser.uniqueId;
       }
     } catch (e) {

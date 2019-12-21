@@ -37,16 +37,21 @@ TunnelPickupSelect.propTypes = {
 };
 export default function TunnelPickupSelect(props) {
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
+  const [selectedProducts] = useState(
+    props.navigation.state.params.selectedProducts,
+  );
 
   function _onDone() {
     props.navigation.navigate('TunnelUserAddress', {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
     });
   }
 
   function _goBack() {
     props.navigation.navigate('TunnelDeliverySelect', {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
     });
   }
 

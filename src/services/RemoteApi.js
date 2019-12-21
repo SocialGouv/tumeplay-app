@@ -7,17 +7,19 @@ import DefaultProducts from '../models/defaults/Products';
 import DefaultBoarding from '../models/defaults/Boarding';
 
 // @TODO : Set this in environment
-const BaseRemoteApi = 'http://127.0.0.1:5000/api/';
+const BaseRemote = 'http://40.89.163.125:5000/';
+const BaseRemoteApi = BaseRemote + 'api/';
 
-const QuizzEndpoint = BaseRemoteApi + 'contents';
+const QuizzEndpoint = BaseRemoteApi + 'quizzs';
 const BoardingEndpoint = BaseRemoteApi + 'contents';
 const ContentsEndpoint = BaseRemoteApi + 'contents';
-const ProductsEndpoint = BaseRemoteApi + 'contents';
+const ProductsEndpoint = BaseRemoteApi + 'boxs';
+const ThemesEndpoint = BaseRemoteApi + 'thematiques';
 const UserRegisterEndpoint = BaseRemoteApi + 'auth/simple-register';
 const OrderConfirmEndpoint = BaseRemoteApi + 'orders/confirm';
 
 // @TODO : Set this in environment
-const LOCAL_MODE = true;
+const LOCAL_MODE = false;
 
 const RemoteApi = {
   getAutorizationHeaders: async () => {
@@ -87,6 +89,18 @@ const RemoteApi = {
       throw Error(e);
     }
   },
+  mapPictures: async objects => {
+    return objects.map((item, key) => {
+      if (item.picture) {
+        item.picture = {uri: BaseRemote + item.picture};
+      }
+      if (item.background) {
+        item.background = {uri: BaseRemote + item.background};
+      }
+
+      return item;
+    });
+  },
   registerUser: async uniqId => {
     try {
       if (LOCAL_MODE) {
@@ -102,14 +116,18 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchProducts: async () => {
+  fetchBoxsData: async () => {
     try {
       if (LOCAL_MODE) {
         return DefaultProducts;
       } else {
         const contents = await RemoteApi.fetch(ProductsEndpoint);
 
-        return contents.contents;
+        contents.boxs = await RemoteApi.mapPictures(contents.boxs);
+
+        console.log(contents);
+
+        return contents;
       }
     } catch (e) {
       throw Error(e);
@@ -120,9 +138,9 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         return DefaultThemes;
       } else {
-        const contents = await RemoteApi.fetch(BoardingEndpoint);
+        const themes = await RemoteApi.fetch(ThemesEndpoint);
 
-        return contents.contents;
+        return await RemoteApi.mapPictures(themes);
       }
     } catch (e) {
       throw Error(e);
@@ -140,7 +158,13 @@ const RemoteApi = {
       } else {
         const contents = await RemoteApi.fetch(ContentsEndpoint);
 
-        return contents.contents;
+        let filtered = contents.filter(
+          content => content.theme == selectedTheme.id,
+        );
+
+        filtered = await RemoteApi.mapPictures(filtered);
+
+        return filtered;
       }
     } catch (e) {
       throw Error(e);
@@ -158,7 +182,13 @@ const RemoteApi = {
       } else {
         const contents = await RemoteApi.fetch(QuizzEndpoint);
 
-        return contents.contents;
+        let filtered = contents.filter(
+          content => content.theme == selectedTheme.id,
+        );
+
+        filtered = await RemoteApi.mapPictures(filtered);
+
+        return filtered;
       }
     } catch (e) {
       throw Error(e);
@@ -166,6 +196,8 @@ const RemoteApi = {
   },
   fetchBoarding: async () => {
     try {
+      return DefaultBoarding;
+      //@TODO : Enable Remote Boarding
       if (LOCAL_MODE) {
         return DefaultBoarding;
       } else {
@@ -177,18 +209,35 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  confirmOrder: async selectedItem => {
+  confirmOrder: async (
+    selectedItem,
+    selectedProducts,
+    userAdress,
+    deliveryType,
+  ) => {
     try {
       if (LOCAL_MODE) {
         return true;
       } else {
+        const products = [];
         const headers = await RemoteApi.getAutorizationHeaders();
 
+        selectedProducts.forEach(product => {
+          products.push(product.id);
+        });
+
+        const postData = {
+          box: selectedItem.id,
+          products: products,
+          userAdress: userAdress,
+          deliveryMode: deliveryType,
+        };
+        console.log(postData);
         let result = false;
         if (headers) {
           result = await RemoteApi.protectedPost(
             OrderConfirmEndpoint,
-            selectedItem,
+            postData,
             headers,
           );
         }

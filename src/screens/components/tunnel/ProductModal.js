@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 
 import ProductContentList from './ProductContentList';
+import ProductCustomSelectList from './ProductCustomSelectList';
 
 import ModalCloseButton from '../global/ModalCloseButton';
 import Styles from '../../../styles/Styles';
@@ -22,11 +23,14 @@ ProductModal.propTypes = {
   onOrder: PropTypes.func,
   showModal: PropTypes.bool,
   onClose: PropTypes.func,
+  allProducts: PropTypes.array,
 };
 
 export default function ProductModal(props) {
   const [productBox] = useState(props.item);
   const [showModal] = useState(props.showModal);
+  const [allProducts] = useState(props.allProducts);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const cardStyle = StyleSheet.create({
     container: {
@@ -73,6 +77,17 @@ export default function ProductModal(props) {
     },
   });
 
+  function onOrder() {
+    props.onOrder(selectedItems);
+  }
+
+  function onSelectChange(selectedItems) {
+    setSelectedItems(selectedItems);
+  }
+
+  if (productBox.title === undefined) {
+    return <View></View>;
+  }
   return (
     <Modal
       visible={showModal}
@@ -82,6 +97,7 @@ export default function ProductModal(props) {
       backdropOpacity={0}
       transparent={true}>
       <View style={ModalStyle.backdrop}></View>
+
       <View
         style={[
           ModalStyle.innerModal,
@@ -108,18 +124,28 @@ export default function ProductModal(props) {
             <Text style={cardStyle.text}>{productBox.description}</Text>
           </View>
 
-          <View style={{paddingLeft: 15, paddingRight: 15}}>
-            <Text style={cardStyle.subtitle}>
-              Ce que tu trouveras dans ta box :
-            </Text>
+          {productBox && productBox.products.length > 0 && (
+            <View style={{paddingLeft: 15, paddingRight: 15}}>
+              <Text style={cardStyle.subtitle}>
+                Ce que tu trouveras dans ta box :
+              </Text>
 
-            <ProductContentList item={productBox} />
-          </View>
-
+              <ProductContentList item={productBox} />
+            </View>
+          )}
+          {productBox && productBox.products.length == 0 && (
+            <View style={{paddingLeft: 15, paddingRight: 15}}>
+              <ProductCustomSelectList
+                onSelectChange={onSelectChange}
+                allProducts={allProducts}
+                item={productBox}
+              />
+            </View>
+          )}
           <View style={{marginTop: 15, marginBottom: 15}}>
             <TouchableOpacity
               style={[Styles.bottomButton, {borderRadius: 25}]}
-              onPress={props.onOrder}>
+              onPress={onOrder}>
               <Text style={Styles.bottomCommText}>Commander</Text>
             </TouchableOpacity>
           </View>

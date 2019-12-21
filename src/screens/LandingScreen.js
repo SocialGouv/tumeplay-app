@@ -10,6 +10,8 @@ import {
 import PropTypes from 'prop-types';
 
 import useIsMounted from '../hooks/isMounted';
+import autoScrollToTop from '../hooks/autoScrollToTop';
+
 import LandingThemeGrid from './components/landing/LandingThemeGrid';
 
 import CustomFooter from './CustomFooter';
@@ -22,8 +24,10 @@ LandingScreen.propTypes = {
   navigation: PropTypes.object,
 };
 export default function LandingScreen(props) {
-  const [localThemes, setLocalThemes] = useState({});
+  const [localThemes, setLocalThemes] = useState([]);
   const isMounted = useIsMounted();
+
+  autoScrollToTop(props);
 
   const item = {
     arrow: require('../assets/pictures/right-arrow.png'),
@@ -34,26 +38,14 @@ export default function LandingScreen(props) {
     bottomTitle2: 'Échange avec un professionnel',
   };
 
-  const didFocusSubscription = props.navigation.addListener(
-    'didFocus',
-    () => {
-      window.scrollTo(0, 0);
-    },
-  );
-  
-  const willBlurSubscription = props.navigation.addListener(
-    'willBlur',
-    () => {
-      didFocusSubscription.remove();
-      willBlurSubscription.remove();
-    },
-  );
-
   useEffect(() => {
     async function _fetchThemes() {
       if (isMounted.current) {
         const _themes = await RemoteApi.fetchThemes();
-        setLocalThemes(_themes);
+
+        if (isMounted.current) {
+          setLocalThemes(_themes);
+        }
       }
     }
 
@@ -62,11 +54,8 @@ export default function LandingScreen(props) {
         const uniqId = await UserService.getUniqueId();
 
         if (uniqId !== undefined && uniqId) {
-          console.log(uniqId);
+          const {token} = await RemoteApi.registerUser(uniqId);
 
-          const {user, token} = await RemoteApi.registerUser(uniqId);
-
-          console.log(token);
           if (token) {
             await UserService.setJWT(token);
           }

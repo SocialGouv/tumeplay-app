@@ -9,6 +9,7 @@ ProductContentList.propTypes = {
 
 export default function ProductContentList(props) {
   const [productBox] = useState(props.item);
+  const [customProducts] = useState(props.products);
   const [shortMode] = useState(props.shortMode);
 
   function renderRow(key, itemQty, itemText) {
@@ -37,5 +38,8 @@ export default function ProductContentList(props) {
     return null;
   }
 
-  return _renderProductList(productBox.products);
+  const _targetList =
+    productBox.products.length > 0 ? productBox.products : customProducts;
+
+  return _renderProductList(_targetList);
 }

@@ -17,7 +17,7 @@ export default function ContactButton() {
         style={[Styles.landingBottomWrapper]}
         onPress={_contactMail}>
         <Text style={Styles.landingBottomText}>
-          Tu te poses des questions ? Envoie-les nous, nous y répondrons !
+          Tu te poses des questions ?{'\n'}Envoie-les nous !
         </Text>
         <View
           style={{
@@ -37,7 +37,7 @@ export default function ContactButton() {
             }}
             source={require('../../../assets/pictures/right-arrow.png')}
           />
-          <Text style={Styles.landingBottomButtonNext}>Voir</Text>
+          <Text style={Styles.landingBottomButtonNext}>Contacter</Text>
         </View>
       </TouchableOpacity>
     </View>

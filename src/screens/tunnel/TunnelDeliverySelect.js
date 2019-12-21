@@ -11,10 +11,14 @@ TunnelDeliverySelect.propTypes = {
 
 export default function TunnelDeliverySelect(props) {
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
+  const [selectedProducts] = useState(
+    props.navigation.state.params.selectedProducts,
+  );
 
   function _onDone(deliveryType) {
     const _params = {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
       deliveryType: deliveryType,
     };
     if (deliveryType == 'home') {

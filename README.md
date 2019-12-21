@@ -37,3 +37,9 @@ react-app-rewired start
 Because we are using a special system to link everything, some Node modules may not be compatible / too old for web ( see react-native-device-info ).
 
 We use a postinstall "sed" to inline replace old export to new export format ( may won't work on Mac system ).
+
+## Linter side-effect
+
+Linter may overreact to some code, and automatically add watched variables on useEffect, which may cause infinite loop on theses two files : 
+- ContentScreen; remove "eventListener" on useEffect hook
+- HeaderRight; remove "eventListener" on useEffect hook

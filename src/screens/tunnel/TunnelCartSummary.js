@@ -19,10 +19,19 @@ TunnelCartSummary.propTypes = {
 
 export default function TunnelCartSummary(props) {
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
+  const [deliveryType] = useState(props.navigation.state.params.deliveryType);
+  const [selectedProducts] = useState(
+    props.navigation.state.params.selectedProducts,
+  );
   const [userAdress] = useState(props.navigation.state.params.userAdress);
 
   async function _confirmOrder() {
-    const _isSuccess = await RemoteApi.confirmOrder(selectedItem);
+    const _isSuccess = await RemoteApi.confirmOrder(
+      selectedItem,
+      selectedProducts,
+      userAdress,
+      deliveryType,
+    );
     if (_isSuccess) {
       const _newTokens = await UserService.subTokens(200);
 
@@ -34,6 +43,7 @@ export default function TunnelCartSummary(props) {
     _confirmOrder();
     props.navigation.navigate('TunnelOrderConfirm', {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
       userAdress: userAdress,
     });
   }
@@ -41,6 +51,7 @@ export default function TunnelCartSummary(props) {
   function _goBack() {
     props.navigation.navigate('TunnelUserAddress', {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
       userAdress: userAdress,
     });
   }
@@ -85,7 +96,11 @@ export default function TunnelCartSummary(props) {
             <Text style={TunnelCartSummaryStyle.productTitle}>
               {selectedItem.title}
             </Text>
-            <ProductContentList shortMode={true} item={selectedItem} />
+            <ProductContentList
+              shortMode={true}
+              products={selectedProducts}
+              item={selectedItem}
+            />
           </View>
         </View>
       </View>

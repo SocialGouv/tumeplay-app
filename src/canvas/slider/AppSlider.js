@@ -56,8 +56,7 @@ export default function AppSlider(props) {
 
   function _renderItem(flatListArgs) {
     const localProps = {...flatListArgs, dimensions: {width, height}};
-    console.log('DIMENSIONS');
-    console.log(Dimensions.get('window').height);
+
     const localStyle =
       Platform.OS == 'web'
         ? {
@@ -128,7 +127,6 @@ export default function AppSlider(props) {
   }
 
   function _onMomentumScrollEnd(e) {
-    console.log('PASS');
     const offset = e.nativeEvent.contentOffset.x;
     // Touching very very quickly and continuous brings about
     // a variation close to - but not quite - the width.

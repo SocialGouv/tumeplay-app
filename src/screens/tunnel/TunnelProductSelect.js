@@ -13,47 +13,34 @@ import ProductModal from '../components/tunnel/ProductModal';
 import ProductSelectHeader from '../components/tunnel/ProductSelectHeader';
 
 import useIsMounted from '../../hooks/isMounted';
+import autoScrollToTop from '../../hooks/autoScrollToTop';
 
 TunnelProductSelect.propTypes = {
   navigation: PropTypes.object,
 };
 export default function TunnelProductSelect(props) {
-  const [selectedItem, setSelectedItem] = useState(false);
-  const [localScroll, setLocalScroll] = useState(null);
-  const [localProducts, setLocalProducts] = useState([]);
+  const [selectedItem, setSelectedItem] = useState({});
+  const [localBoxs, setLocalBoxs] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useIsMounted();
 
-  const didFocusSubscription = props.navigation.addListener(
-    'didFocus',
-    () => {
-      window.scrollTo(0, 0);
-    },
-  );
-  
-  const willBlurSubscription = props.navigation.addListener(
-    'willBlur',
-    () => {
-      didFocusSubscription.remove();
-      willBlurSubscription.remove();
-    },
-  );
+  autoScrollToTop(props);
 
   useEffect(() => {
-    async function _fetchProducts() {
-      const _products = await RemoteApi.fetchProducts();
+    async function _fetchBoxs() {
+      const _boxs = await RemoteApi.fetchBoxsData();
 
       if (isMounted.current) {
-        setLocalProducts(_products);
-
-        localScroll.scrollTo({x: 0, y: -200, animated: true});
+        setLocalBoxs(_boxs.boxs);
+        setAllProducts(_boxs.products);
       }
     }
 
-    _fetchProducts();
-  }, [isMounted, localScroll]);
+    _fetchBoxs();
+  }, [isMounted]);
 
-  function _onProductClicked(selectedItem) {
+  function _onBoxClicked(selectedItem) {
     setSelectedItem(selectedItem);
     setShowModal(true);
   }
@@ -62,29 +49,32 @@ export default function TunnelProductSelect(props) {
     setShowModal(!showModal);
   }
 
-  const ForwardedProductModal = forwardRef(() => (
+  const ForwardedBoxModal = forwardRef(() => (
     <ProductModal
       onOrder={_onOrder}
       showModal={showModal}
       item={selectedItem}
+      allProducts={allProducts}
       onClose={_toggleModal}
     />
   ));
 
-  function _onOrder() {
+  function _onOrder(selectedProducts) {
     setShowModal(false);
+
     props.navigation.navigate('TunnelDeliverySelect', {
       selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
     });
   }
 
-  function _renderProductsCards() {
-    return localProducts.map((item, key) => {
+  function _renderBoxsCards() {
+    return localBoxs.map((item, key) => {
       return (
         <ProductCard
           key={key}
           item={item}
-          onPress={() => _onProductClicked(item)}
+          onPress={() => _onBoxClicked(item)}
         />
       );
     });
@@ -93,16 +83,16 @@ export default function TunnelProductSelect(props) {
   return (
     <SafeAreaView style={Styles.safeAreaView}>
       <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
-        <ScrollView ref={ref => setLocalScroll(ref)} style={{flex: 0.9}}>
+        <ScrollView style={{flex: 0.9}}>
           <ProductSelectHeader />
 
-          {_renderProductsCards()}
+          {_renderBoxsCards()}
 
-          <ContactButton/>
+          <ContactButton />
 
-          <CustomFooter containerStyle={{ paddingLeft: 0, paddingRight: 0 }}/>
+          <CustomFooter containerStyle={{paddingLeft: 0, paddingRight: 0}} />
         </ScrollView>
-        <ForwardedProductModal />
+        <ForwardedBoxModal />
       </View>
     </SafeAreaView>
   );

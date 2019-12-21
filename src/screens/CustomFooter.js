@@ -8,7 +8,11 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
+CustomFooter.propTypes = {
+  containerStyle: PropTypes.object,
+};
 export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
   function _contactMail() {
@@ -32,16 +36,15 @@ export default function CustomFooter(props) {
       fontSize: 13,
     },
   });
-  const containerStyle = {	  
+  const containerStyle = {
     flex: 0.1,
     flexDirection: 'column',
     paddingLeft: 15,
     paddingRight: 15,
-    marginTop: 15,      
+    marginTop: 15,
   };
   return (
-    <View
-      style={[containerStyle, props.containerStyle]}>
+    <View style={[containerStyle, props.containerStyle]}>
       <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 0.2}}>
           <Image

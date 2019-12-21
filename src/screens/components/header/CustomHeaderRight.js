@@ -82,7 +82,7 @@ export default function CustomHeaderRight(props) {
     }
 
     _fetchTokens();
-  }, [eventListener, isMounted]);
+  }, [isMounted]);
 
   function _gotoProductSelect() {
     props.navigation.navigate('TunnelProductSelect');

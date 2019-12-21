@@ -11,7 +11,7 @@ TopMenu.propTypes = {
 };
 
 export default function TopMenu(props) {
-  const [activeFilter, setActiveFilter] = useState(0);
+  const [activeFilter, setActiveFilter] = useState(1);
   const [selectedTheme] = useState(props.selectedTheme);
 
   function _onDone(key) {
@@ -49,11 +49,11 @@ export default function TopMenu(props) {
   });
 
   const _menuItems = [
-    {id: 0, key: 0, text: 'A poils'},
-    {id: 1, key: 0, text: 'Les WTF'},
-    {id: 2, key: 0, text: 'Sexploration'},
-    {id: 3, key: 0, text: 'Nos droits'},
-    {id: 4, key: 0, text: 'Sexysanté'},
+    {id: 1, key: 1, text: 'A poils'},
+    {id: 2, key: 2, text: 'Les WTF'},
+    {id: 3, key: 3, text: 'Sexploration'},
+    {id: 4, key: 4, text: 'Nos droits'},
+    {id: 5, key: 5, text: 'Sexysanté'},
   ];
 
   const _menuButtons = _menuItems.map((item, key) => {
@@ -62,18 +62,18 @@ export default function TopMenu(props) {
         key={key}
         style={[
           menuStyle.itemButton,
-          activeFilter == key
+          activeFilter == item.id
             ? menuStyle.activeItemButton
             : menuStyle.normalItemButton,
           {alignSelf: 'flex-start'},
         ]}
         onPress={() => {
-          _onDone(key);
+          _onDone(item.id);
         }}>
         <Text
           style={[
             menuStyle.itemText,
-            activeFilter == key ? menuStyle.activeItemText : false,
+            activeFilter == item.id ? menuStyle.activeItemText : false,
           ]}>
           {item.text}
         </Text>

@@ -88,17 +88,14 @@ var Styles = {
   },
   questionText: {
     color: Colors.secondaryText,
-    fontFamily: Colors.textFont,
+    fontFamily: Colors.appTitleFont,
     fontSize: 30,
     marginBottom: 0,
     paddingBottom: 0,
     marginTop: 0,
     paddingTop: 0,
     textAlign: 'center',
-    flex: 1,
-    textShadowColor: '#303030',
-    textShadowOffset: {width: -1, height: 0},
-    textShadowRadius: 10,
+    flex: 1,             
   },
 
   finishText: {

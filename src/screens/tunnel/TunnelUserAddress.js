@@ -152,7 +152,7 @@ export default function TunnelUserAddress(props) {
           backgroundColor: Colors.backgroundColor,
           paddingLeft: 15,
           paddingRight: 15,
-          paddingTop: 15,
+          paddingTop: 5,
         },
       ]}>
       <Backlink step={3} onPress={_goBack} />
@@ -162,21 +162,21 @@ export default function TunnelUserAddress(props) {
       </View>
 
       <CustomTextInput
-        inputLabel="Ton Prénom"
+        inputLabel="Prénom"
         inputPlaceholder="Ton Prénom"
         onChangeText={val => _handleChange('firstName', val)}
         isValid={localValid.firstName}
         currentValue={localAdress.firstName}
       />
       <CustomTextInput
-        inputLabel="Ton Nom"
+        inputLabel="Nom"
         inputPlaceholder="Ton Nom"
         onChangeText={val => _handleChange('lastName', val)}
         isValid={localValid.lastName}
         currentValue={localAdress.lastName}
       />
       <CustomTextInput
-        inputLabel="Ton adresse e-mail"
+        inputLabel="Adresse e-mail"
         inputPlaceholder="Ton adresse e-mail"
         onChangeText={val => _handleChange('emailAdress', val)}
         isValid={localValid.emailAdress}
@@ -185,7 +185,7 @@ export default function TunnelUserAddress(props) {
 
       {deliveryType == 'home' && (
         <CustomTextInput
-          inputLabel="Ton adresse"
+          inputLabel="Adresse"
           inputPlaceholder="Ton adresse"
           onChangeText={val => _handleChange('adress', val)}
           isValid={localValid.adress}
@@ -200,7 +200,7 @@ export default function TunnelUserAddress(props) {
               Styles.placeholderText,
               {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
             ]}>
-            * Champs Obligatoire
+            * Champs obligatoires
           </Text>
         </View>
       </View>

@@ -6,9 +6,9 @@ var Styles = {
   gridContainer: {
     flex: 1,
     width: '100%',
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 15,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 14,
     backgroundColor: '#000000',
     flexDirection: 'column',
   },
@@ -16,7 +16,7 @@ var Styles = {
   gridItemPicture: {
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
-    height: 150,
+    height: 130,
     flex: 1,
   },
   gridItemTextContainer: {
@@ -31,6 +31,7 @@ var Styles = {
     margin: 0,
     color: Colors.mainButton,
     fontSize: 23,
+    lineHeight: 24,
     fontFamily: Colors.titleCard,
   },
 };

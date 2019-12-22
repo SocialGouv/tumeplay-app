@@ -62,7 +62,6 @@ export default function ContentScreen(props) {
   useEffect(() => {
     async function _fetchContents() {
       const _contents = await RemoteApi.fetchContents(selectedTheme);
-      console.log(_contents);
       if (isMounted.current) {
         setFullContents(_contents);
         _filterContent(1);
@@ -99,11 +98,7 @@ export default function ContentScreen(props) {
   }, [currentCategory, fullContents]);
 
   useEffect(() => {
-    console.log(currentCategory);
-    var _filtered = fullQuestions.filter(
-      question => question.category == currentCategory,
-    );
-    setLocalQuestions(_filtered);
+    setLocalQuestions(fullQuestions);
   }, [currentCategory, fullQuestions]);
 
   useEffect(() => {
@@ -126,7 +121,22 @@ export default function ContentScreen(props) {
     }
   }, [needResultModal]);
 
+  function shuffleArray(array) {
+    let i = array.length - 1;
+    for (; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
   function _toggleQuizzModal() {
+    let randomQuestions = shuffleArray(fullQuestions);
+    randomQuestions = randomQuestions.slice(0, 10);
+
+    setLocalQuestions(randomQuestions);
     setIsQuizzModalVisible(!isQuizzModalVisible);
   }
 

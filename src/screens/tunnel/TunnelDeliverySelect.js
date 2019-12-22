@@ -41,7 +41,7 @@ export default function TunnelDeliverySelect(props) {
           backgroundColor: Colors.backgroundColor,
           paddingLeft: 15,
           paddingRight: 15,
-          paddingTop: 15,
+          paddingTop: 5,
           paddingBottom: 15,
         },
       ]}>

@@ -122,11 +122,7 @@ const RemoteApi = {
         return DefaultProducts;
       } else {
         const contents = await RemoteApi.fetch(ProductsEndpoint);
-
         contents.boxs = await RemoteApi.mapPictures(contents.boxs);
-
-        console.log(contents);
-
         return contents;
       }
     } catch (e) {

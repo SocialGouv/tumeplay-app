@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+
+import Colors from '../../../styles/Color';
 import useIsMounted from '../../../hooks/isMounted';
 
 import PropTypes from 'prop-types';
@@ -43,6 +45,7 @@ export default function ExpandableText(props) {
     title: {
       color: '#F1732C',
       fontSize: 28,
+      fontFamily: Colors.titleCard,
     },
     text: {
       color: '#4F4F4F',
@@ -60,12 +63,13 @@ export default function ExpandableText(props) {
     readMore: {
       color: '#F1732C',
       textDecorationLine: 'underline',
+      fontSize: 13,
     },
     readMorePicture: {
-      marginRight: 3,
+      marginRight: 8,
       width: 16,
       height: 16,
-      marginTop: 3,
+      marginTop: 1,
       paddingTop: 0,
       resizeMode: 'contain',
     },

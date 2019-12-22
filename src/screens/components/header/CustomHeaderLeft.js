@@ -20,8 +20,8 @@ export default function CustomHeaderLeft(props) {
     },
     logo: {
       marginLeft: 15,
-      width: 160,
-      height: 30,
+      width: 140,
+      height: 25,
     },
     back: {
       marginTop: 3,

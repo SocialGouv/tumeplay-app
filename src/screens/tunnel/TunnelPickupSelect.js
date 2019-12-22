@@ -63,7 +63,7 @@ export default function TunnelPickupSelect(props) {
           backgroundColor: Colors.backgroundColor,
           paddingLeft: 15,
           paddingRight: 15,
-          paddingTop: 15,
+          paddingTop: 5,
         },
       ]}>
       <Backlink step={2} onPress={_goBack} />

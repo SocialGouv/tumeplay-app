@@ -15,16 +15,16 @@ export default function CustomHeader(props) {
   const wrapperStyle = {
     backgroundColor: '#000000',
     flex: 1,
-    height: 65,
-    maxHeight: 65,
+    height: 55,
+    maxHeight: 55,
     paddingBottom: 10,
   };
   let headerStyle = {
     backgroundColor: '#000000',
     borderBottomWidth: 2,
     borderBottomColor: '#3D1D0B',
-    height: 65,
-    maxHeight: 65,
+    height: 55,
+    maxHeight: 55,
     flex: 1,
     flexDirection: 'row',
     paddingTop: 10,

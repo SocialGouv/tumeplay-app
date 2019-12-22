@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import {EventRegister} from 'react-native-event-listeners';
 
+import Splitter from '../components/tunnel/Splitter';
 import Backlink from '../components/tunnel/Backlink';
 import ProductContentList from '../components/tunnel/ProductContentList';
 
@@ -63,12 +64,9 @@ export default function TunnelCartSummary(props) {
       <View style={{flex: 0.1}}>
         <Text style={Styles.tunnelTitle}>Ton récapitulatif</Text>
       </View>
-      <View style={TunnelCartSummaryStyle.splitterWrapper}>
-        <Image
-          style={TunnelCartSummaryStyle.splitterPicture}
-          source={require('../../assets/pictures/splitter.png')}
-        />
-      </View>
+
+      <Splitter />
+
       <View style={{flex: 0.2, marginBottom: 15}}>
         <Text style={TunnelCartSummaryStyle.title}>Tes articles</Text>
         <View
@@ -104,12 +102,9 @@ export default function TunnelCartSummary(props) {
           </View>
         </View>
       </View>
-      <View style={TunnelCartSummaryStyle.splitterWrapper}>
-        <Image
-          style={TunnelCartSummaryStyle.splitterPicture}
-          source={require('../../assets/pictures/splitter.png')}
-        />
-      </View>
+
+      <Splitter />
+
       <View style={{flex: 0.15}}>
         <View style={{flex: 0.2}}>
           <Text style={TunnelCartSummaryStyle.title}>Adresse de livraison</Text>
@@ -135,12 +130,9 @@ export default function TunnelCartSummary(props) {
           </View>
         </View>
       </View>
-      <View style={TunnelCartSummaryStyle.splitterWrapper}>
-        <Image
-          style={TunnelCartSummaryStyle.splitterPicture}
-          source={require('../../assets/pictures/splitter.png')}
-        />
-      </View>
+
+      <Splitter />
+
       <View style={{flex: 0.15}}>
         <Text style={[TunnelCartSummaryStyle.subTitle, {marginBottom: 8}]}>
           Nous t&apos;enverrons un mail pour t&apos;informer de

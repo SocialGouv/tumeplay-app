@@ -6,7 +6,7 @@ var Styles = {
     backgroundColor: Colors.backgroundColor,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 15,
+    paddingTop: 5,
     flexDirection: 'column',
   },
   title: {
@@ -33,6 +33,7 @@ var Styles = {
   },
   splitterPicture: {
     width: 35,
+    minHeight: 8,
     marginTop: 5,
     marginBottom: 5,
     resizeMode: 'contain',

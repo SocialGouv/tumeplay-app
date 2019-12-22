@@ -91,7 +91,9 @@ export default function QuizzFinishScreen(props) {
           bottom: 0,
           left: 0,
           width: '100%',
-          resizeMode: 'contain',
+          minHeight: '100%',
+          borderRadius: 7,
+          resizeMode: 'stretch',
         }}
         source={require('../assets/pictures/quizz-finish-background.png')}
       />
@@ -112,6 +114,7 @@ export default function QuizzFinishScreen(props) {
             textAlign: 'center',
             fontSize: 20,
             color: Colors.mainButton,
+            fontFamily: Colors.titleCard,
           }}>
           Tu as gagné assez de points pour recevoir ton cadeau gratuitement !
         </Text>
@@ -122,7 +125,12 @@ export default function QuizzFinishScreen(props) {
           style={Styles.PictureFinish}
           source={require('../assets/pictures/header-right.png')}
         />
-        <Text style={[headerStyle.text, {height: 40, minHeight: 40}]}>
+        <Text
+          style={[
+            headerStyle.text,
+            Styles.withShadow,
+            {height: 40, minHeight: 40},
+          ]}>
           {availableTokens} points !
         </Text>
       </View>

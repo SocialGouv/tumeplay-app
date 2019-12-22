@@ -38,13 +38,13 @@ export default function CustomHeaderRight(props) {
     text: {
       borderRadius: 15,
       padding: 5,
-      paddingTop: 8,
-      paddingBottom: 3,
+      paddingTop: 4,
+      paddingBottom: 1,
       marginRight: 20,
       textAlign: 'right',
-      width: 85,
+      width: 75,
       paddingLeft: 5,
-      paddingRight: 25,
+      paddingRight: 20,
       backgroundColor: '#FFFFFF',
       borderWidth: 2,
       borderColor: Colors.mainButton,
@@ -56,8 +56,8 @@ export default function CustomHeaderRight(props) {
       position: 'absolute',
       right: 0,
       top: -3,
-      width: 38,
-      height: 38,
+      width: 33,
+      height: 33,
     },
   });
 

@@ -16,6 +16,7 @@ import ProductCustomSelectList from './ProductCustomSelectList';
 
 import ModalCloseButton from '../global/ModalCloseButton';
 import Styles from '../../../styles/Styles';
+import Colors from '../../../styles/Color';
 import ModalStyle from '../../../styles/components/Modal';
 
 ProductModal.propTypes = {
@@ -55,6 +56,7 @@ export default function ProductModal(props) {
     title: {
       color: '#F1732C',
       fontSize: 28,
+      fontFamily: Colors.titleCard,
     },
     subtitle: {
       color: '#F1732C',
@@ -65,6 +67,7 @@ export default function ProductModal(props) {
       fontSize: 14,
       marginBottom: 25,
       marginTop: 10,
+      lineHeight: 22,
     },
 
     readMoreWrapper: {

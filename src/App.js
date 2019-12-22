@@ -43,8 +43,14 @@ export default function App() {
         <View style={{flex: 1, alignSelf: 'center'}}>
           <Text style={Styles.appTitle}>{item.title}</Text>
         </View>
-        <View style={{flex: 3, alignSelf: 'center'}}>
-          <Text style={Styles.text}>{item.text}</Text>
+        <View
+          style={{
+            flex: 3,
+            alignSelf: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}>
+          <Text style={[Styles.text, {fontSize: 18}]}>{item.text}</Text>
         </View>
       </View>
     );

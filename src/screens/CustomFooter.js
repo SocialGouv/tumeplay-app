@@ -56,8 +56,8 @@ export default function CustomFooter(props) {
           <View style={{flex: 1, flexDirection: 'column', paddingTop: 3}}>
             <View>
               <Image
-                source={require('../assets/pictures/text-logo.png')}
-                style={{marginRight: 15, width: 100, height: 20}}
+                source={require('../assets/pictures/header-left-logo.png')}
+                style={{marginRight: 15, width: 115, height: 22}}
               />
             </View>
             <View>

@@ -17,6 +17,7 @@ var Styles = {
     color: Colors.secondaryText,
     fontFamily: Colors.appTitleFont,
     fontSize: 30,
+    lineHeight: 34,
     marginBottom: 0,
     paddingBottom: 0,
     flex: 2,
@@ -156,8 +157,8 @@ var Styles = {
     resizeMode: 'contain',
   },
   PictureFinish: {
-    width: 170,
-    height: 170,
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
     marginTop: 10,
     marginBottom: -5,
@@ -389,12 +390,14 @@ var Styles = {
     borderWidth: 0,
     backgroundColor: Colors.mainButton,
     borderRadius: 7,
+    minHeight: 45,
+    alignItems: 'center',
   },
   landingBottomText: {
     flex: 0.75,
     color: '#FFFFFF',
     fontFamily: Colors.textFont,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   landingBottomButtonNext: {
@@ -404,7 +407,7 @@ var Styles = {
   landingScreenTitle: {
     color: Colors.mainColor,
     fontFamily: Colors.appTitleFont,
-    fontSize: 22,
+    fontSize: 26,
     marginLeft: 15,
     marginRight: 15,
     marginBottom: 15,

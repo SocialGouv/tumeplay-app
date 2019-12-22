@@ -95,7 +95,8 @@ var Styles = {
     marginTop: 0,
     paddingTop: 0,
     textAlign: 'center',
-    flex: 1,             
+    flex: 1,
+    lineHeight: 34,
   },
 
   finishText: {

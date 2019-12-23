@@ -273,7 +273,7 @@ const contents = [
     title:
       'À partir de quel âge la loi autorise à avoir des rapports sexuels ?',
     text:
-      'Il n'y a pas d'âge légal à partir duquel on peut avoir des rapports sexuels. Cependant, un mineur de moins de 15 ans ne peut pas avoir de rapports sexuels avec un majeur de plus de 18 ans.',
+      "Il n'y a pas d'âge légal à partir duquel on peut avoir des rapports sexuels. Cependant, un mineur de moins de 15 ans ne peut pas avoir de rapports sexuels avec un majeur de plus de 18 ans.",
   },
   {
     key: 26,

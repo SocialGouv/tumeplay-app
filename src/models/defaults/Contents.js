@@ -52,7 +52,7 @@ const contents = [
     picture: require('../../assets/pictures/contents/DTC-photocontenu-pertesblanches.jpg'),
     title: "Les pertes blanches, c'est quoi ?",
     text:
-      'Le vagin est tapissé d'une muqueuse qui ressemble à celle de l'intérieur des joues. Comme toutes les muqueuses, la muqueuse vaginale produit un liquide en continu qui permet un auto-nettoyage constant et un maintien d'une flore équilibrée. Il peut se manifester par des pertes blanches.',
+      "Le vagin est tapissé d'une muqueuse qui ressemble à celle de l'intérieur des joues. Comme toutes les muqueuses, la muqueuse vaginale produit un liquide en continu qui permet un auto-nettoyage constant et un maintien d'une flore équilibrée. Il peut se manifester par des pertes blanches.",
   },
   {
     key: 6,

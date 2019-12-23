@@ -7,7 +7,7 @@ import DefaultProducts from '../models/defaults/Products';
 import DefaultBoarding from '../models/defaults/Boarding';
 
 // @TODO : Set this in environment
-const BaseRemote = 'http://40.89.163.125:5000/';
+const BaseRemote = 'https://tumeplay-api.fabrique.social.gouv.fr/';
 const BaseRemoteApi = BaseRemote + 'api/';
 
 const QuizzEndpoint = BaseRemoteApi + 'quizzs';

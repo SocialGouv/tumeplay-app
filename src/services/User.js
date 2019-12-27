@@ -11,13 +11,15 @@ const User = {
     let uniqueId = false;
 
     if (Platform.OS == 'web') {
+      var n = false;
+      var base = false;
       if (window.performance) {
         var s = performance.timing.navigationStart;
-        var n = performance.now();
-        var base = Math.floor((s + Math.floor(n)) / 1000);
+        n = performance.now();
+        base = Math.floor((s + Math.floor(n)) / 1000);
       } else {
-        var n = new Date().getTime();
-        var base = Math.floor(n / 1000);
+        n = new Date().getTime();
+        base = Math.floor(n / 1000);
       }
       var ext = Math.floor((n % 1000) * 1000);
       var now =
@@ -55,10 +57,8 @@ const User = {
   },
   subTokens: async substractedTokens => {
     try {
-      let localUser = null;
-
       if (!User.localUser) {
-        localUser = await User.load();
+        await User.load();
       }
 
       // Not an "else".
@@ -77,10 +77,8 @@ const User = {
 
   addTokens: async addedTokens => {
     try {
-      let localUser = null;
-
       if (!User.localUser) {
-        localUser = await User.load();
+        await User.load();
       }
 
       // Not an "else".

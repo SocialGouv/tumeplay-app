@@ -30,6 +30,15 @@ export default function CustomTextInput(props) {
         onChangeText={props.onChangeText}
         defaultValue={props.currentValue}
       />
+      <Text
+        style={[
+          Styles.placeholderText,
+          {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
+        ]}>
+        {props.emailAdressWrongFormat
+          ? 'Le format du mail est incorrect'
+          : undefined}
+      </Text>
     </View>
   );
 }

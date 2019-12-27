@@ -86,6 +86,13 @@ var Styles = {
     color: '#FFFFFF',
     fontSize: 18,
   },
+
+  tunnelButtonTextOpaque: {
+    opacity: 0.2,
+    color: '#FFFFFF',
+    fontSize: 18,
+  },
+
   questionText: {
     color: Colors.secondaryText,
     fontFamily: Colors.appTitleFont,

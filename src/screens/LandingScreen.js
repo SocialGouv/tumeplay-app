@@ -1,16 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 
 import useIsMounted from '../hooks/isMounted';
 import autoScrollToTop from '../hooks/autoScrollToTop';
+
+import CustomTouchableOpacity from './components/global/CustomTouchableOpacity';
 
 import LandingThemeGrid from './components/landing/LandingThemeGrid';
 
@@ -25,6 +20,7 @@ LandingScreen.propTypes = {
 };
 export default function LandingScreen(props) {
   const [localThemes, setLocalThemes] = useState([]);
+
   const isMounted = useIsMounted();
 
   autoScrollToTop(props);
@@ -95,7 +91,7 @@ export default function LandingScreen(props) {
 
         {/* Bottom part */}
         <View style={{flex: 0.25, marginLeft: 15, marginRight: 15}}>
-          <TouchableOpacity
+          <CustomTouchableOpacity
             style={[Styles.landingBottomWrapper]}
             onPress={_onSelected_lieuxUtiles}>
             <Text style={Styles.landingBottomText}>{item.bottomTitle1}</Text>
@@ -118,9 +114,9 @@ export default function LandingScreen(props) {
               />
               <Text style={Styles.landingBottomButtonNext}>Voir</Text>
             </View>
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
 
-          <TouchableOpacity
+          <CustomTouchableOpacity
             style={[Styles.landingBottomWrapper]}
             onPress={_onSelected_echangeProfessionnel}>
             <Text style={Styles.landingBottomText}>{item.bottomTitle2}</Text>
@@ -143,7 +139,7 @@ export default function LandingScreen(props) {
               />
               <Text style={Styles.landingBottomButtonNext}>Accéder</Text>
             </View>
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         </View>
         <CustomFooter />
       </ScrollView>

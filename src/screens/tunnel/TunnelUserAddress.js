@@ -43,6 +43,8 @@ export default function TunnelUserAddress(props) {
     lastName: '',
     emailAdress: '',
     adress: '',
+    zipCode: '',
+    city: '',
   };
 
   var defaultIsValid = {
@@ -50,6 +52,8 @@ export default function TunnelUserAddress(props) {
     lastName: -1,
     emailAdress: -1,
     adress: -1,
+    zipCode: -1,
+    city: -1,
   };
   const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
@@ -60,6 +64,7 @@ export default function TunnelUserAddress(props) {
 
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
   const [localValid, setLocalValid] = useState({});
+  const [mainValidFlag, setMainValidFlag] = useState(false);
 
   useEffect(() => {
     if (props.navigation.state.params.userAdress) {
@@ -69,6 +74,8 @@ export default function TunnelUserAddress(props) {
         lastName: userAdress.lastName,
         emailAdress: userAdress.emailAdress,
         adress: userAdress.adress,
+        zipCode: userAdress.zipCode,
+        city: userAdress.city,
       };
 
       setLocalAdress(newAdress);
@@ -81,31 +88,44 @@ export default function TunnelUserAddress(props) {
     // Reset all validations
     const checkedIsValid = defaultIsValid;
 
-    if (localAdress.firstName == '') {
+    if (localAdress.firstName === '') {
       checkedIsValid.firstName = false;
       isValid = false;
     }
 
-    if (localAdress.lastName == '') {
+    if (localAdress.lastName === '') {
       checkedIsValid.lastName = false;
       isValid = false;
     }
 
-    if (
-      localAdress.emailAdress == '' ||
-      !emailRegex.test(localAdress.emailAdress)
-    ) {
+    if (localAdress.emailAdress === '') {
       checkedIsValid.emailAdress = false;
       isValid = false;
+    } else {
+      if (!emailRegex.test(localAdress.emailAdress)) {
+        checkedIsValid.emailAdress = false;
+        checkedIsValid.emailAdressWrongFormat = true;
+        isValid = false;
+      }
     }
 
-    if (localAdress.adress == '' && deliveryType == 'home') {
+    if (localAdress.adress === '' && deliveryType === 'home') {
       checkedIsValid.adress = false;
       isValid = false;
     }
 
-    setLocalValid(checkedIsValid);
+    if (localAdress.zipCode === '') {
+      checkedIsValid.zipCode = false;
+      isValid = false;
+    }
 
+    if (localAdress.city === '') {
+      checkedIsValid.city = false;
+      isValid = false;
+    }
+
+    setLocalValid(checkedIsValid);
+    setMainValidFlag(isValid);
     return isValid;
   }
 
@@ -123,7 +143,7 @@ export default function TunnelUserAddress(props) {
   }
 
   function _goBack() {
-    if (deliveryType == 'home') {
+    if (deliveryType === 'home') {
       props.navigation.navigate('TunnelDeliverySelect', {
         selectedItem: selectedItem,
         selectedProducts: selectedProducts,
@@ -140,7 +160,7 @@ export default function TunnelUserAddress(props) {
     localAdress[`${name}`] = value;
 
     setLocalAdress(localAdress);
-
+    _validateFields();
     return value;
   }
 
@@ -180,16 +200,37 @@ export default function TunnelUserAddress(props) {
         inputPlaceholder="Ton adresse e-mail"
         onChangeText={val => _handleChange('emailAdress', val)}
         isValid={localValid.emailAdress}
+        emailAdressWrongFormat={localValid.emailAdressWrongFormat}
         currentValue={localAdress.emailAdress}
       />
 
-      {deliveryType == 'home' && (
+      {deliveryType === 'home' && (
         <CustomTextInput
           inputLabel="Adresse"
           inputPlaceholder="Ton adresse"
           onChangeText={val => _handleChange('adress', val)}
           isValid={localValid.adress}
           currentValue={localAdress.adress}
+        />
+      )}
+
+      {deliveryType === 'home' && (
+        <CustomTextInput
+          inputLabel="Ville"
+          inputPlaceholder="Ta ville"
+          onChangeText={val => _handleChange('city', val)}
+          isValid={localValid.city}
+          currentValue={localAdress.city}
+        />
+      )}
+
+      {deliveryType === 'home' && (
+        <CustomTextInput
+          inputLabel="Code Postal"
+          inputPlaceholder="Ton code postal"
+          onChangeText={val => _handleChange('zipCode', val)}
+          isValid={localValid.zipCode}
+          currentValue={localAdress.zipCode}
         />
       )}
 
@@ -215,7 +256,14 @@ export default function TunnelUserAddress(props) {
           }}
           onPress={_onDone}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>Suivant</Text>
+            <Text
+              style={
+                mainValidFlag
+                  ? Styles.tunnelButtonText
+                  : Styles.tunnelButtonTextOpaque
+              }>
+              Suivant
+            </Text>
           </View>
         </TouchableOpacity>
       </View>

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 import ExpandableText from '../global/ExpandableText';
+import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
 
 ContentCard.propTypes = {
   item: PropTypes.object,
@@ -78,7 +79,7 @@ export default function ContentCard(props) {
 
   return (
     <View style={cardStyle.container}>
-      <TouchableOpacity
+      <CustomTouchableOpacity
         style={cardStyle.buttonWrapper}
         onPress={() => {
           _onReadMoreClick();
@@ -91,7 +92,7 @@ export default function ContentCard(props) {
           lessPicture={'minus-orange.png'}
           morePicture={'plus-orange.png'}
         />
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
     </View>
   );
 }

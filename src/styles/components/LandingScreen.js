@@ -1,7 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform, Dimensions} from 'react-native';
 import Colors from '../Color';
 
 // if browser && screenWidth < 420
+const isWeb = Platform.OS == 'web';
+const pictureHeight = isWeb ? Dimensions.get('window').width * 0.25 : 130;
 var Styles = {
   gridContainer: {
     flex: 1,
@@ -16,7 +18,9 @@ var Styles = {
   gridItemPicture: {
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
-    height: 130,
+    height: pictureHeight,
+    maxHeight: 300,
+    minHeight: 130,
     flex: 1,
   },
   gridItemTextContainer: {

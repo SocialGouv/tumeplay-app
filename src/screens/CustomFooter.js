@@ -63,7 +63,7 @@ export default function CustomFooter(props) {
             <View>
               <Text style={footerStyle.text}>
                 Tumeplay est une initiative du Ministère des Solidarités et de
-                la Santé autour de la prévention sexuelle.
+                la Santé.
               </Text>
             </View>
           </View>

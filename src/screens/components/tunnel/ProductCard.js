@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet} from 'react-native';
+
+import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
 
 ProductCard.propTypes = {
   item: PropTypes.object,
@@ -63,7 +65,9 @@ export default function ProductCard(props) {
 
   return (
     <View style={cardStyle.container}>
-      <TouchableOpacity style={cardStyle.buttonWrapper} onPress={props.onPress}>
+      <CustomTouchableOpacity
+        style={cardStyle.buttonWrapper}
+        onPress={props.onPress}>
         <Image source={productBox.picture} style={cardStyle.picture} />
 
         <View style={cardStyle.textContainer}>
@@ -78,7 +82,7 @@ export default function ProductCard(props) {
           />
           <Text style={cardStyle.readMore}>Plus d infos</Text>
         </View>
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
     </View>
   );
 }

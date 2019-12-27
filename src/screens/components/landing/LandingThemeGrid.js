@@ -1,6 +1,7 @@
 import React from 'react';
-import {Image, TouchableOpacity, View, FlatList, Text} from 'react-native';
+import {Image, View, FlatList, Text} from 'react-native';
 import PropTypes from 'prop-types';
+import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
 
 import LandingStyle from '../../../styles/components/LandingScreen';
 
@@ -24,7 +25,7 @@ export default function LandingThemeGrid(props) {
         currentIndex = currentIndex + 1;
         return (
           <View style={[LandingStyle.gridContainer, localStyle]}>
-            <TouchableOpacity
+            <CustomTouchableOpacity
               style={LandingStyle.gridItemButton}
               onPress={() => {
                 props.onPress(item);
@@ -39,7 +40,7 @@ export default function LandingThemeGrid(props) {
               <View style={LandingStyle.gridItemTextContainer}>
                 <Text style={LandingStyle.gridItemText}>{item.value}</Text>
               </View>
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           </View>
         );
       }}

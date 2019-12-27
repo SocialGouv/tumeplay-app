@@ -18,7 +18,7 @@ var Styles = {
     borderColor: '#000000',
     position: 'relative',
     maxWidth: isWeb ? 500 : undefined,
-    maxHeight: isWeb ? 700 : undefined,
+    maxHeight: isWeb ? 650 : undefined,
   },
   backdrop: {
     position: 'absolute',

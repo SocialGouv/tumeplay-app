@@ -39,7 +39,7 @@ export default function CustomHeader(props) {
     headerStyle = {
       ...headerStyle,
       ...{
-        maxWidth: 900,
+        maxWidth: 800,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 0,

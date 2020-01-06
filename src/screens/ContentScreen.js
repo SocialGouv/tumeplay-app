@@ -158,7 +158,7 @@ export default function ContentScreen(props) {
 
     setIsAge25(_isAge25 || null);
 
-    if (_isAge25 === null) {
+    if (_isAge25 === null || _isAge25 === undefined) {
       // Step 2
       _toggleMoreThan25YearsModal();
     } else {

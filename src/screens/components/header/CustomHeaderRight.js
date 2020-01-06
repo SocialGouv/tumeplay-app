@@ -109,7 +109,7 @@ export default function CustomHeaderRight(props) {
     console.log(
       `In CustomHeaderRight: ---> isAgeMoreThan25: ${isAgeMoreThan25}`,
     );
-    if (isAgeMoreThan25 !== null) {
+    if (isAgeMoreThan25 !== null && isAgeMoreThan25 !== undefined) {
       if (isAgeMoreThan25) {
         props.navigation.navigate('TunnelBadgeList');
       } else {

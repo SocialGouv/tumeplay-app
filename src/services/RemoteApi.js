@@ -5,6 +5,7 @@ import DefaultContents from '../models/defaults/Contents';
 import DefaultQuestions from '../models/defaults/Questions';
 import DefaultProducts from '../models/defaults/Products';
 import DefaultBoarding from '../models/defaults/Boarding';
+import DefaultBadges from '../models/defaults/Badges';
 
 // @TODO : Set this in environment
 const BaseRemote = 'https://tumeplay-api.fabrique.social.gouv.fr/';
@@ -129,6 +130,13 @@ const RemoteApi = {
       throw Error(e);
     }
   },
+  fetchBadges: async () => {
+    try {
+      return DefaultBadges;
+    } catch (e) {
+      throw Error(e);
+    }
+  },
   fetchThemes: async () => {
     try {
       if (LOCAL_MODE) {
@@ -147,7 +155,7 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         const contents = DefaultContents;
         const filtered = contents.filter(
-          content => content.theme == selectedTheme.id,
+          content => content.theme === selectedTheme.id,
         );
 
         return filtered;
@@ -155,7 +163,7 @@ const RemoteApi = {
         const contents = await RemoteApi.fetch(ContentsEndpoint);
 
         let filtered = contents.filter(
-          content => content.theme == selectedTheme.id,
+          content => content.theme === selectedTheme.id,
         );
 
         filtered = await RemoteApi.mapPictures(filtered);
@@ -171,7 +179,7 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         const questions = DefaultQuestions;
         const filtered = questions.filter(
-          question => question.theme == selectedTheme.id,
+          question => question.theme === selectedTheme.id,
         );
 
         return filtered;
@@ -179,7 +187,7 @@ const RemoteApi = {
         const contents = await RemoteApi.fetch(QuizzEndpoint);
 
         let filtered = contents.filter(
-          content => content.theme == selectedTheme.id,
+          content => content.theme === selectedTheme.id,
         );
 
         filtered = await RemoteApi.mapPictures(filtered);

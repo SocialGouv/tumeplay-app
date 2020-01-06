@@ -4,4 +4,6 @@ export default class UserModel {
   availableTokens = 0;
   token = false;
   address = {};
+  isMoreThan25YearsOld = null;
+  latestBadgeIDWon = null;
 }

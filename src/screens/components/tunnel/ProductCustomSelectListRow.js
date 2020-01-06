@@ -10,7 +10,6 @@ ProductCustomSelectListRow.propTypes = {
 export default function ProductCustomSelectListRow(props) {
   const [item] = useState(props.item);
   const [isSelected, setIsSelected] = useState(false);
-  const [selectAllowed, setSelectAllowed] = useState(props.selectAllowed);
 
   const localStylesheet = StyleSheet.create({
     readMorePicture: {

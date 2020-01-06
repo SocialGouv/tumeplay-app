@@ -1,79 +1,132 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
-
-import Colors from '../../../styles/Color';
-import useIsMounted from '../../../hooks/isMounted';
-
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
+import useIsMounted from '../../../hooks/isMounted';
+
+import Colors from '../../../styles/Color';
+
 ExpandableText.propTypes = {
-  content: PropTypes.object,
   isExpanded: PropTypes.bool,
-  containerStyle: PropTypes.object,
-  readMoreStyle: PropTypes.object,
+  onReady: PropTypes.func,
+  renderTruncatedFooter: PropTypes.func,
+  renderRevealedFooter: PropTypes.func,
   purpleMode: PropTypes.bool,
+  readMoreStyle: PropTypes.array,
+  content: PropTypes.object,
+  containerStyle: PropTypes.object,
   textStyle: PropTypes.object,
 };
 
 export default function ExpandableText(props) {
-  // @TODO : Not linted, because placeholder below.
-  const [needReadMore, setNeedReadMore] = useState(true);
+  const [measured, setMeasured] = useState(false);
+  const [shouldShowReadMore, setShouldShowReadMore] = useState(false);
+  const [showAllText, setShowAllText] = useState(props.isExpanded);
   const isMounted = useIsMounted();
+  let _text = false;
 
   useEffect(() => {
-    // @TODO : Placeholder for height mesurement between full and restricted height
-    // @TODO : set "needReadmore" only if full length > truncated length
-  }, [isMounted]);
+    async function nextFrameAsync() {
+      return new Promise(resolve => requestAnimationFrame(() => resolve()));
+    }
 
-  // @TODO : Handle picture name with props.
-  let _targetPicture = false;
+    async function measureHeightAsync(component) {
+      return new Promise(resolve => {
+        component.measure((x, y, w, h) => {
+          resolve(h);
+        });
+      });
+    }
 
-  if (props.purpleMode) {
-    _targetPicture = props.isExpanded
-      ? require('../../../assets/pictures/minus-purple.png')
-      : require('../../../assets/pictures/plus-purple.png');
-  } else {
-    _targetPicture = props.isExpanded
-      ? require('../../../assets/pictures/minus-orange.png')
-      : require('../../../assets/pictures/plus-orange.png');
+    async function handleHeight(_text) {
+      await nextFrameAsync();
+
+      if (!isMounted.current) {
+        return;
+      }
+
+      // Get the height of the text with no restriction on number of lines
+      const fullHeight = await measureHeightAsync(_text);
+
+      setMeasured(true);
+
+      await nextFrameAsync();
+
+      if (!isMounted.current) {
+        return;
+      }
+
+      // Get the height of the text now that number of lines has been set
+      const limitedHeight = await measureHeightAsync(_text);
+
+      if (fullHeight > limitedHeight) {
+        setShouldShowReadMore(true);
+      }
+      if (props.onReady) {
+        props.onReady();
+      }
+    }
+
+    handleHeight(_text);
+  }, [_text, isMounted, props]);
+
+  function _handlePressReadMore() {
+    console.log('Pressed read more...');
+    setShowAllText(true);
   }
 
-  const cardStyle = StyleSheet.create({
-    textContainer: {
-      padding: 15,
-    },
-    title: {
-      color: '#F1732C',
-      fontSize: 28,
-      fontFamily: Colors.titleCard,
-    },
-    text: {
-      color: '#4F4F4F',
-      fontSize: 14,
-      marginBottom: 25,
-      marginTop: 10,
-    },
-    readMoreWrapper: {
-      position: 'absolute',
-      right: 15,
-      bottom: 15,
-      flex: 1,
-      flexDirection: 'row',
-    },
-    readMore: {
-      color: '#F1732C',
-      textDecorationLine: 'underline',
-      fontSize: 13,
-    },
-    readMorePicture: {
-      marginRight: 8,
-      width: 16,
-      height: 16,
-      marginTop: 1,
-      paddingTop: 0,
-      resizeMode: 'contain',
-    },
-  });
+  function _handlePressReadLess() {
+    console.log('Pressed read less...');
+    setShowAllText(false);
+  }
+
+  function _maybeRenderReadMore() {
+    if (shouldShowReadMore && !props.isExpanded) {
+      if (props.renderTruncatedFooter) {
+        return props.renderTruncatedFooter(_handlePressReadMore);
+      }
+
+      return (
+        <TouchableOpacity
+          style={cardStyle.readMoreWrapper}
+          onPress={_handlePressReadMore}>
+          <Image
+            style={cardStyle.readMorePicture}
+            source={
+              props.purpleMode
+                ? require('../../../assets/pictures/plus-purple.png')
+                : require('../../../assets/pictures/plus-orange.png')
+            }
+          />
+          <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
+            Plus d'infos
+          </Text>
+        </TouchableOpacity>
+      );
+    } else if (shouldShowReadMore && props.isExpanded) {
+      if (props.renderRevealedFooter) {
+        return props.renderRevealedFooter(_handlePressReadLess);
+      }
+
+      return (
+        <TouchableOpacity
+          style={cardStyle.readMoreWrapper}
+          onPress={_handlePressReadLess}>
+          <Image
+            style={cardStyle.readMorePicture}
+            source={
+              props.purpleMode
+                ? require('../../../assets/pictures/minus-purple.png')
+                : require('../../../assets/pictures/minus-orange.png')
+            }
+          />
+          <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
+            Refermer
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }
 
   return (
     <View style={props.containerStyle}>
@@ -82,17 +135,55 @@ export default function ExpandableText(props) {
           <Text style={cardStyle.title}>{props.content.title}</Text>
         )}
         <Text
-          numberOfLines={props.content.numberOfLines}
+          numberOfLines={
+            measured && !props.isExpanded ? props.content.numberOfLines : 0
+          }
+          ref={text => {
+            _text = text;
+          }}
           style={[cardStyle.text, {...props.textStyle}]}>
           {props.content.text}
         </Text>
-      </View>
-      <View style={cardStyle.readMoreWrapper}>
-        <Image style={cardStyle.readMorePicture} source={_targetPicture} />
-        <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
-          {props.isExpanded ? 'Refermer' : "Plus d'infos"}
-        </Text>
+
+        {_maybeRenderReadMore()}
       </View>
     </View>
   );
 }
+
+const cardStyle = StyleSheet.create({
+  textContainer: {
+    padding: 15,
+  },
+  title: {
+    color: '#F1732C',
+    fontSize: 28,
+    fontFamily: Colors.titleCard,
+  },
+  text: {
+    color: '#4F4F4F',
+    fontSize: 14,
+    marginBottom: 25,
+    marginTop: 10,
+  },
+  readMoreWrapper: {
+    position: 'absolute',
+    right: 15,
+    bottom: 15,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  readMore: {
+    color: '#F1732C',
+    textDecorationLine: 'underline',
+    fontSize: 13,
+  },
+  readMorePicture: {
+    marginRight: 8,
+    width: 16,
+    height: 16,
+    marginTop: 1,
+    paddingTop: 0,
+    resizeMode: 'contain',
+  },
+});

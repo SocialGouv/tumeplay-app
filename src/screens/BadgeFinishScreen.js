@@ -10,12 +10,13 @@ import useIsMounted from '../hooks/isMounted';
 
 import PropTypes from 'prop-types';
 
-QuizzFinishScreen.propTypes = {
-  onOrder: PropTypes.func,
+BadgeFinishScreen.propTypes = {
+  onRetry: PropTypes.func,
   availableTokens: PropTypes.number,
+  badgeInfoDetails: PropTypes.object,
 };
 
-export default function QuizzFinishScreen(props) {
+export default function BadgeFinishScreen(props) {
   const [availableTokens, setAvailableTokens] = useState(props.availableTokens);
 
   const [eventListener, setEventListener] = useState(false);
@@ -44,6 +45,7 @@ export default function QuizzFinishScreen(props) {
         EventRegister.removeEventListener(eventListener);
       };
     }
+
     _fetchUserData();
   }, [isMounted]);
 
@@ -80,6 +82,61 @@ export default function QuizzFinishScreen(props) {
     },
   });
 
+  // Rendering:
+
+  const badgeItems = {
+    tu_obtiens_le_badge: (
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 20,
+          color: Colors.mainButton,
+          fontFamily: Colors.titleCard,
+        }}>
+        Tu obtiens le badge :
+      </Text>
+    ),
+
+    prochain_badge: (
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 16,
+          color: Colors.mainButton,
+          fontFamily: Colors.titleCard,
+        }}>
+        <b>
+          {props.badgeInfoDetails && props.badgeInfoDetails.nextBadge
+            ? `*Prochain badge: ${props.badgeInfoDetails.nextBadge.title}`
+            : ''}
+        </b>
+      </Text>
+    ),
+
+    badge_title_item:
+      props.badgeInfoDetails && props.badgeInfoDetails.updatedBadge ? (
+        <Text
+          style={[
+            headerStyle.text,
+            Styles.withShadow,
+            {height: 40, minHeight: 40},
+          ]}>
+          {props.badgeInfoDetails.updatedBadge.title}
+        </Text>
+      ) : null,
+
+    badge_picture: (
+      <Image
+        style={[Styles.PictureFinish, {marginTop: 25}]}
+        source={
+          props.badgeInfoDetails && props.badgeInfoDetails.updatedBadge
+            ? props.badgeInfoDetails.updatedBadge.picture
+            : undefined
+        }
+      />
+    ),
+  };
+
   return (
     <View
       style={{
@@ -87,6 +144,7 @@ export default function QuizzFinishScreen(props) {
         borderRadius: 7,
         backgroundColor: '#FEE7E3',
         position: 'relative',
+        minWidth: 350,
       }}>
       <Image
         style={{
@@ -111,7 +169,7 @@ export default function QuizzFinishScreen(props) {
           Bravo !
         </Text>
       </View>
-      <View style={{flex: 0.15, paddingLeft: 15, paddingRight: 15}}>
+      <View style={{flex: 0.15, paddingLeft: 40, paddingRight: 40}}>
         <Text
           style={{
             textAlign: 'center',
@@ -119,23 +177,28 @@ export default function QuizzFinishScreen(props) {
             color: Colors.mainButton,
             fontFamily: Colors.titleCard,
           }}>
-          Tu as gagné assez de points pour recevoir ton cadeau gratuitement !
+          Ton score s'éleve a
         </Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 40,
+            color: Colors.mainButton,
+            fontFamily: Colors.titleCard,
+          }}>
+          {availableTokens} points
+        </Text>
+        {props.badgeInfoDetails && props.badgeInfoDetails.updatedBadge
+          ? badgeItems.tu_obtiens_le_badge
+          : undefined}
       </View>
 
       <View style={{flex: 0.3, alignItems: 'center'}}>
-        <Image
-          style={Styles.PictureFinish}
-          source={require('../assets/pictures/header-right.png')}
-        />
-        <Text
-          style={[
-            headerStyle.text,
-            Styles.withShadow,
-            {height: 40, minHeight: 40},
-          ]}>
-          {availableTokens} points !
-        </Text>
+        {badgeItems.badge_picture}
+
+        {badgeItems.badge_title_item}
+
+        {badgeItems.prochain_badge}
       </View>
 
       <View style={{flex: 0.2}}></View>
@@ -144,8 +207,8 @@ export default function QuizzFinishScreen(props) {
         style={{position: 'absolute', width: '100%', bottom: 25, zIndex: 1}}>
         <TouchableOpacity
           style={[Styles.bottomButton, {borderRadius: 25}]}
-          onPress={props.onOrder}>
-          <Text style={Styles.bottomCommText}>Commander</Text>
+          onPress={props.onRetry}>
+          <Text style={Styles.bottomCommText}>Recommencer</Text>
         </TouchableOpacity>
       </View>
     </View>

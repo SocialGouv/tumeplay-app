@@ -27,7 +27,7 @@ export default function ProductCustomSelectList(props) {
 
       if (!_newState) {
         _newProducts = _newProducts.filter(
-          localItem => localItem.id != item.id,
+          localItem => localItem.id !== item.id,
         );
       } else {
         _newProducts.push(item);

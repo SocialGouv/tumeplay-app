@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 
 const autoScrollToTop = props => {
-  if (Platform.OS == 'web') {
+  if (Platform.OS === 'web') {
     const didFocusSubscription = props.navigation.addListener(
       'didFocus',
       () => {

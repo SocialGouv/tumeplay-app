@@ -13,19 +13,6 @@ export default function ContentCard(props) {
   const [content, setContent] = useState(props.item);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  function _onReadMoreClick() {
-    if (content.numberOfLines == 0) {
-      setContent(old => {
-        return {...old, numberOfLines: 3};
-      });
-    } else {
-      setContent(old => {
-        return {...old, numberOfLines: 0};
-      });
-    }
-    setIsExpanded(!isExpanded);
-  }
-
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,
@@ -82,7 +69,7 @@ export default function ContentCard(props) {
       <CustomTouchableOpacity
         style={cardStyle.buttonWrapper}
         onPress={() => {
-          _onReadMoreClick();
+          setIsExpanded(!isExpanded);
         }}>
         <Image source={content.picture} style={cardStyle.picture} />
 

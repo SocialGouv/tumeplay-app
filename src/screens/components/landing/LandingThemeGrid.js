@@ -21,7 +21,7 @@ export default function LandingThemeGrid(props) {
       renderItem={({item}) => {
         // That's a really dirty way; but strangely the only one working.
         const localStyle =
-          currentIndex % 2 == 0 ? {marginRight: 7} : {marginLeft: 7};
+          currentIndex % 2 === 0 ? {marginRight: 7} : {marginLeft: 7};
         currentIndex = currentIndex + 1;
         return (
           <View style={[LandingStyle.gridContainer, localStyle]}>

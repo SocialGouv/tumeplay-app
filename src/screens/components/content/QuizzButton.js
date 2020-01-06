@@ -12,7 +12,7 @@ QuizzButton.propTypes = {
 export default function QuizzButton(props) {
   // See QuizzPortal : on web, we cannot use fixed as it's won't scroll due to parent containers
   // So we extract it and set it on body.
-  const isWeb = Platform.OS == 'web';
+  const isWeb = Platform.OS === 'web';
   const wrapperStyle = {
     bottom: 95,
     left: isWeb ? '50%' : 0,
@@ -23,7 +23,7 @@ export default function QuizzButton(props) {
     position: isWeb ? undefined : 'absolute',
   };
 
-  if (Platform.OS == 'web') {
+  if (Platform.OS === 'web') {
     return (
       <QuizzPortal>
         <View style={wrapperStyle}>

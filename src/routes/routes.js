@@ -6,6 +6,7 @@ import CustomHeader from '../screens/components/header/CustomHeader';
 import ContentScreen from '../screens/ContentScreen';
 import TunnelDeliverySelect from '../screens/tunnel/TunnelDeliverySelect';
 import TunnelProductSelect from '../screens/tunnel/TunnelProductSelect';
+import TunnelBadgeList from '../screens/tunnel/TunnelBadgeList';
 import TunnelUserAddress from '../screens/tunnel/TunnelUserAddress';
 import TunnelCartSummary from '../screens/tunnel/TunnelCartSummary';
 import TunnelOrderConfirm from '../screens/tunnel/TunnelOrderConfirm';
@@ -30,6 +31,13 @@ const AppStack = createStackNavigator(
     },
     TunnelProductSelect: {
       screen: TunnelProductSelect,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
+    },
+    TunnelBadgeList: {
+      screen: TunnelBadgeList,
       navigationOptions: ({navigation}) => ({
         params: navigation.state.params,
         header: <CustomHeader navigation={navigation} withBack={true} />,

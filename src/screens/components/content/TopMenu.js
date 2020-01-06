@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 
 import Styles from '../../../styles/Styles';
 import Colors from '../../../styles/Color';
@@ -26,7 +32,8 @@ export default function TopMenu(props) {
       marginBottom: 0,
       flexShrink: 1,
       flexGrow: 1,
-
+      minWidth: 105,
+      width: '20%',
       paddingTop: 4,
       paddingBottom: 4,
     },
@@ -62,7 +69,7 @@ export default function TopMenu(props) {
         key={key}
         style={[
           menuStyle.itemButton,
-          activeFilter == item.id
+          activeFilter === item.id
             ? menuStyle.activeItemButton
             : menuStyle.normalItemButton,
           {alignSelf: 'flex-start'},
@@ -73,7 +80,7 @@ export default function TopMenu(props) {
         <Text
           style={[
             menuStyle.itemText,
-            activeFilter == item.id ? menuStyle.activeItemText : false,
+            activeFilter === item.id ? menuStyle.activeItemText : false,
           ]}>
           {item.text}
         </Text>
@@ -86,23 +93,20 @@ export default function TopMenu(props) {
       <View style={{flex: 0.65, maxHeight: 40}}>
         <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
       </View>
-      <View
-        style={{
-          flex: 0.35,
-          flexDirection: 'column',
-        }}>
-        <View
+      <View>
+        <ScrollView
+          horizontal={true}
           style={{
             flex: 1,
             paddingTop: 8,
-            marginBottom: 15,
+            marginBottom: 10,
             flexDirection: 'row',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             flexWrap: 'nowrap',
             alignContent: 'stretch',
           }}>
           {_menuButtons}
-        </View>
+        </ScrollView>
       </View>
     </View>
   );

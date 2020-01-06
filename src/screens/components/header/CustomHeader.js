@@ -35,7 +35,7 @@ export default function CustomHeader(props) {
     justifyContent: 'center',
   };
 
-  if (Platform.OS == 'web') {
+  if (Platform.OS === 'web') {
     headerStyle = {
       ...headerStyle,
       ...{

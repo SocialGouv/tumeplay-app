@@ -17,7 +17,8 @@ CustomHeaderRight.propTypes = {
 export default function CustomHeaderRight(props) {
   const [availableTokens, setAvailableTokens] = useState(props.availableTokens);
   const [eventListener, setEventListener] = useState(false);
-
+  const [eventListener25Years, setEventListener25Years] = useState(false);
+  const [isAgeMoreThan25, setIsAgeMoreThan25] = useState(null);
   const isMounted = useIsMounted();
 
   const headerStyle = StyleSheet.create({
@@ -81,11 +82,40 @@ export default function CustomHeaderRight(props) {
       };
     }
 
+    async function _fetchMoreThan25YO() {
+      const _isAgeMoreThan25 = await User.getIsMoreThan25YearsOld();
+      if (isMounted.current) {
+        setIsAgeMoreThan25(_isAgeMoreThan25);
+
+        const _listener = EventRegister.addEventListener(
+          'isAgeMoreThan25Changed',
+          data => {
+            setIsAgeMoreThan25(data);
+          },
+        );
+        setEventListener25Years(_listener);
+      }
+
+      return () => {
+        EventRegister.removeEventListener(eventListener25Years);
+      };
+    }
+
     _fetchTokens();
+    _fetchMoreThan25YO();
   }, [isMounted]);
 
   function _gotoProductSelect() {
-    props.navigation.navigate('TunnelProductSelect');
+    console.log(
+      `In CustomHeaderRight: ---> isAgeMoreThan25: ${isAgeMoreThan25}`,
+    );
+    if (isAgeMoreThan25 !== null) {
+      if (isAgeMoreThan25) {
+        props.navigation.navigate('TunnelBadgeList');
+      } else {
+        props.navigation.navigate('TunnelProductSelect');
+      }
+    }
   }
 
   return (

@@ -9,6 +9,7 @@ import AnswerButton from './components/quizz/AnswerButton';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
+  resetQuestions: PropTypes.bool,
   onFinishedQuizz: PropTypes.func,
 };
 
@@ -25,6 +26,11 @@ export default function QuizzScreen(props) {
     setQuestions(props.questions);
     setTotal(props.questions.length);
   }, [props.questions]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    setDisplayAnswer(false);
+  }, [props.resetQuestions]);
 
   function _answerQuestion(key) {
     const currentQuestion = questions[currentIndex];

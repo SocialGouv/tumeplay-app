@@ -136,7 +136,7 @@ export default function ProductModal(props) {
               <ProductContentList item={productBox} />
             </View>
           )}
-          {productBox && productBox.products.length == 0 && (
+          {productBox && productBox.products.length === 0 && (
             <View style={{paddingLeft: 15, paddingRight: 15}}>
               <ProductCustomSelectList
                 onSelectChange={onSelectChange}

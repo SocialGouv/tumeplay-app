@@ -24,24 +24,11 @@ export default function AnswerScreen(props) {
     });
   }, [_currentQuestion.explanation, isMounted]);
 
-  function _onReadMoreClick() {
-    if (content.numberOfLines == 0) {
-      setContent(old => {
-        return {...old, numberOfLines: 3};
-      });
-    } else {
-      setContent(old => {
-        return {...old, numberOfLines: 0};
-      });
-    }
-    setIsExpanded(!isExpanded);
-  }
-
   let _rightAnswer = _currentQuestion.answers.filter(
-    _rightAnswer => _rightAnswer.id == _currentQuestion.rightAnswer,
+    _rightAnswer => _rightAnswer.id === _currentQuestion.rightAnswer,
   );
 
-  if (_rightAnswer === undefined || _rightAnswer.length == 0) {
+  if (_rightAnswer === undefined || _rightAnswer.length === 0) {
     _rightAnswer = '';
   } else {
     _rightAnswer = _rightAnswer[0].text;
@@ -49,7 +36,7 @@ export default function AnswerScreen(props) {
 
   return (
     <View style={{flex: 3}}>
-      {_rightAnswer != '' && (
+      {_rightAnswer !== '' && (
         <View style={Styles.rightAnswerButton}>
           <View style={[QuizzAnswerStyle.pictureAndTextWrapper]}>
             <View style={{flex: 0.2, maxWidth: 50, justifyContent: 'center'}}>
@@ -70,7 +57,7 @@ export default function AnswerScreen(props) {
         <TouchableOpacity
           style={[QuizzAnswerStyle.explanationInnerWrapper, {flexGrow: 1}]}
           onPress={() => {
-            _onReadMoreClick();
+            setIsExpanded(!isExpanded);
           }}>
           <ExpandableText
             containerStyle={{backgroundColor: '#FFFFFF', borderRadius: 7}}

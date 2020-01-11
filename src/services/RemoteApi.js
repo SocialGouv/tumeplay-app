@@ -85,7 +85,7 @@ const RemoteApi = {
         body: JSON.stringify(postData),
       });
 
-      return await response.json();
+      return response;
     } catch (e) {
       throw Error(e);
     }

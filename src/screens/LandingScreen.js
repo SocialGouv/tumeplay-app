@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import useIsMounted from '../hooks/isMounted';
 import autoScrollToTop from '../hooks/autoScrollToTop';
 
+import UnderlineText from './components/global/UnderlineText';
 import CustomTouchableOpacity from './components/global/CustomTouchableOpacity';
 
 import LandingThemeGrid from './components/landing/LandingThemeGrid';
@@ -81,7 +82,14 @@ export default function LandingScreen(props) {
         {/* Title and grid */}
         <View style={{flex: 0.75}}>
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
-          <Text style={Styles.landingScreenSubtitle}>{item.subtitle}</Text>
+          <Text style={Styles.landingScreenSubtitle}>
+            Explore nos thématiques, découvre les questions réponses associées
+            et réponds aux quizz pour{' '}
+            <UnderlineText textStyle={Styles.landingScreenSubtitle}>
+              gagner
+            </UnderlineText>{' '}
+            des box !
+          </Text>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
             <LandingThemeGrid
               onPress={_onSelectedTheme}

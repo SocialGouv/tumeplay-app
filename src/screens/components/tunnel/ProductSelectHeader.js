@@ -3,6 +3,7 @@ import {Text, View, Image} from 'react-native';
 
 import Styles from '../../../styles/Styles';
 import TunnelProductSelectStyle from '../../../styles/components/TunnelProductSelect';
+import UnderlineText from '../global/UnderlineText';
 
 import useIsMounted from '../../../hooks/isMounted';
 import User from '../../../services/User';
@@ -29,8 +30,9 @@ export default function ProductSelectHeader() {
     <View>
       <Text style={Styles.appTitle}>Commande ta box gratuitement !</Text>
       <Text style={[Styles.text, Styles.textLeft, {fontSize: 18}]}>
-        Super ! Tu as {availableTokens} points, choisis une de nos quatre boxs
-        pour en apprendre plus et passer à l&apos;action en toute sécurité !
+        <UnderlineText textStyle={Styles.text}>Super</UnderlineText> ! Tu as{' '}
+        {availableTokens} points, choisis une de nos quatre boxs pour en
+        apprendre plus et passer à l&apos;action en toute sécurité !
       </Text>
       <Image
         style={TunnelProductSelectStyle.topLogoPicture}

@@ -12,6 +12,7 @@ CustomTextInput.propTypes = {
   isValid: PropTypes.bool,
   onChangeText: PropTypes.func,
   currentValue: PropTypes.string,
+  emailAdressWrongFormat: PropTypes.bool,
 };
 
 export default function CustomTextInput(props) {

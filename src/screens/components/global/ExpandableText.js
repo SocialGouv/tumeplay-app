@@ -12,7 +12,7 @@ ExpandableText.propTypes = {
   renderTruncatedFooter: PropTypes.func,
   renderRevealedFooter: PropTypes.func,
   purpleMode: PropTypes.bool,
-  readMoreStyle: PropTypes.array,
+  readMoreStyle: PropTypes.object,
   content: PropTypes.object,
   containerStyle: PropTypes.object,
   textStyle: PropTypes.object,

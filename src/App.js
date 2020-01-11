@@ -7,6 +7,7 @@ import AppStack from './routes/routes';
 import Onboarding from './canvas/slider/Onboarding';
 
 import RemoteApi from './services/RemoteApi';
+import UserService from './services/User';
 
 import useIsMounted from './hooks/isMounted';
 
@@ -32,10 +33,19 @@ export default function App() {
       }
     }
 
+    async function _alreadyRegistered() {
+      const _passedOnboarding = await UserService.hasPassedOnboarding();
+
+      if (_passedOnboarding) {
+        setShowRealApp(true);
+      }
+    }
+    _alreadyRegistered();
     _fetchSlides();
   }, [isMounted]);
 
   function _onDone() {
+    UserService.setPassedOnboarding(true);
     setShowRealApp(true);
   }
 

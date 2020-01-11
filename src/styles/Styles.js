@@ -111,7 +111,6 @@ var Styles = {
     fontFamily: Colors.appTitleFont,
     fontSize: 33,
     textAlign: 'center',
-    flex: 1,
   },
   descText: {
     color: '#5f6dc4',

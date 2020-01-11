@@ -15,6 +15,7 @@ QuizzScreen.propTypes = {
 
 export default function QuizzScreen(props) {
   const [displayAnswer, setDisplayAnswer] = useState(false);
+  const [isRightAnswer, setIsRightAnswer] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [total, setTotal] = useState(0);
@@ -30,6 +31,7 @@ export default function QuizzScreen(props) {
   useEffect(() => {
     setCurrentIndex(0);
     setDisplayAnswer(false);
+    setIsRightAnswer(false);
   }, [props.resetQuestions]);
 
   function _answerQuestion(key) {
@@ -38,6 +40,9 @@ export default function QuizzScreen(props) {
       questionId: currentQuestion.id,
       givenAnswer: currentQuestion.answers[key].id,
     };
+    setIsRightAnswer(
+      currentQuestion.answers[key].id == currentQuestion.rightAnswer,
+    );
     setDisplayAnswer(!displayAnswer);
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
   }
@@ -47,6 +52,7 @@ export default function QuizzScreen(props) {
       props.onFinishedQuizz(givenAnswers);
     } else {
       setCurrentIndex(currentIndex + 1);
+      setIsRightAnswer(false);
       setDisplayAnswer(!displayAnswer);
     }
   }
@@ -96,7 +102,12 @@ export default function QuizzScreen(props) {
               <View style={Styles.flexOne}></View>
             )}
 
-            {displayAnswer && <AnswerScreen question={_currentQuestion} />}
+            {displayAnswer && (
+              <AnswerScreen
+                isRightAnswer={isRightAnswer}
+                question={_currentQuestion}
+              />
+            )}
           </View>
         </View>
 

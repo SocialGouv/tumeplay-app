@@ -8,6 +8,8 @@ import Styles from '../styles/Styles';
 import User from '../services/User';
 import useIsMounted from '../hooks/isMounted';
 
+import UnderlineText from './components/global/UnderlineText';
+
 import PropTypes from 'prop-types';
 
 BadgeFinishScreen.propTypes = {
@@ -161,13 +163,18 @@ export default function BadgeFinishScreen(props) {
 
       <View style={{flex: 0.1}}></View>
       <View style={{flex: 0.15}}>
-        <Text
-          style={[
-            Styles.finishText,
-            {textDecorationColor: '#E55C22', textDecorationLine: 'underline'},
-          ]}>
-          Bravo !
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={Styles.finishText}>
+            <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
+              Bravo !
+            </UnderlineText>
+          </Text>
+        </View>
       </View>
       <View style={{flex: 0.15, paddingLeft: 40, paddingRight: 40}}>
         <Text

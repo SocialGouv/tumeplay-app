@@ -244,7 +244,7 @@ const User = {
 
       return result;
     } catch (e) {
-      throw e;
+      throw Error(e);
     }
   },
 
@@ -264,6 +264,39 @@ const User = {
     }
 
     return null;
+  },
+  setPassedOnboarding: async passedOnBoarding => {
+    let localUser = User.localUser;
+
+    if (!localUser) {
+      localUser = await User.load();
+    }
+
+    if (localUser) {
+      localUser.passedOnBoarding = passedOnBoarding;
+
+      await User.save();
+
+      return localUser;
+    }
+
+    return null;
+  },
+  hasPassedOnboarding: async () => {
+    try {
+      if (!User.localUser) {
+        var localUser = await User.load();
+        if (localUser) {
+          return localUser.passedOnBoarding !== undefined;
+        }
+
+        return false;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Error(e);
+    }
   },
   getUniqueId: async () => {
     try {

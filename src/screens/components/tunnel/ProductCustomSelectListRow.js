@@ -54,6 +54,8 @@ export default function ProductCustomSelectListRow(props) {
     }
   }
 
+  const _title = item.qty ? item.qty + ' ' + item.title : item.title;
+
   return (
     <View>
       <TouchableOpacity
@@ -83,7 +85,7 @@ export default function ProductCustomSelectListRow(props) {
               fontFamily: 'Chivo-Regular',
               fontSize: 15,
             }}>
-            {item.qty} {item.title}
+            {_title}
           </Text>
           <Text
             style={{

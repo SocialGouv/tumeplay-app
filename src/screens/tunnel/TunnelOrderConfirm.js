@@ -4,8 +4,9 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Colors from '../../styles/Color';
-
 import Styles from '../../styles/Styles';
+
+import UnderlineText from '../components/global/UnderlineText';
 
 TunnelOrderConfirm.propTypes = {
   navigation: PropTypes.object,
@@ -42,15 +43,11 @@ export default function TunnelOrderConfirm(props) {
             Styles.textCenter,
             {zIndex: 4, fontSize: 33},
           ]}>
-          Ta commande a bien été prise en compte !
+          Ta commande a bien{'\n'}
+          <UnderlineText borderMargin={-14}>
+            été prise en compte !
+          </UnderlineText>
         </Text>
-        <Image
-          style={{
-            width: '90%',
-            marginTop: -12,
-          }}
-          source={require('../../assets/pictures/line.png')}
-        />
       </View>
       <View style={{flex: 0.15, marginTop: 30}}>
         <Text

@@ -9,12 +9,14 @@ import useIsMounted from '../../../hooks/isMounted';
 
 AnswerScreen.propTypes = {
   question: PropTypes.object,
+  isRightAnswer: PropTypes.bool,
 };
 
 export default function AnswerScreen(props) {
   const [content, setContent] = useState({});
   const [isExpanded, setIsExpanded] = useState(false);
   const _currentQuestion = props.question;
+  const _isRightAnswer = props.isRightAnswer;
   const isMounted = useIsMounted();
 
   useEffect(() => {
@@ -40,10 +42,18 @@ export default function AnswerScreen(props) {
         <View style={Styles.rightAnswerButton}>
           <View style={[QuizzAnswerStyle.pictureAndTextWrapper]}>
             <View style={{flex: 0.2, maxWidth: 50, justifyContent: 'center'}}>
-              <Image
-                style={QuizzAnswerStyle.checkPicture}
-                source={require('../../../assets/pictures/check.png')}
-              />
+              {_isRightAnswer && (
+                <Image
+                  style={QuizzAnswerStyle.checkPicture}
+                  source={require('../../../assets/pictures/answer.right.png')}
+                />
+              )}
+              {!_isRightAnswer && (
+                <Image
+                  style={QuizzAnswerStyle.checkPicture}
+                  source={require('../../../assets/pictures/answer.wrong.png')}
+                />
+              )}
             </View>
             <View style={{flex: 0.8, justifyContent: 'center'}}>
               <Text style={[Styles.rightAnswerButtonText, {fontSize: 15}]}>

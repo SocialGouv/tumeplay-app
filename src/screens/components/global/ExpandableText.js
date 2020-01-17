@@ -162,9 +162,11 @@ const cardStyle = StyleSheet.create({
   },
   text: {
     color: '#4F4F4F',
-    fontSize: 14,
+    fontSize: 13,
     marginBottom: 25,
     marginTop: 10,
+    lineHeight: 19,
+    fontFamily: Colors.textFont,
   },
   readMoreWrapper: {
     position: 'absolute',

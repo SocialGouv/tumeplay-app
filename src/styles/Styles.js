@@ -70,6 +70,13 @@ var Styles = {
     shadowRadius: 6,
     elevation: 1,
   },
+  withWhiteShadow: {
+    shadowColor: '#FFFFFF',
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.9,
+    shadowRadius: 6,
+    elevation: 1,
+  },
   tunnelButton: {
     flex: 1,
     width: '100%',

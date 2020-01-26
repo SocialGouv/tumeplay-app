@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, ImageBackground} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../styles/Styles';
+import {EventRegister} from 'react-native-event-listeners';
 
+import UserService from '../services/User';
 import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
@@ -34,6 +36,14 @@ export default function QuizzScreen(props) {
     setIsRightAnswer(false);
   }, [props.resetQuestions]);
 
+  async function _addTokens(_tokenAmount) {
+    const _newTokens = await UserService.addTokens(_tokenAmount);
+    const updateResultOfBadge = await UserService.updateToLatestBadge();
+    console.log('Updated result of badge:', updateResultOfBadge);
+
+    EventRegister.emit('tokensAmountChanged', _newTokens);
+  }
+
   function _answerQuestion(key) {
     const currentQuestion = questions[currentIndex];
     const localAnswer = {
@@ -45,6 +55,10 @@ export default function QuizzScreen(props) {
     );
     setDisplayAnswer(!displayAnswer);
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
+
+    const _tokenAmount =
+      currentQuestion.answers[key].id == currentQuestion.rightAnswer ? 100 : 50;
+    _addTokens(_tokenAmount);
   }
 
   function _nextQuestion() {

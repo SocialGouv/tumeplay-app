@@ -34,7 +34,7 @@ export default function TunnelCartSummary(props) {
       deliveryType,
     );
     if (_isSuccess) {
-      const _newTokens = await UserService.subTokens(200);
+      const _newTokens = await UserService.subTokens(1000);
 
       EventRegister.emit('tokensAmountChanged', _newTokens);
     }

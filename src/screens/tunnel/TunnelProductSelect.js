@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Styles from '../../styles/Styles';
 
+import UserService from '../../services/User';
 import RemoteApi from '../../services/RemoteApi';
 
 import CustomFooter from '../CustomFooter';
@@ -59,13 +60,21 @@ export default function TunnelProductSelect(props) {
     />
   ));
 
-  function _onOrder(selectedProducts) {
-    setShowModal(false);
+  async function orderProduct(selectedProducts) {
+    const _tokens = await UserService.getTokensAmount();
 
-    props.navigation.navigate('TunnelDeliverySelect', {
-      selectedItem: selectedItem,
-      selectedProducts: selectedProducts,
-    });
+    if (_tokens >= 1000) {
+      setShowModal(false);
+
+      props.navigation.navigate('TunnelDeliverySelect', {
+        selectedItem: selectedItem,
+        selectedProducts: selectedProducts,
+      });
+    }
+  }
+
+  function _onOrder(selectedProducts) {
+    orderProduct(selectedProducts);
   }
 
   function _renderBoxsCards() {

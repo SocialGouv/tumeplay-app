@@ -26,6 +26,7 @@ module.exports = function override(config, env) {
   addModuleToMainRule(config, '@react-navigation');
   addModuleToMainRule(config, '@react-native-community/async-storage');
   addModuleToMainRule(config, 'react-native-event-listeners');
+  addModuleToMainRule(config, 'react-native-maps');
 
   for (const plugin of config.plugins) {
     if (plugin.constructor.name === 'DefinePlugin') {

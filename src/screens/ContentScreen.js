@@ -111,18 +111,7 @@ export default function ContentScreen(props) {
   }, [currentCategory, fullQuestions]);
 
   useEffect(() => {
-    async function _addTokens() {
-      const _newTokens = await UserService.addTokens(200);
-      const updateResultOfBadge = await UserService.updateToLatestBadge();
-      console.log('Updated result of badge:', updateResultOfBadge);
-      setbadgeInfoDetails(updateResultOfBadge);
-      setAvailableTokens(_newTokens);
-
-      EventRegister.emit('tokensAmountChanged', _newTokens);
-    }
-
     if (needResultModal) {
-      _addTokens();
       setNeedResultModal(false);
 
       if (isAge25) {

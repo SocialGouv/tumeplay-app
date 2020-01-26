@@ -93,7 +93,11 @@ const RemoteApi = {
   mapPictures: async objects => {
     return objects.map((item, key) => {
       if (item.picture) {
-        item.picture = {uri: BaseRemote + item.picture};
+        if (typeof item.picture === 'string') {
+          item.picture = {uri: BaseRemote + item.picture};
+        } else {
+          item.picture = {uri: BaseRemote + item.picture.path};
+        }
       }
       if (item.background) {
         item.background = {uri: BaseRemote + item.background};
@@ -124,6 +128,7 @@ const RemoteApi = {
       } else {
         const contents = await RemoteApi.fetch(ProductsEndpoint);
         contents.boxs = await RemoteApi.mapPictures(contents.boxs);
+        contents.products = await RemoteApi.mapPictures(contents.products);
         return contents;
       }
     } catch (e) {

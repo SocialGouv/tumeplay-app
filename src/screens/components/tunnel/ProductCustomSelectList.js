@@ -15,9 +15,19 @@ export default function ProductCustomSelectList(props) {
   const [selectAllowed, setSelectAllowed] = useState(true);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
+  function countProducts() {
+    let _total = 0;
+
+    for (const localProduct of selectedProducts) {
+      _total += localProduct.qty;
+    }
+
+    return _total;
+  }
+
   function onPress(item, _newState) {
     // not at max OR we were at max, now we deselect one.
-    const _limitReached = selectedProducts.length + 1 > 4;
+    const _limitReached = countProducts() + 1 > 4;
     const _isAllowed = !_limitReached || (_limitReached && !_newState);
 
     setSelectAllowed(_isAllowed);
@@ -27,10 +37,10 @@ export default function ProductCustomSelectList(props) {
 
       if (!_newState) {
         _newProducts = _newProducts.filter(
-          localItem => localItem.id !== item.id,
+          localItem => localItem.item.id !== item.id,
         );
       } else {
-        _newProducts.push(item);
+        _newProducts.push({item: item, qty: 1});
       }
 
       setSelectedProducts(_newProducts);
@@ -38,6 +48,27 @@ export default function ProductCustomSelectList(props) {
     }
 
     return _isAllowed;
+  }
+
+  function onQuantityAdjust(item, _newQty, mode) {
+    const _totalProducts = countProducts();
+    const _newTotal = mode == 'sub' ? _totalProducts - 1 : _totalProducts + 1;
+    const _limitReached = _newTotal > 4;
+
+    if (!_limitReached) {
+      let _newProducts = [...selectedProducts];
+
+      _newProducts = _newProducts.filter(
+        localItem => localItem.item.id !== item.id,
+      );
+
+      _newProducts.push({item: item, qty: _newQty});
+
+      setSelectedProducts(_newProducts);
+      props.onSelectChange(_newProducts);
+    }
+
+    return !_limitReached;
   }
 
   function _renderProductList(items) {
@@ -48,6 +79,7 @@ export default function ProductCustomSelectList(props) {
             key={key}
             item={item}
             onPress={onPress}
+            onQtyAdjust={onQuantityAdjust}
             selectAllowed={selectAllowed}
           />
         );

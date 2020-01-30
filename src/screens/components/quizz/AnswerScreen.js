@@ -36,27 +36,38 @@ export default function AnswerScreen(props) {
     _rightAnswer = _rightAnswer[0].text;
   }
 
+  const rightAnswerPicture = require('../../../assets/pictures/answer.right.png');
+  const wrongAnswerPicture = require('../../../assets/pictures/answer.wrong.png');
+  var currentPicture = false;
+  var localStyle = {};
+  var localTextStyle = {};
+
+  if (_isRightAnswer) {
+    currentPicture = rightAnswerPicture;
+    localStyle = {borderColor: '#FF6A00'};
+    localTextStyle = {color: '#FF6A00'};
+  } else {
+    currentPicture = wrongAnswerPicture;
+  }
+
   return (
     <View style={{flex: 3}}>
       {_rightAnswer !== '' && (
-        <View style={Styles.rightAnswerButton}>
+        <View style={[Styles.rightAnswerButton, localStyle]}>
           <View style={[QuizzAnswerStyle.pictureAndTextWrapper]}>
             <View style={{flex: 0.2, maxWidth: 50, justifyContent: 'center'}}>
-              {_isRightAnswer && (
-                <Image
-                  style={QuizzAnswerStyle.checkPicture}
-                  source={require('../../../assets/pictures/answer.right.png')}
-                />
-              )}
-              {!_isRightAnswer && (
-                <Image
-                  style={QuizzAnswerStyle.checkPicture}
-                  source={require('../../../assets/pictures/answer.wrong.png')}
-                />
-              )}
+              <Image
+                style={QuizzAnswerStyle.checkPicture}
+                source={currentPicture}
+              />
             </View>
             <View style={{flex: 0.8, justifyContent: 'center'}}>
-              <Text style={[Styles.rightAnswerButtonText, {fontSize: 15}]}>
+              <Text
+                style={[
+                  Styles.rightAnswerButtonText,
+                  {fontSize: 15},
+                  localTextStyle,
+                ]}>
                 {_rightAnswer}
               </Text>
             </View>

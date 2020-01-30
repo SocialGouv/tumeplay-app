@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, TouchableOpacity, Text, View} from 'react-native';
 
 import TunnelCartSummaryStyle from '../../../styles/components/TunnelCartSummary';
@@ -6,9 +6,54 @@ import Styles from '../../../styles/Styles';
 
 import PropTypes from 'prop-types';
 
-PointOfInterestCard.propTypes = {};
+PointOfInterestCard.propTypes = {
+  item: PropTypes.Object,
+  onPress: PropTypes.func,
+  isSelected: PropTypes.bool,
+};
 
 export default function PointOfInterestCard(props) {
+  const [localHeight, setLocalHeight] = useState(0);
+  const item = props.item;
+  const textStyle = {
+    lineHeight: 21,
+    color: '#4F4F4F',
+    fontSize: 12,
+    fontFamily: 'Chivo-Regular',
+  };
+
+  function renderTimeTable() {
+    console.log(item.horaires);
+    var _return = [];
+
+    for (const timetable in item.horaires) {
+      const dayTable = item.horaires[timetable];
+      let time = dayTable.am;
+      if (dayTable.pm) {
+        time = time + ' ' + dayTable.pm;
+      }
+      _return.push(
+        <Text style={[textStyle, {textTransform: 'capitalize'}]}>
+          {timetable} : {time}
+        </Text>,
+      );
+    }
+
+    return (
+      <View style={{height: localHeight, overflow: 'hidden', paddingLeft: 27}}>
+        {_return}
+      </View>
+    );
+  }
+
+  function displayTimeTable() {
+    if (localHeight > 0) {
+      setLocalHeight(0);
+    } else {
+      setLocalHeight(7 * 21);
+    }
+  }
+
   return (
     <TouchableOpacity
       style={{
@@ -19,11 +64,18 @@ export default function PointOfInterestCard(props) {
         paddingLeft: 10,
         paddingRight: 10,
       }}
-      onPress={props.onClose}>
+      onPress={() => {
+        console.log(item);
+        props.onPress(item);
+      }}>
       <View
         style={[
           Styles.withWhiteShadow,
-          {padding: 10, backgroundColor: '#FFFFFF', borderRadius: 7},
+          {
+            padding: 10,
+            backgroundColor: props.isSelected ? '#EBB1C8' : '#FFFFFF',
+            borderRadius: 7,
+          },
         ]}>
         <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
           <View>
@@ -37,14 +89,9 @@ export default function PointOfInterestCard(props) {
               style={[
                 TunnelCartSummaryStyle.subTitle,
                 TunnelCartSummaryStyle.emailAdress,
-                {
-                  lineHeight: 21,
-                  color: '#4F4F4F',
-                  fontSize: 12,
-                  fontFamily: 'Chivo-Regular',
-                },
+                textStyle,
               ]}>
-              49 Rue de Labelleville 95690 Nesles la vallée
+              {item.name} {item.street} {item.zipCode} {item.city}
             </Text>
           </View>
         </View>
@@ -61,12 +108,7 @@ export default function PointOfInterestCard(props) {
               style={[
                 TunnelCartSummaryStyle.subTitle,
                 TunnelCartSummaryStyle.emailAdress,
-                {
-                  lineHeight: 21,
-                  color: '#4F4F4F',
-                  fontSize: 12,
-                  fontFamily: 'Chivo-Regular',
-                },
+                textStyle,
               ]}>
               01 23 45 67 89 00
             </Text>
@@ -74,28 +116,40 @@ export default function PointOfInterestCard(props) {
         </View>
 
         <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
-          <View>
-            <Image
-              style={TunnelCartSummaryStyle.pictureAndTextPicture}
-              source={require('../../../assets/pictures/picto-clock.png')}
-            />
-          </View>
-          <View>
-            <Text
-              style={[
-                TunnelCartSummaryStyle.subTitle,
-                TunnelCartSummaryStyle.emailAdress,
-                {
-                  lineHeight: 21,
-                  color: '#4F4F4F',
-                  fontSize: 12,
-                  fontFamily: 'Chivo-Regular',
-                },
-              ]}>
-              Voir les horaires
-            </Text>
-          </View>
+          <TouchableOpacity
+            onPress={displayTimeTable}
+            style={{flexDirection: 'row'}}>
+            <View>
+              <Image
+                style={TunnelCartSummaryStyle.pictureAndTextPicture}
+                source={require('../../../assets/pictures/picto-clock.png')}
+              />
+            </View>
+            <View>
+              {localHeight == 0 && (
+                <Text
+                  style={[
+                    TunnelCartSummaryStyle.subTitle,
+                    TunnelCartSummaryStyle.emailAdress,
+                    textStyle,
+                  ]}>
+                  Voir les horaires
+                </Text>
+              )}
+              {localHeight > 0 && (
+                <Text
+                  style={[
+                    TunnelCartSummaryStyle.subTitle,
+                    TunnelCartSummaryStyle.emailAdress,
+                    textStyle,
+                  ]}>
+                  Cacher les horaires
+                </Text>
+              )}
+            </View>
+          </TouchableOpacity>
         </View>
+        {renderTimeTable()}
       </View>
     </TouchableOpacity>
   );

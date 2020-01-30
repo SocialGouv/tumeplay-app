@@ -2,24 +2,35 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
+import Colors from '../../../styles/Color';
+
 ProductCustomSelectListRow.propTypes = {
   item: PropTypes.object,
   onPress: PropTypes.func,
+  onQtyAdjust: PropTypes.func,
 };
 
 export default function ProductCustomSelectListRow(props) {
   const [item] = useState(props.item);
   const [isSelected, setIsSelected] = useState(false);
+  const [localQuantity, setLocalQuantity] = useState(0);
 
   const localStylesheet = StyleSheet.create({
-    readMorePicture: {
+    picture: {
       marginLeft: 7,
       marginRight: 7,
+      paddingTop: 0,
+      resizeMode: 'contain',
+    },
+    normalPicture: {
       width: 26,
       height: 26,
       marginTop: 3,
-      paddingTop: 0,
-      resizeMode: 'contain',
+    },
+    smallPicture: {
+      width: 18,
+      height: 18,
+      marginTop: 0,
     },
     rowStyle: {
       flexDirection: 'row',
@@ -36,9 +47,7 @@ export default function ProductCustomSelectListRow(props) {
       alignItems: 'stretch',
       minWidth: '100%',
     },
-    selectedRowStyle: {
-      backgroundColor: 'rgba(199, 0, 78, 0.15)',
-    },
+    selectedRowStyle: {},
   });
 
   const _targetPicture = isSelected
@@ -51,6 +60,20 @@ export default function ProductCustomSelectListRow(props) {
 
     if (_selectAllowed) {
       setIsSelected(!isSelected);
+      setLocalQuantity(1);
+    }
+  }
+
+  function adjustQuantity(mode) {
+    const newQuantity = mode == 'sub' ? localQuantity - 1 : localQuantity + 1;
+    const _adjustAllowed = props.onQtyAdjust(item, newQuantity, mode);
+
+    if (_adjustAllowed) {
+      setLocalQuantity(newQuantity);
+
+      if (newQuantity <= 0) {
+        onPress();
+      }
     }
   }
 
@@ -105,10 +128,58 @@ export default function ProductCustomSelectListRow(props) {
             alignItems: 'flex-end',
             alignSelf: 'center',
           }}>
-          <Image
-            style={localStylesheet.readMorePicture}
-            source={_targetPicture}
-          />
+          {!isSelected && (
+            <Image
+              style={[localStylesheet.picture, localStylesheet.normalPicture]}
+              source={_targetPicture}
+            />
+          )}
+          {isSelected && (
+            <View
+              style={{
+                alignSelf: 'center',
+                flex: 1,
+                flexDirection: 'column',
+                minHeight: 70,
+              }}>
+              <TouchableOpacity
+                style={{padding: 8}}
+                onPress={() => {
+                  adjustQuantity('add');
+                }}>
+                <Image
+                  style={[
+                    localStylesheet.picture,
+                    localStylesheet.smallPicture,
+                  ]}
+                  source={require('../../../assets/pictures/products/add.png')}
+                />
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontFamily: Colors.textFont,
+                  color: Colors.labelColor,
+                }}>
+                {localQuantity}
+              </Text>
+
+              <TouchableOpacity
+                style={{padding: 8}}
+                onPress={() => {
+                  adjustQuantity('sub');
+                }}>
+                <Image
+                  style={[
+                    localStylesheet.picture,
+                    localStylesheet.smallPicture,
+                  ]}
+                  source={require('../../../assets/pictures/products/remove.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </Text>
       </TouchableOpacity>
     </View>

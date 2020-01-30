@@ -11,6 +11,7 @@ import CustomFooter from '../CustomFooter';
 import ContactButton from '../components/global/ContactButton';
 import ProductCard from '../components/tunnel/ProductCard';
 import ProductModal from '../components/tunnel/ProductModal';
+import ProductNotEnoughTokensModal from '../components/tunnel/ProductNotEnoughTokensModal';
 import ProductSelectHeader from '../components/tunnel/ProductSelectHeader';
 
 import useIsMounted from '../../hooks/isMounted';
@@ -24,7 +25,9 @@ export default function TunnelProductSelect(props) {
   const [localBoxs, setLocalBoxs] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showNotEnoughModal, setShowNotEnoughModal] = useState(false);
   const isMounted = useIsMounted();
+  const neededTokens = 1000;
 
   autoScrollToTop(props);
 
@@ -41,14 +44,31 @@ export default function TunnelProductSelect(props) {
     _fetchBoxs();
   }, [isMounted]);
 
-  function _onBoxClicked(selectedItem) {
-    setSelectedItem(selectedItem);
-    setShowModal(true);
+  async function _onBoxClicked(selectedItem) {
+    const _tokens = await UserService.getTokensAmount();
+
+    if (_tokens >= neededTokens) {
+      setSelectedItem(selectedItem);
+      setShowModal(true);
+    } else {
+      setShowNotEnoughModal(true);
+    }
   }
 
   function _toggleModal() {
     setShowModal(!showModal);
   }
+
+  function _toggleNotEnoughModal() {
+    setShowNotEnoughModal(!showNotEnoughModal);
+  }
+
+  const ForwardedNotEnoughModal = forwardRef(() => (
+    <ProductNotEnoughTokensModal
+      showModal={showNotEnoughModal}
+      onClose={_toggleNotEnoughModal}
+    />
+  ));
 
   const ForwardedBoxModal = forwardRef(() => (
     <ProductModal
@@ -63,7 +83,7 @@ export default function TunnelProductSelect(props) {
   async function orderProduct(selectedProducts) {
     const _tokens = await UserService.getTokensAmount();
 
-    if (_tokens >= 1000) {
+    if (_tokens >= neededTokens) {
       setShowModal(false);
 
       props.navigation.navigate('TunnelDeliverySelect', {
@@ -102,6 +122,7 @@ export default function TunnelProductSelect(props) {
           <CustomFooter containerStyle={{paddingLeft: 0, paddingRight: 0}} />
         </ScrollView>
         <ForwardedBoxModal />
+        <ForwardedNotEnoughModal />
       </View>
     </SafeAreaView>
   );

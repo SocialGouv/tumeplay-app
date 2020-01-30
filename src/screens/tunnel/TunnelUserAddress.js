@@ -58,6 +58,9 @@ export default function TunnelUserAddress(props) {
   const isMounted = useIsMounted();
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
+  const [selectedPickup] = useState(
+    props.navigation.state.params.selectedPickup,
+  );
   const [selectedProducts] = useState(
     props.navigation.state.params.selectedProducts,
   );
@@ -109,21 +112,22 @@ export default function TunnelUserAddress(props) {
       }
     }
 
-    if (localAdress.adress === '' && deliveryType === 'home') {
-      checkedIsValid.adress = false;
-      isValid = false;
-    }
+    if (deliveryType == 'home') {
+      if (localAdress.adress === '') {
+        checkedIsValid.adress = false;
+        isValid = false;
+      }
 
-    if (localAdress.zipCode === '') {
-      checkedIsValid.zipCode = false;
-      isValid = false;
-    }
+      if (localAdress.zipCode === '') {
+        checkedIsValid.zipCode = false;
+        isValid = false;
+      }
 
-    if (localAdress.city === '') {
-      checkedIsValid.city = false;
-      isValid = false;
+      if (localAdress.city === '') {
+        checkedIsValid.city = false;
+        isValid = false;
+      }
     }
-
     setLocalValid(checkedIsValid);
     setMainValidFlag(isValid);
     return isValid;
@@ -138,6 +142,7 @@ export default function TunnelUserAddress(props) {
         selectedProducts: selectedProducts,
         deliveryType: deliveryType,
         userAdress: localAdress,
+        selectedPickup: selectedPickup,
       });
     }
   }
@@ -152,6 +157,7 @@ export default function TunnelUserAddress(props) {
       props.navigation.navigate('TunnelPickupSelect', {
         selectedItem: selectedItem,
         selectedProducts: selectedProducts,
+        selectedPickup: selectedPickup,
       });
     }
   }

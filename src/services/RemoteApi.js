@@ -9,6 +9,7 @@ import DefaultBadges from '../models/defaults/Badges';
 
 // @TODO : Set this in environment
 const BaseRemote = 'https://tumeplay-api.fabrique.social.gouv.fr/';
+//const BaseRemote = 'http://localhost:5000/';
 const BaseRemoteApi = BaseRemote + 'api/';
 
 const QuizzEndpoint = BaseRemoteApi + 'quizzs';
@@ -16,6 +17,7 @@ const BoardingEndpoint = BaseRemoteApi + 'contents';
 const ContentsEndpoint = BaseRemoteApi + 'contents';
 const ProductsEndpoint = BaseRemoteApi + 'boxs';
 const ThemesEndpoint = BaseRemoteApi + 'thematiques';
+const PickupEndpoint = BaseRemoteApi + 'poi/pickup';
 const UserRegisterEndpoint = BaseRemoteApi + 'auth/simple-register';
 const OrderConfirmEndpoint = BaseRemoteApi + 'orders/confirm';
 
@@ -116,6 +118,18 @@ const RemoteApi = {
         });
 
         return result;
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
+  fetchPickupPoints: async () => {
+    try {
+      if (LOCAL_MODE) {
+        return DefaultProducts;
+      } else {
+        const contents = await RemoteApi.fetch(PickupEndpoint);
+        return contents;
       }
     } catch (e) {
       throw Error(e);
@@ -222,6 +236,7 @@ const RemoteApi = {
     selectedItem,
     selectedProducts,
     userAdress,
+    selectedPickup,
     deliveryType,
   ) => {
     try {
@@ -232,7 +247,7 @@ const RemoteApi = {
         const headers = await RemoteApi.getAutorizationHeaders();
 
         selectedProducts.forEach(product => {
-          products.push(product.id);
+          products.push({id: product.item.id, qty: product.qty});
         });
 
         const postData = {
@@ -240,6 +255,7 @@ const RemoteApi = {
           products: products,
           userAdress: userAdress,
           deliveryMode: deliveryType,
+          selectedPickup: selectedPickup,
         };
         console.log(postData);
         let result = false;

@@ -11,7 +11,6 @@ var Styles = {
     marginLeft: 0,
     marginRight: 0,
     marginBottom: 14,
-    backgroundColor: '#000000',
     flexDirection: 'column',
   },
   gridItemButton: {},

@@ -42,6 +42,7 @@ export default function CustomFooter(props) {
     paddingLeft: 15,
     paddingRight: 15,
     marginTop: 15,
+    paddingBottom: 25,
   };
   return (
     <View style={[containerStyle, props.containerStyle]}>

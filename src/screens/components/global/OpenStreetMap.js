@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, Dimensions} from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import MapView, {Marker} from 'react-native-maps';
 
@@ -12,6 +12,9 @@ OpenStreetMap.propTypes = {
   latitude: PropTypes.number,
   longitude: PropTypes.number,
   items: PropTypes.array,
+  width: PropTypes.width,
+  height: PropTypes.height,
+  onPoiPress: PropTypes.func,
 };
 export default function OpenStreetMap(props) {
   const [region, setRegion] = useState({
@@ -31,7 +34,14 @@ export default function OpenStreetMap(props) {
     setRegion(_localRegion);
   }, [props.latitude, props.longitude]);
 
+  if (props.items.length == 0) {
+    return <View></View>;
+  }
+
   const _pins = props.items.map((item, key) => {
+    const markerPin = item.isSelected
+      ? require('../../../assets/pictures/pins/pin-selected.png')
+      : require('../../../assets/pictures/pins/pin-raw.png');
     return (
       <Marker
         key={key}
@@ -39,14 +49,10 @@ export default function OpenStreetMap(props) {
         coordinate={item.coordinates}
         identifier={item.identifier}
         item={item}
-        onPress={(e, item) => {
-          console.log(e.nativeEvent);
-          console.log('ENTER', e.nativeEvent.sourceTarget.options.item);
+        onPress={e => {
+          props.onPoiPress(e.nativeEvent.sourceTarget.options.item);
         }}>
-        <Image
-          style={{height: 40, width: 28}}
-          source={require('../../../assets/pictures/pins/pin-raw.png')}
-        />
+        <Image style={{height: 40, width: 28}} source={markerPin} />
       </Marker>
     );
   });
@@ -58,17 +64,10 @@ export default function OpenStreetMap(props) {
         provider={null}
         mapType="none"
         rotateEnabled={false}
-        style={styles.map}
+        style={{width: props.width, height: props.height}}
         showsUserLocation>
         {_pins}
       </MapView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  map: {
-    width: 600,
-    height: 275,
-  },
-});

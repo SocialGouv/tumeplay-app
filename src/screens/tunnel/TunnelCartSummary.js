@@ -21,6 +21,9 @@ TunnelCartSummary.propTypes = {
 export default function TunnelCartSummary(props) {
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
+  const [selectedPickup] = useState(
+    props.navigation.state.params.selectedPickup,
+  );
   const [selectedProducts] = useState(
     props.navigation.state.params.selectedProducts,
   );
@@ -31,6 +34,7 @@ export default function TunnelCartSummary(props) {
       selectedItem,
       selectedProducts,
       userAdress,
+      selectedPickup,
       deliveryType,
     );
     if (_isSuccess) {
@@ -46,6 +50,7 @@ export default function TunnelCartSummary(props) {
       selectedItem: selectedItem,
       selectedProducts: selectedProducts,
       userAdress: userAdress,
+      selectedPickup: selectedPickup,
     });
   }
 
@@ -53,10 +58,12 @@ export default function TunnelCartSummary(props) {
     props.navigation.navigate('TunnelUserAddress', {
       selectedItem: selectedItem,
       selectedProducts: selectedProducts,
+      selectedPickup: selectedPickup,
       userAdress: userAdress,
     });
   }
-
+  console.log(selectedPickup);
+  console.log(props.navigation.state.params);
   return (
     <ScrollView style={[Styles.flexOne, TunnelCartSummaryStyle.container]}>
       <Backlink step={4} onPress={_goBack} />
@@ -105,7 +112,7 @@ export default function TunnelCartSummary(props) {
 
       <Splitter />
 
-      <View style={{flex: 0.15}}>
+      <View style={{flex: 0.2}}>
         <View style={{flex: 0.2}}>
           <Text style={TunnelCartSummaryStyle.title}>Adresse de livraison</Text>
         </View>
@@ -124,9 +131,22 @@ export default function TunnelCartSummary(props) {
               ]}>
               {userAdress.firstName} {userAdress.lastName}
             </Text>
-            <Text style={[TunnelCartSummaryStyle.subTitle]}>
-              {userAdress.adress}
-            </Text>
+            {deliveryType == 'home ' && (
+              <Text style={[TunnelCartSummaryStyle.subTitle]}>
+                {userAdress.adress}
+              </Text>
+            )}
+            {deliveryType == 'pickup' && (
+              <Text
+                style={[TunnelCartSummaryStyle.subTitle, {paddingBottom: 50}]}>
+                {selectedPickup.name}
+                {'\n'}
+                {selectedPickup.street}
+                {'\n'}
+                {selectedPickup.zipCode} {selectedPickup.city}
+                {'\n'}
+              </Text>
+            )}
           </View>
         </View>
       </View>

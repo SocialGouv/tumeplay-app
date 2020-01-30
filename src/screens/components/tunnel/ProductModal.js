@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -32,6 +32,7 @@ export default function ProductModal(props) {
   const [showModal] = useState(props.showModal);
   const [allProducts] = useState(props.allProducts);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [totalProducts, setTotalProducts] = useState([]);
 
   const cardStyle = StyleSheet.create({
     container: {
@@ -79,6 +80,16 @@ export default function ProductModal(props) {
       color: '#F1732C',
     },
   });
+
+  useEffect(() => {
+    let _total = 0;
+
+    for (const localProduct of selectedItems) {
+      _total += localProduct.qty;
+    }
+
+    setTotalProducts(_total);
+  }, [selectedItems]);
 
   function onOrder() {
     props.onOrder(selectedItems);
@@ -137,7 +148,8 @@ export default function ProductModal(props) {
             </View>
           )}
           {productBox && productBox.products.length === 0 && (
-            <View style={{paddingLeft: 15, paddingRight: 15}}>
+            <View
+              style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 100}}>
               <ProductCustomSelectList
                 onSelectChange={onSelectChange}
                 allProducts={allProducts}
@@ -145,14 +157,32 @@ export default function ProductModal(props) {
               />
             </View>
           )}
-          <View style={{marginTop: 15, marginBottom: 15}}>
-            <TouchableOpacity
-              style={[Styles.bottomButton, {borderRadius: 25}]}
-              onPress={onOrder}>
-              <Text style={Styles.bottomCommText}>Commander</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
+        <View
+          style={{
+            marginTop: 15,
+            marginBottom: 15,
+            position: 'absolute',
+            bottom: 30,
+            width: '100%',
+          }}>
+          {productBox && productBox.products.length === 0 && totalProducts < 4 && (
+            <TouchableOpacity
+              style={[Styles.bottomButton, {borderRadius: 25, opacity: 0.75}]}>
+              <Text style={[Styles.bottomCommText]}>
+                {totalProducts}/4 Produits
+              </Text>
+            </TouchableOpacity>
+          )}
+          {productBox &&
+            (productBox.products.length > 0 || totalProducts >= 4) && (
+              <TouchableOpacity
+                style={[Styles.bottomButton, {borderRadius: 25}]}
+                onPress={onOrder}>
+                <Text style={Styles.bottomCommText}>Commander</Text>
+              </TouchableOpacity>
+            )}
+        </View>
       </View>
     </Modal>
   );

@@ -12,8 +12,8 @@ OpenStreetMap.propTypes = {
   latitude: PropTypes.number,
   longitude: PropTypes.number,
   items: PropTypes.array,
-  width: PropTypes.width,
-  height: PropTypes.height,
+  width: PropTypes.number,
+  height: PropTypes.number,
   onPoiPress: PropTypes.func,
 };
 export default function OpenStreetMap(props) {

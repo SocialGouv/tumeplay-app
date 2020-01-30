@@ -7,7 +7,7 @@ import Styles from '../../../styles/Styles';
 import PropTypes from 'prop-types';
 
 PointOfInterestCard.propTypes = {
-  item: PropTypes.Object,
+  item: PropTypes.object,
   onPress: PropTypes.func,
   isSelected: PropTypes.bool,
 };

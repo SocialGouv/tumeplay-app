@@ -14,6 +14,9 @@ export default function ProductCustomSelectList(props) {
   const [allProducts] = useState(props.allProducts);
   const [selectAllowed, setSelectAllowed] = useState(true);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [maxRowHeight, setMaxRowHeight] = useState(0);
+  // Because we need a synchronous way of doin' it ...
+  var rowHeight = 0;
 
   function countProducts() {
     let _total = 0;
@@ -71,6 +74,18 @@ export default function ProductCustomSelectList(props) {
     return !_limitReached;
   }
 
+  function _onChildLayout(event) {
+    if (event.nativeEvent.layout.height > rowHeight) {
+      rowHeight = event.nativeEvent.layout.height;
+
+      setMaxRowHeight(rowHeight);
+    } else {
+      if (rowHeight > maxRowHeight) {
+        setMaxRowHeight(rowHeight);
+      }
+    }
+  }
+
   function _renderProductList(items) {
     if (items !== undefined) {
       return items.map((item, key) => {
@@ -79,6 +94,8 @@ export default function ProductCustomSelectList(props) {
             key={key}
             item={item}
             onPress={onPress}
+            rowHeight={maxRowHeight}
+            onLayout={_onChildLayout}
             onQtyAdjust={onQuantityAdjust}
             selectAllowed={selectAllowed}
           />

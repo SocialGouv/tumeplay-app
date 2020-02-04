@@ -14,7 +14,7 @@ export default function QuizzButton(props) {
   // So we extract it and set it on body.
   const isWeb = Platform.OS === 'web';
   const wrapperStyle = {
-    bottom: 95,
+    bottom: 75,
     left: isWeb ? '50%' : 0,
     marginLeft: isWeb ? '-25%' : undefined,
     width: '100%',
@@ -31,7 +31,7 @@ export default function QuizzButton(props) {
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={props.onClick}>
             <View style={{paddingTop: 8, paddingBottom: 8}}>
-              <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
+              <Text style={[Styles.tunnelButtonText]}>Répondre au quiz</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -44,7 +44,7 @@ export default function QuizzButton(props) {
           style={[Styles.bottomButton, {borderRadius: 25}]}
           onPress={props.onClick}>
           <View style={{paddingTop: 8, paddingBottom: 8}}>
-            <Text style={[Styles.tunnelButtonText]}>Répondre au quizz</Text>
+            <Text style={[Styles.tunnelButtonText]}>Répondre au quiz</Text>
           </View>
         </TouchableOpacity>
       </View>

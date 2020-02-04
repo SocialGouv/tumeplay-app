@@ -20,10 +20,10 @@ export default function PointOfInterestCard(props) {
     color: '#4F4F4F',
     fontSize: 12,
     fontFamily: 'Chivo-Regular',
+    flexWrap: 'wrap',
   };
 
   function renderTimeTable() {
-    console.log(item.horaires);
     var _return = [];
 
     for (const timetable in item.horaires) {
@@ -73,25 +73,55 @@ export default function PointOfInterestCard(props) {
           Styles.withWhiteShadow,
           {
             padding: 10,
-            backgroundColor: props.isSelected ? '#EBB1C8' : '#FFFFFF',
+            backgroundColor: '#FFFFFF',
             borderRadius: 7,
           },
         ]}>
-        <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
+        <Text
+          style={{
+            fontFamily: 'Abel-Regular',
+            color: '#C80352',
+            fontSize: 20,
+            marginBottom: 3,
+          }}>
+          {item.name}
+        </Text>
+        <View
+          style={[
+            TunnelCartSummaryStyle.pictureAndTextWrapper,
+            {position: 'relative'},
+          ]}>
+          <View style={{position: 'absolute', right: -5, top: 5}}>
+            {props.isSelected && (
+              <Image
+                style={TunnelCartSummaryStyle.pictureAndTextPicture}
+                source={require('../../../assets/pictures/filled-check.png')}
+              />
+            )}
+            {!props.isSelected && (
+              <Image
+                style={TunnelCartSummaryStyle.pictureAndTextPicture}
+                source={require('../../../assets/pictures/empty-circle.png')}
+              />
+            )}
+          </View>
           <View>
             <Image
               style={TunnelCartSummaryStyle.pictureAndTextPicture}
               source={require('../../../assets/pictures/picto-pin.png')}
             />
           </View>
-          <View>
+          <View style={{width: 0, flexGrow: 1, flex: 1}}>
             <Text
               style={[
                 TunnelCartSummaryStyle.subTitle,
                 TunnelCartSummaryStyle.emailAdress,
                 textStyle,
+                {lineHeight: 18, paddingRight: 10},
               ]}>
-              {item.name} {item.street} {item.zipCode} {item.city}
+              {item.street}
+              {'\n'}
+              {item.zipCode} {item.city}
             </Text>
           </View>
         </View>
@@ -132,6 +162,7 @@ export default function PointOfInterestCard(props) {
                     TunnelCartSummaryStyle.subTitle,
                     TunnelCartSummaryStyle.emailAdress,
                     textStyle,
+                    {color: '#C80352', textDecorationLine: 'underline'},
                   ]}>
                   Voir les horaires
                 </Text>

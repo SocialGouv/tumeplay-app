@@ -55,6 +55,7 @@ export default function Onboarding(props) {
       alignSelf: 'center',
       paddingLeft: 20,
       paddingRight: 20,
+      marginTop: 15,
     },
   };
 
@@ -75,7 +76,7 @@ export default function Onboarding(props) {
         <View style={{flex: 8, alignItems: 'center'}}>
           <Image style={Styles.contentPicture} source={item.picture} />
         </View>
-        <View style={{flex: 1, alignSelf: 'center'}}>
+        <View style={{flex: 1, alignSelf: 'center', marginTop: 7}}>
           <Text style={Styles.appTitle}>{item.title}</Text>
         </View>
         <View style={onboardStyle.slideTextWrapper}>

@@ -8,6 +8,8 @@ ProductCustomSelectListRow.propTypes = {
   item: PropTypes.object,
   onPress: PropTypes.func,
   onQtyAdjust: PropTypes.func,
+  rowHeight: PropTypes.number,
+  onLayout: PropTypes.func,
 };
 
 export default function ProductCustomSelectListRow(props) {
@@ -78,6 +80,7 @@ export default function ProductCustomSelectListRow(props) {
   }
 
   const _title = item.qty ? item.qty + ' ' + item.title : item.title;
+  const _height = props.rowHeight > 0 ? {minHeight: props.rowHeight} : {};
 
   return (
     <View>
@@ -85,13 +88,15 @@ export default function ProductCustomSelectListRow(props) {
         style={[
           localStylesheet.rowStyle,
           isSelected ? localStylesheet.selectedRowStyle : false,
+          _height,
         ]}
+        onLayout={props.onLayout}
         onPress={() => {
           onPress(item);
         }}>
         <View style={{flex: 0.2, justifyContent: 'center'}}>
           <Image
-            style={{width: '100%', resizeMode: 'stretch', height: '100%'}}
+            style={{width: '100%', resizeMode: 'contain', height: '100%'}}
             source={item.picture}
           />
         </View>

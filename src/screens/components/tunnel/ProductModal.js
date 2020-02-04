@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions,
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -34,6 +35,7 @@ export default function ProductModal(props) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalProducts, setTotalProducts] = useState([]);
 
+  const screenWidth = Math.round(Dimensions.get('window').width);
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,
@@ -79,6 +81,20 @@ export default function ProductModal(props) {
     readMore: {
       color: '#F1732C',
     },
+    internalScrollView: {
+      flex: 1,
+      paddingBottom: screenWidth < 400 ? 95 : 0,
+    },
+    innerProductModal: {
+      backgroundColor: '#FFFFFF',
+      marginBottom: 10,
+      marginTop: 10,
+      borderRadius: 7,
+      marginLeft: screenWidth < 400 ? 7 : 'auto',
+      marginRight: screenWidth < 400 ? 7 : 'auto',
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
   });
 
   useEffect(() => {
@@ -112,19 +128,10 @@ export default function ProductModal(props) {
       transparent={true}>
       <View style={ModalStyle.backdrop}></View>
 
-      <View
-        style={[
-          ModalStyle.innerModal,
-          {
-            backgroundColor: '#FFFFFF',
-            marginBottom: 10,
-            marginTop: 10,
-            borderRadius: 7,
-          },
-        ]}>
+      <View style={[ModalStyle.innerModal, cardStyle.innerProductModal]}>
         <ModalCloseButton onClose={props.onClose} />
 
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={cardStyle.internalScrollView}>
           <View>
             <Image style={cardStyle.picture} source={productBox.picture} />
           </View>
@@ -149,7 +156,7 @@ export default function ProductModal(props) {
           )}
           {productBox && productBox.products.length === 0 && (
             <View
-              style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 100}}>
+              style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 80}}>
               <ProductCustomSelectList
                 onSelectChange={onSelectChange}
                 allProducts={allProducts}

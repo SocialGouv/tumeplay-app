@@ -81,7 +81,7 @@ export default function ExpandableText(props) {
   }
 
   function _maybeRenderReadMore() {
-    if (shouldShowReadMore && !props.isExpanded) {
+    if (shouldShowReadMore && !props.isExpanded && !showAllText) {
       if (props.renderTruncatedFooter) {
         return props.renderTruncatedFooter(_handlePressReadMore);
       }
@@ -103,7 +103,7 @@ export default function ExpandableText(props) {
           </Text>
         </TouchableOpacity>
       );
-    } else if (shouldShowReadMore && props.isExpanded) {
+    } else if (shouldShowReadMore && (props.isExpanded || showAllText)) {
       if (props.renderRevealedFooter) {
         return props.renderRevealedFooter(_handlePressReadLess);
       }
@@ -136,7 +136,9 @@ export default function ExpandableText(props) {
         )}
         <Text
           numberOfLines={
-            measured && !props.isExpanded ? props.content.numberOfLines : 0
+            measured && !props.isExpanded && !showAllText
+              ? props.content.numberOfLines
+              : 0
           }
           ref={text => {
             _text = text;

@@ -99,7 +99,7 @@ export default function TopMenu(props) {
           style={{
             flex: 1,
             paddingTop: 8,
-            marginBottom: 10,
+            marginTop: 5,
             flexDirection: 'row',
             // justifyContent: 'center',
             flexWrap: 'nowrap',

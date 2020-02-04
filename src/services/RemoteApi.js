@@ -123,12 +123,13 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchPickupPoints: async () => {
+  fetchPickupPoints: async (latitude, longitude) => {
     try {
       if (LOCAL_MODE) {
         return DefaultProducts;
       } else {
-        const contents = await RemoteApi.fetch(PickupEndpoint);
+	    const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
+        const contents = await RemoteApi.fetch(endPoint);
         return contents;
       }
     } catch (e) {

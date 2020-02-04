@@ -68,12 +68,6 @@ const Styles = {
     fontSize: 14,
     padding: 8,
   },
-  wrongAnswerButton: {
-    width: '56%',
-    justifyContent: 'center',
-    marginTop: 0,
-    marginBottom: 0,
-  },
   answerText: {
     marginTop: 0,
     marginBottom: 10,

@@ -304,20 +304,6 @@ var Styles = {
     borderColor: Colors.mainButton,
     maxHeight: 50,
   },
-  wrongAnswerButton: {
-    flex: 1,
-    width: '50%',
-    borderWidth: 1,
-    borderColor: Colors.mainButton,
-    color: Colors.secondaryText,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    alignSelf: 'center',
-    fontFamily: Colors.textFont,
-  },
   answerText: {
     flex: 1,
     width: '100%',
@@ -336,6 +322,7 @@ var Styles = {
     color: Colors.mainButton,
     fontFamily: Colors.textFont,
     fontSize: 22,
+    paddingRight: 10,
   },
   answerButtonInnerWrapper: {
     flexWrap: 'wrap',
@@ -421,7 +408,7 @@ var Styles = {
     fontSize: 26,
     marginLeft: 15,
     marginRight: 15,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   landingScreenSubtitle: {
     color: Colors.mainColor,
@@ -429,7 +416,7 @@ var Styles = {
     fontSize: 16,
     marginLeft: 15,
     marginRight: 15,
-    marginBottom: 15,
+    marginBottom: 25,
   },
   safeAreaView: {
     flex: 1,

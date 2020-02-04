@@ -63,12 +63,7 @@ var Styles = {
     fontSize: 18,
     padding: 12,
   },
-  wrongAnswerButton: {
-    width: '50%',
-    justifyContent: 'flex-start',
-    marginTop: 10,
-    marginBottom: 10,
-  },
+
   answerText: {
     marginTop: 10,
     marginBottom: 10,

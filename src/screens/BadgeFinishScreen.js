@@ -146,7 +146,7 @@ export default function BadgeFinishScreen(props) {
         borderRadius: 7,
         backgroundColor: '#FEE7E3',
         position: 'relative',
-        minWidth: 350,
+        minWidth: 330,
       }}>
       <Image
         style={{
@@ -215,7 +215,7 @@ export default function BadgeFinishScreen(props) {
         <TouchableOpacity
           style={[Styles.bottomButton, {borderRadius: 25}]}
           onPress={props.onRetry}>
-          <Text style={Styles.bottomCommText}>Recommencer</Text>
+          <Text style={Styles.bottomCommText}>Continuer</Text>
         </TouchableOpacity>
       </View>
     </View>

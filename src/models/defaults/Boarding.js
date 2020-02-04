@@ -15,7 +15,7 @@ const boarding = [
     key: 'boarding-3',
     title: 'Teste toi !',
     text:
-      'Réponds à nos quizz pour tester tes connaissances et gagne des points.',
+      'Réponds à nos quiz pour tester tes connaissances et gagne des points.',
     picture: require('../../assets/pictures/boarding/boarding-2.jpeg'),
   },
   {

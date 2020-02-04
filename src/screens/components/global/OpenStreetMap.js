@@ -15,6 +15,7 @@ OpenStreetMap.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   onPoiPress: PropTypes.func,
+  onRegionChange: PropTypes.func,
 };
 export default function OpenStreetMap(props) {
   const [region, setRegion] = useState({
@@ -28,35 +29,19 @@ export default function OpenStreetMap(props) {
     const _localRegion = {
       latitude: props.latitude,
       longitude: props.longitude,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta,
     };
     setRegion(_localRegion);
   }, [props.latitude, props.longitude]);
 
+  function onRegionChange(region) {
+    setRegion(region);
+    props.onRegionChange(region);
+  }
   if (props.items.length == 0) {
     return <View></View>;
   }
-
-  const _pins = props.items.map((item, key) => {
-    const markerPin = item.isSelected
-      ? require('../../../assets/pictures/pins/pin-selected.png')
-      : require('../../../assets/pictures/pins/pin-raw.png');
-    return (
-      <Marker
-        key={key}
-        title={item.title}
-        coordinate={item.coordinates}
-        identifier={item.identifier}
-        item={item}
-        onPress={e => {
-          props.onPoiPress(e.nativeEvent.sourceTarget.options.item);
-        }}>
-        <Image style={{height: 40, width: 28}} source={markerPin} />
-      </Marker>
-    );
-  });
-
   return (
     <View style={{marginTop: 5, borderRadius: 7}}>
       <MapView
@@ -64,9 +49,27 @@ export default function OpenStreetMap(props) {
         provider={null}
         mapType="none"
         rotateEnabled={false}
+        onRegionChange={onRegionChange}
         style={{width: props.width, height: props.height}}
         showsUserLocation>
-        {_pins}
+        {props.items.map((item, key) => {
+          const markerPin = item.isSelected
+            ? require('../../../assets/pictures/pins/pin-selected.png')
+            : require('../../../assets/pictures/pins/pin-raw.png');
+          return (
+            <Marker
+              key={key}
+              title={item.title}
+              coordinate={item.coordinates}
+              identifier={item.identifier}
+              item={item}
+              onPress={e => {
+                props.onPoiPress(e.nativeEvent.sourceTarget.options.item);
+              }}>
+              <Image style={{height: 40, width: 28}} source={markerPin} />
+            </Marker>
+          );
+        })}
       </MapView>
     </View>
   );

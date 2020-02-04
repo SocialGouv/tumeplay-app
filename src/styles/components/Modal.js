@@ -19,6 +19,8 @@ var Styles = {
     position: 'relative',
     maxWidth: isWeb ? 500 : undefined,
     maxHeight: isWeb ? 650 : undefined,
+    paddingLeft: 7,
+    paddingRight: 7,
   },
   backdrop: {
     position: 'absolute',

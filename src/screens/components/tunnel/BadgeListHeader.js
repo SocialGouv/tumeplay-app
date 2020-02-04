@@ -87,7 +87,7 @@ export default function BadgeListHeader() {
         Suis ta progression et collectionne des badges
       </Text>
       <Text style={[Styles.text, Styles.textLeft, {fontSize: 18}]}>
-        Super ! Grace aux points que tu as gagné en répondant aux quizzs, tu
+        Super ! Grace aux points que tu as gagné en répondant aux quiz, tu
         obtiens des badges !
       </Text>
       <View style={TunnelBadgeListStyle.topLogoCounterWrapper}>

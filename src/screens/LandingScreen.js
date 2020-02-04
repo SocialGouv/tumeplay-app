@@ -30,7 +30,7 @@ export default function LandingScreen(props) {
     arrow: require('../assets/pictures/right-arrow.png'),
     title: 'Quel est le thème que tu veux découvrir ?',
     subtitle:
-      'Explore nos thématiques, découvre les questions réponses associées et réponds aux quizz pour gagner des box !',
+      'Explore nos thématiques, découvre les questions réponses associées et réponds aux quiz pour gagner des box !',
     bottomTitle1: 'Trouve les lieux utiles à tes besoins',
     bottomTitle2: 'Échange avec un professionnel',
   };
@@ -84,11 +84,10 @@ export default function LandingScreen(props) {
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
           <Text style={Styles.landingScreenSubtitle}>
             Explore nos thématiques, découvre les questions réponses associées
-            et réponds aux quizz pour{' '}
+            et réponds aux quiz pour{' '}
             <UnderlineText textStyle={Styles.landingScreenSubtitle}>
-              gagner
-            </UnderlineText>{' '}
-            des box !
+              gagner des box !
+            </UnderlineText>
           </Text>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
             <LandingThemeGrid

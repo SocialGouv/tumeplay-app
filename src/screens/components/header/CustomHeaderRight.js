@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, forwardRef} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {EventRegister} from 'react-native-event-listeners';
 
 import PropTypes from 'prop-types';
+import ProductNotEnoughTokensModal from '../tunnel/ProductNotEnoughTokensModal';
 
 import User from '../../../services/User';
 import Colors from '../../../styles/Color';
@@ -19,6 +20,7 @@ export default function CustomHeaderRight(props) {
   const [eventListener, setEventListener] = useState(false);
   const [eventListener25Years, setEventListener25Years] = useState(false);
   const [isAgeMoreThan25, setIsAgeMoreThan25] = useState(null);
+  const [showNotEnoughModal, setShowNotEnoughModal] = useState(false);
   const isMounted = useIsMounted();
 
   const headerStyle = StyleSheet.create({
@@ -113,10 +115,25 @@ export default function CustomHeaderRight(props) {
       if (isAgeMoreThan25) {
         props.navigation.navigate('TunnelBadgeList');
       } else {
-        props.navigation.navigate('TunnelProductSelect');
+        if (availableTokens < 1000) {
+          setShowNotEnoughModal(!showNotEnoughModal);
+        } else {
+          props.navigation.navigate('TunnelProductSelect');
+        }
       }
     }
   }
+
+  function _toggleNotEnoughModal() {
+    setShowNotEnoughModal(!showNotEnoughModal);
+  }
+
+  const ForwardedNotEnoughModal = forwardRef(() => (
+    <ProductNotEnoughTokensModal
+      showModal={showNotEnoughModal}
+      onClose={_toggleNotEnoughModal}
+    />
+  ));
 
   return (
     <View style={headerStyle.container}>
@@ -129,6 +146,7 @@ export default function CustomHeaderRight(props) {
           />
         </TouchableOpacity>
       </View>
+      <ForwardedNotEnoughModal />
     </View>
   );
 }

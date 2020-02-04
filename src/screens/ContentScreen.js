@@ -39,7 +39,7 @@ export default function ContentScreen(props) {
 
   const [isAge25, setIsAge25] = useState(null);
 
-  const [badgeInfoDetails, setbadgeInfoDetails] = useState();
+  const [badgeInfoDetails] = useState();
   const [isQuizzButtonVisible, setIsQuizzButtonVisible] = useState(false);
   const [needResultModal, setNeedResultModal] = useState(false);
   const [localContents, setLocalContents] = useState([]);
@@ -188,6 +188,7 @@ export default function ContentScreen(props) {
 
   function _onFinishedQuizz() {
     _toggleQuizzModal();
+    setResetQuizzQuestions(!resetQuizzQuestions);
     setNeedResultModal(true);
   }
 
@@ -196,12 +197,15 @@ export default function ContentScreen(props) {
     props.navigation.navigate('TunnelProductSelect');
   }
 
-  function _onRetry() {
+  function _onRetry(hideQuizzModal) {
     // Set to invisible, resetup and reopen quizz modal
     _shuffleQuestions();
     setResetQuizzQuestions(!resetQuizzQuestions);
     setIsBadgeModalVisible(false);
-    _toggleQuizzModal();
+    setIsResultModalVisible(false);
+    if (hideQuizzModal) {
+      _toggleQuizzModal();
+    }
   }
 
   /**
@@ -224,6 +228,7 @@ export default function ContentScreen(props) {
   async function setAndToggleMoreThan25Years(val) {
     await UserService.setIsMoreThan25YearsOld(val);
     EventRegister.emit('isAgeMoreThan25Changed', val);
+    setIsAge25(val);
     _toggleMoreThan25YearsModal();
     _shuffleQuestions();
     _toggleQuizzModal();
@@ -297,6 +302,7 @@ export default function ContentScreen(props) {
           <ModalCloseButton onClose={_toggleResultModal} />
 
           <QuizzFinishScreen
+            onRetry={_onRetry}
             availableTokens={availableTokens}
             onOrder={_onOrder}
           />

@@ -18,6 +18,9 @@ import Backlink from '../components/tunnel/Backlink';
 import OpenStreetMap from '../components/global/OpenStreetMap';
 import PointOfInterestCard from '../components/global/PointOfInterestCard';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
+const openGeocoder = require('node-open-geocoder');
+
+const zipCodeTest = /^[0-9]{5}$/;
 
 TunnelPickupSelect.propTypes = {
   navigation: PropTypes.object,
@@ -28,17 +31,18 @@ export default function TunnelPickupSelect(props) {
       latitude: 48.8465464,
       longitude: 2.2797058999999997,
     },
+    delta: {
+      latitude: 0.09,
+      longitude: 0.09,
+    },
   };
   var defaultPickup = {
     userZipCode: '',
     zipCode: '',
     city: '',
   };
+  var pickupTimer = false;
 
-  var defaultMapDimensions = {
-    width: 250,
-    height: 250,
-  };
   const [selectedPickup, setSelectedPickup] = useState(
     props.navigation.state.params.selectedPickup,
   );
@@ -49,11 +53,10 @@ export default function TunnelPickupSelect(props) {
   );
 
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
-  const [positionWatcher, setPositionWatcher] = useState(false);
   const [localAdress, setLocalAdress] = useState(defaultPickup);
   const [localValid, setLocalValid] = useState({});
   const [pickupPoints, setPickupPoints] = useState([]);
-  const [mapLayout, setMapLayout] = useState(defaultMapDimensions);
+  const [mapLayout, setMapLayout] = useState({width: 250, height: 250});
 
   const isMounted = useIsMounted();
 
@@ -78,13 +81,56 @@ export default function TunnelPickupSelect(props) {
       error => console.log('Error', JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
-    const watch = Geolocation.watchPosition(position => {
-      setCurrentPosition(position);
-      console.log(position);
-    });
     fetchPoints();
-    setPositionWatcher(watch);
   }, [isMounted]);
+
+  useEffect(() => {
+    async function fetchPoints() {
+      const rawPickupPoints = await RemoteApi.fetchPickupPoints(
+        currentPosition.coords.latitude,
+        currentPosition.coords.longitude,
+      );
+      const pickupPoints = rawPickupPoints.map(function(item) {
+        item.isSelected = false;
+
+        return item;
+      });
+
+      let filteredPoints = [];
+
+      if (typeof currentPosition.delta !== 'undefined') {
+        const bounds = {
+          max_lat:
+            currentPosition.coords.latitude + currentPosition.delta.latitude,
+          min_lat:
+            currentPosition.coords.latitude - currentPosition.delta.latitude,
+          max_lon:
+            currentPosition.coords.longitude + currentPosition.delta.longitude,
+          min_lon:
+            currentPosition.coords.longitude - currentPosition.delta.longitude,
+        };
+
+        console.log('BOUNDS : ', bounds);
+
+        filteredPoints = pickupPoints.filter(pickupPoint => {
+          console.log('FILTER REGION : ', currentPosition);
+          console.log('VS PICKUP ', pickupPoint);
+          return (
+            pickupPoint.coordinates.latitude < bounds.max_lat &&
+            pickupPoint.coordinates.latitude > bounds.min_lat &&
+            pickupPoint.coordinates.longitude < bounds.max_lon &&
+            pickupPoint.coordinates.longitude > bounds.min_lon
+          );
+        });
+      } else {
+        filteredPoints = pickupPoints;
+      }
+      console.log(filteredPoints);
+      setPickupPoints(filteredPoints);
+    }
+
+    fetchPoints();
+  }, [currentPosition]);
 
   function _onDone() {
     props.navigation.navigate('TunnelUserAddress', {
@@ -107,11 +153,34 @@ export default function TunnelPickupSelect(props) {
 
     setLocalAdress(localAdress);
 
+    if (zipCodeTest.test(value)) {
+      openGeocoder()
+        .geocode(value)
+        .end((err, res) => {
+          console.log('err' + err);
+          console.log(res);
+          if (res.length >= 1) {
+            const localPosition = {
+              coords: {
+                latitude: parseFloat(res[0].lat),
+                longitude: parseFloat(res[0].lon),
+              },
+              delta: {
+                latitude: currentPosition.delta.latitude,
+                longitude: currentPosition.delta.longitude,
+              },
+            };
+
+            setCurrentPosition(localPosition);
+          }
+        });
+    }
+
     return value;
   }
 
   function adjustMapLayout(parentLayout) {
-    const {x, y, width} = parentLayout;
+    const {width} = parentLayout;
     const {height} = Dimensions.get('window');
     const newMapLayout = mapLayout;
 
@@ -119,6 +188,27 @@ export default function TunnelPickupSelect(props) {
     newMapLayout.height = height * 0.4;
 
     setMapLayout(newMapLayout);
+  }
+
+  function onRegionChange(region) {
+    if (pickupTimer) {
+      clearTimeout(pickupTimer);
+    }
+    const refRegion = region;
+    pickupTimer = setTimeout(refRegion => {
+      const localRegion = {
+        coords: {
+          latitude: region.latitude,
+          longitude: region.longitude,
+        },
+        delta: {
+          latitude: region.latitudeDelta,
+          longitude: region.longitudeDelta,
+        },
+      };
+      console.log('CURRENT REGION : ', region);
+      setCurrentPosition(localRegion);
+    }, 700);
   }
 
   function onPoiPress(selectedItem) {
@@ -181,6 +271,7 @@ export default function TunnelPickupSelect(props) {
           onPoiPress={onPoiPress}
           width={mapLayout.width}
           height={mapLayout.height}
+          onRegionChange={onRegionChange}
           latitude={currentPosition.coords.latitude}
           longitude={currentPosition.coords.longitude}
         />

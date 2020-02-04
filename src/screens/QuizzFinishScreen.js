@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 
 QuizzFinishScreen.propTypes = {
   onOrder: PropTypes.func,
+  onRetry: PropTypes.func,
   availableTokens: PropTypes.number,
 };
 
@@ -82,6 +83,8 @@ export default function QuizzFinishScreen(props) {
     },
   });
 
+  const hasEnoughTokens = availableTokens >= 1000;
+  const missingTokens = 1000 - availableTokens;
   return (
     <View
       style={{
@@ -112,22 +115,43 @@ export default function QuizzFinishScreen(props) {
             justifyContent: 'center',
           }}>
           <Text style={Styles.finishText}>
-            <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
-              Bravo !
-            </UnderlineText>
+            {hasEnoughTokens && (
+              <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
+                Bravo !
+              </UnderlineText>
+            )}
+            {!hasEnoughTokens && (
+              <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
+                Presque !
+              </UnderlineText>
+            )}
           </Text>
         </View>
       </View>
       <View style={{flex: 0.15, paddingLeft: 15, paddingRight: 15}}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            color: Colors.mainButton,
-            fontFamily: Colors.titleCard,
-          }}>
-          Tu as gagné assez de points pour recevoir ton cadeau gratuitement !
-        </Text>
+        {hasEnoughTokens && (
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: Colors.mainButton,
+              fontFamily: Colors.titleCard,
+            }}>
+            Tu as gagné assez de points pour recevoir ta box gratuitement !
+          </Text>
+        )}
+        {!hasEnoughTokens && (
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              color: Colors.mainButton,
+              fontFamily: Colors.titleCard,
+            }}>
+            Il te manque encore {missingTokens} points pour pouvoir recevoir ta
+            box gratuitement.
+          </Text>
+        )}
       </View>
 
       <View style={{flex: 0.3, alignItems: 'center'}}>
@@ -149,11 +173,20 @@ export default function QuizzFinishScreen(props) {
 
       <View
         style={{position: 'absolute', width: '100%', bottom: 25, zIndex: 1}}>
-        <TouchableOpacity
-          style={[Styles.bottomButton, {borderRadius: 25}]}
-          onPress={props.onOrder}>
-          <Text style={Styles.bottomCommText}>Commander</Text>
-        </TouchableOpacity>
+        {hasEnoughTokens && (
+          <TouchableOpacity
+            style={[Styles.bottomButton, {borderRadius: 25}]}
+            onPress={props.onOrder}>
+            <Text style={Styles.bottomCommText}>Commander</Text>
+          </TouchableOpacity>
+        )}
+        {!hasEnoughTokens && (
+          <TouchableOpacity
+            style={[Styles.bottomButton, {borderRadius: 25}]}
+            onPress={props.onRetry}>
+            <Text style={Styles.bottomCommText}>Recommencer</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

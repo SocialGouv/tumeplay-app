@@ -30,8 +30,10 @@ export default function ProductSelectHeader() {
     <View>
       <Text style={Styles.appTitle}>Commande ta box gratuitement !</Text>
       <Text style={[Styles.text, Styles.textLeft, {fontSize: 18}]}>
-        <UnderlineText textStyle={Styles.text}>Super</UnderlineText> ! Tu as{' '}
-        {availableTokens} points, choisis une de nos quatre boxs pour en
+        <UnderlineText borderMargin={-4} textStyle={Styles.text}>
+          Super
+        </UnderlineText>{' '}
+        ! Tu as {availableTokens} points, choisis une de nos quatre boxs pour en
         apprendre plus et passer à l&apos;action en toute sécurité !
       </Text>
       <Image

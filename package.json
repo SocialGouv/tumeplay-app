@@ -21,6 +21,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "detect-browser": "^4.8.0",
     "modal-react-native-web": "^0.2.0",
+    "node-open-geocoder": "^4.0.1",
     "react": "16.9.0",
     "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",

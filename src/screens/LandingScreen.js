@@ -148,7 +148,7 @@ export default function LandingScreen(props) {
             </View>
           </CustomTouchableOpacity>
         </View>
-        <CustomFooter />
+        <CustomFooter navigation={props.navigation} />
       </ScrollView>
     </SafeAreaView>
   );

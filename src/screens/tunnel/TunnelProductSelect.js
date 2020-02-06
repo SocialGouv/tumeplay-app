@@ -119,7 +119,10 @@ export default function TunnelProductSelect(props) {
 
           <ContactButton />
 
-          <CustomFooter containerStyle={{paddingLeft: 0, paddingRight: 0}} />
+          <CustomFooter
+            navigation={props.navigation}
+            containerStyle={{paddingLeft: 0, paddingRight: 0}}
+          />
         </ScrollView>
         <ForwardedBoxModal />
         <ForwardedNotEnoughModal />

@@ -184,7 +184,7 @@ export default function BadgeFinishScreen(props) {
             color: Colors.mainButton,
             fontFamily: Colors.titleCard,
           }}>
-          Ton score s'éleve a
+          Ton score s&apos;éleve a
         </Text>
         <Text
           style={{

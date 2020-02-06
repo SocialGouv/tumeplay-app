@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 
 CustomFooter.propTypes = {
   containerStyle: PropTypes.object,
+  navigation: PropTypes.object,
 };
 export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
@@ -19,6 +20,14 @@ export default function CustomFooter(props) {
     Linking.openURL(
       'mailto:contact.tumeplay@fabrique.social.gouv.fr?subject=Tumeplay > Demande de contact',
     );
+  }
+
+  function openLegalTerms() {
+    props.navigation.navigate('LegalTerms');
+  }
+
+  function openChart() {
+    props.navigation.navigate('Chart');
   }
 
   const footerStyle = StyleSheet.create({
@@ -79,13 +88,13 @@ export default function CustomFooter(props) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={footerStyle.link}>
+          <TouchableOpacity style={footerStyle.link} onPress={openLegalTerms}>
             <Text style={[footerStyle.text, footerStyle.textDecoration]}>
-              Trouver les lieux utiles
+              Mentions légales
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={footerStyle.link}>
+          <TouchableOpacity style={footerStyle.link} onPress={openChart}>
             <Text style={[footerStyle.text, footerStyle.textDecoration]}>
               Lire notre charte
             </Text>

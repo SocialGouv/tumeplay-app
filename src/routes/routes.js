@@ -13,6 +13,8 @@ import TunnelOrderConfirm from '../screens/tunnel/TunnelOrderConfirm';
 import TunnelPickupSelect from '../screens/tunnel/TunnelPickupSelect';
 import LandingScreen from '../screens/LandingScreen';
 import QuizzFinishScreen from '../screens/QuizzFinishScreen';
+import LegalTermsScreen from '../screens/LegalTermsScreen';
+import ChartScreen from '../screens/ChartScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -57,6 +59,20 @@ const AppStack = createStackNavigator(
     },
     TunnelPickupSelect: {
       screen: TunnelPickupSelect,
+    },
+    LegalTerms: {
+      screen: LegalTermsScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
+    },
+    Chart: {
+      screen: ChartScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
     },
   },
   {

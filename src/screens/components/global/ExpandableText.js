@@ -99,7 +99,7 @@ export default function ExpandableText(props) {
             }
           />
           <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
-            Plus d'infos
+            Plus d&apos;infos
           </Text>
         </TouchableOpacity>
       );

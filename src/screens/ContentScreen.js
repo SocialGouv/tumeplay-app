@@ -246,6 +246,7 @@ export default function ContentScreen(props) {
 
           <CustomFooter
             style={{flex: 0.1}}
+            navigation={props.navigation}
             containerStyle={{paddingLeft: 0, paddingRight: 0}}
           />
         </ScrollView>

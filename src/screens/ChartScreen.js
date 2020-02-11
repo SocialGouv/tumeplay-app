@@ -99,7 +99,7 @@ export default function ChartScreen(props) {
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Les données relatives aux réponses appoertées aux différents quizz
+            Les données relatives aux réponses appoertées aux différents quiz
             sont anonymisées. Elles sont stockées le temps de la session
             directement sur l&apos;apparail de l&apos;utilisateur.
           </UnorderedListRow>

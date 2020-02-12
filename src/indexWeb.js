@@ -20,6 +20,13 @@ Sentry.init({
   enableInExpoDevelopment: false,
 });
 
+window.ResizeObserver = ResizeObserver;
+
+Sentry.init({
+  dsn: "https://58c382a0f5bb4e11be31887a0920aa8d@sentry.fabrique.social.gouv.fr/33",
+  enableInExpoDevelopment: true,
+})
+
 const App = createBrowserApp(AppStack);
 
 AppRegistry.registerComponent(appName, () => App);

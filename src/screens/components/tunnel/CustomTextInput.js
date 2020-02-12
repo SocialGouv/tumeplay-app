@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 
 import TunnelUserAdressStyle from '../../../styles/components/TunnelUserAdress';
 import Styles from '../../../styles/Styles';
@@ -13,11 +13,14 @@ CustomTextInput.propTypes = {
   onChangeText: PropTypes.func,
   currentValue: PropTypes.string,
   emailAdressWrongFormat: PropTypes.bool,
+  displayResetButton: PropTypes.bool,
 };
 
 export default function CustomTextInput(props) {
+  let _myTextInput = false;
+
   return (
-    <View style={TunnelUserAdressStyle.inputWrapper}>
+    <View style={[TunnelUserAdressStyle.inputWrapper, {position: 'relative'}]}>
       <Text style={Styles.labelText}>{props.inputLabel} *</Text>
       <TextInput
         placeholder={props.inputPlaceholder}
@@ -27,10 +30,39 @@ export default function CustomTextInput(props) {
             ? TunnelUserAdressStyle.invalidTextField
             : false,
         ]}
+        ref={component => (_myTextInput = component)}
         name="lastName"
         onChangeText={props.onChangeText}
         defaultValue={props.currentValue}
       />
+      {props.displayResetButton && (
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            right: 15,
+            bottom: 10,
+            height: 25,
+            width: 25,
+            paddingTop: 2,
+            paddingBottom: 2,
+            alignSelf: 'center',
+          }}
+          onPress={() => {
+            _myTextInput.setNativeProps({text: ''});
+            props.onChangeText('');
+          }}>
+          <Image
+            style={{
+              marginLeft: 10,
+              marginRight: 10,
+              width: 25,
+              height: 25,
+              resizeMode: 'contain',
+            }}
+            source={require('../../../assets/pictures/answer.wrong.png')}
+          />
+        </TouchableOpacity>
+      )}
       <Text
         style={[
           Styles.placeholderText,

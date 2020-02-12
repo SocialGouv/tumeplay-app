@@ -300,7 +300,7 @@ var Styles = {
     borderRadius: 25,
     alignSelf: 'center',
     //fontFamily		: Colors.textFont,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F6F6F6',
     borderColor: Colors.mainButton,
     maxHeight: 50,
   },

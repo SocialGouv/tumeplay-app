@@ -48,6 +48,10 @@ export default function ExpandableText(props) {
       // Get the height of the text with no restriction on number of lines
       const fullHeight = await measureHeightAsync(_text);
 
+      if (!isMounted.current) {
+        return;
+      }
+
       setMeasured(true);
 
       await nextFrameAsync();
@@ -71,12 +75,10 @@ export default function ExpandableText(props) {
   }, [_text, isMounted, props]);
 
   function _handlePressReadMore() {
-    console.log('Pressed read more...');
     setShowAllText(true);
   }
 
   function _handlePressReadLess() {
-    console.log('Pressed read less...');
     setShowAllText(false);
   }
 

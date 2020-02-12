@@ -57,6 +57,7 @@ export default function TunnelPickupSelect(props) {
   const [localValid, setLocalValid] = useState({});
   const [pickupPoints, setPickupPoints] = useState([]);
   const [mapLayout, setMapLayout] = useState({width: 250, height: 250});
+  const [displayReset, setDisplayReset] = useState(false);
 
   const isMounted = useIsMounted();
 
@@ -72,16 +73,18 @@ export default function TunnelPickupSelect(props) {
       setPickupPoints(pickupPoints);
     }
 
-    Geolocation.getCurrentPosition(
-      position => {
-        setCurrentPosition(position);
+    if (isMounted.current) {
+      Geolocation.getCurrentPosition(
+        position => {
+          setCurrentPosition(position);
 
-        console.log(position);
-      },
-      error => console.log('Error', JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-    fetchPoints();
+          console.log(position);
+        },
+        error => console.log('Error', JSON.stringify(error)),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      );
+      fetchPoints();
+    }
   }, [isMounted]);
 
   useEffect(() => {
@@ -110,11 +113,7 @@ export default function TunnelPickupSelect(props) {
             currentPosition.coords.longitude - currentPosition.delta.longitude,
         };
 
-        console.log('BOUNDS : ', bounds);
-
         filteredPoints = pickupPoints.filter(pickupPoint => {
-          console.log('FILTER REGION : ', currentPosition);
-          console.log('VS PICKUP ', pickupPoint);
           return (
             pickupPoint.coordinates.latitude < bounds.max_lat &&
             pickupPoint.coordinates.latitude > bounds.min_lat &&
@@ -166,8 +165,14 @@ export default function TunnelPickupSelect(props) {
                 longitude: parseFloat(res[0].lon),
               },
               delta: {
-                latitude: currentPosition.delta.latitude,
-                longitude: currentPosition.delta.longitude,
+                latitude:
+                  typeof currentPosition.delta !== 'undefined'
+                    ? currentPosition.delta.latitude
+                    : 0.09,
+                longitude:
+                  typeof currentPosition.delta !== 'undefined'
+                    ? currentPosition.delta.longitude
+                    : 0.09,
               },
             };
 
@@ -175,6 +180,9 @@ export default function TunnelPickupSelect(props) {
           }
         });
     }
+
+    const _displayReset = value != '';
+    setDisplayReset(_displayReset);
 
     return value;
   }
@@ -206,7 +214,7 @@ export default function TunnelPickupSelect(props) {
           longitude: region.longitudeDelta,
         },
       };
-      console.log('CURRENT REGION : ', region);
+
       setCurrentPosition(localRegion);
     }, 700);
   }
@@ -265,7 +273,9 @@ export default function TunnelPickupSelect(props) {
           onChangeText={val => _handleChange('userZipCode', val)}
           isValid={localValid.userZipCode}
           currentValue={localAdress.userZipCode}
+          displayResetButton={displayReset}
         />
+
         <OpenStreetMap
           items={pickupPoints}
           onPoiPress={onPoiPress}

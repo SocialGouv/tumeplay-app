@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import {
   Text,
   View,
+  Dimensions,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
 
 import Styles from '../../../styles/Styles';
@@ -19,10 +21,19 @@ TopMenu.propTypes = {
 export default function TopMenu(props) {
   const [activeFilter, setActiveFilter] = useState(1);
   const [selectedTheme] = useState(props.selectedTheme);
+  const [showMore, setShowMore] = useState(false);
+  const [wrapperPadding, setWrapperPadding] = useState(false);
+  const {width} = Dimensions.get('window');
 
-  function _onDone(key) {
+  function _filterContents(key) {
     setActiveFilter(key);
     props.onPress(key);
+  }
+
+  function showMoreIfNeeded(contentWidth) {
+    const needMore = contentWidth > width;
+    setShowMore(needMore);
+    setWrapperPadding(true);
   }
 
   const menuStyle = StyleSheet.create({
@@ -53,6 +64,27 @@ export default function TopMenu(props) {
       textDecorationLine: 'none',
       fontFamily: Colors.textFontBold,
     },
+    scrollWrapper: {
+      flex: 1,
+      paddingTop: 8,
+      marginTop: 5,
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      alignContent: 'stretch',
+    },
+    moreWrapper: {
+      position: 'absolute',
+      top: 13,
+      right: 3,
+      zIndex: 1,
+      backgroundColor: Colors.backgroundColor,
+      padding: 5,
+    },
+    morePicture: {
+      width: 30,
+      height: 15,
+      resizeMode: 'contain',
+    },
   });
 
   const _menuItems = [
@@ -75,7 +107,7 @@ export default function TopMenu(props) {
           {alignSelf: 'flex-start'},
         ]}
         onPress={() => {
-          _onDone(item.id);
+          _filterContents(item.id);
         }}>
         <Text
           style={[
@@ -93,21 +125,49 @@ export default function TopMenu(props) {
       <View style={{flex: 0.65, maxHeight: 40}}>
         <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
       </View>
-      <View>
-        <ScrollView
-          horizontal={true}
-          style={{
-            flex: 1,
-            paddingTop: 8,
-            marginTop: 5,
-            flexDirection: 'row',
-            // justifyContent: 'center',
-            flexWrap: 'nowrap',
-            alignContent: 'stretch',
-          }}>
-          {_menuButtons}
-        </ScrollView>
-      </View>
+      {!selectedTheme.isSpecial && (
+        <View
+          style={[
+            {position: 'relative'},
+            wrapperPadding ? {paddingRight: 50} : undefined,
+          ]}>
+          <ScrollView
+            horizontal={true}
+            style={[menuStyle.scrollWrapper]}
+            onContentSizeChange={(width) => {
+              showMoreIfNeeded(width);
+            }}
+            scrollEventThrottle={16}
+            onScroll={evt => {
+              if (wrapperPadding) {
+                const {
+                  contentOffset,
+                  contentSize,
+                  layoutMeasurement,
+                } = evt.nativeEvent;
+                const {x} = contentOffset;
+                const {width} = contentSize;
+
+                if (width - x <= layoutMeasurement.width) {
+                  setShowMore(false);
+                } else {
+                  setShowMore(true);
+                }
+              }
+            }}>
+            {_menuButtons}
+          </ScrollView>
+
+          {showMore && (
+            <View style={menuStyle.moreWrapper}>
+              <Image
+                source={require('../../../assets/pictures/menu.show-more.png')}
+                style={menuStyle.morePicture}
+              />
+            </View>
+          )}
+        </View>
+      )}
     </View>
   );
 }

@@ -130,7 +130,7 @@ const RemoteApi = {
       } else {
 	    const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
         const contents = await RemoteApi.fetch(endPoint);
-        return contents.slice(0, 50);
+        return contents.slice(0, 20);
       }
     } catch (e) {
       throw Error(e);

@@ -53,7 +53,8 @@ export default function OpenStreetMap(props) {
         style={{width: props.width, height: props.height}}
         showsUserLocation>
         {props.items.map((item, key) => {
-          const markerPin = item.isSelected
+
+          const markerPin = props.selectedPickup && (props.selectedPickup.id == item.id)
             ? require('../../../assets/pictures/pins/pin-selected.png')
             : require('../../../assets/pictures/pins/pin-raw.png');
           return (
@@ -64,6 +65,7 @@ export default function OpenStreetMap(props) {
               identifier={item.identifier}
               item={item}
               onPress={e => {
+	            console.log(e);
                 props.onPoiPress(e.nativeEvent.sourceTarget.options.item);
               }}>
               <Image style={{height: 40, width: 28}} source={markerPin} />

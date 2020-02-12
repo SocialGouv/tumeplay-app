@@ -25,15 +25,18 @@ export default function PointOfInterestCard(props) {
 
   function renderTimeTable() {
     var _return = [];
-
+	var i = 0; 
+	
     for (const timetable in item.horaires) {
       const dayTable = item.horaires[timetable];
       let time = dayTable.am;
       if (dayTable.pm) {
         time = time + ' ' + dayTable.pm;
       }
+      i = i + 1;
+
       _return.push(
-        <Text style={[textStyle, {textTransform: 'capitalize'}]}>
+        <Text key={i} style={[textStyle, {textTransform: 'capitalize'}]}>
           {timetable} : {time}
         </Text>,
       );

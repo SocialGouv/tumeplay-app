@@ -12,6 +12,7 @@ import AppStack from './routes/routes';
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
 
 window.ResizeObserver = ResizeObserver;
 
@@ -20,15 +21,7 @@ Sentry.init({
   enableInExpoDevelopment: false,
 });
 
-window.ResizeObserver = ResizeObserver;
-
-Sentry.init({
-  dsn: "https://58c382a0f5bb4e11be31887a0920aa8d@sentry.fabrique.social.gouv.fr/33",
-  enableInExpoDevelopment: true,
-})
-
 const App = createBrowserApp(AppStack);
 
 AppRegistry.registerComponent(appName, () => App);
 AppRegistry.runApplication(appName, {rootTag: document.getElementById('root')});
-serviceWorker.unregister();

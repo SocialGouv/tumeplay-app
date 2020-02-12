@@ -124,8 +124,11 @@ export default function TunnelPickupSelect(props) {
       } else {
         filteredPoints = pickupPoints;
       }
-      console.log(filteredPoints);
-      setPickupPoints(filteredPoints);
+	  setPickupPoints([]);
+	  
+	  setTimeout(function() {
+	      setPickupPoints(filteredPoints);		  
+	  }, 10);
     }
 
     fetchPoints();
@@ -220,8 +223,9 @@ export default function TunnelPickupSelect(props) {
   }
 
   function onPoiPress(selectedItem) {
+
     const newItems = pickupPoints.map(function(item) {
-      item.isSelected = item.id == selectedItem.id ? true : false;
+      item.isSelected = (item.id == selectedItem.id);
 
       return item;
     });
@@ -284,6 +288,7 @@ export default function TunnelPickupSelect(props) {
           onRegionChange={onRegionChange}
           latitude={currentPosition.coords.latitude}
           longitude={currentPosition.coords.longitude}
+          selectedPickup={selectedPickup}
         />
       </View>
 

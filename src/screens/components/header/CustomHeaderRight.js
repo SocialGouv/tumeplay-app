@@ -105,7 +105,7 @@ export default function CustomHeaderRight(props) {
 
     _fetchTokens();
     _fetchMoreThan25YO();
-  }, [isMounted]);
+  }, [eventListener, eventListener25Years, isMounted]);
 
   function _gotoProductSelect() {
     console.log(

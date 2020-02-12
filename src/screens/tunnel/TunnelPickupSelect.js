@@ -32,8 +32,8 @@ export default function TunnelPickupSelect(props) {
       longitude: 2.2797058999999997,
     },
     delta: {
-      latitude: 0.09,
-      longitude: 0.09,
+      latitude: 0.009,
+      longitude: 0.009,
     },
   };
   var defaultPickup = {
@@ -124,11 +124,10 @@ export default function TunnelPickupSelect(props) {
       } else {
         filteredPoints = pickupPoints;
       }
-	  setPickupPoints([]);
-	  
-	  setTimeout(function() {
-	      setPickupPoints(filteredPoints);		  
-	  }, 10);
+      setPickupPoints([]);
+      setPickupPoints(filteredPoints);
+
+      setTimeout(function() {}, 1);
     }
 
     fetchPoints();
@@ -159,8 +158,6 @@ export default function TunnelPickupSelect(props) {
       openGeocoder()
         .geocode(value)
         .end((err, res) => {
-          console.log('err' + err);
-          console.log(res);
           if (res.length >= 1) {
             const localPosition = {
               coords: {
@@ -219,13 +216,12 @@ export default function TunnelPickupSelect(props) {
       };
 
       setCurrentPosition(localRegion);
-    }, 700);
+    }, 900);
   }
 
   function onPoiPress(selectedItem) {
-
     const newItems = pickupPoints.map(function(item) {
-      item.isSelected = (item.id == selectedItem.id);
+      item.isSelected = item.id == selectedItem.id;
 
       return item;
     });
@@ -288,7 +284,6 @@ export default function TunnelPickupSelect(props) {
           onRegionChange={onRegionChange}
           latitude={currentPosition.coords.latitude}
           longitude={currentPosition.coords.longitude}
-          selectedPickup={selectedPickup}
         />
       </View>
 

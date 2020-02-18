@@ -330,9 +330,9 @@ export default function ContentScreen(props) {
       </Modal>
 
       {/* Fix staying button on web */}
-      {isQuizzButtonVisible && !isQuizzModalVisible && (
-        <QuizzButton onClick={_openInitialModal} />
-      )}
+      {!selectedTheme.isSpecial &&
+        isQuizzButtonVisible &&
+        !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
     </SafeAreaView>
   );
 }

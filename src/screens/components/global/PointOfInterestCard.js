@@ -25,8 +25,8 @@ export default function PointOfInterestCard(props) {
 
   function renderTimeTable() {
     var _return = [];
-	var i = 0; 
-	
+    var i = 0;
+
     for (const timetable in item.horaires) {
       const dayTable = item.horaires[timetable];
       let time = dayTable.am;

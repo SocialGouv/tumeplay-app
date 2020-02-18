@@ -122,7 +122,7 @@ export default function LandingScreen(props) {
               <Text style={Styles.landingBottomButtonNext}>Voir</Text>
             </View>
           </CustomTouchableOpacity>
-		  {/*
+          {/*
           <CustomTouchableOpacity
             style={[Styles.landingBottomWrapper]}
             onPress={_onSelected_echangeProfessionnel}>

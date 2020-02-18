@@ -62,8 +62,7 @@ export default function TunnelCartSummary(props) {
       userAdress: userAdress,
     });
   }
-  console.log(selectedPickup);
-  console.log(props.navigation.state.params);
+
   return (
     <ScrollView style={[Styles.flexOne, TunnelCartSummaryStyle.container]}>
       <Backlink step={4} onPress={_goBack} />
@@ -131,9 +130,11 @@ export default function TunnelCartSummary(props) {
               ]}>
               {userAdress.firstName} {userAdress.lastName}
             </Text>
-            {deliveryType == 'home ' && (
+            {deliveryType == 'home' && (
               <Text style={[TunnelCartSummaryStyle.subTitle]}>
                 {userAdress.adress}
+                {'\n'}
+                {userAdress.zipCode} {userAdress.city}
               </Text>
             )}
             {deliveryType == 'pickup' && (

@@ -126,8 +126,6 @@ export default function TunnelPickupSelect(props) {
       }
       setPickupPoints([]);
       setPickupPoints(filteredPoints);
-
-      setTimeout(function() {}, 1);
     }
 
     fetchPoints();

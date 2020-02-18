@@ -134,7 +134,7 @@ export default function TopMenu(props) {
           <ScrollView
             horizontal={true}
             style={[menuStyle.scrollWrapper]}
-            onContentSizeChange={(width) => {
+            onContentSizeChange={width => {
               showMoreIfNeeded(width);
             }}
             scrollEventThrottle={16}

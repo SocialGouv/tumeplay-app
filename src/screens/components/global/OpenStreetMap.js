@@ -33,10 +33,7 @@ export default function OpenStreetMap(props) {
       longitudeDelta: region.longitudeDelta,
     };
     setRegion(_localRegion);
-  }, [
-    props.latitude,
-    props.longitude
-  ]);
+  }, [props.latitude, props.longitude]);
 
   function onRegionChange(region) {
     setRegion(region);

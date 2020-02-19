@@ -50,7 +50,19 @@ export default function OpenStreetMap(props) {
     setRegion(region);
     props.onRegionChange(region);
   }
-
+  
+  let mapWidth = props.width;
+  if( !mapWidth || !NaN(mapWidth) )
+  {
+      mapWidth = 100;
+  }
+  
+  let mapHeight = props.height;
+  if( !mapHeight || !NaN(mapHeight) )
+  {
+      mapHeight = 100;
+  }
+    
   return (
     <View style={{marginTop: 5, borderRadius: 7}}>
       <MapView
@@ -59,7 +71,7 @@ export default function OpenStreetMap(props) {
         mapType="none"
         rotateEnabled={false}
         onRegionChange={onRegionChange}
-        style={{width: props.width, height: props.height}}
+        style={{width: mapWidth, height: mapHeight}}
         showsUserLocation>
         {props.items.length > 0 &&
           props.items.map((item, key) => {

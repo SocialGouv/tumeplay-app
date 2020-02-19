@@ -62,17 +62,6 @@ export default function TunnelPickupSelect(props) {
   const isMounted = useIsMounted();
 
   useEffect(() => {
-    async function fetchPoints() {
-      const rawPickupPoints = await RemoteApi.fetchPickupPoints();
-      const pickupPoints = rawPickupPoints.map(function(item) {
-        item.isSelected = false;
-
-        return item;
-      });
-
-      setPickupPoints(pickupPoints);
-    }
-
     if (isMounted.current) {
       Geolocation.getCurrentPosition(
         position => {
@@ -83,7 +72,6 @@ export default function TunnelPickupSelect(props) {
         error => console.log('Error', JSON.stringify(error)),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
-      fetchPoints();
     }
   }, [isMounted]);
 

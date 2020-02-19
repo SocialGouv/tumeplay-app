@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Image, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import MapView, {Marker} from 'react-native-maps';
-import useIsMounted from './hooks/isMounted';
+import useIsMounted from '../../../hooks/isMounted';
 
 const {width, height} = Dimensions.get('window');
 

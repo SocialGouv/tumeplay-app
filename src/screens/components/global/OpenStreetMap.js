@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Image, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import MapView, {Marker} from 'react-native-maps';
+import useIsMounted from './hooks/isMounted';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,6 +19,7 @@ OpenStreetMap.propTypes = {
   onRegionChange: PropTypes.func,
 };
 export default function OpenStreetMap(props) {
+  const isMounted = useIsMounted();
   const [region, setRegion] = useState({
     latitude: props.latitude,
     longitude: props.longitude,
@@ -40,7 +42,7 @@ export default function OpenStreetMap(props) {
   );
 
   function onRegionChange(region) {
-    if( isNaN(region.latitude) || isNaN(region.longitude) )
+    if( !isMounted.current || !region || isNaN(region.latitude) || isNaN(region.longitude) )
     {
       return;
     }

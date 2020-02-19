@@ -58,6 +58,7 @@ export default function TunnelPickupSelect(props) {
   const [pickupPoints, setPickupPoints] = useState([]);
   const [mapLayout, setMapLayout] = useState({width: 250, height: 250});
   const [displayReset, setDisplayReset] = useState(false);
+  const [displayMap, setDisplayMap] = useState(true);
 
   const isMounted = useIsMounted();
 
@@ -72,6 +73,7 @@ export default function TunnelPickupSelect(props) {
         error => console.log('Error', JSON.stringify(error)),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
+      setDisplayMap(true);
     }
   }, [isMounted]);
 
@@ -120,6 +122,7 @@ export default function TunnelPickupSelect(props) {
   }, [currentPosition]);
 
   function _onDone() {
+	setDisplayMap(false);
     props.navigation.navigate('TunnelUserAddress', {
       selectedItem: selectedItem,
       selectedProducts: selectedProducts,
@@ -267,7 +270,7 @@ export default function TunnelPickupSelect(props) {
           currentValue={localAdress.userZipCode}
           displayResetButton={displayReset}
         />
-
+		{ displayMap && 
         <OpenStreetMap
           items={pickupPoints}
           onPoiPress={onPoiPress}
@@ -277,6 +280,7 @@ export default function TunnelPickupSelect(props) {
           latitude={currentPosition.coords.latitude}
           longitude={currentPosition.coords.longitude}
         />
+        }
       </View>
 
       <ScrollView

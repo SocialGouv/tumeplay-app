@@ -40,7 +40,11 @@ export default function OpenStreetMap(props) {
   );
 
   function onRegionChange(region) {
-	console.log("CURRENT REGION", region);
+    if( isNaN(region.latitude) || isNaN(region.longitude) )
+    {
+      return;
+    }
+	
     setRegion(region);
     props.onRegionChange(region);
   }

@@ -52,13 +52,13 @@ export default function OpenStreetMap(props) {
   }
   
   let mapWidth = props.width;
-  if( !mapWidth || !isNaN(mapWidth) )
+  if( !mapWidth || isNaN(mapWidth) )
   {
       mapWidth = 100;
   }
   
   let mapHeight = props.height;
-  if( !mapHeight || !isNaN(mapHeight) )
+  if( !mapHeight || isNaN(mapHeight) )
   {
       mapHeight = 100;
   }

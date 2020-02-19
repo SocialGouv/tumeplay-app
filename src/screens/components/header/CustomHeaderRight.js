@@ -64,48 +64,52 @@ export default function CustomHeaderRight(props) {
     },
   });
 
-  useEffect(() => {
-    async function _fetchTokens() {
-      const _tokens = await User.getTokensAmount();
-      if (isMounted.current) {
-        setAvailableTokens(_tokens);
+  useEffect(
+    () => {
+      async function _fetchTokens() {
+        const _tokens = await User.getTokensAmount();
+        if (isMounted.current) {
+          setAvailableTokens(_tokens);
 
-        const _listener = EventRegister.addEventListener(
-          'tokensAmountChanged',
-          data => {
-            setAvailableTokens(data);
-          },
-        );
-        setEventListener(_listener);
+          const _listener = EventRegister.addEventListener(
+            'tokensAmountChanged',
+            data => {
+              setAvailableTokens(data);
+            },
+          );
+          setEventListener(_listener);
+        }
+
+        return () => {
+          EventRegister.removeEventListener(eventListener);
+        };
       }
 
-      return () => {
-        EventRegister.removeEventListener(eventListener);
-      };
-    }
+      async function _fetchMoreThan25YO() {
+        const _isAgeMoreThan25 = await User.getIsMoreThan25YearsOld();
+        if (isMounted.current) {
+          setIsAgeMoreThan25(_isAgeMoreThan25);
 
-    async function _fetchMoreThan25YO() {
-      const _isAgeMoreThan25 = await User.getIsMoreThan25YearsOld();
-      if (isMounted.current) {
-        setIsAgeMoreThan25(_isAgeMoreThan25);
+          const _listener = EventRegister.addEventListener(
+            'isAgeMoreThan25Changed',
+            data => {
+              setIsAgeMoreThan25(data);
+            },
+          );
+          setEventListener25Years(_listener);
+        }
 
-        const _listener = EventRegister.addEventListener(
-          'isAgeMoreThan25Changed',
-          data => {
-            setIsAgeMoreThan25(data);
-          },
-        );
-        setEventListener25Years(_listener);
+        return () => {
+          EventRegister.removeEventListener(eventListener25Years);
+        };
       }
 
-      return () => {
-        EventRegister.removeEventListener(eventListener25Years);
-      };
-    }
-
-    _fetchTokens();
-    _fetchMoreThan25YO();
-  }, [isMounted]);
+      _fetchTokens();
+      _fetchMoreThan25YO();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isMounted],
+  );
 
   function _gotoProductSelect() {
     console.log(

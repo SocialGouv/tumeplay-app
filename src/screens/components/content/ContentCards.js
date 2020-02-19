@@ -5,6 +5,7 @@ import ContentCard from './ContentCard';
 
 ContentCards.propTypes = {
   localContents: PropTypes.array,
+  activeOpacity: PropTypes.number,
 };
 
 export default function ContentCards(props) {
@@ -14,7 +15,13 @@ export default function ContentCards(props) {
 
   function _mapThem(contents) {
     return contents.map((item, key) => {
-      return <ContentCard key={key} item={item} />;
+      return (
+        <ContentCard
+          activeOpacity={props.activeOpacity}
+          key={key}
+          item={item}
+        />
+      );
     });
   }
 

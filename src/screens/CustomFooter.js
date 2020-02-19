@@ -101,6 +101,15 @@ export default function CustomFooter(props) {
           </TouchableOpacity>
         </View>
       </View>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 9,
+          color: '#CCCCCC',
+          marginTop: 15,
+        }}>
+        Version Beta - 20200219.1
+      </Text>
     </View>
   );
 }

@@ -50,6 +50,8 @@ export default function ContentScreen(props) {
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
   const [resetQuizzQuestions, setResetQuizzQuestions] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [activeOpacity, setActiveOpacity] = useState(0);
   const isMounted = useIsMounted();
 
   autoScrollToTop(props);
@@ -239,8 +241,22 @@ export default function ContentScreen(props) {
       <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
         <TopMenu selectedTheme={selectedTheme} onPress={_filterContent} />
 
-        <ScrollView style={{flex: 0.8}}>
-          <ContentCards style={{flex: 0.8}} localContents={localContents} />
+        <ScrollView
+          style={{flex: 0.8}}
+          scrollEventThrottle={16}
+          onScroll={evt => {
+            console.log('Entering scroll !');
+            if (!isScrolling) {
+              console.log('Setting ActiveOpacity');
+              setIsScrolling(true);
+              setActiveOpacity(1);
+            }
+          }}>
+          <ContentCards
+            activeOpacity={activeOpacity}
+            style={{flex: 0.8}}
+            localContents={localContents}
+          />
 
           <ContactButton />
 

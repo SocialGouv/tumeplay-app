@@ -25,17 +25,22 @@ export default function OpenStreetMap(props) {
     longitudeDelta: LONGITUDE_DELTA,
   });
 
-  useEffect(() => {
-    const _localRegion = {
-      latitude: props.latitude,
-      longitude: props.longitude,
-      latitudeDelta: region.latitudeDelta,
-      longitudeDelta: region.longitudeDelta,
-    };
-    setRegion(_localRegion);
-  }, [props.latitude, props.longitude]);
+  useEffect(
+    () => {
+      const _localRegion = {
+        latitude: props.latitude,
+        longitude: props.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta,
+      };
+      setRegion(_localRegion);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.latitude, props.longitude],
+  );
 
   function onRegionChange(region) {
+	console.log("CURRENT REGION", region);
     setRegion(region);
     props.onRegionChange(region);
   }

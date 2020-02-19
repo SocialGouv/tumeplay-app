@@ -25,31 +25,35 @@ export default function BadgeFinishScreen(props) {
 
   const isMounted = useIsMounted();
 
-  useEffect(() => {
-    async function _fetchUserData() {
-      // Fetching token
-      const _tokens = await User.getTokensAmount();
-      // Fetching isAgeMoreThan25:
+  useEffect(
+    () => {
+      async function _fetchUserData() {
+        // Fetching token
+        const _tokens = await User.getTokensAmount();
+        // Fetching isAgeMoreThan25:
 
-      if (isMounted.current) {
-        setAvailableTokens(_tokens);
+        if (isMounted.current) {
+          setAvailableTokens(_tokens);
 
-        const _listener = EventRegister.addEventListener(
-          'tokensAmountChanged',
-          data => {
-            setAvailableTokens(data);
-          },
-        );
-        setEventListener(_listener);
+          const _listener = EventRegister.addEventListener(
+            'tokensAmountChanged',
+            data => {
+              setAvailableTokens(data);
+            },
+          );
+          setEventListener(_listener);
+        }
+
+        return () => {
+          EventRegister.removeEventListener(eventListener);
+        };
       }
 
-      return () => {
-        EventRegister.removeEventListener(eventListener);
-      };
-    }
-
-    _fetchUserData();
-  }, [isMounted]);
+      _fetchUserData();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isMounted],
+  );
 
   const headerStyle = StyleSheet.create({
     container: {},

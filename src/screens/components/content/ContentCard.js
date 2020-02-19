@@ -7,6 +7,7 @@ import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
 
 ContentCard.propTypes = {
   item: PropTypes.object,
+  activeOpacity: PropTypes.number,
 };
 
 export default function ContentCard(props) {
@@ -70,7 +71,8 @@ export default function ContentCard(props) {
         style={cardStyle.buttonWrapper}
         onPress={() => {
           setIsExpanded(!isExpanded);
-        }}>
+        }}
+        activeOpacity={props.activeOpacity}>
         <Image source={content.picture} style={cardStyle.picture} />
 
         <ExpandableText

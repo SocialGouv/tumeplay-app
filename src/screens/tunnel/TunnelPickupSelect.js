@@ -157,24 +157,30 @@ export default function TunnelPickupSelect(props) {
         .geocode(value)
         .end((err, res) => {
           if (res.length >= 1) {
-            const localPosition = {
-              coords: {
-                latitude: parseFloat(res[0].lat),
-                longitude: parseFloat(res[0].lon),
-              },
-              delta: {
-                latitude:
-                  typeof currentPosition.delta !== 'undefined'
-                    ? currentPosition.delta.latitude
-                    : 0.09,
-                longitude:
-                  typeof currentPosition.delta !== 'undefined'
-                    ? currentPosition.delta.longitude
-                    : 0.09,
-              },
-            };
+            const filtered = res.filter(
+              place => place.address.country_code === 'fr',
+            );
 
-            setCurrentPosition(localPosition);
+            if (filtered.length > 0) {
+              const localPosition = {
+                coords: {
+                  latitude: parseFloat(filtered[0].lat),
+                  longitude: parseFloat(filtered[0].lon),
+                },
+                delta: {
+                  latitude:
+                    typeof currentPosition.delta !== 'undefined'
+                      ? currentPosition.delta.latitude
+                      : 0.09,
+                  longitude:
+                    typeof currentPosition.delta !== 'undefined'
+                      ? currentPosition.delta.longitude
+                      : 0.09,
+                },
+              };
+
+              setCurrentPosition(localPosition);
+            }
           }
         });
     }
@@ -305,7 +311,7 @@ export default function TunnelPickupSelect(props) {
           ]}
           onPress={_onDone}>
           <View style={{paddingTop: 8, paddingBottom: 8}}>
-            <Text style={Styles.tunnelButtonText}>Valider</Text>
+            <Text style={Styles.tunnelButtonText}>Suivant</Text>
           </View>
         </TouchableOpacity>
       )}

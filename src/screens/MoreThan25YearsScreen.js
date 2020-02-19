@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Styles from '../styles/Styles';
+import Colors from '../styles/Color';
 
 MoreThan25YearsScreen.propTypes = {
   lessThan25: PropTypes.func,
@@ -27,7 +28,7 @@ export default function MoreThan25YearsScreen(props) {
           borderRadius: 7,
           resizeMode: 'stretch',
         }}
-        source={require('../assets/background.png')}
+        source={require('../assets/age.jpg')}
       />
 
       <View style={{flex: 0.25}}></View>
@@ -48,6 +49,27 @@ export default function MoreThan25YearsScreen(props) {
           onPress={props.moreThan25}>
           <Text style={Styles.bottomCommText}>+ de 25 ans</Text>
         </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          left: 0,
+          bottom: 20,
+          width: '100%',
+          padding: 15,
+        }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontStyle: 'italic',
+            lineHeight: 20,
+            fontSize: 13,
+            color: '#FFFFFF',
+            fontFamily: Colors.textFont,
+          }}>
+          Actuellement la commande de box est disponible en Nouvelle-Aquitaine
+          et dans le département du 77.
+        </Text>
       </View>
     </View>
   );

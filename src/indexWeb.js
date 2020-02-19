@@ -1,7 +1,7 @@
 import {name as appName} from './app.json';
 import {AppRegistry} from 'react-native';
 import {createBrowserApp} from '@react-navigation/web';
-import ResizeObserver from "resize-observer-polyfill"
+import ResizeObserver from 'resize-observer-polyfill';
 import * as Sentry from '@sentry/browser';
 
 import * as serviceWorker from './serviceWorker';
@@ -16,7 +16,8 @@ import AppStack from './routes/routes';
 window.ResizeObserver = ResizeObserver;
 
 Sentry.init({
-  dsn: "https://58c382a0f5bb4e11be31887a0920aa8d@sentry.fabrique.social.gouv.fr/33",
+  dsn:
+    'https://58c382a0f5bb4e11be31887a0920aa8d@sentry.fabrique.social.gouv.fr/33',
   enableInExpoDevelopment: false,
 });
 

@@ -122,7 +122,7 @@ export default function TunnelPickupSelect(props) {
   }, [currentPosition]);
 
   function _onDone() {
-	setDisplayMap(false);
+    setDisplayMap(false);
     props.navigation.navigate('TunnelUserAddress', {
       selectedItem: selectedItem,
       selectedProducts: selectedProducts,
@@ -270,17 +270,17 @@ export default function TunnelPickupSelect(props) {
           currentValue={localAdress.userZipCode}
           displayResetButton={displayReset}
         />
-		{ displayMap && 
-        <OpenStreetMap
-          items={pickupPoints}
-          onPoiPress={onPoiPress}
-          width={mapLayout.width}
-          height={mapLayout.height}
-          onRegionChange={onRegionChange}
-          latitude={currentPosition.coords.latitude}
-          longitude={currentPosition.coords.longitude}
-        />
-        }
+        {displayMap && (
+          <OpenStreetMap
+            items={pickupPoints}
+            onPoiPress={onPoiPress}
+            width={mapLayout.width}
+            height={mapLayout.height}
+            onRegionChange={onRegionChange}
+            latitude={currentPosition.coords.latitude}
+            longitude={currentPosition.coords.longitude}
+          />
+        )}
       </View>
 
       <ScrollView

@@ -42,27 +42,29 @@ export default function OpenStreetMap(props) {
   );
 
   function onRegionChange(region) {
-    if( !isMounted.current || !region || isNaN(region.latitude) || isNaN(region.longitude) )
-    {
+    if (
+      !isMounted.current ||
+      !region ||
+      isNaN(region.latitude) ||
+      isNaN(region.longitude)
+    ) {
       return;
     }
-	
+
     setRegion(region);
     props.onRegionChange(region);
   }
-  
+
   let mapWidth = props.width;
-  if( !mapWidth || isNaN(mapWidth) )
-  {
-      mapWidth = 100;
+  if (!mapWidth || isNaN(mapWidth)) {
+    mapWidth = 100;
   }
-  
+
   let mapHeight = props.height;
-  if( !mapHeight || isNaN(mapHeight) )
-  {
-      mapHeight = 100;
+  if (!mapHeight || isNaN(mapHeight)) {
+    mapHeight = 100;
   }
-    
+
   return (
     <View style={{marginTop: 5, borderRadius: 7}}>
       <MapView

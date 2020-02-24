@@ -8,21 +8,21 @@ const boarding = [
   {
     key: 'boarding-2',
     title: 'Informe toi !',
-    text: 'Choisis ta thématique et consulte nos contenus pensés pour toi.',
+    text: 'Choisis ta thématique et consulte des contenus pensés pour toi.',
     picture: require('../../assets/pictures/boarding/boarding-3.jpeg'),
   },
   {
     key: 'boarding-3',
     title: 'Teste toi !',
     text:
-      'Réponds à nos quiz pour tester tes connaissances et gagne des points.',
+      'Réponds à des quiz pour tester tes connaissances et gagne des points.',
     picture: require('../../assets/pictures/boarding/boarding-2.jpeg'),
   },
   {
     key: 'boarding-4',
     title: 'Reçois ta box !',
     text:
-      'Commande une de nos box remplie de préservatifs et autres accessoires gratuitement.',
+      'Grace à tes points, commande gratuitement une des box remplie de préservatifs et autres accessoires.',
     picture: require('../../assets/pictures/boarding/boarding-1.jpeg'),
   },
   {

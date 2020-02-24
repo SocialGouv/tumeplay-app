@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
 import {EventRegister} from 'react-native-event-listeners';
 
@@ -54,6 +54,8 @@ export default function ContentScreen(props) {
   const [activeOpacity, setActiveOpacity] = useState(0);
   const isMounted = useIsMounted();
 
+  const refBody = useRef();
+
   autoScrollToTop(props);
 
   // Listeners to fix QuizzButton display on web mode
@@ -63,6 +65,19 @@ export default function ContentScreen(props) {
       setIsQuizzButtonVisible(true);
     },
   );
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const handleScroll = event => {
+        // Placeholder for future fix
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [isMounted]);
 
   const willBlurSubscription = props.navigation.addListener('willBlur', () => {
     if (isQuizzButtonVisible) {
@@ -238,20 +253,14 @@ export default function ContentScreen(props) {
 
   return (
     <SafeAreaView style={[Styles.safeAreaView, {}]}>
-      <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
-        <TopMenu selectedTheme={selectedTheme} onPress={_filterContent} />
+      <TopMenu
+        selectedTheme={selectedTheme}
+        onPress={_filterContent}
+        style={{position: 'absolute', top: 0}}
+      />
 
-        <ScrollView
-          style={{flex: 0.8}}
-          scrollEventThrottle={16}
-          onScroll={evt => {
-            console.log('Entering scroll !');
-            if (!isScrolling) {
-              console.log('Setting ActiveOpacity');
-              setIsScrolling(true);
-              setActiveOpacity(1);
-            }
-          }}>
+      <View style={[Styles.safeAreaViewInner, {flex: 1, paddingTop: 80}]}>
+        <ScrollView style={{flex: 0.8}}>
           <ContentCards
             activeOpacity={activeOpacity}
             style={{flex: 0.8}}

@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 export default class Portal extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    portalClass: PropTypes.string,
   };
 
   state = {
@@ -21,7 +22,7 @@ export default class Portal extends Component {
     this.setState(
       {el: document.createElement('div'), target: document.body},
       () => {
-        this.state.el.className = 'web-quizz-button';
+        this.state.el.className = this.props.portalClass; //'web-quizz-button';
         this.state.target.appendChild(this.state.el);
       },
     );

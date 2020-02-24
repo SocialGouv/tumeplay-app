@@ -32,7 +32,7 @@ export default function LandingThemeGrid(props) {
               }}>
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <Image
-                  source={item.picture}
+                  source={item.picture ? item.picture : null}
                   style={LandingStyle.gridItemPicture}
                 />
               </View>

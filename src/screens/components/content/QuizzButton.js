@@ -25,7 +25,7 @@ export default function QuizzButton(props) {
 
   if (Platform.OS === 'web') {
     return (
-      <QuizzPortal>
+      <QuizzPortal portalClass={'web-quizz-button'}>
         <View style={wrapperStyle}>
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}

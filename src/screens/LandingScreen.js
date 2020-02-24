@@ -86,7 +86,7 @@ export default function LandingScreen(props) {
             Explore nos thématiques, découvre les questions réponses associées
             et réponds aux quiz pour{' '}
             <UnderlineText textStyle={Styles.landingScreenSubtitle}>
-              gagner des box !
+              recevoir des box gratuitement !
             </UnderlineText>
           </Text>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>

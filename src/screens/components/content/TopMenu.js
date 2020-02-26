@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   Text,
   View,
@@ -8,6 +8,8 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import useIsMounted from '../../../hooks/isMounted';
+import TopMenuPortal from './Portal';
 
 import Styles from '../../../styles/Styles';
 import Colors from '../../../styles/Color';
@@ -23,7 +25,38 @@ export default function TopMenu(props) {
   const [selectedTheme] = useState(props.selectedTheme);
   const [showMore, setShowMore] = useState(false);
   const [wrapperPadding, setWrapperPadding] = useState(false);
+  const [forceRender, setForceRender] = useState(false);
   const {width} = Dimensions.get('window');
+  const isMounted = useIsMounted();
+  const topMenuRef = useRef();
+  let useAbsolute = false;
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const handleFocus = event => {
+        topMenuRef.current.measure((fx, fy, width, height, px, py) => {
+          const scrollTop = event.target.scrollingElement.scrollTop;
+
+          if (py - height < 14) {
+            if (!useAbsolute) {
+              useAbsolute = true;
+              setForceRender(useAbsolute);
+            } else {
+              if (scrollTop < 50) {
+                useAbsolute = false;
+                setForceRender(useAbsolute);
+              }
+            }
+          }
+        });
+      };
+
+      window.addEventListener('scroll', handleFocus);
+      return () => {
+        window.removeEventListener('scroll', handleFocus);
+      };
+    }
+  }, [isMounted]);
 
   function _filterContents(key) {
     setActiveFilter(key);
@@ -66,7 +99,7 @@ export default function TopMenu(props) {
     },
     scrollWrapper: {
       flex: 1,
-      paddingTop: 8,
+      paddingTop: 3,
       marginTop: 5,
       flexDirection: 'row',
       flexWrap: 'nowrap',
@@ -121,53 +154,79 @@ export default function TopMenu(props) {
   });
 
   return (
-    <View style={{flex: 0.2, maxHeight: 80}}>
-      <View style={{flex: 0.65, maxHeight: 40}}>
+    <View>
+      <View style={{flex: 0.65, maxHeight: 40, paddingLeft: 15}}>
         <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
       </View>
-      {!selectedTheme.isSpecial && (
+
+      <TopMenuPortal portalClass={'top-menu-portal'}>
         <View
-          style={[
-            {position: 'relative'},
-            wrapperPadding ? {paddingRight: 50} : undefined,
-          ]}>
-          <ScrollView
-            horizontal={true}
-            style={[menuStyle.scrollWrapper]}
-            onContentSizeChange={width => {
-              showMoreIfNeeded(width);
-            }}
-            scrollEventThrottle={16}
-            onScroll={evt => {
-              if (wrapperPadding) {
-                const {
-                  contentOffset,
-                  contentSize,
-                  layoutMeasurement,
-                } = evt.nativeEvent;
-                const {x} = contentOffset;
-                const {width} = contentSize;
+          style={{
+            position: 'absolute',
+            top: 90,
+            paddingLeft: 15,
+            paddingRight: 15,
+            left: '50%',
+            marginLeft: '-25%',
+            flex: 0.2,
+            height: 80,
+          }}>
+          {!selectedTheme.isSpecial && (
+            <View
+              style={[
+                forceRender
+                  ? {
+                      position: 'fixed',
+                      top: 40,
+                      width: '100%',
+                      backgroundColor: 'rgb(17, 7, 11)',
+                      paddingTop: 5,
+                      paddingBottom: 8,
+                    }
+                  : {top: 5, position: 'relative'},
+                wrapperPadding ? {paddingRight: 50} : undefined,
+              ]}
+              ref={topMenuRef}
+              forceRender={forceRender}>
+              <ScrollView
+                horizontal={true}
+                style={[menuStyle.scrollWrapper]}
+                onContentSizeChange={width => {
+                  showMoreIfNeeded(width);
+                }}
+                scrollEventThrottle={16}
+                onScroll={evt => {
+                  if (wrapperPadding) {
+                    const {
+                      contentOffset,
+                      contentSize,
+                      layoutMeasurement,
+                    } = evt.nativeEvent;
+                    const {x} = contentOffset;
+                    const {width} = contentSize;
 
-                if (width - x <= layoutMeasurement.width) {
-                  setShowMore(false);
-                } else {
-                  setShowMore(true);
-                }
-              }
-            }}>
-            {_menuButtons}
-          </ScrollView>
+                    if (width - x <= layoutMeasurement.width) {
+                      setShowMore(false);
+                    } else {
+                      setShowMore(true);
+                    }
+                  }
+                }}>
+                {_menuButtons}
+              </ScrollView>
 
-          {showMore && (
-            <View style={menuStyle.moreWrapper}>
-              <Image
-                source={require('../../../assets/pictures/menu.show-more.png')}
-                style={menuStyle.morePicture}
-              />
+              {showMore && (
+                <View style={menuStyle.moreWrapper}>
+                  <Image
+                    source={require('../../../assets/pictures/menu.show-more.png')}
+                    style={menuStyle.morePicture}
+                  />
+                </View>
+              )}
             </View>
           )}
         </View>
-      )}
+      </TopMenuPortal>
     </View>
   );
 }

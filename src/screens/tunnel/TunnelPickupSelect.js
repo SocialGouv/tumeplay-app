@@ -18,7 +18,7 @@ import Backlink from '../components/tunnel/Backlink';
 import OpenStreetMap from '../components/global/OpenStreetMap';
 import PointOfInterestCard from '../components/global/PointOfInterestCard';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
-const openGeocoder = require('node-open-geocoder');
+import openGeocoder from 'node-open-geocoder';
 
 const zipCodeTest = /^[0-9]{5}$/;
 
@@ -266,6 +266,8 @@ export default function TunnelPickupSelect(props) {
           inputLabel="Code postal"
           inputPlaceholder="Ton Code Postal"
           onChangeText={val => _handleChange('userZipCode', val)}
+          name={'userZipCode'}
+          filterNumbers={true}
           isValid={localValid.userZipCode}
           currentValue={localAdress.userZipCode}
           displayResetButton={displayReset}

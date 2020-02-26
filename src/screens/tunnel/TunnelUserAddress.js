@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import openGeocoder from 'node-open-geocoder';
 
 import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
@@ -16,6 +17,8 @@ import Backlink from '../components/tunnel/Backlink';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
 
 import useIsMounted from '../../hooks/isMounted';
+
+const zipCodeTest = /^[0-9]{5}$/;
 
 // @TODO : Need to find a cleaner way to test email.
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -68,6 +71,7 @@ export default function TunnelUserAddress(props) {
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
   const [localValid, setLocalValid] = useState({});
   const [mainValidFlag, setMainValidFlag] = useState(false);
+  const [invalidAddress, setInvalidAddress] = useState(false);
 
   useEffect(() => {
     if (props.navigation.state.params.userAdress) {
@@ -84,6 +88,31 @@ export default function TunnelUserAddress(props) {
       setLocalAdress(newAdress);
     }
   }, [isMounted, props.navigation.state.params.userAdress]);
+
+  function _validateAddressBeforeGoto() {
+    const fullAddress =
+      localAdress.adress + ' ' + localAdress.zipCode + ' ' + localAdress.city;
+
+    setInvalidAddress(false);
+
+    openGeocoder()
+      .geocode(fullAddress)
+      .end((err, res) => {
+        let filtered = [];
+
+        if (res.length >= 1) {
+          filtered = res.filter(place => place.address.country_code === 'fr');
+
+          if (filtered.length > 0) {
+            _gotoSummary();
+          }
+        }
+
+        if (filtered.length == 0 || res.length == 0) {
+          setInvalidAddress(true);
+        }
+      });
+  }
 
   function _validateFields() {
     let isValid = true;
@@ -133,17 +162,25 @@ export default function TunnelUserAddress(props) {
     return isValid;
   }
 
+  function _gotoSummary() {
+    props.navigation.navigate('TunnelCartSummary', {
+      selectedItem: selectedItem,
+      selectedProducts: selectedProducts,
+      deliveryType: deliveryType,
+      userAdress: localAdress,
+      selectedPickup: selectedPickup,
+    });
+  }
+
   function _onDone() {
     const isValid = _validateFields();
 
     if (isValid) {
-      props.navigation.navigate('TunnelCartSummary', {
-        selectedItem: selectedItem,
-        selectedProducts: selectedProducts,
-        deliveryType: deliveryType,
-        userAdress: localAdress,
-        selectedPickup: selectedPickup,
-      });
+      if (deliveryType === 'home') {
+        _validateAddressBeforeGoto();
+      } else {
+        _gotoSummary();
+      }
     }
   }
 
@@ -162,12 +199,41 @@ export default function TunnelUserAddress(props) {
     }
   }
 
-  function _handleChange(name, value) {
-    localAdress[`${name}`] = value;
+  async function _handleZipCode(zipCode) {
+    const localValue = zipCode.replace(/[^0-9]/g, '');
 
-    setLocalAdress(localAdress);
-    _validateFields();
-    return value;
+    if (!isNaN(localValue)) {
+      if (localAdress['zipCode'] != zipCode && zipCodeTest.test(localValue)) {
+        openGeocoder()
+          .geocode(localValue)
+          .end((err, res) => {
+            if (res.length >= 1) {
+              const filtered = res.filter(
+                place => place.address.country_code === 'fr',
+              );
+
+              if (filtered.length > 0) {
+                localAdress['city'] = filtered[0].address.city;
+                localAdress['zipCode'] = localValue;
+
+                setLocalAdress(localAdress);
+                _validateFields();
+              }
+            }
+          });
+      }
+    }
+  }
+
+  function _handleChange(name, value) {
+    if (name == 'zipCode') {
+      _handleZipCode(value);
+    } else {
+      localAdress[`${name}`] = value;
+
+      setLocalAdress(localAdress);
+      _validateFields();
+    }
   }
 
   return (
@@ -193,6 +259,7 @@ export default function TunnelUserAddress(props) {
         onChangeText={val => _handleChange('firstName', val)}
         isValid={localValid.firstName}
         currentValue={localAdress.firstName}
+        name="firstName"
       />
       <CustomTextInput
         inputLabel="Nom"
@@ -200,6 +267,7 @@ export default function TunnelUserAddress(props) {
         onChangeText={val => _handleChange('lastName', val)}
         isValid={localValid.lastName}
         currentValue={localAdress.lastName}
+        name="lastName"
       />
       <CustomTextInput
         inputLabel="Adresse e-mail"
@@ -208,6 +276,7 @@ export default function TunnelUserAddress(props) {
         isValid={localValid.emailAdress}
         emailAdressWrongFormat={localValid.emailAdressWrongFormat}
         currentValue={localAdress.emailAdress}
+        name="emailAdress"
       />
 
       {deliveryType === 'home' && (
@@ -217,16 +286,7 @@ export default function TunnelUserAddress(props) {
           onChangeText={val => _handleChange('adress', val)}
           isValid={localValid.adress}
           currentValue={localAdress.adress}
-        />
-      )}
-
-      {deliveryType === 'home' && (
-        <CustomTextInput
-          inputLabel="Ville"
-          inputPlaceholder="Ta ville"
-          onChangeText={val => _handleChange('city', val)}
-          isValid={localValid.city}
-          currentValue={localAdress.city}
+          name="adress"
         />
       )}
 
@@ -237,9 +297,35 @@ export default function TunnelUserAddress(props) {
           onChangeText={val => _handleChange('zipCode', val)}
           isValid={localValid.zipCode}
           currentValue={localAdress.zipCode}
+          filterNumbers={true}
+          name="zipCode"
         />
       )}
 
+      {deliveryType === 'home' && (
+        <CustomTextInput
+          inputLabel="Ville"
+          inputPlaceholder="Ta ville"
+          onChangeText={val => _handleChange('city', val)}
+          isValid={localValid.city}
+          currentValue={localAdress.city}
+          name="city"
+        />
+      )}
+      {deliveryType === 'home' && invalidAddress && (
+        <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
+          <View style={{flex: 1}}>
+            <Text
+              style={[
+                Styles.placeholderText,
+                {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
+              ]}>
+              L&apos;adresse indiquée semble invalide. Merci de vérifier les
+              informations.
+            </Text>
+          </View>
+        </View>
+      )}
       <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
         <View style={{flex: 1}}>
           <Text

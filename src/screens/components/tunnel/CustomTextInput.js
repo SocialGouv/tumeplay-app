@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 
 import TunnelUserAdressStyle from '../../../styles/components/TunnelUserAdress';
@@ -14,10 +14,36 @@ CustomTextInput.propTypes = {
   currentValue: PropTypes.string,
   emailAdressWrongFormat: PropTypes.bool,
   displayResetButton: PropTypes.bool,
+  name: PropTypes.string,
+  filterNumbers: PropTypes.bool,
 };
 
 export default function CustomTextInput(props) {
   let _myTextInput = false;
+
+  function filterNumbers(value) {
+    return value.replace(/[^0-9]/g, '');
+  }
+
+  function onChangeText(value) {
+    let parsed = value;
+
+    if (props.filterNumbers) {
+      parsed = filterNumbers(value);
+    }
+    _myTextInput.setNativeProps({text: parsed});
+    props.onChangeText(parsed);
+  }
+
+  useEffect(
+    () => {
+      if (props.currentValue) {
+        _myTextInput.setNativeProps({text: props.currentValue});
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.currentValue],
+  );
 
   return (
     <View style={[TunnelUserAdressStyle.inputWrapper, {position: 'relative'}]}>
@@ -31,8 +57,8 @@ export default function CustomTextInput(props) {
             : false,
         ]}
         ref={component => (_myTextInput = component)}
-        name="lastName"
-        onChangeText={props.onChangeText}
+        name={props.name}
+        onChangeText={onChangeText}
         defaultValue={props.currentValue}
       />
       {props.displayResetButton && (

@@ -173,9 +173,6 @@ export default function TunnelCartSummary(props) {
             {userAdress.emailAdress}
           </Text>
         </View>
-        <Text style={[TunnelCartSummaryStyle.subTitle, {marginTop: 10}]}>
-          * Livraison prévue entre le XX et le XX
-        </Text>
       </View>
 
       <View style={{flex: 0.25, height: 60, marginTop: 15, marginBottom: 25}}>

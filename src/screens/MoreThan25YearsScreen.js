@@ -67,8 +67,8 @@ export default function MoreThan25YearsScreen(props) {
             color: '#FFFFFF',
             fontFamily: Colors.textFont,
           }}>
-          Actuellement la commande de box est disponible en Nouvelle-Aquitaine
-          et dans le département du 77.
+          Actuellement la commande de box est disponible en Seine-et-Marne et en
+          Nouvelle-Aquitaine.
         </Text>
       </View>
     </View>

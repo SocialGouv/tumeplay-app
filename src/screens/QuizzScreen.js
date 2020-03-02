@@ -125,7 +125,7 @@ export default function QuizzScreen(props) {
           </View>
         </View>
 
-        <View style={{flex: 1.7}}></View>
+        <View style={{flex: 1.3}}></View>
 
         <View style={{position: 'absolute', bottom: 15, width: '100%'}}>
           {displayAnswer && <NextButton onPress={_nextQuestion} />}

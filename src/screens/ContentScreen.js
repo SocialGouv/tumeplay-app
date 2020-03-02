@@ -253,7 +253,11 @@ export default function ContentScreen(props) {
 
   return (
     <SafeAreaView style={[Styles.safeAreaView, {}]}>
-      <TopMenu selectedTheme={selectedTheme} onPress={_filterContent} />
+      <TopMenu
+        navigation={props.navigation}
+        selectedTheme={selectedTheme}
+        onPress={_filterContent}
+      />
 
       <View style={[Styles.safeAreaViewInner, {flex: 1, paddingTop: 40}]}>
         <ScrollView style={{flex: 0.8}}>

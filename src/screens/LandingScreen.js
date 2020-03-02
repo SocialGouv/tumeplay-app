@@ -69,7 +69,7 @@ export default function LandingScreen(props) {
   }
 
   function _onSelected_lieuxUtiles() {
-    props.navigation.navigate('TunnelProductSelect');
+    props.navigation.navigate('ContentScreen', {selectedTheme: localThemes[3]});
   }
 
   function _onSelected_echangeProfessionnel() {

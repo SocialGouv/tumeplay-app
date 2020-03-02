@@ -52,15 +52,15 @@
 		width: 100%;
 	}
 	
-	.web-quizz-button > div,
-	.top-menu-portal > div
+	.web-quizz-button > div
 	{
 		margin-left: 0 !important;
 		left: 0 !important;
 	}
 	       
 	@media (min-width : 768px) {
-		#root
+		#root,
+		.top-menu-portal > div
 		{
 			width: 75%;
 		}          
@@ -77,12 +77,16 @@
 			margin-left: -25% !important;
 			left: 50% !important;	
 		}
+	}
         
         .top-menu-portal > div
         {
-            left: 50% !important;    
-            transform: translateX(-50%);
-        }   
+		max-width: 800px;
+		
+		right: 0;
+	    left: 0;
+	    margin-right: auto;
+	    margin-left: auto;
 	}
 	
 	@font-face {
@@ -121,6 +125,16 @@
 	var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
 	g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
+</script>
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1712152,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 <!-- End Matomo Code -->
 </head>

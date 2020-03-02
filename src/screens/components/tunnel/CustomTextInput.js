@@ -13,6 +13,7 @@ CustomTextInput.propTypes = {
   onChangeText: PropTypes.func,
   currentValue: PropTypes.string,
   emailAdressWrongFormat: PropTypes.bool,
+  phoneNumberWrongFormat: PropTypes.bool,
   displayResetButton: PropTypes.bool,
   name: PropTypes.string,
   filterNumbers: PropTypes.bool,
@@ -89,15 +90,24 @@ export default function CustomTextInput(props) {
           />
         </TouchableOpacity>
       )}
-      <Text
-        style={[
-          Styles.placeholderText,
-          {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
-        ]}>
-        {props.emailAdressWrongFormat
-          ? 'Le format du mail est incorrect'
-          : undefined}
-      </Text>
+      {props.emailAdressWrongFormat && (
+        <Text
+          style={[
+            Styles.placeholderText,
+            {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
+          ]}>
+          Le format du mail est incorrect
+        </Text>
+      )}
+      {props.phoneNumberWrongFormat && (
+        <Text
+          style={[
+            Styles.placeholderText,
+            {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
+          ]}>
+          Le format du numéro de téléphone est incorrect
+        </Text>
+      )}
     </View>
   );
 }

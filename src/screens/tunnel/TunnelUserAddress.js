@@ -17,8 +17,10 @@ import Backlink from '../components/tunnel/Backlink';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
 
 import useIsMounted from '../../hooks/isMounted';
+import AddressValidator from '../../services/AddressValidator';
 
 const zipCodeTest = /^[0-9]{5}$/;
+const phoneTest = /^0[0-9]{9}$/;
 
 // @TODO : Need to find a cleaner way to test email.
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -45,6 +47,7 @@ export default function TunnelUserAddress(props) {
     firstName: '',
     lastName: '',
     emailAdress: '',
+    phoneNumber: '',
     adress: '',
     zipCode: '',
     city: '',
@@ -54,6 +57,7 @@ export default function TunnelUserAddress(props) {
     firstName: -1,
     lastName: -1,
     emailAdress: -1,
+    phoneNumber: -1,
     adress: -1,
     zipCode: -1,
     city: -1,
@@ -72,6 +76,7 @@ export default function TunnelUserAddress(props) {
   const [localValid, setLocalValid] = useState({});
   const [mainValidFlag, setMainValidFlag] = useState(false);
   const [invalidAddress, setInvalidAddress] = useState(false);
+  const [invalidZipCode, setInvalidZipCode] = useState(false);
 
   useEffect(() => {
     if (props.navigation.state.params.userAdress) {
@@ -80,6 +85,7 @@ export default function TunnelUserAddress(props) {
         firstName: userAdress.firstName,
         lastName: userAdress.lastName,
         emailAdress: userAdress.emailAdress,
+        phoneNumber: userAdress.phoneNumber,
         adress: userAdress.adress,
         zipCode: userAdress.zipCode,
         city: userAdress.city,
@@ -156,6 +162,17 @@ export default function TunnelUserAddress(props) {
         checkedIsValid.city = false;
         isValid = false;
       }
+
+      if (localAdress.phoneNumber === '') {
+        checkedIsValid.phoneNumber = false;
+        isValid = false;
+      } else {
+        if (!phoneTest.test(localAdress.phoneNumber)) {
+          checkedIsValid.phoneNumber = false;
+          checkedIsValid.phoneNumberWrongFormat = true;
+          isValid = false;
+        }
+      }
     }
     setLocalValid(checkedIsValid);
     setMainValidFlag(isValid);
@@ -175,7 +192,7 @@ export default function TunnelUserAddress(props) {
   function _onDone() {
     const isValid = _validateFields();
 
-    if (isValid) {
+    if (isValid && !invalidZipCode) {
       if (deliveryType === 'home') {
         _validateAddressBeforeGoto();
       } else {
@@ -213,9 +230,12 @@ export default function TunnelUserAddress(props) {
               );
 
               if (filtered.length > 0) {
-                localAdress['city'] = filtered[0].address.city;
+                const city = filtered[0].address.city
+                  ? filtered[0].address.city
+                  : filtered[0].address.town;
+                localAdress['city'] = city;
                 localAdress['zipCode'] = localValue;
-
+                console.log('SETTING ZPC WITH ' + city);
                 setLocalAdress(localAdress);
                 _validateFields();
               }
@@ -227,7 +247,12 @@ export default function TunnelUserAddress(props) {
 
   function _handleChange(name, value) {
     if (name == 'zipCode') {
-      _handleZipCode(value);
+      if (AddressValidator.validateZipCode(value)) {
+        setInvalidZipCode(false);
+        _handleZipCode(value);
+      } else {
+        setInvalidZipCode(true);
+      }
     } else {
       localAdress[`${name}`] = value;
 
@@ -281,6 +306,19 @@ export default function TunnelUserAddress(props) {
 
       {deliveryType === 'home' && (
         <CustomTextInput
+          inputLabel="Numéro de téléphone"
+          inputPlaceholder="Ton numéro de téléphone"
+          onChangeText={val => _handleChange('phoneNumber', val)}
+          isValid={localValid.phoneNumber}
+          currentValue={localAdress.phoneNumber}
+          phoneNumberWrongFormat={localValid.phoneNumberWrongFormat}
+          name="phoneNumber"
+          filterNumbers={true}
+        />
+      )}
+
+      {deliveryType === 'home' && (
+        <CustomTextInput
           inputLabel="Adresse"
           inputPlaceholder="Ton adresse"
           onChangeText={val => _handleChange('adress', val)}
@@ -322,6 +360,19 @@ export default function TunnelUserAddress(props) {
               ]}>
               L&apos;adresse indiquée semble invalide. Merci de vérifier les
               informations.
+            </Text>
+          </View>
+        </View>
+      )}
+      {deliveryType === 'home' && invalidZipCode && (
+        <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
+          <View style={{flex: 1}}>
+            <Text
+              style={[
+                Styles.placeholderText,
+                {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
+              ]}>
+              Aïe ! Cette zone n&apos;est pas encore disponible à la livraison.
             </Text>
           </View>
         </View>

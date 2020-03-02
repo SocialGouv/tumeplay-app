@@ -26,6 +26,7 @@ export default function TopMenu(props) {
   const [showMore, setShowMore] = useState(false);
   const [wrapperPadding, setWrapperPadding] = useState(false);
   const [forceRender, setForceRender] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const {width} = Dimensions.get('window');
   const isMounted = useIsMounted();
   const topMenuRef = useRef();
@@ -36,7 +37,6 @@ export default function TopMenu(props) {
       const handleFocus = event => {
         topMenuRef.current.measure((fx, fy, width, height, px, py) => {
           const scrollTop = event.target.scrollingElement.scrollTop;
-
           if (py - height < 14) {
             if (!useAbsolute) {
               useAbsolute = true;
@@ -57,6 +57,24 @@ export default function TopMenu(props) {
       };
     }
   }, [isMounted]);
+
+  const willFocusSubscription = props.navigation.addListener(
+    'willFocus',
+    () => {
+      setIsMenuVisible(true);
+      setForceRender(false);
+      useAbsolute = false;
+    },
+  );
+
+  const willBlurSubscription = props.navigation.addListener('willBlur', () => {
+    setForceRender(false);
+    useAbsolute = false;
+    setIsMenuVisible(false);
+
+    willFocusSubscription.remove();
+    willBlurSubscription.remove();
+  });
 
   function _filterContents(key) {
     setActiveFilter(key);
@@ -125,7 +143,7 @@ export default function TopMenu(props) {
     {id: 2, key: 2, text: 'Les WTF'},
     {id: 3, key: 3, text: 'Sexploration'},
     {id: 4, key: 4, text: 'Nos droits'},
-    {id: 5, key: 5, text: 'SexysantÃ©'},
+    {id: 5, key: 5, text: 'Sexysanté'},
   ];
 
   const _menuButtons = _menuItems.map((item, key) => {
@@ -159,74 +177,74 @@ export default function TopMenu(props) {
         <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
       </View>
 
-      <TopMenuPortal portalClass={'top-menu-portal'}>
-        <View
-          style={{
-            position: 'absolute',
-            top: 90,
-            paddingLeft: 15,
-            paddingRight: 15,
-            left: '50%',
-            marginLeft: '-25%',
-            flex: 0.2,
-            height: 80,
-          }}>
-          {!selectedTheme.isSpecial && (
-            <View
-              style={[
-                forceRender
-                  ? {
-                      position: 'fixed',
-                      top: 40,
-                      width: '100%',
-                      backgroundColor: 'rgb(17, 7, 11)',
-                      paddingTop: 5,
-                      paddingBottom: 8,
-                    }
-                  : {top: 5, position: 'relative'},
-                wrapperPadding ? {paddingRight: 50} : undefined,
-              ]}
-              ref={topMenuRef}
-              forceRender={forceRender}>
-              <ScrollView
-                horizontal={true}
-                style={[menuStyle.scrollWrapper]}
-                onContentSizeChange={width => {
-                  showMoreIfNeeded(width);
-                }}
-                scrollEventThrottle={16}
-                onScroll={evt => {
-                  if (wrapperPadding) {
-                    const {
-                      contentOffset,
-                      contentSize,
-                      layoutMeasurement,
-                    } = evt.nativeEvent;
-                    const {x} = contentOffset;
-                    const {width} = contentSize;
+      {isMenuVisible && (
+        <TopMenuPortal portalClass={'top-menu-portal'}>
+          <View
+            style={{
+              position: 'absolute',
+              top: 90,
+              paddingLeft: 15,
+              paddingRight: 15,
+              flex: 0.2,
+              height: 80,
+            }}>
+            {!selectedTheme.isSpecial && (
+              <View
+                style={[
+                  forceRender
+                    ? {
+                        position: 'fixed',
+                        top: 45,
+                        width: 'calc(100% - 30px)',
+                        backgroundColor: 'rgb(17, 7, 11)',
+                        paddingTop: 5,
+                        paddingBottom: 8,
+                      }
+                    : {top: 5, position: 'relative'},
+                  wrapperPadding ? {paddingRight: 50} : undefined,
+                ]}
+                ref={topMenuRef}
+                forceRender={forceRender}>
+                <ScrollView
+                  horizontal={true}
+                  style={[menuStyle.scrollWrapper]}
+                  onContentSizeChange={width => {
+                    showMoreIfNeeded(width);
+                  }}
+                  scrollEventThrottle={16}
+                  onScroll={evt => {
+                    if (wrapperPadding) {
+                      const {
+                        contentOffset,
+                        contentSize,
+                        layoutMeasurement,
+                      } = evt.nativeEvent;
+                      const {x} = contentOffset;
+                      const {width} = contentSize;
 
-                    if (width - x <= layoutMeasurement.width) {
-                      setShowMore(false);
-                    } else {
-                      setShowMore(true);
+                      if (width - x <= layoutMeasurement.width) {
+                        setShowMore(false);
+                      } else {
+                        setShowMore(true);
+                      }
                     }
-                  }
-                }}>
-                {_menuButtons}
-              </ScrollView>
+                  }}>
+                  {_menuButtons}
+                </ScrollView>
 
-              {showMore && (
-                <View style={menuStyle.moreWrapper}>
-                  <Image
-                    source={require('../../../assets/pictures/menu.show-more.png')}
-                    style={menuStyle.morePicture}
-                  />
-                </View>
-              )}
-            </View>
-          )}
-        </View>
-      </TopMenuPortal>
+                {showMore && (
+                  <View style={menuStyle.moreWrapper}>
+                    <Image
+                      source={require('../../../assets/pictures/menu.show-more.png')}
+                      style={menuStyle.morePicture}
+                    />
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
+        </TopMenuPortal>
+      )}
     </View>
   );
 }

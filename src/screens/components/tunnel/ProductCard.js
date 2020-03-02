@@ -39,6 +39,7 @@ export default function ProductCard(props) {
     title: {
       color: '#F1732C',
       fontSize: 28,
+      fontFamily: Colors.titleCard,
     },
     text: {
       color: '#4F4F4F',

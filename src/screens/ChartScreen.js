@@ -61,7 +61,7 @@ export default function ChartScreen(props) {
         paddingBottom: 30,
       }}>
       <ScrollView style={{flex: 1}}>
-        <Text style={contentStyle.title}>TuMePlay</Text>
+        <Text style={contentStyle.title}>Tumeplay</Text>
 
         <Text style={contentStyle.text}>
           Cette application est une initiative du Ministère de la Santé et des
@@ -107,9 +107,9 @@ export default function ChartScreen(props) {
           <UnorderedListRow>
             Les utilisateurs pour commander l&apos;une des boites proposées -
             qui contiennent différents outils de prévention - sont amenés à
-            donner des informations relatives à leur adresse et coordonnaées.
-            Ces données ne sont pas stockées avec les informations relatives à
-            votre téléphone.
+            donner des informations relatives à leur adresse et coordonnées. Ces
+            données ne sont pas stockées avec les informations relatives à votre
+            téléphone.
           </UnorderedListRow>
           {'\n'}
           {'\n'}

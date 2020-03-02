@@ -50,8 +50,8 @@ export default function TunnelDeliverySelect(props) {
       <View style={{flex: 0.4}}>
         <Text style={Styles.tunnelTitle}>Choisis le mode de livraison</Text>
         <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
-          Nous te livrons sous 4 jours à domicile ou en points relais ! Nos
-          boîtes sont 100% discrètes ;)
+          Nous ferons de notre mieux pour te livrer au plus vite ! Nos box sont
+          100% discrètes ;)
         </Text>
       </View>
       <View style={{flex: 0.4, marginTop: 30}}>
@@ -85,6 +85,10 @@ export default function TunnelDeliverySelect(props) {
             <Text style={Styles.tunnelButtonText}>En point relais</Text>
           </View>
         </TouchableOpacity>
+        <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
+          Actuellement la commande de box est disponible en Seine-et-Marne et en
+          Nouvelle-Aquitaine.
+        </Text>
       </View>
     </View>
   );

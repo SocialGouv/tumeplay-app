@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Geolocation from '@react-native-community/geolocation';
+import openGeocoder from 'node-open-geocoder';
 
 import useIsMounted from '../../hooks/isMounted';
 import RemoteApi from '../../services/RemoteApi';
@@ -18,7 +19,8 @@ import Backlink from '../components/tunnel/Backlink';
 import OpenStreetMap from '../components/global/OpenStreetMap';
 import PointOfInterestCard from '../components/global/PointOfInterestCard';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
-import openGeocoder from 'node-open-geocoder';
+import AddressValidator from '../../services/AddressValidator';
+import TunnelUserAdressStyle from '../../styles/components/TunnelUserAdress';
 
 const zipCodeTest = /^[0-9]{5}$/;
 
@@ -59,6 +61,7 @@ export default function TunnelPickupSelect(props) {
   const [mapLayout, setMapLayout] = useState({width: 250, height: 250});
   const [displayReset, setDisplayReset] = useState(false);
   const [displayMap, setDisplayMap] = useState(true);
+  const [invalidZipCode, setInvalidZipCode] = useState(false);
 
   const isMounted = useIsMounted();
 
@@ -139,43 +142,47 @@ export default function TunnelPickupSelect(props) {
   }
 
   function _handleChange(name, value) {
-    localAdress[`${name}`] = value;
+    if (AddressValidator.validateZipCode(value)) {
+      setInvalidZipCode(false);
+      localAdress[`${name}`] = value;
 
-    setLocalAdress(localAdress);
+      setLocalAdress(localAdress);
 
-    if (zipCodeTest.test(value)) {
-      openGeocoder()
-        .geocode(value)
-        .end((err, res) => {
-          if (res.length >= 1) {
-            const filtered = res.filter(
-              place => place.address.country_code === 'fr',
-            );
+      if (zipCodeTest.test(value)) {
+        openGeocoder()
+          .geocode(value)
+          .end((err, res) => {
+            if (res.length >= 1) {
+              const filtered = res.filter(
+                place => place.address.country_code === 'fr',
+              );
 
-            if (filtered.length > 0) {
-              const localPosition = {
-                coords: {
-                  latitude: parseFloat(filtered[0].lat),
-                  longitude: parseFloat(filtered[0].lon),
-                },
-                delta: {
-                  latitude:
-                    typeof currentPosition.delta !== 'undefined'
-                      ? currentPosition.delta.latitude
-                      : 0.09,
-                  longitude:
-                    typeof currentPosition.delta !== 'undefined'
-                      ? currentPosition.delta.longitude
-                      : 0.09,
-                },
-              };
+              if (filtered.length > 0) {
+                const localPosition = {
+                  coords: {
+                    latitude: parseFloat(filtered[0].lat),
+                    longitude: parseFloat(filtered[0].lon),
+                  },
+                  delta: {
+                    latitude:
+                      typeof currentPosition.delta !== 'undefined'
+                        ? currentPosition.delta.latitude
+                        : 0.09,
+                    longitude:
+                      typeof currentPosition.delta !== 'undefined'
+                        ? currentPosition.delta.longitude
+                        : 0.09,
+                  },
+                };
 
-              setCurrentPosition(localPosition);
+                setCurrentPosition(localPosition);
+              }
             }
-          }
-        });
+          });
+      }
+    } else {
+      setInvalidZipCode(true);
     }
-
     const _displayReset = value != '';
     setDisplayReset(_displayReset);
 
@@ -272,6 +279,23 @@ export default function TunnelPickupSelect(props) {
           currentValue={localAdress.userZipCode}
           displayResetButton={displayReset}
         />
+        {invalidZipCode && (
+          <View
+            style={[
+              TunnelUserAdressStyle.requiredFieldsWrapper,
+              {marginTop: 5, marginBottom: 5},
+            ]}>
+            <View style={{flex: 1}}>
+              <Text
+                style={[
+                  Styles.placeholderText,
+                  {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
+                ]}>
+                Aïe ! Cette zone n&apos;est pas encore disponible à la livraison.
+              </Text>
+            </View>
+          </View>
+        )}
         {displayMap && (
           <OpenStreetMap
             items={pickupPoints}

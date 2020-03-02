@@ -143,7 +143,7 @@ export default function TopMenu(props) {
     {id: 2, key: 2, text: 'Les WTF'},
     {id: 3, key: 3, text: 'Sexploration'},
     {id: 4, key: 4, text: 'Nos droits'},
-    {id: 5, key: 5, text: 'Sexysanté'},
+    {id: 5, key: 5, text: 'SexysantÃ©'},
   ];
 
   const _menuButtons = _menuItems.map((item, key) => {

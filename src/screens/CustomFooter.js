@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  Image,
-  Linking,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 CustomFooter.propTypes = {
@@ -17,9 +10,7 @@ CustomFooter.propTypes = {
 export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
   function _contactMail() {
-    Linking.openURL(
-      'mailto:contact.tumeplay@fabrique.social.gouv.fr?subject=Tumeplay > Demande de contact',
-    );
+    props.navigation.navigate('Contact');
   }
 
   function openLegalTerms() {
@@ -108,7 +99,7 @@ export default function CustomFooter(props) {
           color: '#CCCCCC',
           marginTop: 15,
         }}>
-        Version Beta - 20200302.1
+        Version Beta - 20200309.2
       </Text>
     </View>
   );

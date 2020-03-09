@@ -78,6 +78,7 @@ export default function ContentCard(props) {
         <ExpandableText
           content={content}
           isExpanded={isExpanded}
+          readMoreLink={content.link}
           lessPicture={'minus-orange.png'}
           morePicture={'plus-orange.png'}
         />

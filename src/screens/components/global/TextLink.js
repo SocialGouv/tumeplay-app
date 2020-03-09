@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 TextLink.propTypes = {
   targetUrl: PropTypes.string,
   children: PropTypes.object,
+  style: PropTypes.object,
 };
 export default function TextLink(props) {
   function _openTarget() {
@@ -26,7 +27,7 @@ export default function TextLink(props) {
             href={props.targetUrl}
             accessibilityRole="link"
             target="_blank"
-            style={{textDecorationLine: 'underline'}}>
+            style={[{textDecorationLine: 'underline'}, props.style]}>
             {props.children}
           </Text>
         </View>

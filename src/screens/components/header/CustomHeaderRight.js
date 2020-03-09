@@ -126,6 +126,9 @@ export default function CustomHeaderRight(props) {
         }
       }
     }
+    if (isAgeMoreThan25 === null) {
+      setShowNotEnoughModal(!showNotEnoughModal);
+    }
   }
 
   function _toggleNotEnoughModal() {
@@ -135,6 +138,7 @@ export default function CustomHeaderRight(props) {
   const ForwardedNotEnoughModal = forwardRef(() => (
     <ProductNotEnoughTokensModal
       showModal={showNotEnoughModal}
+      isAgeMoreThan25={isAgeMoreThan25}
       onClose={_toggleNotEnoughModal}
     />
   ));

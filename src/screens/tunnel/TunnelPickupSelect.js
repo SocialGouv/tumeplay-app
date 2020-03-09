@@ -291,7 +291,8 @@ export default function TunnelPickupSelect(props) {
                   Styles.placeholderText,
                   {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
                 ]}>
-                Aïe ! Cette zone n&apos;est pas encore disponible à la livraison.
+                Aïe ! Cette zone n&apos;est pas encore disponible à la
+                livraison.
               </Text>
             </View>
           </View>

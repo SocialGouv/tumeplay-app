@@ -15,6 +15,7 @@ import LandingScreen from '../screens/LandingScreen';
 import QuizzFinishScreen from '../screens/QuizzFinishScreen';
 import LegalTermsScreen from '../screens/LegalTermsScreen';
 import ChartScreen from '../screens/ChartScreen';
+import ContactUsScreen from '../screens/ContactUsScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -69,6 +70,13 @@ const AppStack = createStackNavigator(
     },
     Chart: {
       screen: ChartScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
+    },
+    Contact: {
+      screen: ContactUsScreen,
       navigationOptions: ({navigation}) => ({
         params: navigation.state.params,
         header: <CustomHeader navigation={navigation} withBack={true} />,

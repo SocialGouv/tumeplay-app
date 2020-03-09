@@ -26,6 +26,7 @@ export default function ContactButton() {
             justifyContent: 'center',
             alignContent: 'center',
             alignItems: 'center',
+            paddingRight: 10,
           }}>
           <Image
             style={{

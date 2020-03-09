@@ -173,6 +173,22 @@ export default function TunnelCartSummary(props) {
             {userAdress.emailAdress}
           </Text>
         </View>
+        {deliveryType == 'home' && (
+          <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
+            <Image
+              style={TunnelCartSummaryStyle.pictureAndTextPicture}
+              source={require('../../assets/pictures/picto-phone.png')}
+            />
+
+            <Text
+              style={[
+                TunnelCartSummaryStyle.subTitle,
+                TunnelCartSummaryStyle.emailAdress,
+              ]}>
+              {userAdress.phoneNumber}
+            </Text>
+          </View>
+        )}
       </View>
 
       <View style={{flex: 0.25, height: 60, marginTop: 15, marginBottom: 25}}>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
+import TextLink from './TextLink';
 import useIsMounted from '../../../hooks/isMounted';
 
 import Colors from '../../../styles/Color';
@@ -16,6 +17,7 @@ ExpandableText.propTypes = {
   content: PropTypes.object,
   containerStyle: PropTypes.object,
   textStyle: PropTypes.object,
+  readMoreLink: PropTypes.string,
 };
 
 export default function ExpandableText(props) {
@@ -101,7 +103,7 @@ export default function ExpandableText(props) {
             }
           />
           <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
-            Plus d&apos;infos
+            En lire plus
           </Text>
         </TouchableOpacity>
       );
@@ -110,23 +112,45 @@ export default function ExpandableText(props) {
         return props.renderRevealedFooter(_handlePressReadLess);
       }
 
-      return (
-        <TouchableOpacity
-          style={cardStyle.readMoreWrapper}
-          onPress={_handlePressReadLess}>
-          <Image
-            style={cardStyle.readMorePicture}
-            source={
-              props.purpleMode
-                ? require('../../../assets/pictures/minus-purple.png')
-                : require('../../../assets/pictures/minus-orange.png')
-            }
-          />
-          <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
-            Refermer
-          </Text>
-        </TouchableOpacity>
-      );
+      if (props.readMoreLink) {
+        return (
+          <TouchableOpacity
+            style={cardStyle.readMoreWrapper}
+            onPress={_handlePressReadLess}>
+            <Image
+              style={cardStyle.readMorePicture}
+              source={
+                props.purpleMode
+                  ? require('../../../assets/pictures/plus-purple.png')
+                  : require('../../../assets/pictures/plus-orange.png')
+              }
+            />
+            <TextLink
+              style={[cardStyle.readMore, {...props.readMoreStyle}]}
+              targetUrl={props.readMoreLink}>
+              En savoir plus
+            </TextLink>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity
+            style={cardStyle.readMoreWrapper}
+            onPress={_handlePressReadLess}>
+            <Image
+              style={cardStyle.readMorePicture}
+              source={
+                props.purpleMode
+                  ? require('../../../assets/pictures/minus-purple.png')
+                  : require('../../../assets/pictures/minus-orange.png')
+              }
+            />
+            <Text style={[cardStyle.readMore, {...props.readMoreStyle}]}>
+              Refermer
+            </Text>
+          </TouchableOpacity>
+        );
+      }
     }
   }
 

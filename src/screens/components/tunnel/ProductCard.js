@@ -110,7 +110,7 @@ export default function ProductCard(props) {
             style={cardStyle.plusPicture}
             source={require('../../../assets/pictures/plus-orange.png')}
           />
-          <Text style={cardStyle.readMore}>Plus d infos</Text>
+          <Text style={cardStyle.readMore}>Plus d&apos;infos</Text>
         </View>
       </CustomTouchableOpacity>
       {!productBox.available && (

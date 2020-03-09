@@ -384,7 +384,7 @@ export default function TunnelUserAddress(props) {
               Styles.placeholderText,
               {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
             ]}>
-            * Champs obligatoires
+            * Champs obligatoires pour le suivi et la réception de ta commande
           </Text>
         </View>
       </View>

@@ -85,7 +85,14 @@ export default function TunnelDeliverySelect(props) {
             <Text style={Styles.tunnelButtonText}>En point relais</Text>
           </View>
         </TouchableOpacity>
-        <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontStyle: 'italic',
+            fontSize: 13,
+            textAlign: 'center',
+            marginTop: 15,
+          }}>
           Actuellement la commande de box est disponible en Seine-et-Marne et en
           Nouvelle-Aquitaine.
         </Text>

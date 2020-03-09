@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 TopMenu.propTypes = {
   selectedTheme: PropTypes.object,
   onPress: PropTypes.func,
+  navigation: PropTypes.object,
 };
 
 export default function TopMenu(props) {
@@ -35,20 +36,23 @@ export default function TopMenu(props) {
   useEffect(() => {
     if (isMounted.current) {
       const handleFocus = event => {
-        topMenuRef.current.measure((fx, fy, width, height, px, py) => {
-          const scrollTop = event.target.scrollingElement.scrollTop;
-          if (py - height < 14) {
-            if (!useAbsolute) {
-              useAbsolute = true;
-              setForceRender(useAbsolute);
-            } else {
-              if (scrollTop < 50) {
-                useAbsolute = false;
+        if (topMenuRef.current) {
+          topMenuRef.current.measure((fx, fy, width, height, px, py) => {
+            const scrollTop = event.target.scrollingElement.scrollTop;
+
+            if (py - height < 14) {
+              if (!useAbsolute) {
+                useAbsolute = true;
                 setForceRender(useAbsolute);
+              } else {
+                if (scrollTop < 50) {
+                  useAbsolute = false;
+                  setForceRender(useAbsolute);
+                }
               }
             }
-          }
-        });
+          });
+        }
       };
 
       window.addEventListener('scroll', handleFocus);

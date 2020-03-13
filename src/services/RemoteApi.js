@@ -8,7 +8,7 @@ import DefaultBoarding from '../models/defaults/Boarding';
 import DefaultBadges from '../models/defaults/Badges';
 
 // @TODO : Set this in environment
-const BaseRemote = 'https://tumeplay-api.fabrique.social.gouv.fr/';
+const BaseRemote = 'https://preprod.tumeplay-api.fabrique.social.gouv.fr/';
 //const BaseRemote = 'http://localhost:5000/';
 const BaseRemoteApi = BaseRemote + 'api/';
 

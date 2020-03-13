@@ -1,5 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  UIManager,
+  findNodeHandle,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import PropTypes from 'prop-types';
 
 import TextLink from './TextLink';
@@ -25,7 +34,7 @@ export default function ExpandableText(props) {
   const [shouldShowReadMore, setShouldShowReadMore] = useState(false);
   const [showAllText, setShowAllText] = useState(props.isExpanded);
   const isMounted = useIsMounted();
-  let _text = false;
+  const _text = useRef();
 
   useEffect(() => {
     async function nextFrameAsync() {
@@ -34,9 +43,12 @@ export default function ExpandableText(props) {
 
     async function measureHeightAsync(component) {
       return new Promise(resolve => {
-        component.measure((x, y, w, h) => {
-          resolve(h);
-        });
+        UIManager.measure(
+          findNodeHandle(_text.current),
+          (x, y, width, height) => {
+            resolve(height);
+          },
+        );
       });
     }
 
@@ -61,7 +73,6 @@ export default function ExpandableText(props) {
       if (!isMounted.current) {
         return;
       }
-
       // Get the height of the text now that number of lines has been set
       const limitedHeight = await measureHeightAsync(_text);
 
@@ -75,6 +86,19 @@ export default function ExpandableText(props) {
 
     handleHeight(_text);
   }, [_text, isMounted, props]);
+
+  function renderNode(node, index, siblings, parent, defaultRenderer) {
+    if (node.name == 'a') {
+      return (
+        <TextLink
+          key={index}
+          style={[cardStyle.readMore, {...props.readMoreStyle}]}
+          targetUrl={node.attribs.href}>
+          {defaultRenderer(node.children, parent)}
+        </TextLink>
+      );
+    }
+  }
 
   function _handlePressReadMore() {
     setShowAllText(true);
@@ -154,25 +178,27 @@ export default function ExpandableText(props) {
     }
   }
 
+  const NoL =
+    measured && !props.isExpanded && !showAllText
+      ? props.content.numberOfLines
+      : 0;
+
   return (
     <View style={props.containerStyle}>
       <View style={cardStyle.textContainer}>
         {props.content.title && (
           <Text style={cardStyle.title}>{props.content.title}</Text>
         )}
-        <Text
-          numberOfLines={
-            measured && !props.isExpanded && !showAllText
-              ? props.content.numberOfLines
-              : 0
-          }
-          ref={text => {
-            _text = text;
+        <HTMLView
+          RootComponent={Text}
+          renderNode={renderNode}
+          ref={_text}
+          value={`<p>${props.content.text}</p>`}
+          rootComponentProps={{
+            numberOfLines: NoL,
+            style: [cardStyle.text, {...props.textStyle}],
           }}
-          style={[cardStyle.text, {...props.textStyle}]}>
-          {props.content.text}
-        </Text>
-
+          style={[cardStyle.text, {...props.textStyle}]}></HTMLView>
         {_maybeRenderReadMore()}
       </View>
     </View>

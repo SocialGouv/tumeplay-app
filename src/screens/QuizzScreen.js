@@ -91,7 +91,9 @@ export default function QuizzScreen(props) {
     <ImageBackground
       imageStyle={{borderRadius: 7}}
       style={{width: '100%', height: '100%'}}
-      source={_currentQuestion.background ? _currentQuestion.background : null}>
+      source={
+        _currentQuestion.background ? _currentQuestion.background : undefined
+      }>
       <View style={Styles.flexOne}>
         <View style={{flex: 0.5}}></View>
         <View style={{flex: 2}}>

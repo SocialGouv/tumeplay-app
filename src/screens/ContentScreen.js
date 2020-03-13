@@ -50,12 +50,10 @@ export default function ContentScreen(props) {
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
   const [resetQuizzQuestions, setResetQuizzQuestions] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [activeOpacity, setActiveOpacity] = useState(0);
+  const [activeOpacity, setActiveOpacity] = useState(0.5);
   const isMounted = useIsMounted();
 
-  const refBody = useRef();
-
+  const opacityTimer = useRef(null);
   autoScrollToTop(props);
 
   // Listeners to fix QuizzButton display on web mode
@@ -69,7 +67,15 @@ export default function ContentScreen(props) {
   useEffect(() => {
     if (isMounted.current) {
       const handleScroll = event => {
-        // Placeholder for future fix
+        setActiveOpacity(1);
+
+        if (opacityTimer && opacityTimer.current) {
+          clearTimeout(opacityTimer.current);
+        }
+
+        opacityTimer.current = setTimeout(() => {
+          setActiveOpacity(0.5);
+        }, 150);
       };
 
       window.addEventListener('scroll', handleScroll);

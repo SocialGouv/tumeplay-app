@@ -31,6 +31,7 @@
     "react-native-device-info": "^5.3.1",
     "react-native-event-listeners": "^1.0.3",
     "react-native-gesture-handler": "^1.5.0",
+    "react-native-htmlview": "^0.15.0",
     "react-native-maps": "github:expo/react-native-maps",
     "react-native-modal": "^11.5.3",
     "react-native-web": "^0.11.7",

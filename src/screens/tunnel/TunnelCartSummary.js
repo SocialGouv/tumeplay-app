@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, forwardRef} from 'react';
 import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import {EventRegister} from 'react-native-event-listeners';
@@ -6,6 +6,7 @@ import {EventRegister} from 'react-native-event-listeners';
 import Splitter from '../components/tunnel/Splitter';
 import Backlink from '../components/tunnel/Backlink';
 import ProductContentList from '../components/tunnel/ProductContentList';
+import ProductErrorModal from '../components/tunnel/ProductErrorModal';
 
 import RemoteApi from '../../services/RemoteApi';
 import UserService from '../../services/User';
@@ -19,6 +20,8 @@ TunnelCartSummary.propTypes = {
 };
 
 export default function TunnelCartSummary(props) {
+  const [showMaxLimitModal, setShowMaxLimitModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedPickup] = useState(
@@ -37,21 +40,63 @@ export default function TunnelCartSummary(props) {
       selectedPickup,
       deliveryType,
     );
+
+    if (!_isSuccess || !_isSuccess.success) {
+      setShowErrorModal(true);
+
+      return;
+    }
+
+    return;
+
     if (_isSuccess) {
       const _newTokens = await UserService.subTokens(1000);
 
       EventRegister.emit('tokensAmountChanged', _newTokens);
+
+      props.navigation.navigate('TunnelOrderConfirm', {
+        selectedItem: selectedItem,
+        selectedProducts: selectedProducts,
+        userAdress: userAdress,
+        selectedPickup: selectedPickup,
+      });
     }
   }
 
+  function _toggleErrorModal() {
+    setShowErrorModal(!showErrorModal);
+  }
+
+  function _toggleMaxLimitModal() {
+    setShowMaxLimitModal(!showMaxLimitModal);
+  }
+
+  const ForwardedErrorModal = forwardRef(() => (
+    <ProductErrorModal
+      showModal={showErrorModal}
+      onClose={_toggleErrorModal}
+      modalTitle={'Oups !'}>
+      <Text>
+        Une erreur est survenue lors de la validation. Nous t&apos;invitons à
+        vérifier les données entrées et à réessayer ultérieurement.
+      </Text>
+    </ProductErrorModal>
+  ));
+
+  const ForwardedMaxLimitModal = forwardRef(() => (
+    <ProductErrorModal
+      showModal={showMaxLimitModal}
+      onClose={_toggleMaxLimitModal}
+      modalTitle={'Oups !'}>
+      <Text>
+        La limite de commande est dépassée. Nous t&apos;invitons à tester de
+        nouveau dans quelques jours ou à essayer une autre box.
+      </Text>
+    </ProductErrorModal>
+  ));
+
   function _onDone() {
     _confirmOrder();
-    props.navigation.navigate('TunnelOrderConfirm', {
-      selectedItem: selectedItem,
-      selectedProducts: selectedProducts,
-      userAdress: userAdress,
-      selectedPickup: selectedPickup,
-    });
   }
 
   function _goBack() {
@@ -189,6 +234,17 @@ export default function TunnelCartSummary(props) {
             </Text>
           </View>
         )}
+
+        <Splitter />
+
+        <Text
+          style={[
+            TunnelCartSummaryStyle.subTitle,
+            {marginTop: 10, fontSize: 12},
+          ]}>
+          À ce jour, la commande de box n&apos;est malheureusement pas
+          illimitée. Tu ne pourras commander que quelques box.
+        </Text>
       </View>
 
       <View style={{flex: 0.25, height: 60, marginTop: 15, marginBottom: 25}}>
@@ -208,6 +264,8 @@ export default function TunnelCartSummary(props) {
           </View>
         </TouchableOpacity>
       </View>
+      <ForwardedMaxLimitModal />
+      <ForwardedErrorModal />
     </ScrollView>
   );
 }

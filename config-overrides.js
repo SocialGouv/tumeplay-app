@@ -27,6 +27,7 @@ module.exports = function override(config, env) {
   addModuleToMainRule(config, '@react-native-community/async-storage');
   addModuleToMainRule(config, 'react-native-event-listeners');
   addModuleToMainRule(config, 'react-native-maps');
+  addModuleToMainRule(config, 'react-native-htmlview');
 
   for (const plugin of config.plugins) {
     if (plugin.constructor.name === 'DefinePlugin') {

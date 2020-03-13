@@ -20,6 +20,7 @@ const ThemesEndpoint = BaseRemoteApi + 'thematiques';
 const PickupEndpoint = BaseRemoteApi + 'poi/pickup';
 const UserRegisterEndpoint = BaseRemoteApi + 'auth/simple-register';
 const OrderConfirmEndpoint = BaseRemoteApi + 'orders/confirm';
+const OrderAllowedEndpoint = BaseRemoteApi + 'orders/is-allowed';
 
 // @TODO : Set this in environment
 const LOCAL_MODE = false;
@@ -233,6 +234,26 @@ const RemoteApi = {
       throw Error(e);
     }
   },
+  isAllowedOrder: async (selectedItem, userAdress) => {
+    const headers = await RemoteApi.getAutorizationHeaders();
+
+    const postData = {
+      box: selectedItem.id,
+      userAdress: userAdress,
+    };
+    console.log(postData);
+    let result = false;
+
+    if (headers) {
+      result = await RemoteApi.protectedPost(
+        OrderAllowedEndpoint,
+        postData,
+        headers,
+      );
+    }
+
+    return result.json();
+  },
   confirmOrder: async (
     selectedItem,
     selectedProducts,
@@ -268,7 +289,7 @@ const RemoteApi = {
           );
         }
 
-        return result;
+        return result.json();
       }
     } catch (e) {
       throw Error(e);

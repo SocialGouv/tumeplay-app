@@ -35,7 +35,7 @@ export default function TopMenu(props) {
 
   useEffect(() => {
     if (isMounted.current) {
-      const handleFocus = event => {
+      const handleScroll = event => {
         if (topMenuRef.current) {
           topMenuRef.current.measure((fx, fy, width, height, px, py) => {
             const scrollTop = event.target.scrollingElement.scrollTop;
@@ -55,9 +55,9 @@ export default function TopMenu(props) {
         }
       };
 
-      window.addEventListener('scroll', handleFocus);
+      window.addEventListener('scroll', handleScroll);
       return () => {
-        window.removeEventListener('scroll', handleFocus);
+        window.removeEventListener('scroll', handleScroll);
       };
     }
   }, [isMounted]);

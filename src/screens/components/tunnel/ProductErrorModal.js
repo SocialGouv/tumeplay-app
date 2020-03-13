@@ -8,13 +8,14 @@ import ModalCloseButton from '../global/ModalCloseButton';
 import Colors from '../../../styles/Color';
 import ModalStyle from '../../../styles/components/Modal';
 
-ProductNotEnoughTokensModal.propTypes = {
+ProductError.propTypes = {
   showModal: PropTypes.bool,
-  isAgeMoreThan25: PropTypes.bool,
   onClose: PropTypes.func,
+  modalTitle: PropTypes.string,
+  children: PropTypes.object,
 };
 
-export default function ProductNotEnoughTokensModal(props) {
+export default function ProductError(props) {
   const [showModal] = useState(props.showModal);
 
   const customModal = StyleSheet.create({
@@ -57,25 +58,10 @@ export default function ProductNotEnoughTokensModal(props) {
       <View style={[ModalStyle.innerModal, customModal.innerModal]}>
         <ModalCloseButton onClose={props.onClose} />
         <View style={{flex: 1, padding: 30}}>
-          {!props.isAgeMoreThan25 && props.isAgeMoreThan25 != null && (
-            <View>
-              <Text style={customModal.modalTitle}>Presque !</Text>
-              <Text style={customModal.text}>
-                Pour accéder à la commande de box gratuite, il faut avoir au
-                minimum <Text style={{fontWeight: 'bold'}}>1000 points</Text>.
-                {'\n'}Réponds à d&apos;autres quiz pour augmenter ton score.
-              </Text>
-            </View>
-          )}
-          {props.isAgeMoreThan25 == null && (
-            <View>
-              <Text style={customModal.modalTitle}>Oups !</Text>
-              <Text style={customModal.text}>
-                Pour accéder à la suite, tu dois répondre à des quiz et
-                augmenter ton score.
-              </Text>
-            </View>
-          )}
+          <View>
+            <Text style={customModal.modalTitle}>{props.modalTitle}</Text>
+            <Text style={customModal.text}>{props.children}</Text>
+          </View>
         </View>
       </View>
     </Modal>

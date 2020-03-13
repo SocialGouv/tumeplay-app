@@ -18,6 +18,7 @@ import CustomTextInput from '../components/tunnel/CustomTextInput';
 
 import useIsMounted from '../../hooks/isMounted';
 import AddressValidator from '../../services/AddressValidator';
+import RemoteApi from '../../services/RemoteApi';
 
 const zipCodeTest = /^[0-9]{5}$/;
 const phoneTest = /^0[0-9]{9}$/;
@@ -77,6 +78,7 @@ export default function TunnelUserAddress(props) {
   const [mainValidFlag, setMainValidFlag] = useState(false);
   const [invalidAddress, setInvalidAddress] = useState(false);
   const [invalidZipCode, setInvalidZipCode] = useState(false);
+  const [disallowOrder, setDisallowOrder] = useState(false);
 
   useEffect(() => {
     if (props.navigation.state.params.userAdress) {
@@ -189,15 +191,32 @@ export default function TunnelUserAddress(props) {
     });
   }
 
+  async function _checkBeforeGotoSummary() {
+    const _isOrderAllowed = await RemoteApi.isAllowedOrder(
+      selectedItem,
+      localAdress,
+    );
+
+    if (!_isOrderAllowed || !_isOrderAllowed.isAllowed) {
+      setDisallowOrder(true);
+
+      return;
+    }
+
+    setDisallowOrder(false);
+
+    if (deliveryType === 'home') {
+      _validateAddressBeforeGoto();
+    } else {
+      _gotoSummary();
+    }
+  }
+
   function _onDone() {
     const isValid = _validateFields();
 
     if (isValid && !invalidZipCode) {
-      if (deliveryType === 'home') {
-        _validateAddressBeforeGoto();
-      } else {
-        _gotoSummary();
-      }
+      _checkBeforeGotoSummary();
     }
   }
 
@@ -373,6 +392,20 @@ export default function TunnelUserAddress(props) {
                 {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
               ]}>
               Aïe ! Cette zone n&apos;est pas encore disponible à la livraison.
+            </Text>
+          </View>
+        </View>
+      )}
+      {disallowOrder && (
+        <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
+          <View style={{flex: 1}}>
+            <Text
+              style={[
+                Styles.placeholderText,
+                {fontSize: 14, color: '#C80352', fontFamily: 'Chivo-Regular'},
+              ]}>
+              La commande de box est à ce jour limitée. Tente ta chance plus
+              tard et n&apos;hésite pas à nous faire des retours !
             </Text>
           </View>
         </View>

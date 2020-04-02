@@ -98,6 +98,13 @@ export default function ExpandableText(props) {
         </TextLink>
       );
     }
+    if (node.name === 'strong' || node.name === 'b') {
+      return (
+        <Text key={index} style={cardStyle.boldText}>
+          {defaultRenderer(node.children, parent)}
+        </Text>
+      );
+    }
   }
 
   function _handlePressReadMore() {
@@ -221,6 +228,11 @@ const cardStyle = StyleSheet.create({
     marginTop: 10,
     lineHeight: 19,
     fontFamily: Colors.textFont,
+  },
+  boldText: {
+    color: '#4F4F4F',
+    fontFamily: Colors.textFont,
+    fontWeight: 600,
   },
   readMoreWrapper: {
     position: 'absolute',

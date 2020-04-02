@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ImageBackground} from 'react-native';
+import {Text, View, ImageBackground, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../styles/Styles';
 import {EventRegister} from 'react-native-event-listeners';
@@ -94,21 +94,20 @@ export default function QuizzScreen(props) {
       source={
         _currentQuestion.background ? _currentQuestion.background : undefined
       }>
-      <View style={Styles.flexOne}>
-        <View style={{flex: 0.5}}></View>
-        <View style={{flex: 2}}>
-          <View
-            style={{
-              paddingLeft: 10,
-              paddingRight: 10,
-              marginTop: 20,
-              alignSelf: 'center',
-            }}>
-            <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
-          </View>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{flex: 1}}>
+        <View
+          style={{
+            paddingLeft: 10,
+            paddingRight: 10,
+            marginTop: 50,
+            marginBottom: 40,
+            alignSelf: 'center',
+            height: '20%',
+          }}>
+          <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
         </View>
 
-        <View style={{flex: 2}}>
+        <View style={{paddingBottom: 50, height: '52%'}}>
           <View style={{flex: 1, flexDirection: 'column'}}>
             {!displayAnswer && _currentQuestion.answers.length <= 2 && (
               <View style={Styles.flexOne}></View>
@@ -127,9 +126,13 @@ export default function QuizzScreen(props) {
           </View>
         </View>
 
-        <View style={{flex: 1.3}}></View>
-
-        <View style={{position: 'absolute', bottom: 15, width: '100%'}}>
+        <View
+          style={[
+            {textAlign: 'center', paddingBottom: 10},
+            displayAnswer
+              ? {}
+              : {position: 'absolute', bottom: 5, width: '100%'},
+          ]}>
           {displayAnswer && <NextButton onPress={_nextQuestion} />}
 
           <Text
@@ -142,7 +145,7 @@ export default function QuizzScreen(props) {
             {currentIndex + 1} / {total}
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 }

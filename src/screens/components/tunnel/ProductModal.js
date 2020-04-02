@@ -170,25 +170,29 @@ export default function ProductModal(props) {
             marginTop: 15,
             marginBottom: 15,
             position: 'absolute',
-            bottom: 30,
+            bottom: -15,
             width: '100%',
+            paddingLeft: 15,
+            paddingRight: 15,
+            paddingBottom: 30,
+            backgroundColor: 'white',
           }}>
-          {productBox && productBox.products.length === 0 && totalProducts < 4 && (
-            <TouchableOpacity
-              style={[Styles.bottomButton, {borderRadius: 25, opacity: 0.75}]}>
-              <Text style={[Styles.bottomCommText]}>
-                {totalProducts}/4 Produits
-              </Text>
-            </TouchableOpacity>
-          )}
-          {productBox &&
-            (productBox.products.length > 0 || totalProducts >= 4) && (
-              <TouchableOpacity
-                style={[Styles.bottomButton, {borderRadius: 25}]}
-                onPress={onOrder}>
-                <Text style={Styles.bottomCommText}>Commander</Text>
-              </TouchableOpacity>
-            )}
+          <TouchableOpacity style={[Styles.bottomButton, {borderRadius: 25}]}>
+            <Text style={[Styles.bottomCommText, {opacity: 0.2}]}>
+              Commander
+            </Text>
+          </TouchableOpacity>
+          <Text
+            style={{
+              color: '#C80352',
+              fontSize: 15,
+              textAlign: 'center',
+              marginTop: 15,
+              fontFamily: 'Chivo-Bold',
+            }}>
+            En raison des mesures prises en lien avec le COVID-19 et par mesure
+            de sûreté, la commande est actuellement suspendue.
+          </Text>
         </View>
       </View>
     </Modal>

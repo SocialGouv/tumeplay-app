@@ -13,12 +13,12 @@ var Styles = {
     marginBottom: 25,
     marginRight: isWeb ? 'auto' : 25,
     marginLeft: isWeb ? 'auto' : 25,
-    marginTop: 35,
+    marginTop: 40,
     borderRadius: 7,
     borderColor: '#000000',
     position: 'relative',
     maxWidth: isWeb ? 500 : undefined,
-    maxHeight: isWeb ? 650 : undefined,
+    maxHeight: isWeb ? 750 : undefined,
     paddingLeft: 7,
     paddingRight: 7,
   },
@@ -28,7 +28,7 @@ var Styles = {
     height: '100%',
     left: 0,
     top: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 };
 

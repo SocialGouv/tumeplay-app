@@ -51,7 +51,7 @@ export default function AnswerScreen(props) {
   }
 
   return (
-    <View style={{flex: 3}}>
+    <View style={{flex: 6, flexGrow: 1}}>
       {_rightAnswer !== '' && (
         <View style={[Styles.rightAnswerButton, localStyle]}>
           <View style={[QuizzAnswerStyle.pictureAndTextWrapper]}>

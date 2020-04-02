@@ -89,17 +89,19 @@ export default function ProductCustomSelectList(props) {
   function _renderProductList(items) {
     if (items !== undefined) {
       return items.map((item, key) => {
-        return (
-          <ProductCustomSelectListRow
-            key={key}
-            item={item}
-            onPress={onPress}
-            rowHeight={maxRowHeight}
-            onLayout={_onChildLayout}
-            onQtyAdjust={onQuantityAdjust}
-            selectAllowed={selectAllowed}
-          />
-        );
+        if (item.isOrderable) {
+          return (
+            <ProductCustomSelectListRow
+              key={key}
+              item={item}
+              onPress={onPress}
+              rowHeight={maxRowHeight}
+              onLayout={_onChildLayout}
+              onQtyAdjust={onQuantityAdjust}
+              selectAllowed={selectAllowed}
+            />
+          );
+        }
       });
     } else {
       return <View></View>;

@@ -84,10 +84,7 @@ export default function LandingScreen(props) {
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
           <Text style={Styles.landingScreenSubtitle}>
             Explore nos thématiques, découvre les questions réponses associées
-            et réponds aux quiz pour{' '}
-            <UnderlineText textStyle={Styles.landingScreenSubtitle}>
-              recevoir des box gratuitement !
-            </UnderlineText>
+            et réponds aux quiz pour recevoir des box gratuitement !
           </Text>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
             <LandingThemeGrid

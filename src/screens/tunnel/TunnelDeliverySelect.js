@@ -79,12 +79,22 @@ export default function TunnelDeliverySelect(props) {
             paddingBottom: 2,
             width: '50%',
             alignSelf: 'center',
-          }}
-          onPress={() => _onDone('pickup')}>
+          }}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>En point relais</Text>
+            <Text style={Styles.tunnelButtonTextOpaque}>En point relais</Text>
           </View>
         </TouchableOpacity>
+        <Text
+          style={{
+            color: '#C80352',
+            fontSize: 15,
+            textAlign: 'center',
+            marginTop: 15,
+            fontFamily: 'Chivo-Bold',
+          }}>
+          En raison des mesures prises en lien avec le COVID-19 et par mesure de
+          sûreté, la livraison en point relais est actuellement suspendue.
+        </Text>
         <Text
           style={{
             color: '#FFFFFF',

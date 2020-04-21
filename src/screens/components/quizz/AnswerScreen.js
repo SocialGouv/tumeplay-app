@@ -6,6 +6,7 @@ import Styles from '../../../styles/Styles';
 import QuizzAnswerStyle from '../../../styles/components/QuizzAnswer';
 import ExpandableText from '../global/ExpandableText';
 import useIsMounted from '../../../hooks/isMounted';
+import Tracking from '../../../services/Tracking';
 
 AnswerScreen.propTypes = {
   question: PropTypes.object,
@@ -78,6 +79,7 @@ export default function AnswerScreen(props) {
         <TouchableOpacity
           style={[QuizzAnswerStyle.explanationInnerWrapper, {flexGrow: 1}]}
           onPress={() => {
+            Tracking.knowMoreTriggered('question', content.id);
             setIsExpanded(!isExpanded);
           }}>
           <ExpandableText
@@ -89,6 +91,9 @@ export default function AnswerScreen(props) {
             purpleMode={true}
             lessPicture={'minus-purple.png'}
             morePicture={'plus-purple.png'}
+            onReadMore={() => {
+              Tracking.knowMoreTriggered('question', content.id);
+            }}
           />
         </TouchableOpacity>
       </View>

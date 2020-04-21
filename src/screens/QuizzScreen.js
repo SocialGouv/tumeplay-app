@@ -5,6 +5,7 @@ import Styles from '../styles/Styles';
 import {EventRegister} from 'react-native-event-listeners';
 
 import UserService from '../services/User';
+import Tracking from '../services/Tracking';
 import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
@@ -25,6 +26,8 @@ export default function QuizzScreen(props) {
 
   const _currentQuestion = questions[currentIndex];
 
+  var questionTimer = Math.floor(Date.now() / 1000);
+
   useEffect(() => {
     setQuestions(props.questions);
     setTotal(props.questions.length);
@@ -44,8 +47,27 @@ export default function QuizzScreen(props) {
     EventRegister.emit('tokensAmountChanged', _newTokens);
   }
 
+  function _getTokenAmount(question, givenAnswer) {
+    let _tokenAmount = 25;
+
+    if (givenAnswer == question.rightAnswer) {
+      _tokenAmount = 100;
+    }
+
+    if (givenAnswer == question.neutralAnswer) {
+      _tokenAmount = 30;
+    }
+
+    return _tokenAmount;
+  }
+
   function _answerQuestion(key) {
+    questionTimer = Math.floor(Date.now() / 1000) - questionTimer;
+
     const currentQuestion = questions[currentIndex];
+
+    Tracking.questionAnswered(currentQuestion.id, questionTimer);
+
     const localAnswer = {
       questionId: currentQuestion.id,
       givenAnswer: currentQuestion.answers[key].id,
@@ -56,8 +78,11 @@ export default function QuizzScreen(props) {
     setDisplayAnswer(!displayAnswer);
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
 
-    const _tokenAmount =
-      currentQuestion.answers[key].id == currentQuestion.rightAnswer ? 100 : 50;
+    const _tokenAmount = _getTokenAmount(
+      currentQuestion,
+      currentQuestion.answers[key].id,
+    );
+
     _addTokens(_tokenAmount);
   }
 
@@ -65,6 +90,8 @@ export default function QuizzScreen(props) {
     if (currentIndex + 1 >= total) {
       props.onFinishedQuizz(givenAnswers);
     } else {
+      questionTimer = Math.floor(Date.now() / 1000);
+
       setCurrentIndex(currentIndex + 1);
       setIsRightAnswer(false);
       setDisplayAnswer(!displayAnswer);

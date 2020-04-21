@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 
 import TextLink from './TextLink';
 import useIsMounted from '../../../hooks/isMounted';
+import Tracking from '../../../services/Tracking';
 
 import Colors from '../../../styles/Color';
 
@@ -27,6 +28,7 @@ ExpandableText.propTypes = {
   containerStyle: PropTypes.object,
   textStyle: PropTypes.object,
   readMoreLink: PropTypes.string,
+  onReadMore: PropTypes.func,
 };
 
 export default function ExpandableText(props) {
@@ -109,6 +111,7 @@ export default function ExpandableText(props) {
 
   function _handlePressReadMore() {
     setShowAllText(true);
+    props.onReadMore();
   }
 
   function _handlePressReadLess() {

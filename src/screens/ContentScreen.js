@@ -18,6 +18,7 @@ import QuizzButton from './components/content/QuizzButton';
 import ModalCloseButton from './components/global/ModalCloseButton';
 import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
+import Tracking from '../services/Tracking';
 
 import autoScrollToTop from '../hooks/autoScrollToTop';
 import useIsMounted from '../hooks/isMounted';
@@ -56,6 +57,7 @@ export default function ContentScreen(props) {
   const opacityTimer = useRef(null);
   autoScrollToTop(props);
 
+  var quizTimer = false;
   // Listeners to fix QuizzButton display on web mode
   const willFocusSubscription = props.navigation.addListener(
     'willFocus',
@@ -175,6 +177,10 @@ export default function ContentScreen(props) {
       _toggleMoreThan25YearsModal();
     } else {
       // Step 3
+      Tracking.quizStarted();
+
+      quizTimer = Math.floor(Date.now() / 1000);
+
       _shuffleQuestions();
       _toggleQuizzModal();
     }
@@ -205,11 +211,15 @@ export default function ContentScreen(props) {
     setIsResultModalVisible(!isResultModalVisible);
   }
 
-  function _filterContent(selectedCategory) {
+  function _filterContent(selectedCategory, categoryText) {
+    Tracking.categorySelected(selectedTheme, categoryText);
     setCurrentCategory(selectedCategory);
   }
 
   function _onFinishedQuizz() {
+    quizTimer = Math.floor(Date.now() / 1000) - quizTimer;
+    Tracking.quizEnded(quizTimer);
+
     _toggleQuizzModal();
     setResetQuizzQuestions(!resetQuizzQuestions);
     setNeedResultModal(true);

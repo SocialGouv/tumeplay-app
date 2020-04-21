@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ExpandableText from '../global/ExpandableText';
 import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
+import Tracking from '../../../services/Tracking';
 
 ContentCard.propTypes = {
   item: PropTypes.object,
@@ -70,6 +71,7 @@ export default function ContentCard(props) {
       <CustomTouchableOpacity
         style={cardStyle.buttonWrapper}
         onPress={() => {
+          Tracking.knowMoreTriggered('contenu', content.id);
           setIsExpanded(!isExpanded);
         }}
         activeOpacity={props.activeOpacity}>
@@ -81,6 +83,9 @@ export default function ContentCard(props) {
           readMoreLink={content.link}
           lessPicture={'minus-orange.png'}
           morePicture={'plus-orange.png'}
+          onReadMore={() => {
+            Tracking.knowMoreTriggered('contenu', content.id);
+          }}
         />
       </CustomTouchableOpacity>
     </View>

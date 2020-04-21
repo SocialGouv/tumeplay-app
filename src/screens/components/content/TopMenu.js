@@ -80,9 +80,9 @@ export default function TopMenu(props) {
     willBlurSubscription.remove();
   });
 
-  function _filterContents(key) {
+  function _filterContents(key, text) {
     setActiveFilter(key);
-    props.onPress(key);
+    props.onPress(key, text);
   }
 
   function showMoreIfNeeded(contentWidth) {
@@ -162,7 +162,7 @@ export default function TopMenu(props) {
           {alignSelf: 'flex-start'},
         ]}
         onPress={() => {
-          _filterContents(item.id);
+          _filterContents(item.id, item.text);
         }}>
         <Text
           style={[

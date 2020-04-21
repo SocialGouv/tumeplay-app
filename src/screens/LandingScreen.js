@@ -16,6 +16,8 @@ import Styles from '../styles/Styles';
 import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 
+import Tracking from '../services/Tracking';
+
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
 };
@@ -65,6 +67,7 @@ export default function LandingScreen(props) {
   }, [isMounted]);
 
   function _onSelectedTheme(selectedTheme) {
+    Tracking.themeSelected(selectedTheme);
     props.navigation.navigate('ContentScreen', {selectedTheme: selectedTheme});
   }
 

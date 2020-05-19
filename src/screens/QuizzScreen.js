@@ -9,6 +9,7 @@ import Tracking from '../services/Tracking';
 import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
+import QuizAmount from '../services/Quiz';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
@@ -22,6 +23,7 @@ export default function QuizzScreen(props) {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [total, setTotal] = useState(0);
+  const [lastTokenAmount, setLastTokenAmount] = useState(0);
   const [givenAnswers, setGivenAnswers] = useState([]);
 
   const _currentQuestion = questions[currentIndex];
@@ -35,6 +37,7 @@ export default function QuizzScreen(props) {
 
   useEffect(() => {
     setCurrentIndex(0);
+    setLastTokenAmount(0);
     setDisplayAnswer(false);
     setIsRightAnswer(false);
   }, [props.resetQuestions]);
@@ -45,20 +48,6 @@ export default function QuizzScreen(props) {
     console.log('Updated result of badge:', updateResultOfBadge);
 
     EventRegister.emit('tokensAmountChanged', _newTokens);
-  }
-
-  function _getTokenAmount(question, givenAnswer) {
-    let _tokenAmount = 25;
-
-    if (givenAnswer == question.rightAnswer) {
-      _tokenAmount = 100;
-    }
-
-    if (givenAnswer == question.neutralAnswer) {
-      _tokenAmount = 30;
-    }
-
-    return _tokenAmount;
   }
 
   function _answerQuestion(key) {
@@ -75,15 +64,16 @@ export default function QuizzScreen(props) {
     setIsRightAnswer(
       currentQuestion.answers[key].id == currentQuestion.rightAnswer,
     );
-    setDisplayAnswer(!displayAnswer);
-    setGivenAnswers(prevState => ({...prevState, localAnswer}));
 
-    const _tokenAmount = _getTokenAmount(
+    const _tokenAmount = QuizAmount.getTokenAmount(
       currentQuestion,
       currentQuestion.answers[key].id,
     );
-
+	setLastTokenAmount(_tokenAmount);
     _addTokens(_tokenAmount);
+    
+    setDisplayAnswer(!displayAnswer);
+    setGivenAnswers(prevState => ({...prevState, localAnswer}));
   }
 
   function _nextQuestion() {
@@ -148,6 +138,7 @@ export default function QuizzScreen(props) {
               <AnswerScreen
                 isRightAnswer={isRightAnswer}
                 question={_currentQuestion}
+                lastTokenAmount={lastTokenAmount}
               />
             )}
           </View>

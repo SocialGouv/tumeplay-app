@@ -170,29 +170,18 @@ export default function ProductModal(props) {
             marginTop: 15,
             marginBottom: 15,
             position: 'absolute',
-            bottom: -15,
+            bottom: -30,
             width: '100%',
             paddingLeft: 15,
             paddingRight: 15,
             paddingBottom: 30,
             backgroundColor: 'white',
           }}>
-          <TouchableOpacity style={[Styles.bottomButton, {borderRadius: 25}]}>
-            <Text style={[Styles.bottomCommText, {opacity: 0.2}]}>
+          <TouchableOpacity onPress={onOrder} style={[Styles.bottomButton, {borderRadius: 25}]}>
+            <Text style={[Styles.bottomCommText]}>
               Commander
             </Text>
-          </TouchableOpacity>
-          <Text
-            style={{
-              color: '#C80352',
-              fontSize: 15,
-              textAlign: 'center',
-              marginTop: 15,
-              fontFamily: 'Chivo-Bold',
-            }}>
-            En raison des mesures prises en lien avec le COVID-19 et par mesure
-            de sûreté, la commande est actuellement suspendue.
-          </Text>
+          </TouchableOpacity>  
         </View>
       </View>
     </Modal>

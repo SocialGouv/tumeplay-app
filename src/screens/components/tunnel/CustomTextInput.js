@@ -9,17 +9,26 @@ import PropTypes from 'prop-types';
 CustomTextInput.propTypes = {
   inputLabel: PropTypes.string,
   inputPlaceholder: PropTypes.string,
-  isValid: PropTypes.bool,
+  isValid: PropTypes.number,
   onChangeText: PropTypes.func,
   currentValue: PropTypes.string,
   emailAdressWrongFormat: PropTypes.bool,
   phoneNumberWrongFormat: PropTypes.bool,
+  emailAdressMismatch: PropTypes.bool,
   displayResetButton: PropTypes.bool,
   name: PropTypes.string,
   filterNumbers: PropTypes.bool,
+  maxLength: PropTypes.number,
 };
 
+CustomTextInput.fieldStatus = {
+  NEUTRAL: -1,
+  INVALID: 0,
+  VALID: 1,
+}
+
 export default function CustomTextInput(props) {
+  
   let _myTextInput = false;
 
   function filterNumbers(value) {
@@ -31,6 +40,10 @@ export default function CustomTextInput(props) {
 
     if (props.filterNumbers) {
       parsed = filterNumbers(value);
+    }
+    
+    if (props.maxLength){
+	  parsed = parsed.substring(0,props.maxLength);
     }
     _myTextInput.setNativeProps({text: parsed});
     props.onChangeText(parsed);
@@ -53,7 +66,7 @@ export default function CustomTextInput(props) {
         placeholder={props.inputPlaceholder}
         style={[
           Styles.inputTypeText,
-          props.isValid !== undefined && !props.isValid
+          props.isValid !== undefined && props.isValid == CustomTextInput.fieldStatus.INVALID
             ? TunnelUserAdressStyle.invalidTextField
             : false,
         ]}
@@ -97,6 +110,15 @@ export default function CustomTextInput(props) {
             {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
           ]}>
           Le format du mail est incorrect
+        </Text>
+      )}
+      {props.emailAdressMismatch && (
+        <Text
+          style={[
+            Styles.placeholderText,
+            {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
+          ]}>
+          Les addresses e-mails indiquées ne correspondent pas. { props.emailAdressMismatch }
         </Text>
       )}
       {props.phoneNumberWrongFormat && (

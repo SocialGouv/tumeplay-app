@@ -19,7 +19,6 @@ const Storage = {
     }
   },
 
-  //@TODO: Cant' put promlise in JS file ?
   clear: async (): Promise<null> => {
     try {
       await AsyncStorage.clear();

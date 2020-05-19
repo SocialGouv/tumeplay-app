@@ -47,8 +47,6 @@ export default function TunnelCartSummary(props) {
       return;
     }
 
-    return;
-
     if (_isSuccess) {
       const _newTokens = await UserService.subTokens(1000);
 

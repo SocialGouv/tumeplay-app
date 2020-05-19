@@ -93,24 +93,25 @@ export default function TopMenu(props) {
 
   const menuStyle = StyleSheet.create({
     itemButton: {
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: 4,
+      marginRight: 4,
       marginBottom: 0,
       flexShrink: 1,
       flexGrow: 1,
-      minWidth: 105,
-      width: '20%',
-      paddingTop: 4,
-      paddingBottom: 4,
+      minWidth: 50,
+      paddingTop: 9,
+      paddingBottom: 7,
+      paddingLeft: 18,
+      paddingRight: 18,
+      borderRadius: 16
     },
     itemText: {
       color: '#FFFFFF',
       textAlign: 'center',
-      textDecorationLine: 'underline',
       fontFamily: Colors.textFont,
     },
     normalItemButton: {
-      backgroundColor: Colors.backgroundColor,
+      backgroundColor: '#281F22',
     },
     activeItemButton: {
       backgroundColor: Colors.mainButton,

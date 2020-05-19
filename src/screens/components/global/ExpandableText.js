@@ -235,7 +235,7 @@ const cardStyle = StyleSheet.create({
   boldText: {
     color: '#4F4F4F',
     fontFamily: Colors.textFont,
-    fontWeight: 600,
+    fontWeight: '600',
   },
   readMoreWrapper: {
     position: 'absolute',

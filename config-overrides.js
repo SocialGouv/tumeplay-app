@@ -39,6 +39,7 @@ module.exports = function override(config, env) {
   
   config.module.rules[2].oneOf[1].options.sourceType = 'unambiguous';
   config.resolve.alias['react-native-modal'] = 'modal-react-native-web';
+  config.resolve.alias['@react-native-community/async-storage'] = 'react-native-web';
 
   return config;
 };                              

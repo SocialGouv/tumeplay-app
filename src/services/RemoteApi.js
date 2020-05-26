@@ -195,25 +195,30 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchQuestions: async selectedTheme => {
+  fetchQuestions: async () => {
     try {
       if (LOCAL_MODE) {
         const questions = DefaultQuestions;
-        const filtered = questions.filter(
+        /*const filtered = questions.filter(
           question => question.theme === selectedTheme.id,
-        );
+        );*/
 
-        return filtered;
+        return questions;
       } else {
         const contents = await RemoteApi.fetch(QuizzEndpoint);
+        const mapped = await RemoteApi.mapPictures(contents);
 
-        let filtered = contents.filter(
-          content => content.theme === selectedTheme.id,
-        );
+        const sorted = {};
 
-        filtered = await RemoteApi.mapPictures(filtered);
+        mapped.forEach(item => {
+          if (!sorted[item.theme]) {
+            sorted[item.theme] = {};
+          }
 
-        return filtered;
+          sorted[item.theme][item.id] = item;
+        });
+
+        return sorted;
       }
     } catch (e) {
       throw Error(e);

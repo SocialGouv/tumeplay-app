@@ -103,7 +103,7 @@ export default function TopMenu(props) {
       paddingBottom: 7,
       paddingLeft: 18,
       paddingRight: 18,
-      borderRadius: 16
+      borderRadius: 16,
     },
     itemText: {
       color: '#FFFFFF',

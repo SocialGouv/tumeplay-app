@@ -158,19 +158,20 @@ export default function TunnelUserAddress(props) {
       isValid = false;
     } else {
       if (!MailValidator.validateMail(localAdress.emailAdressConfirmation)) {
-        checkedIsValid.emailAdressConfirmation = CustomTextInput.fieldStatus.INVALID;
+        checkedIsValid.emailAdressConfirmation =
+          CustomTextInput.fieldStatus.INVALID;
         checkedIsValid.emailAdressConfirmationWrongFormat = true;
         isValid = false;
-      }
-      else
-      {
-	  	if( localAdress.emailAdress !== '' && localAdress.emailAdressConfirmation !== '' )
-	  	{
-			if( localAdress.emailAdress != localAdress.emailAdressConfirmation )
-			{
-				console.log("Invalid mismatch.");
-				checkedIsValid.emailAdressConfirmation = CustomTextInput.fieldStatus.INVALID;
-		        checkedIsValid.emailAdressMismatch = true;
+      } else {
+        if (
+          localAdress.emailAdress !== '' &&
+          localAdress.emailAdressConfirmation !== ''
+        ) {
+          if (localAdress.emailAdress != localAdress.emailAdressConfirmation) {
+            console.log('Invalid mismatch.');
+            checkedIsValid.emailAdressConfirmation =
+              CustomTextInput.fieldStatus.INVALID;
+            checkedIsValid.emailAdressMismatch = true;
 		        isValid = false;
 			}
 	  	}

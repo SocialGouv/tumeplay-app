@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 Backlink.propTypes = {
   step: PropTypes.number,
   onPress: PropTypes.func,
+  text: PropTypes.string,
 };
 
 export default function Backlink(props) {
+  const buttonText = props.steps ? 'étape ' + props.step + ' / 4' : props.text;
+
   return (
     <View style={BacklinkStyle.backlinkWrapper}>
       <TouchableOpacity
@@ -20,7 +23,7 @@ export default function Backlink(props) {
           source={require('../../../assets/pictures/left-arrow.png')}
         />
 
-        <Text style={BacklinkStyle.backlinkText}>étape {props.step} / 4</Text>
+        <Text style={BacklinkStyle.backlinkText}>{buttonText}</Text>
       </TouchableOpacity>
     </View>
   );

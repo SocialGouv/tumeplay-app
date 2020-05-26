@@ -37,6 +37,6 @@ const AddressValidator = {
     }
 
     return false;  
-  }
+  },
 };
 export default AddressValidator;

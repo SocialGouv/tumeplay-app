@@ -16,6 +16,8 @@ import QuizzFinishScreen from '../screens/QuizzFinishScreen';
 import LegalTermsScreen from '../screens/LegalTermsScreen';
 import ChartScreen from '../screens/ChartScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
+import StayInTouchScreen from '../screens/StayInTouchScreen';
+import StayInTouchConfirmScreen from '../screens/StayInTouchConfirmScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -80,6 +82,20 @@ const AppStack = createStackNavigator(
       navigationOptions: ({navigation}) => ({
         params: navigation.state.params,
         header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
+    },
+    StayInTouch: {
+      screen: StayInTouchScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} />,
+      }),
+    },
+    StayInTouchConfirm: {
+      screen: StayInTouchConfirmScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} />,
       }),
     },
   },

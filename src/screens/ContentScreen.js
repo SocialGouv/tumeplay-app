@@ -267,6 +267,14 @@ export default function ContentScreen(props) {
     _toggleQuizzModal();
   }
 
+  function _onContactClick() {
+    setIsAge25ModalVisible(false);
+    setIsQuizzModalVisible(false);
+    setIsResultModalVisible(false);
+
+    props.navigation.navigate('StayInTouch');
+  }
+
   return (
     <SafeAreaView style={[Styles.safeAreaView, {}]}>
       <TopMenu
@@ -328,6 +336,7 @@ export default function ContentScreen(props) {
           <MoreThan25YearsScreen
             moreThan25={_onSelectedMoreThan25Years}
             lessThan25={_onSelectedLessThan25Years}
+            onContactClick={_onContactClick}
           />
         </View>
       </Modal>

@@ -21,6 +21,7 @@ const PickupEndpoint = BaseRemoteApi + 'poi/pickup';
 const UserRegisterEndpoint = BaseRemoteApi + 'auth/simple-register';
 const OrderConfirmEndpoint = BaseRemoteApi + 'orders/confirm';
 const OrderAllowedEndpoint = BaseRemoteApi + 'orders/is-allowed';
+const SendContactEndpoint = BaseRemoteApi + 'contact/save';
 
 // @TODO : Set this in environment
 const LOCAL_MODE = false;
@@ -289,6 +290,32 @@ const RemoteApi = {
         if (headers) {
           result = await RemoteApi.protectedPost(
             OrderConfirmEndpoint,
+            postData,
+            headers,
+          );
+        }
+
+        return result.json();
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
+  sendContact: async userAdress => {
+    try {
+      if (LOCAL_MODE) {
+        return true;
+      } else {
+        const headers = await RemoteApi.getAutorizationHeaders();
+
+        const postData = {
+          userAdress: userAdress,
+        };
+
+        let result = false;
+        if (headers) {
+          result = await RemoteApi.protectedPost(
+            SendContactEndpoint,
             postData,
             headers,
           );

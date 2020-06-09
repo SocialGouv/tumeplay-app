@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
 import Backlink from '../components/tunnel/Backlink';
+import Splitter from '../components/tunnel/Splitter';
 
 TunnelDeliverySelect.propTypes = {
   navigation: PropTypes.object,
@@ -14,6 +15,10 @@ export default function TunnelDeliverySelect(props) {
   const [selectedProducts] = useState(
     props.navigation.state.params.selectedProducts,
   );
+
+  function _onContactClick() {
+    props.navigation.navigate('StayInTouch');
+  }
 
   function _onDone(deliveryType) {
     const _params = {
@@ -77,34 +82,41 @@ export default function TunnelDeliverySelect(props) {
             maxHeight: 60,
             paddingTop: 2,
             paddingBottom: 2,
+            marginBottom: 60,
             width: '50%',
             alignSelf: 'center',
-          }}>
+          }}
+          onPress={() => _onDone('pickup')}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonTextOpaque}>En point relais</Text>
+            <Text style={Styles.tunnelButtonText}>En point relais</Text>
           </View>
         </TouchableOpacity>
-        <Text
-          style={{
-            color: '#C80352',
-            fontSize: 15,
-            textAlign: 'center',
-            marginTop: 15,
-            fontFamily: 'Chivo-Bold',
-          }}>
-          En raison des mesures prises en lien avec le COVID-19 et par mesure de
-          sûreté, la livraison en point relais est actuellement suspendue.
-        </Text>
+        <Splitter />
         <Text
           style={{
             color: '#FFFFFF',
-            fontStyle: 'italic',
-            fontSize: 13,
-            textAlign: 'center',
+            fontSize: 14,
             marginTop: 15,
+            lineHeight: 22,
+            fontFamily: Colors.textFont,
           }}>
           Actuellement la commande de box est disponible en Seine-et-Marne et en
-          Nouvelle-Aquitaine.
+          Nouvelle-Aquitaine.{'\n'}
+          Si tu n&apos;es pas dans ces zones :{'\n'}
+          Pour être informé·e de la sortie de l&apos;app&apos; dans ta région,
+          laisse nous ton adresse mail{' '}
+          <TouchableOpacity
+            onPress={() => {
+              _onContactClick();
+            }}>
+        <Text
+          style={{
+                textDecorationLine: 'underline',
+          }}>
+              ici
+            </Text>
+          </TouchableOpacity>
+          .
         </Text>
       </View>
     </View>

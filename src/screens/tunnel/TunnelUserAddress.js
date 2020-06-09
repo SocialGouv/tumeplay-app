@@ -51,6 +51,7 @@ export default function TunnelUserAddress(props) {
     emailAdressConfirmation: '',
     phoneNumber: '',
     adress: '',
+    adressMore: '',
     zipCode: '',
     city: '',
   };
@@ -93,6 +94,7 @@ export default function TunnelUserAddress(props) {
         emailAdressConfirmation: userAdress.emailAdressConfirmation,
         phoneNumber: userAdress.phoneNumber,
         adress: userAdress.adress,
+        adressMore: userAdress.adressMore,
         zipCode: userAdress.zipCode,
         city: userAdress.city,
       };
@@ -377,6 +379,7 @@ export default function TunnelUserAddress(props) {
       )}
 
       {deliveryType === 'home' && (
+      	<View>
         <CustomTextInput
           inputLabel="Adresse"
           inputPlaceholder="Ton adresse"
@@ -385,9 +388,13 @@ export default function TunnelUserAddress(props) {
           currentValue={localAdress.adress}
           name="adress"
         />
-      )}
-
-      {deliveryType === 'home' && (
+	        <CustomTextInput
+	          inputLabel="Complément d'adresse"
+	          inputPlaceholder="Bâtiment, lieu-dit, nom sur la boîte, etc."
+	          onChangeText={val => _handleChange('adressMore', val)}
+	          currentValue={localAdress.adressMore}
+	          name="adressMore"
+	        />
         <CustomTextInput
           inputLabel="Code Postal"
           inputPlaceholder="Ton code postal"
@@ -397,9 +404,6 @@ export default function TunnelUserAddress(props) {
           filterNumbers={true}
           name="zipCode"
         />
-      )}
-
-      {deliveryType === 'home' && (
         <CustomTextInput
           inputLabel="Ville"
           inputPlaceholder="Ta ville"
@@ -408,6 +412,7 @@ export default function TunnelUserAddress(props) {
           currentValue={localAdress.city}
           name="city"
         />
+        </View>
       )}
       {deliveryType === 'home' && invalidAddress && (
         <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>

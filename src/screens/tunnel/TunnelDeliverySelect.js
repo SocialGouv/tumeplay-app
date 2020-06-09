@@ -109,10 +109,10 @@ export default function TunnelDeliverySelect(props) {
             onPress={() => {
               _onContactClick();
             }}>
-        <Text
-          style={{
+            <Text
+              style={{
                 textDecorationLine: 'underline',
-          }}>
+              }}>
               ici
             </Text>
           </TouchableOpacity>

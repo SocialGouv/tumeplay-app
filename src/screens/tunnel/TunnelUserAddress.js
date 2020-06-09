@@ -174,9 +174,9 @@ export default function TunnelUserAddress(props) {
             checkedIsValid.emailAdressConfirmation =
               CustomTextInput.fieldStatus.INVALID;
             checkedIsValid.emailAdressMismatch = true;
-		        isValid = false;
-			}
-	  	}
+            isValid = false;
+          }
+        }
       }
     }
 
@@ -364,7 +364,7 @@ export default function TunnelUserAddress(props) {
         currentValue={localAdress.emailAdressConfirmation}
         name="emailAdressConfirmation"
       />
-      
+
       {deliveryType === 'home' && (
         <CustomTextInput
           inputLabel="Numéro de téléphone"
@@ -379,39 +379,39 @@ export default function TunnelUserAddress(props) {
       )}
 
       {deliveryType === 'home' && (
-      	<View>
-        <CustomTextInput
-          inputLabel="Adresse"
-          inputPlaceholder="Ton adresse"
-          onChangeText={val => _handleChange('adress', val)}
-          isValid={localValid.adress}
-          currentValue={localAdress.adress}
-          name="adress"
-        />
-	        <CustomTextInput
-	          inputLabel="Complément d'adresse"
-	          inputPlaceholder="Bâtiment, lieu-dit, nom sur la boîte, etc."
-	          onChangeText={val => _handleChange('adressMore', val)}
-	          currentValue={localAdress.adressMore}
-	          name="adressMore"
-	        />
-        <CustomTextInput
-          inputLabel="Code Postal"
-          inputPlaceholder="Ton code postal"
-          onChangeText={val => _handleChange('zipCode', val)}
-          isValid={localValid.zipCode}
-          currentValue={localAdress.zipCode}
-          filterNumbers={true}
-          name="zipCode"
-        />
-        <CustomTextInput
-          inputLabel="Ville"
-          inputPlaceholder="Ta ville"
-          onChangeText={val => _handleChange('city', val)}
-          isValid={localValid.city}
-          currentValue={localAdress.city}
-          name="city"
-        />
+        <View>
+          <CustomTextInput
+            inputLabel="Adresse"
+            inputPlaceholder="Ton adresse"
+            onChangeText={val => _handleChange('adress', val)}
+            isValid={localValid.adress}
+            currentValue={localAdress.adress}
+            name="adress"
+          />
+          <CustomTextInput
+            inputLabel="Complément d'adresse"
+            inputPlaceholder="Bâtiment, lieu-dit, nom sur la boîte, etc."
+            onChangeText={val => _handleChange('adressMore', val)}
+            currentValue={localAdress.adressMore}
+            name="adressMore"
+          />
+          <CustomTextInput
+            inputLabel="Code Postal"
+            inputPlaceholder="Ton code postal"
+            onChangeText={val => _handleChange('zipCode', val)}
+            isValid={localValid.zipCode}
+            currentValue={localAdress.zipCode}
+            filterNumbers={true}
+            name="zipCode"
+          />
+          <CustomTextInput
+            inputLabel="Ville"
+            inputPlaceholder="Ta ville"
+            onChangeText={val => _handleChange('city', val)}
+            isValid={localValid.city}
+            currentValue={localAdress.city}
+            name="city"
+          />
         </View>
       )}
       {deliveryType === 'home' && invalidAddress && (

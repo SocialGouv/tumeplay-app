@@ -73,9 +73,9 @@ export default function QuizzScreen(props) {
       currentQuestion,
       currentQuestion.answers[key].id,
     );
-	setLastTokenAmount(_tokenAmount);
+    setLastTokenAmount(_tokenAmount);
     _addTokens(_tokenAmount);
-    
+
     setDisplayAnswer(!displayAnswer);
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
   }

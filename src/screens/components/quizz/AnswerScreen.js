@@ -77,22 +77,22 @@ export default function AnswerScreen(props) {
             <View
               style={{
                 transform: [{rotate: '15deg'}],
-            		position: 'absolute', 
-            		right: -12, 
-            		top: -10, 
-            		paddingLeft: 7, 
-            		paddingRight: 7, 
-            		paddingTop: 2, 
-            		paddingBottom: 2, 
-            		borderRadius: 5, 
-            		borderWidth: 1, 
-            		backgroundColor: '#FFFFFF', 
-            		borderColor: '#C80351',
-		            shadowColor: '#666666',
-				    shadowOffset: {width: 1, height: 1},
-				    shadowOpacity: 0.5,
+                position: 'absolute',
+                right: -12,
+                top: -10,
+                paddingLeft: 7,
+                paddingRight: 7,
+                paddingTop: 2,
+                paddingBottom: 2,
+                borderRadius: 5,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                borderColor: '#C80351',
+                shadowColor: '#666666',
+                shadowOffset: {width: 1, height: 1},
+                shadowOpacity: 0.5,
                 shadowRadius: 8,
-		  	}}>
+              }}>
               <Text
                 style={{
                   fontFamily: Colors.textFont,

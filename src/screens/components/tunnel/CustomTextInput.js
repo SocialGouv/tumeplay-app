@@ -40,9 +40,9 @@ export default function CustomTextInput(props) {
     if (props.filterNumbers) {
       parsed = filterNumbers(value);
     }
-    
-    if (props.maxLength){
-	  parsed = parsed.substring(0,props.maxLength);
+
+    if (props.maxLength) {
+      parsed = parsed.substring(0, props.maxLength);
     }
     _myTextInput.setNativeProps({text: parsed});
     props.onChangeText(parsed);

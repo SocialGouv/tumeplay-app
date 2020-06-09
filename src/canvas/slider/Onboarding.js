@@ -109,7 +109,7 @@ export default function Onboarding(props) {
             badgeStyle: onboardStyle.dotStyle,
           },
           dotActiveStyle: onboardStyle.activeDotStyle,
-          PrevComponent: ({ onPress }) => (
+          PrevComponent: ({onPress}) => (
             <TouchableOpacity
               style={{left: -50, position: 'absolute'}}
               onPress={onPress}>
@@ -119,7 +119,7 @@ export default function Onboarding(props) {
               />
             </TouchableOpacity>
           ),
-          NextComponent: ({ onPress }) => (
+          NextComponent: ({onPress}) => (
             <TouchableOpacity
               style={{right: -50, position: 'absolute'}}
               onPress={onPress}>

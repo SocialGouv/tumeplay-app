@@ -9,7 +9,7 @@ import Tracking from '../services/Tracking';
 import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
-import QuizAmount from '../services/Quiz';
+import QuizService from '../services/Quiz';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
@@ -61,17 +61,21 @@ export default function QuizzScreen(props) {
       questionId: currentQuestion.id,
       givenAnswer: currentQuestion.answers[key].id,
     };
-    setIsRightAnswer(
-      currentQuestion.answers[key].id == currentQuestion.rightAnswer,
-    );
 
-    const _tokenAmount = QuizAmount.getTokenAmount(
+    const isRightAnswer =
+      currentQuestion.answers[key].id == currentQuestion.rightAnswer;
+
+    QuizService.moveQuestion(currentQuestion, isRightAnswer);
+
+    setIsRightAnswer(isRightAnswer);
+
+    const _tokenAmount = QuizService.getTokenAmount(
       currentQuestion,
       currentQuestion.answers[key].id,
     );
-	setLastTokenAmount(_tokenAmount);
+    setLastTokenAmount(_tokenAmount);
     _addTokens(_tokenAmount);
-    
+
     setDisplayAnswer(!displayAnswer);
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
   }

@@ -14,13 +14,13 @@ const AddressValidator = {
     '86',
     '87',
   ],
-  zipCodeTest : /^[0-9]{5}$/,
+  zipCodeTest: /^[0-9]{5}$/,
   zipCodePartTest: /^[0-9]{2}$/,
 
   validateZipCode: zipCode => {
     try {
       const firstPart = zipCode.substring(0, 2);
-      
+
       return AddressValidator.allowedZipCodes.indexOf(firstPart) >= 0;
     } catch (e) {
       throw Error(e);
@@ -28,15 +28,15 @@ const AddressValidator = {
 
     return false;
   },
-  
+
   validateZipCodePart: zipCode => {
-	try {
+    try {
       return AddressValidator.zipCodePartTest.test(zipCode);
     } catch (e) {
       throw Error(e);
     }
 
-    return false;  
-  }
+    return false;
+  },
 };
 export default AddressValidator;

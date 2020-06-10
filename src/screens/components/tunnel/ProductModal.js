@@ -177,11 +177,11 @@ export default function ProductModal(props) {
             paddingBottom: 30,
             backgroundColor: 'white',
           }}>
-          <TouchableOpacity onPress={onOrder} style={[Styles.bottomButton, {borderRadius: 25}]}>
-            <Text style={[Styles.bottomCommText]}>
-              Commander
-            </Text>
-          </TouchableOpacity>  
+          <TouchableOpacity
+            onPress={onOrder}
+            style={[Styles.bottomButton, {borderRadius: 25}]}>
+            <Text style={[Styles.bottomCommText]}>Commander</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

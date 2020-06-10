@@ -394,6 +394,7 @@ export default function TunnelUserAddress(props) {
             onChangeText={val => _handleChange('adressMore', val)}
             currentValue={localAdress.adressMore}
             name="adressMore"
+            isRequired={false}
           />
           <CustomTextInput
             inputLabel="Code Postal"

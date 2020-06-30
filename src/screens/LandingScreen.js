@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, forwardRef } from 'react';
 import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -7,8 +7,10 @@ import autoScrollToTop from '../hooks/autoScrollToTop';
 
 import UnderlineText from './components/global/UnderlineText';
 import CustomTouchableOpacity from './components/global/CustomTouchableOpacity';
+import TextWithSound from './components/global/TextWithSound';
 
 import LandingThemeGrid from './components/landing/LandingThemeGrid';
+import ProductErrorModal from './components/tunnel/ProductErrorModal';
 
 import CustomFooter from './CustomFooter';
 import Styles from '../styles/Styles';
@@ -18,12 +20,15 @@ import UserService from '../services/User';
 
 import Tracking from '../services/Tracking';
 
+
+
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
 };
 export default function LandingScreen(props) {
   const [localThemes, setLocalThemes] = useState([]);
-
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  
   const isMounted = useIsMounted();
 
   autoScrollToTop(props);
@@ -58,6 +63,9 @@ export default function LandingScreen(props) {
           if (token) {
             await UserService.setJWT(token);
           }
+          else {
+		    _toggleErrorModal();
+          }
         }
       }
     }
@@ -78,6 +86,22 @@ export default function LandingScreen(props) {
   function _onSelected_echangeProfessionnel() {
     props.navigation.navigate('ContentScreen');
   }
+  
+  function _toggleErrorModal() {
+    setShowErrorModal(!showErrorModal);
+  }
+  
+  const ForwardedErrorModal = forwardRef(() => (
+    <ProductErrorModal
+      showModal={showErrorModal}
+      onClose={_toggleErrorModal}
+      modalTitle={'Oups !'}>
+      <Text>
+        Une erreur est survenue lors de la connexion. Nous t&apos;invitons à
+        vérifier ta connexion et rafraichir la page.
+      </Text>
+    </ProductErrorModal>
+  ));
 
   return (
     <SafeAreaView style={Styles.safeAreaView}>
@@ -85,10 +109,10 @@ export default function LandingScreen(props) {
         {/* Title and grid */}
         <View style={{flex: 0.75}}>
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
-          <Text style={Styles.landingScreenSubtitle}>
+          <TextWithSound style={Styles.landingScreenSubtitle} sound={"accueil-1.mp3"}>
             Explore nos thématiques, découvre les questions réponses associées
             et réponds aux quiz pour recevoir des box gratuitement !
-          </Text>
+          </TextWithSound>
           <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'row'}}>
             <LandingThemeGrid
               onPress={_onSelectedTheme}
@@ -150,6 +174,7 @@ export default function LandingScreen(props) {
           */}
         </View>
         <CustomFooter navigation={props.navigation} />
+        <ForwardedErrorModal />
       </ScrollView>
     </SafeAreaView>
   );

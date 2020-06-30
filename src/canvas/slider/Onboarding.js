@@ -100,13 +100,35 @@ export default function Onboarding(props) {
       </View>
       <Swiper
         controlsProps={{
-          prevPos: false,
-          nextPos: false,
+          prevPos: 'bottom',
+          nextPos: 'bottom',
+          prevTitle: '<',
+          nextTitle: '>',
           dotsTouchable: true,
           dotProps: {
             badgeStyle: onboardStyle.dotStyle,
           },
           dotActiveStyle: onboardStyle.activeDotStyle,
+          PrevComponent: ({onPress}) => (
+            <TouchableOpacity
+              style={{left: -50, position: 'absolute'}}
+              onPress={onPress}>
+              <Image
+                style={{width: 20, height: 20}}
+                source={require('../../assets/pictures/boarding/left-arrow.png')}
+              />
+            </TouchableOpacity>
+          ),
+          NextComponent: ({onPress}) => (
+            <TouchableOpacity
+              style={{right: -50, position: 'absolute'}}
+              onPress={onPress}>
+              <Image
+                style={{width: 20, height: 20}}
+                source={require('../../assets/pictures/boarding/right-arrow.png')}
+              />
+            </TouchableOpacity>
+          ),
         }}
         containerStyle={localStyle}
         style={{flex: 6, backgroundColor: Colors.backgroundColor}}>

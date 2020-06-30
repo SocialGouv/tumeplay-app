@@ -22,6 +22,7 @@ TunnelCartSummary.propTypes = {
 export default function TunnelCartSummary(props) {
   const [showMaxLimitModal, setShowMaxLimitModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [selectedItem] = useState(props.navigation.state.params.selectedItem);
   const [deliveryType] = useState(props.navigation.state.params.deliveryType);
   const [selectedPickup] = useState(
@@ -43,17 +44,17 @@ export default function TunnelCartSummary(props) {
 
     if (!_isSuccess || !_isSuccess.success) {
       setShowErrorModal(true);
-
+	  setIsRunning(false);
       return;
     }
 
-    return;
-
     if (_isSuccess) {
       const _newTokens = await UserService.subTokens(1000);
-
+	  
       EventRegister.emit('tokensAmountChanged', _newTokens);
-
+	  
+	  setIsRunning(false);
+      
       props.navigation.navigate('TunnelOrderConfirm', {
         selectedItem: selectedItem,
         selectedProducts: selectedProducts,
@@ -96,7 +97,11 @@ export default function TunnelCartSummary(props) {
   ));
 
   function _onDone() {
-    _confirmOrder();
+    if(!isRunning)
+    {
+      setIsRunning(true);
+      _confirmOrder();
+	}
   }
 
   function _goBack() {
@@ -260,7 +265,11 @@ export default function TunnelCartSummary(props) {
           }}
           onPress={_onDone}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>Valider</Text>
+            <Text style={
+                isRunning
+                  ? Styles.tunnelButtonTextOpaque
+                  : Styles.tunnelButtonText
+              }>Valider</Text>
           </View>
         </TouchableOpacity>
       </View>

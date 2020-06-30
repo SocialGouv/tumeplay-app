@@ -99,7 +99,7 @@ export default function CustomFooter(props) {
           color: '#CCCCCC',
           marginTop: 15,
         }}>
-        Version Beta - 20200421.1 - PREPROD
+        Version Beta - 20200630.1
       </Text>
     </View>
   );

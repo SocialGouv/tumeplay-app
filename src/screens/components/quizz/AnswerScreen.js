@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../../../styles/Styles';
+import Colors from '../../../styles/Color';
 
 import QuizzAnswerStyle from '../../../styles/components/QuizzAnswer';
 import ExpandableText from '../global/ExpandableText';
@@ -11,6 +12,7 @@ import Tracking from '../../../services/Tracking';
 AnswerScreen.propTypes = {
   question: PropTypes.object,
   isRightAnswer: PropTypes.bool,
+  lastTokenAmount: PropTypes.number,
 };
 
 export default function AnswerScreen(props) {
@@ -70,6 +72,34 @@ export default function AnswerScreen(props) {
                   localTextStyle,
                 ]}>
                 {_rightAnswer}
+              </Text>
+            </View>
+            <View
+              style={{
+                transform: [{rotate: '15deg'}],
+                position: 'absolute',
+                right: -12,
+                top: -10,
+                paddingLeft: 7,
+                paddingRight: 7,
+                paddingTop: 2,
+                paddingBottom: 2,
+                borderRadius: 5,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                borderColor: '#C80351',
+                shadowColor: '#666666',
+                shadowOffset: {width: 1, height: 1},
+                shadowOpacity: 0.5,
+                shadowRadius: 8,
+              }}>
+              <Text
+                style={{
+                  fontFamily: Colors.textFont,
+                  fontSize: 12,
+                  color: '#C80351',
+                }}>
+                + {props.lastTokenAmount}
               </Text>
             </View>
           </View>

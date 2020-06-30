@@ -21,6 +21,7 @@ const PickupEndpoint = BaseRemoteApi + 'poi/pickup';
 const UserRegisterEndpoint = BaseRemoteApi + 'auth/simple-register';
 const OrderConfirmEndpoint = BaseRemoteApi + 'orders/confirm';
 const OrderAllowedEndpoint = BaseRemoteApi + 'orders/is-allowed';
+const SendContactEndpoint = BaseRemoteApi + 'contact/save';
 
 // @TODO : Set this in environment
 const LOCAL_MODE = false;
@@ -121,7 +122,7 @@ const RemoteApi = {
         return result;
       }
     } catch (e) {
-      throw Error(e);
+      return false;
     }
   },
   fetchPickupPoints: async (latitude, longitude) => {
@@ -129,7 +130,7 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         return DefaultProducts;
       } else {
-	    const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
+        const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
         const contents = await RemoteApi.fetch(endPoint);
         return contents.slice(0, 20);
       }
@@ -195,25 +196,30 @@ const RemoteApi = {
       throw Error(e);
     }
   },
-  fetchQuestions: async selectedTheme => {
+  fetchQuestions: async () => {
     try {
       if (LOCAL_MODE) {
         const questions = DefaultQuestions;
-        const filtered = questions.filter(
+        /*const filtered = questions.filter(
           question => question.theme === selectedTheme.id,
-        );
+        );*/
 
-        return filtered;
+        return questions;
       } else {
         const contents = await RemoteApi.fetch(QuizzEndpoint);
+        const mapped = await RemoteApi.mapPictures(contents);
 
-        let filtered = contents.filter(
-          content => content.theme === selectedTheme.id,
-        );
+        const sorted = {};
 
-        filtered = await RemoteApi.mapPictures(filtered);
+        mapped.forEach(item => {
+          if (!sorted[item.theme]) {
+            sorted[item.theme] = {};
+          }
 
-        return filtered;
+          sorted[item.theme][item.id] = item;
+        });
+
+        return sorted;
       }
     } catch (e) {
       throw Error(e);
@@ -284,6 +290,32 @@ const RemoteApi = {
         if (headers) {
           result = await RemoteApi.protectedPost(
             OrderConfirmEndpoint,
+            postData,
+            headers,
+          );
+        }
+
+        return result.json();
+      }
+    } catch (e) {
+      throw Error(e);
+    }
+  },
+  sendContact: async userAdress => {
+    try {
+      if (LOCAL_MODE) {
+        return true;
+      } else {
+        const headers = await RemoteApi.getAutorizationHeaders();
+
+        const postData = {
+          userAdress: userAdress,
+        };
+
+        let result = false;
+        if (headers) {
+          result = await RemoteApi.protectedPost(
+            SendContactEndpoint,
             postData,
             headers,
           );

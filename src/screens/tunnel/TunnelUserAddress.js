@@ -18,14 +18,14 @@ import CustomTextInput from '../components/tunnel/CustomTextInput';
 
 import useIsMounted from '../../hooks/isMounted';
 import AddressValidator from '../../services/AddressValidator';
+import MailValidator from '../../services/MailValidator';
 import RemoteApi from '../../services/RemoteApi';
 
 const zipCodeTest = /^[0-9]{5}$/;
-const phoneTest = /^0[0-9]{9}$/;
+export const phoneTest = /^0[0-9]{9}$/;
 
-// @TODO : Need to find a cleaner way to test email.
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const screenWidth = Math.round(Dimensions.get('window').width);
+
 let flexstyletext; // @TODO: Delete if useless
 
 if (screenWidth <= 420) {
@@ -48,8 +48,10 @@ export default function TunnelUserAddress(props) {
     firstName: '',
     lastName: '',
     emailAdress: '',
+    emailAdressConfirmation: '',
     phoneNumber: '',
     adress: '',
+    adressMore: '',
     zipCode: '',
     city: '',
   };
@@ -58,6 +60,8 @@ export default function TunnelUserAddress(props) {
     firstName: -1,
     lastName: -1,
     emailAdress: -1,
+    emailAdressConfirmation: -1,
+    emailAdressMismatch: false,
     phoneNumber: -1,
     adress: -1,
     zipCode: -1,
@@ -87,8 +91,10 @@ export default function TunnelUserAddress(props) {
         firstName: userAdress.firstName,
         lastName: userAdress.lastName,
         emailAdress: userAdress.emailAdress,
+        emailAdressConfirmation: userAdress.emailAdressConfirmation,
         phoneNumber: userAdress.phoneNumber,
         adress: userAdress.adress,
+        adressMore: userAdress.adressMore,
         zipCode: userAdress.zipCode,
         city: userAdress.city,
       };
@@ -116,61 +122,86 @@ export default function TunnelUserAddress(props) {
           }
         }
 
-        if (filtered.length == 0 || res.length == 0) {
+        if (filtered.length === 0 || res.length === 0) {
           setInvalidAddress(true);
         }
       });
   }
 
-  function _validateFields() {
+  function _validateFields(defaultValue) {
     let isValid = true;
 
     // Reset all validations
     const checkedIsValid = defaultIsValid;
 
     if (localAdress.firstName === '') {
-      checkedIsValid.firstName = false;
+      checkedIsValid.firstName = defaultValue;
       isValid = false;
     }
 
     if (localAdress.lastName === '') {
-      checkedIsValid.lastName = false;
+      checkedIsValid.lastName = defaultValue;
       isValid = false;
     }
 
     if (localAdress.emailAdress === '') {
-      checkedIsValid.emailAdress = false;
+      checkedIsValid.emailAdress = defaultValue;
       isValid = false;
     } else {
-      if (!emailRegex.test(localAdress.emailAdress)) {
-        checkedIsValid.emailAdress = false;
+      if (!MailValidator.validateMail(localAdress.emailAdress)) {
+        checkedIsValid.emailAdress = CustomTextInput.fieldStatus.INVALID;
         checkedIsValid.emailAdressWrongFormat = true;
         isValid = false;
       }
     }
 
-    if (deliveryType == 'home') {
+    if (localAdress.emailAdressConfirmation === '') {
+      checkedIsValid.emailAdressConfirmation = defaultValue;
+      isValid = false;
+    } else {
+      if (!MailValidator.validateMail(localAdress.emailAdressConfirmation)) {
+        checkedIsValid.emailAdressConfirmation =
+          CustomTextInput.fieldStatus.INVALID;
+        checkedIsValid.emailAdressConfirmationWrongFormat = true;
+        isValid = false;
+      } else {
+        if (
+          localAdress.emailAdress !== '' &&
+          localAdress.emailAdressConfirmation !== ''
+        ) {
+          if (localAdress.emailAdress != localAdress.emailAdressConfirmation) {
+            console.log('Invalid mismatch.');
+            checkedIsValid.emailAdressConfirmation =
+              CustomTextInput.fieldStatus.INVALID;
+            checkedIsValid.emailAdressMismatch = true;
+            isValid = false;
+          }
+        }
+      }
+    }
+
+    if (deliveryType === 'home') {
       if (localAdress.adress === '') {
-        checkedIsValid.adress = false;
+        checkedIsValid.adress = defaultValue;
         isValid = false;
       }
 
       if (localAdress.zipCode === '') {
-        checkedIsValid.zipCode = false;
+        checkedIsValid.zipCode = defaultValue;
         isValid = false;
       }
 
       if (localAdress.city === '') {
-        checkedIsValid.city = false;
+        checkedIsValid.city = defaultValue;
         isValid = false;
       }
 
       if (localAdress.phoneNumber === '') {
-        checkedIsValid.phoneNumber = false;
+        checkedIsValid.phoneNumber = defaultValue;
         isValid = false;
       } else {
         if (!phoneTest.test(localAdress.phoneNumber)) {
-          checkedIsValid.phoneNumber = false;
+          checkedIsValid.phoneNumber = CustomTextInput.fieldStatus.INVALID;
           checkedIsValid.phoneNumberWrongFormat = true;
           isValid = false;
         }
@@ -213,7 +244,7 @@ export default function TunnelUserAddress(props) {
   }
 
   function _onDone() {
-    const isValid = _validateFields();
+    const isValid = _validateFields(CustomTextInput.fieldStatus.INVALID);
 
     if (isValid && !invalidZipCode) {
       _checkBeforeGotoSummary();
@@ -239,7 +270,7 @@ export default function TunnelUserAddress(props) {
     const localValue = zipCode.replace(/[^0-9]/g, '');
 
     if (!isNaN(localValue)) {
-      if (localAdress['zipCode'] != zipCode && zipCodeTest.test(localValue)) {
+      if (localAdress['zipCode'] !== zipCode && zipCodeTest.test(localValue)) {
         openGeocoder()
           .geocode(localValue)
           .end((err, res) => {
@@ -252,11 +283,16 @@ export default function TunnelUserAddress(props) {
                 const city = filtered[0].address.city
                   ? filtered[0].address.city
                   : filtered[0].address.town;
+                  
+                if( city == '' || city === undefined )  
+                {
+					return;
+                }
                 localAdress['city'] = city;
                 localAdress['zipCode'] = localValue;
-                console.log('SETTING ZPC WITH ' + city);
+
                 setLocalAdress(localAdress);
-                _validateFields();
+                _validateFields(CustomTextInput.fieldStatus.NEUTRAL);
               }
             }
           });
@@ -264,8 +300,10 @@ export default function TunnelUserAddress(props) {
     }
   }
 
-  function _handleChange(name, value) {
-    if (name == 'zipCode') {
+  function _handleChange(name, inputValue) {
+    const value = inputValue.trim();
+    
+    if (name === 'zipCode') {
       if (AddressValidator.validateZipCode(value)) {
         setInvalidZipCode(false);
         _handleZipCode(value);
@@ -276,7 +314,7 @@ export default function TunnelUserAddress(props) {
       localAdress[`${name}`] = value;
 
       setLocalAdress(localAdress);
-      _validateFields();
+      _validateFields(CustomTextInput.fieldStatus.NEUTRAL);
     }
   }
 
@@ -323,6 +361,17 @@ export default function TunnelUserAddress(props) {
         name="emailAdress"
       />
 
+      <CustomTextInput
+        inputLabel="Confirmation adresse e-mail"
+        inputPlaceholder="Confirme ton adresse e-mail"
+        onChangeText={val => _handleChange('emailAdressConfirmation', val)}
+        isValid={localValid.emailAdressConfirmation}
+        emailAdressWrongFormat={localValid.emailAdressConfirmationWrongFormat}
+        emailAdressMismatch={localValid.emailAdressMismatch}
+        currentValue={localAdress.emailAdressConfirmation}
+        name="emailAdressConfirmation"
+      />
+
       {deliveryType === 'home' && (
         <CustomTextInput
           inputLabel="Numéro de téléphone"
@@ -337,37 +386,41 @@ export default function TunnelUserAddress(props) {
       )}
 
       {deliveryType === 'home' && (
-        <CustomTextInput
-          inputLabel="Adresse"
-          inputPlaceholder="Ton adresse"
-          onChangeText={val => _handleChange('adress', val)}
-          isValid={localValid.adress}
-          currentValue={localAdress.adress}
-          name="adress"
-        />
-      )}
-
-      {deliveryType === 'home' && (
-        <CustomTextInput
-          inputLabel="Code Postal"
-          inputPlaceholder="Ton code postal"
-          onChangeText={val => _handleChange('zipCode', val)}
-          isValid={localValid.zipCode}
-          currentValue={localAdress.zipCode}
-          filterNumbers={true}
-          name="zipCode"
-        />
-      )}
-
-      {deliveryType === 'home' && (
-        <CustomTextInput
-          inputLabel="Ville"
-          inputPlaceholder="Ta ville"
-          onChangeText={val => _handleChange('city', val)}
-          isValid={localValid.city}
-          currentValue={localAdress.city}
-          name="city"
-        />
+        <View>
+          <CustomTextInput
+            inputLabel="Adresse"
+            inputPlaceholder="Ton adresse"
+            onChangeText={val => _handleChange('adress', val)}
+            isValid={localValid.adress}
+            currentValue={localAdress.adress}
+            name="adress"
+          />
+          <CustomTextInput
+            inputLabel="Complément d'adresse"
+            inputPlaceholder="Bâtiment, lieu-dit, nom sur la boîte, etc."
+            onChangeText={val => _handleChange('adressMore', val)}
+            currentValue={localAdress.adressMore}
+            name="adressMore"
+            isRequired={false}
+          />
+          <CustomTextInput
+            inputLabel="Code Postal"
+            inputPlaceholder="Ton code postal"
+            onChangeText={val => _handleChange('zipCode', val)}
+            isValid={localValid.zipCode}
+            currentValue={localAdress.zipCode}
+            filterNumbers={true}
+            name="zipCode"
+          />
+          <CustomTextInput
+            inputLabel="Ville"
+            inputPlaceholder="Ta ville"
+            onChangeText={val => _handleChange('city', val)}
+            isValid={localValid.city}
+            currentValue={localAdress.city}
+            name="city"
+          />
+        </View>
       )}
       {deliveryType === 'home' && invalidAddress && (
         <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>

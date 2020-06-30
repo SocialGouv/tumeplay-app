@@ -8,8 +8,18 @@ import Colors from '../styles/Color';
 MoreThan25YearsScreen.propTypes = {
   lessThan25: PropTypes.func,
   moreThan25: PropTypes.func,
+  onContactClick: PropTypes.func,
 };
 export default function MoreThan25YearsScreen(props) {
+  const textStyle = {
+    textAlign: 'center',
+    fontStyle: 'italic',
+    lineHeight: 20,
+    fontSize: 13,
+    color: '#FFFFFF',
+    fontFamily: Colors.textFont,
+  };
+
   return (
     <View
       style={{
@@ -31,7 +41,7 @@ export default function MoreThan25YearsScreen(props) {
         source={require('../assets/age.jpg')}
       />
 
-      <View style={{flex: 0.25}}></View>
+      <View style={{flex: 0.25}} />
       <View style={{flex: 0.1, paddingLeft: 35, paddingRight: 35}}>
         <Text style={[Styles.finishText, {color: 'white'}]}>
           Quel âge as-tu?
@@ -58,17 +68,23 @@ export default function MoreThan25YearsScreen(props) {
           width: '100%',
           padding: 15,
         }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontStyle: 'italic',
-            lineHeight: 20,
-            fontSize: 13,
-            color: '#FFFFFF',
-            fontFamily: Colors.textFont,
-          }}>
+        <Text style={textStyle}>
           Actuellement la commande de box est disponible en Seine-et-Marne et en
           Nouvelle-Aquitaine.
+        </Text>
+        <Text style={textStyle}>――――</Text>
+        <Text style={textStyle}>
+          Pour être informé·e de la sortie de l&apos;app&apos; dans ta région,
+          laisse nous ton adresse mail{' '}
+          <TouchableOpacity onPress={props.onContactClick}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+              }}>
+              ici
+            </Text>
+          </TouchableOpacity>
+          .
         </Text>
       </View>
     </View>

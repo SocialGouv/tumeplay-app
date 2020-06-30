@@ -19,6 +19,7 @@ import ModalCloseButton from './components/global/ModalCloseButton';
 import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 import Tracking from '../services/Tracking';
+import QuizService from '../services/Quiz';
 
 import autoScrollToTop from '../hooks/autoScrollToTop';
 import useIsMounted from '../hooks/isMounted';
@@ -106,9 +107,18 @@ export default function ContentScreen(props) {
     }
 
     async function _fetchQuestions() {
-      const _questions = await RemoteApi.fetchQuestions(selectedTheme);
+      const _allQuestions = await RemoteApi.fetchQuestions();
       if (isMounted.current) {
-        setFullQuestions(_questions);
+        // Ok, so here we have 10 filtered questions after this call
+        await QuizService.setQuestions(_allQuestions);
+
+        const _filteredQuestions = await QuizService.getQuestions(
+          selectedTheme,
+        );
+
+        console.log('Filtered : ', _filteredQuestions);
+
+        setLocalQuestions(_filteredQuestions);
       }
     }
 
@@ -131,9 +141,9 @@ export default function ContentScreen(props) {
     }, 1);
   }, [currentCategory, fullContents]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     setLocalQuestions(fullQuestions);
-  }, [currentCategory, fullQuestions]);
+  }, [currentCategory, fullQuestions]); */
 
   useEffect(() => {
     if (needResultModal) {
@@ -146,17 +156,6 @@ export default function ContentScreen(props) {
       }
     }
   }, [isAge25, isBadgeModalVisible, isResultModalVisible, needResultModal]);
-
-  function shuffleArray(array) {
-    let i = array.length - 1;
-    for (; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    return array;
-  }
 
   async function _openInitialModal() {
     /**
@@ -181,16 +180,17 @@ export default function ContentScreen(props) {
 
       quizTimer = Math.floor(Date.now() / 1000);
 
-      _shuffleQuestions();
+      await _shuffleQuestions();
       _toggleQuizzModal();
     }
   }
 
-  function _shuffleQuestions() {
-    let randomQuestions = shuffleArray(fullQuestions);
-    randomQuestions = randomQuestions.slice(0, 10);
+  async function _shuffleQuestions() {
+    const _filteredQuestions = await QuizService.getQuestions(selectedTheme);
 
-    setLocalQuestions(randomQuestions);
+    setLocalQuestions(_filteredQuestions);
+
+    //setLocalQuestions(randomQuestions);
   }
 
   function _toggleBadgeModal() {
@@ -267,6 +267,14 @@ export default function ContentScreen(props) {
     _toggleQuizzModal();
   }
 
+  function _onContactClick() {
+    setIsAge25ModalVisible(false);
+    setIsQuizzModalVisible(false);
+    setIsResultModalVisible(false);
+
+    props.navigation.navigate('StayInTouch');
+  }
+
   return (
     <SafeAreaView style={[Styles.safeAreaView, {}]}>
       <TopMenu
@@ -328,6 +336,7 @@ export default function ContentScreen(props) {
           <MoreThan25YearsScreen
             moreThan25={_onSelectedMoreThan25Years}
             lessThan25={_onSelectedLessThan25Years}
+            onContactClick={_onContactClick}
           />
         </View>
       </Modal>
@@ -371,7 +380,7 @@ export default function ContentScreen(props) {
       </Modal>
 
       {/* Fix staying button on web */}
-      {!selectedTheme.isSpecial &&
+      {selectedTheme && !selectedTheme.isSpecial &&
         isQuizzButtonVisible &&
         !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
     </SafeAreaView>

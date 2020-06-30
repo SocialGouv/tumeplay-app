@@ -3,9 +3,13 @@ import DeviceInfo from 'react-native-device-info';
 import Storage from './Storage';
 import UserModel from '../models/User';
 import RemoteApi from './RemoteApi';
+import CryptoJS from 'react-native-crypto-js';
+
 const User = {
+  localHmacKey: 'local.hmac',
   localUserKey: 'local.user',
   localUser: null,
+  localHmac: null,
 
   generateUniqueId: async () => {
     let uniqueId = false;
@@ -148,7 +152,7 @@ const User = {
   },
 
   /**
-   * @param {number} badgeId
+   * @param latestBadgeIDWon
    */
   setlatestBadgeIDWon: async latestBadgeIDWon => {
     let localUser = User.localUser;
@@ -343,6 +347,8 @@ const User = {
         localUser = JSON.parse(localUser);
         User.localUser = localUser;
 
+        await User.checkHmac();
+
         return localUser;
       } else {
         return await User.init();
@@ -354,11 +360,64 @@ const User = {
 
   save: async () => {
     try {
+      await User.updateHmac();
       await Storage.set(User.localUserKey, JSON.stringify(User.localUser));
 
       return User.localUser;
     } catch (e) {
       throw Error(e);
+    }
+  },
+  loadHmac: async () => {
+    return await Storage.get(User.localHmacKey);
+  },
+  checkHmac: async () => {
+    const currentHmac = await User.computeHmac();
+    const storedHmac = await User.loadHmac();
+
+    if (!User.localUser) {
+      await User.load();
+    }
+
+    if (currentHmac && User.localUser) {
+      if (!storedHmac) {
+        return;
+      }
+
+      if (storedHmac != currentHmac) {
+        User.localUser.availableTokens = 0;
+        await User.save();
+
+        return;
+      }
+    }
+  },
+  updateHmac: async () => {
+    const currentHmac = await User.computeHmac();
+
+    if (!User.localUser) {
+      await User.load();
+    }
+
+    await User.setHmac(currentHmac);
+  },
+  computeHmac: async () => {
+    if (User.localUser) {
+      const localData = {
+		  tokens: User.localUser.availableTokens,
+		  uniqueId: User.localUser.uniqueId,
+		  latestBadge: User.localUser.latestBadgeIDWon
+      };
+      return CryptoJS.MD5(JSON.stringify(localData)).toString();
+    }
+
+    return false;
+  },
+  setHmac: async hmac => {
+    if (hmac && User.localUser) {
+      User.localHmac = hmac;
+
+      await Storage.set(User.localHmacKey, hmac);
     }
   },
 };

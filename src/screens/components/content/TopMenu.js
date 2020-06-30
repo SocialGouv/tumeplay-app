@@ -91,57 +91,6 @@ export default function TopMenu(props) {
     setWrapperPadding(true);
   }
 
-  const menuStyle = StyleSheet.create({
-    itemButton: {
-      marginLeft: 0,
-      marginRight: 0,
-      marginBottom: 0,
-      flexShrink: 1,
-      flexGrow: 1,
-      minWidth: 105,
-      width: '20%',
-      paddingTop: 4,
-      paddingBottom: 4,
-    },
-    itemText: {
-      color: '#FFFFFF',
-      textAlign: 'center',
-      textDecorationLine: 'underline',
-      fontFamily: Colors.textFont,
-    },
-    normalItemButton: {
-      backgroundColor: Colors.backgroundColor,
-    },
-    activeItemButton: {
-      backgroundColor: Colors.mainButton,
-    },
-    activeItemText: {
-      textDecorationLine: 'none',
-      fontFamily: Colors.textFontBold,
-    },
-    scrollWrapper: {
-      flex: 1,
-      paddingTop: 3,
-      marginTop: 5,
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      alignContent: 'stretch',
-    },
-    moreWrapper: {
-      position: 'absolute',
-      top: 13,
-      right: 3,
-      zIndex: 1,
-      backgroundColor: Colors.backgroundColor,
-      padding: 5,
-    },
-    morePicture: {
-      width: 30,
-      height: 15,
-      resizeMode: 'contain',
-    },
-  });
-
   const _menuItems = [
     {id: 1, key: 1, text: 'A poils'},
     {id: 2, key: 2, text: 'Les WTF'},
@@ -155,10 +104,10 @@ export default function TopMenu(props) {
       <TouchableOpacity
         key={key}
         style={[
-          menuStyle.itemButton,
+          Styles.itemButton,
           activeFilter === item.id
-            ? menuStyle.activeItemButton
-            : menuStyle.normalItemButton,
+            ? Styles.activeItemButton
+            : Styles.normalItemButton,
           {alignSelf: 'flex-start'},
         ]}
         onPress={() => {
@@ -166,8 +115,8 @@ export default function TopMenu(props) {
         }}>
         <Text
           style={[
-            menuStyle.itemText,
-            activeFilter === item.id ? menuStyle.activeItemText : false,
+            Styles.itemText,
+            activeFilter === item.id ? Styles.activeItemText : false,
           ]}>
           {item.text}
         </Text>
@@ -211,7 +160,7 @@ export default function TopMenu(props) {
                 forceRender={forceRender}>
                 <ScrollView
                   horizontal={true}
-                  style={[menuStyle.scrollWrapper]}
+                  style={[Styles.scrollWrapper]}
                   onContentSizeChange={width => {
                     showMoreIfNeeded(width);
                   }}
@@ -237,10 +186,10 @@ export default function TopMenu(props) {
                 </ScrollView>
 
                 {showMore && (
-                  <View style={menuStyle.moreWrapper}>
+                  <View style={Styles.moreWrapper}>
                     <Image
                       source={require('../../../assets/pictures/menu.show-more.png')}
-                      style={menuStyle.morePicture}
+                      style={Styles.morePicture}
                     />
                   </View>
                 )}

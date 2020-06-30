@@ -44,8 +44,8 @@ export default function App() {
     _fetchSlides();
   }, [isMounted]);
 
-  function _onDone() {
-    UserService.setPassedOnboarding(true);
+  async function _onDone() {
+    await UserService.setPassedOnboarding(true);
     setShowRealApp(true);
   }
 

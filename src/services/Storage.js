@@ -1,9 +1,9 @@
-import {AsyncStorage} from '@react-native-community/async-storage';
+import { AsyncStorage } from '@react-native-community/async-storage';
 
 const Storage = {
   get: async key => {
     try {
-      const localValue = AsyncStorage.getItem(key);
+      const localValue = await AsyncStorage.getItem(key);
 
       return localValue;
     } catch (e) {

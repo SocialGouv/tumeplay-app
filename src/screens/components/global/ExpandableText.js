@@ -90,7 +90,7 @@ export default function ExpandableText(props) {
   }, [_text, isMounted, props]);
 
   function renderNode(node, index, siblings, parent, defaultRenderer) {
-    if (node.name == 'a') {
+    if (node.name === 'a') {
       return (
         <TextLink
           key={index}
@@ -155,8 +155,8 @@ export default function ExpandableText(props) {
               style={cardStyle.readMorePicture}
               source={
                 props.purpleMode
-                  ? require('../../../assets/pictures/plus-purple.png')
-                  : require('../../../assets/pictures/plus-orange.png')
+                  ? require('../../../assets/pictures/external-purple.png')
+                  : require('../../../assets/pictures/external-orange.png')
               }
             />
             <TextLink
@@ -208,7 +208,8 @@ export default function ExpandableText(props) {
             numberOfLines: NoL,
             style: [cardStyle.text, {...props.textStyle}],
           }}
-          style={[cardStyle.text, {...props.textStyle}]}></HTMLView>
+          style={[cardStyle.text, {...props.textStyle}]}
+        />
         {_maybeRenderReadMore()}
       </View>
     </View>

@@ -283,6 +283,11 @@ export default function TunnelUserAddress(props) {
                 const city = filtered[0].address.city
                   ? filtered[0].address.city
                   : filtered[0].address.town;
+                  
+                if( city == '' || city === undefined )  
+                {
+					return;
+                }
                 localAdress['city'] = city;
                 localAdress['zipCode'] = localValue;
 
@@ -295,7 +300,9 @@ export default function TunnelUserAddress(props) {
     }
   }
 
-  function _handleChange(name, value) {
+  function _handleChange(name, inputValue) {
+    const value = inputValue.trim();
+    
     if (name === 'zipCode') {
       if (AddressValidator.validateZipCode(value)) {
         setInvalidZipCode(false);
@@ -394,6 +401,7 @@ export default function TunnelUserAddress(props) {
             onChangeText={val => _handleChange('adressMore', val)}
             currentValue={localAdress.adressMore}
             name="adressMore"
+            isRequired={false}
           />
           <CustomTextInput
             inputLabel="Code Postal"

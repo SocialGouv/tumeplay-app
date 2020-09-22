@@ -116,7 +116,7 @@ export default function ContentScreen(props) {
           selectedTheme,
         );
 
-        console.log('Filtered : ', _filteredQuestions);
+      //  console.log('Filtered : ', _filteredQuestions);
 
         setLocalQuestions(_filteredQuestions);
       }
@@ -167,7 +167,7 @@ export default function ContentScreen(props) {
      * */
     // Step 1
     const _isAge25 = await UserService.getIsMoreThan25YearsOld();
-    console.log(`_isAge25: ${_isAge25}`);
+    // console.log(`_isAge25: ${_isAge25}`);
 
     setIsAge25(_isAge25 || null);
 
@@ -367,7 +367,7 @@ export default function ContentScreen(props) {
         animationType="fade"
         transparent={true}>
         {/* Because backdrop is not available for web, just a little trick ... */}
-        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.backdrop} />
         <View style={ModalStyle.innerModal}>
           <ModalCloseButton onClose={_toggleBadgeModal} />
 
@@ -380,7 +380,8 @@ export default function ContentScreen(props) {
       </Modal>
 
       {/* Fix staying button on web */}
-      {!selectedTheme.isSpecial &&
+      {selectedTheme &&
+        !selectedTheme.isSpecial &&
         isQuizzButtonVisible &&
         !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
     </SafeAreaView>

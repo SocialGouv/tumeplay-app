@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Picker, TouchableOpacity, Image} from 'react-native';
+import {Text, TextInput, View, Picker, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 import RemoteApi from '../services/RemoteApi';
@@ -115,15 +115,18 @@ export default function AddCommentScreen(props) {
 
       <View>
         <Text style={[Styles.labelText, {marginBottom: 5}]}>Remarque *</Text>
-        <textarea
+        <TextInput
           placeholder={'Écris ici ta remarque'}
-          rows="6"
+          multiline={true}
+          numberOfLines={6}
           style={{
             borderRadius: 5,
             padding: 5,
             borderWidth: 1,
+            backgroundColor: '#FFFFFF',
             borderColor: '#D13E72',
             outline: 'none',
+            textAlignVertical: 'top'
           }}
           value={content}
           onChange={handleChange}

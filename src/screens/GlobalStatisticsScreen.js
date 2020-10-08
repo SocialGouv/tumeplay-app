@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableWithoutFeedback} from 'react-native';
 
 import Colors from '../styles/Color';
 import autoScrollToTop from '../hooks/autoScrollToTop';
@@ -73,6 +73,7 @@ export default function GlobalStatisticsScreen(props) {
     }
   };
   
+  const instaLink = 'https://www.instagram.com/tumeplay';
   const fullStar  = require('../assets/pictures/full-star.png')
   const halfStar  = require('../assets/pictures/half-star.png');
   const instagram = require('../assets/pictures/instagram.png');
@@ -93,14 +94,14 @@ export default function GlobalStatisticsScreen(props) {
         
         <View style={{flex: 1, flexDirection: 'row'}}>
         	<View style={[{flex: 0.5, padding: 12}, Styles.textCenter]}>
-        		<Text style={[contentStyle.subTitle, contentStyle.colorOrange]}>Utilisateurs</Text>
+        		<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {marginTop: 0}]}>Utilisateurs</Text>
         		<View style={{flex: 1, flexDirection: 'row'}}>
         			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10}]}>172{'\r\n'}cette semaine</Text>
         			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10}]}>6480{'\r\n'}en tout</Text>
         		</View>
         	</View>
         	<View style={[{flex: 0.5, padding: 12}, Styles.textCenter]}>
-        		<Text style={[contentStyle.subTitle, contentStyle.colorRed]}>Box distribuées</Text>
+        		<Text style={[contentStyle.subTitle, contentStyle.colorRed, {marginTop: 0}]}>Box distribuées</Text>
         		<View style={{flex: 1, flexDirection: 'row'}}>
         			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10}]}>0{'\r\n'}cette semaine</Text>
         			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10}]}>470{'\r\n'}en tout</Text>
@@ -108,7 +109,7 @@ export default function GlobalStatisticsScreen(props) {
         	</View>
         </View>
         
-        <View style={[{flex: 1}, Styles.textCenter]}>
+        <View style={[{flex: 1}, Styles.textCenter, {marginTop: 5}]}>
         	<Text style={[Styles.labelText, contentStyle.colorRed, contentStyle.middleTitle, {marginBottom: 5}]}>Ce que vous en pensez</Text>
         </View>
         <View style={[{flex: 1}, Styles.textCenter]}>
@@ -183,7 +184,15 @@ export default function GlobalStatisticsScreen(props) {
         		<Text style={[contentStyle.subTitle, {marginBottom: 5, letterSpacing: 3}]}>94 PUBLICATIONS</Text>
         	</View>
         	<View style={[{alignItems: 'center', justifyContent: 'center',alignSelf: 'center',flex: 0.4, alignSelf: 'center',}, Styles.textCenter]}>
-        		<Image source={instagram} style={contentStyle.instagram} />
+        		<TouchableWithoutFeedback>
+        			<Text 
+        				href={instaLink}
+			            accessibilityRole="link"
+			            target="_blank"
+		            >
+        				<Image source={instagram} style={contentStyle.instagram} />
+        			</Text>
+        		</TouchableWithoutFeedback>
         	</View>
         	<View style={{ justifyContent: 'center',alignSelf: 'center',flex: 1,textAlign: 'left'}}>
         		<Text style={[contentStyle.subTitle, {marginBottom: 5, letterSpacing: 3}]}>1.007 ABONNÉES</Text>
@@ -191,7 +200,16 @@ export default function GlobalStatisticsScreen(props) {
         </View>
         
         <View style={{flex: 1, marginTop: 15, textAlign: 'center'}}>
-        	<Text style={[Styles.labelText, {marginBottom: 5, fontSize: 20, fontWeight: 200, color: '#FFFFFF',fontFamily: Colors.textFont}]}>@tumeplay</Text>
+        	<TouchableWithoutFeedback>
+        		<Text 
+        			style={[Styles.labelText, {marginBottom: 5, fontSize: 20, fontWeight: 200, color: '#FFFFFF',fontFamily: Colors.textFont}]}
+        			href={instaLink}
+		            accessibilityRole="link"
+		            target="_blank"            			
+        		>
+        			@tumeplay
+        		</Text>
+        	</TouchableWithoutFeedback>
         </View>
       </ScrollView>
     </View>

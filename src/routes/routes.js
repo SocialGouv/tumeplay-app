@@ -18,6 +18,7 @@ import ChartScreen from '../screens/ChartScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import StayInTouchScreen from '../screens/StayInTouchScreen';
 import StayInTouchConfirmScreen from '../screens/StayInTouchConfirmScreen';
+import GlobalStatisticsScreen from '../screens/GlobalStatisticsScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -33,6 +34,13 @@ const AppStack = createStackNavigator(
     },
     QuizzFinishScreen: {
       screen: QuizzFinishScreen,
+    },
+    GlobalStatistics: {
+      screen: GlobalStatisticsScreen,
+      navigationOptions: ({navigation}) => ({
+        params: navigation.state.params,
+        header: <CustomHeader navigation={navigation} withBack={true} />,
+      }),
     },
     TunnelProductSelect: {
       screen: TunnelProductSelect,

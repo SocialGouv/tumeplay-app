@@ -20,6 +20,10 @@ export default function CustomFooter(props) {
   function openChart() {
     props.navigation.navigate('Chart');
   }
+  
+  function openGlobalStatistics() {
+	props.navigation.navigate('GlobalStatistics');  
+  }
 
   const footerStyle = StyleSheet.create({
     text: {
@@ -90,6 +94,12 @@ export default function CustomFooter(props) {
               Lire notre charte
             </Text>
           </TouchableOpacity>
+          
+          <TouchableOpacity style={footerStyle.link} onPress={openGlobalStatistics}>
+            <Text style={[footerStyle.text, footerStyle.textDecoration]}>
+              Statistiques
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <Text
@@ -99,7 +109,7 @@ export default function CustomFooter(props) {
           color: '#CCCCCC',
           marginTop: 15,
         }}>
-        Version Beta - 20200610.1
+        Version Beta - 20201008.2
       </Text>
     </View>
   );

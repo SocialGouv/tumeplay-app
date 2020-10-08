@@ -94,17 +94,17 @@ export default function GlobalStatisticsScreen(props) {
         
         <View style={{flex: 1, flexDirection: 'row'}}>
         	<View style={[{flex: 0.5, padding: 12}, Styles.textCenter]}>
-        		<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {marginTop: 0}]}>Utilisateurs</Text>
+        		<Text style={[contentStyle.subTitle, contentStyle.colorOrange]}>Utilisateurs</Text>
         		<View style={{flex: 1, flexDirection: 'row'}}>
-        			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10}]}>172{'\r\n'}cette semaine</Text>
-        			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10}]}>6480{'\r\n'}en tout</Text>
+        			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10, paddingTop: 0, marginTop: 0}]}>172{'\r\n'}cette semaine</Text>
+        			<Text style={[contentStyle.subTitle, contentStyle.colorOrange, {padding: 10, paddingTop: 0, marginTop: 0}]}>6480{'\r\n'}en tout</Text>
         		</View>
         	</View>
         	<View style={[{flex: 0.5, padding: 12}, Styles.textCenter]}>
-        		<Text style={[contentStyle.subTitle, contentStyle.colorRed, {marginTop: 0}]}>Box distribuées</Text>
+        		<Text style={[contentStyle.subTitle, contentStyle.colorRed]}>Box distribuées</Text>
         		<View style={{flex: 1, flexDirection: 'row'}}>
-        			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10}]}>0{'\r\n'}cette semaine</Text>
-        			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10}]}>470{'\r\n'}en tout</Text>
+        			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10, paddingTop: 0, marginTop: 0}]}>0{'\r\n'}cette semaine</Text>
+        			<Text style={[contentStyle.subTitle, contentStyle.colorRed, {padding: 10, paddingTop: 0, marginTop: 0}]}>470{'\r\n'}en tout</Text>
         		</View>
         	</View>
         </View>

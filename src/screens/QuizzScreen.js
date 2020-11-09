@@ -10,6 +10,7 @@ import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
 import QuizService from '../services/Quiz';
+import RemoteApi from '../services/RemoteApi';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
@@ -25,6 +26,7 @@ export default function QuizzScreen(props) {
   const [total, setTotal] = useState(0);
   const [lastTokenAmount, setLastTokenAmount] = useState(0);
   const [givenAnswers, setGivenAnswers] = useState([]);
+  const [dataFeedback, setDataFeedback] = useState({});
 
   const _currentQuestion = questions[currentIndex];
 
@@ -80,7 +82,7 @@ export default function QuizzScreen(props) {
     setGivenAnswers(prevState => ({...prevState, localAnswer}));
   }
 
-  function _nextQuestion() {
+  async function _nextQuestion() {
     if (currentIndex + 1 >= total) {
       props.onFinishedQuizz(givenAnswers);
     } else {
@@ -90,6 +92,14 @@ export default function QuizzScreen(props) {
       setIsRightAnswer(false);
       setDisplayAnswer(!displayAnswer);
     }
+
+    const userFeedback = {
+      questionContentId: _currentQuestion.id,
+      ...dataFeedback,
+    };
+
+    console.log(userFeedback);
+    await RemoteApi.sendFeedback(userFeedback);
   }
 
   function _renderAnswersButtons(answers) {
@@ -104,9 +114,16 @@ export default function QuizzScreen(props) {
       );
     });
   }
-
+  function setFeedback(isLiked, isDisliked, comment, id) {
+    setDataFeedback({
+      isLiked: isLiked,
+      isDisliked: isDisliked,
+      comment: comment,
+      feedbackId: id,
+    });
+  }
   if (_currentQuestion === undefined) {
-    return <View></View>;
+    return <View />;
   }
   return (
     <ImageBackground
@@ -143,6 +160,7 @@ export default function QuizzScreen(props) {
                 isRightAnswer={isRightAnswer}
                 question={_currentQuestion}
                 lastTokenAmount={lastTokenAmount}
+                setFeedback={setFeedback}
               />
             )}
           </View>

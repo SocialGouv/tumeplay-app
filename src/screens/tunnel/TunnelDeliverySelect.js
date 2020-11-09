@@ -20,6 +20,10 @@ export default function TunnelDeliverySelect(props) {
     props.navigation.navigate('StayInTouch');
   }
 
+  function _onBadgeListClick() {
+    props.navigation.navigate('TunnelBadgeList');
+  }
+
   function _onDone(deliveryType) {
     const _params = {
       selectedItem: selectedItem,
@@ -108,6 +112,28 @@ export default function TunnelDeliverySelect(props) {
           <TouchableOpacity
             onPress={() => {
               _onContactClick();
+            }}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+              }}>
+              ici
+            </Text>
+          </TouchableOpacity>
+          .
+        </Text>
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontSize: 14,
+            marginTop: 0,
+            lineHeight: 22,
+            fontFamily: Colors.textFont,
+          }}>
+          Pour accéder aux badges gagnés, c&apos;est{' '}
+          <TouchableOpacity
+            onPress={() => {
+              _onBadgeListClick();
             }}>
             <Text
               style={{

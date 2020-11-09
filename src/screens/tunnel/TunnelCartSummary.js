@@ -44,17 +44,17 @@ export default function TunnelCartSummary(props) {
 
     if (!_isSuccess || !_isSuccess.success) {
       setShowErrorModal(true);
-	  setIsRunning(false);
+      setIsRunning(false);
       return;
     }
 
     if (_isSuccess) {
       const _newTokens = await UserService.subTokens(1000);
-	  
+
       EventRegister.emit('tokensAmountChanged', _newTokens);
-	  
-	  setIsRunning(false);
-      
+
+      setIsRunning(false);
+
       props.navigation.navigate('TunnelOrderConfirm', {
         selectedItem: selectedItem,
         selectedProducts: selectedProducts,
@@ -97,11 +97,10 @@ export default function TunnelCartSummary(props) {
   ));
 
   function _onDone() {
-    if(!isRunning)
-    {
+    if (!isRunning) {
       setIsRunning(true);
       _confirmOrder();
-	}
+    }
   }
 
   function _goBack() {
@@ -265,11 +264,14 @@ export default function TunnelCartSummary(props) {
           }}
           onPress={_onDone}>
           <View style={Styles.tunnelButton}>
-            <Text style={
+            <Text
+              style={
                 isRunning
                   ? Styles.tunnelButtonTextOpaque
                   : Styles.tunnelButtonText
-              }>Valider</Text>
+              }>
+              Valider
+            </Text>
           </View>
         </TouchableOpacity>
       </View>

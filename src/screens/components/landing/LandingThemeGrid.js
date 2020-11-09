@@ -5,6 +5,8 @@ import CustomTouchableOpacity from '../global/CustomTouchableOpacity';
 
 import LandingStyle from '../../../styles/components/LandingScreen';
 
+import TextWithSound from '../global/TextWithSound';
+
 LandingThemeGrid.propTypes = {
   themes: PropTypes.array,
   onPress: PropTypes.func,
@@ -38,7 +40,11 @@ export default function LandingThemeGrid(props) {
               </View>
 
               <View style={LandingStyle.gridItemTextContainer}>
-                <Text style={LandingStyle.gridItemText}>{item.value}</Text>
+                <TextWithSound
+                  style={LandingStyle.gridItemText}
+                  sound={'N1-contenue-1.mp3'}>
+                  {item.value}
+                </TextWithSound>
               </View>
             </CustomTouchableOpacity>
           </View>

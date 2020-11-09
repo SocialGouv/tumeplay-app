@@ -41,7 +41,7 @@ export default function MoreThan25YearsScreen(props) {
         source={require('../assets/age.jpg')}
       />
 
-      <View style={{flex: 0.25}}></View>
+      <View style={{flex: 0.25}} />
       <View style={{flex: 0.1, paddingLeft: 35, paddingRight: 35}}>
         <Text style={[Styles.finishText, {color: 'white'}]}>
           Quel âge as-tu?

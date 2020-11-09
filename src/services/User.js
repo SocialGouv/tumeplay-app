@@ -403,7 +403,12 @@ const User = {
   },
   computeHmac: async () => {
     if (User.localUser) {
-      return CryptoJS.MD5(JSON.stringify(User.localUser)).toString();
+      const localData = {
+        tokens: User.localUser.availableTokens,
+        uniqueId: User.localUser.uniqueId,
+        latestBadge: User.localUser.latestBadgeIDWon,
+      };
+      return CryptoJS.MD5(JSON.stringify(localData)).toString();
     }
 
     return false;

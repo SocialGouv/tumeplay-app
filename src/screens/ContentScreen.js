@@ -124,7 +124,7 @@ export default function ContentScreen(props) {
 
     _fetchContents();
     _fetchQuestions();
-  }, [_filterContent, isMounted, selectedTheme]);
+  }, [isMounted, selectedTheme]);
 
   // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
   // So we clear it up, and then filter using a very small timer.

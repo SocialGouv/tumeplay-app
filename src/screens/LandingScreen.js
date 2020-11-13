@@ -69,7 +69,7 @@ export default function LandingScreen(props) {
 
     _fetchUserOrRegister();
     _fetchThemes();
-  }, [_toggleErrorModal, isMounted]);
+  }, [isMounted]);
 
   function _onSelectedTheme(selectedTheme) {
     Tracking.themeSelected(selectedTheme);

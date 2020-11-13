@@ -42,7 +42,7 @@ export default function LandingThemeGrid(props) {
               <View style={LandingStyle.gridItemTextContainer}>
                 <TextWithSound
                   style={LandingStyle.gridItemText}
-                  sound={'N1-contenue-1.mp3'}>
+                >
                   {item.value}
                 </TextWithSound>
               </View>

@@ -108,7 +108,7 @@ export default function LandingScreen(props) {
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
           <TextWithSound
             style={Styles.landingScreenSubtitle}
-            sound={'accueil-1.mp3'}>
+            sound={'Accueil_1.MP3'}>
             Explore nos thématiques, découvre les questions réponses associées
             et réponds aux quiz pour recevoir des box gratuitement !
           </TextWithSound>

@@ -105,12 +105,10 @@ export default function TunnelUserAddress(props) {
     else
     {
 	  
-      const newAdress = {
-        firstName: "",
-        lastName: "",
-        emailAdress: UserService.localUser.uniqueId + "@tumeplay.com",
-        emailAdressConfirmation: UserService.localUser.uniqueId + "@tumeplay.com",
-      };
+      const newAdress = defaultUserAdress;
+      
+      newAdress.emailAdress = UserService.localUser.uniqueId + "@tumeplay.com";
+      newAdress.emailAdressConfirmation = UserService.localUser.uniqueId + "@tumeplay.com";
 
       setLocalAdress(newAdress);
     }

@@ -71,6 +71,13 @@ var Styles = {
     marginLeft: 2,
     alignSelf: 'center',
   },
+  IconPicture: {
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+    margin: 10,
+    alignSelf: 'center',
+  },
 };
 
 export default StyleSheet.create(Styles);

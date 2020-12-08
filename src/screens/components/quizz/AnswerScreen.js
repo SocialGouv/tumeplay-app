@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../../../styles/Styles';
 import Colors from '../../../styles/Color';
@@ -8,11 +8,18 @@ import QuizzAnswerStyle from '../../../styles/components/QuizzAnswer';
 import ExpandableText from '../global/ExpandableText';
 import useIsMounted from '../../../hooks/isMounted';
 import Tracking from '../../../services/Tracking';
+import Modal from 'react-native-modal';
+import ModalStyle from '../../../styles/components/Modal';
+import ModalCloseButton from '../global/ModalCloseButton';
+import AddCommentScreen from '../../AddCommentScreen';
+
+import CommentLikesView from './CommentLikesView';
 
 AnswerScreen.propTypes = {
   question: PropTypes.object,
   isRightAnswer: PropTypes.bool,
   lastTokenAmount: PropTypes.number,
+  setFeedback: PropTypes.func,
 };
 
 export default function AnswerScreen(props) {
@@ -21,6 +28,12 @@ export default function AnswerScreen(props) {
   const _currentQuestion = props.question;
   const _isRightAnswer = props.isRightAnswer;
   const isMounted = useIsMounted();
+
+  const [activeFilter, setActiveFilter] = useState(0);
+  const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
+  const [chosenComment, setChosenComment] = useState({});
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
 
   useEffect(() => {
     setContent({
@@ -41,9 +54,9 @@ export default function AnswerScreen(props) {
 
   const rightAnswerPicture = require('../../../assets/pictures/answer.right.png');
   const wrongAnswerPicture = require('../../../assets/pictures/answer.wrong.png');
-  var currentPicture = false;
-  var localStyle = {};
-  var localTextStyle = {};
+  let currentPicture = false;
+  let localStyle = {};
+  let localTextStyle = {};
 
   if (_isRightAnswer) {
     currentPicture = rightAnswerPicture;
@@ -51,6 +64,29 @@ export default function AnswerScreen(props) {
     localTextStyle = {color: '#FF6A00'};
   } else {
     currentPicture = wrongAnswerPicture;
+  }
+
+  function _toggleCommentModal() {
+    setIsCommentModalVisible(!isCommentModalVisible);
+  }
+
+  function _writeComment(comment, id) {
+    //const idFeedback = id + 1;
+    setChosenComment({
+      comment: comment,
+      id: id,
+    });
+    props.setFeedback(isLiked, isDisliked, comment, id);
+  }
+
+  function _setContentLiked(clickedItemId) {
+    const liked = clickedItemId != 0 && clickedItemId == 1;
+    const disliked = clickedItemId != 0 && clickedItemId == 2;
+
+    setIsLiked(liked);
+    setIsDisliked(disliked);
+
+    props.setFeedback(liked, disliked, chosenComment.comment, chosenComment.id);
   }
 
   return (
@@ -111,7 +147,7 @@ export default function AnswerScreen(props) {
           onPress={() => {
             Tracking.knowMoreTriggered('question', content.id);
             setIsExpanded(!isExpanded);
-          }}>
+        }}>
           <ExpandableText
             containerStyle={{backgroundColor: '#FFFFFF', borderRadius: 7}}
             content={content}
@@ -125,7 +161,29 @@ export default function AnswerScreen(props) {
               Tracking.knowMoreTriggered('question', content.id);
             }}
           />
+          <CommentLikesView
+            onPressComment={_toggleCommentModal}
+            onPressLike={_setContentLiked}
+          />  
         </TouchableOpacity>
+        
+        <Modal
+          visible={isCommentModalVisible}
+          isVisible={isCommentModalVisible}
+          style={ModalStyle.modal}
+          animationType="fade"
+          backdropOpacity={0}
+          transparent={true}>
+          <View style={ModalStyle.backdrop} />
+          <View style={ModalStyle.innerModal}>
+            <ModalCloseButton onClose={_toggleCommentModal} />
+
+            <AddCommentScreen
+              onWriteComment={_writeComment}
+              onClose={_toggleCommentModal}
+            />
+          </View>
+        </Modal>
       </View>
     </View>
   );

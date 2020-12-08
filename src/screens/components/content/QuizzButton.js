@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Text, View, TouchableOpacity, Platform} from 'react-native';
+import {Text, Image, View, TouchableOpacity, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import Styles from '../../../styles/Styles';
 
@@ -67,7 +67,17 @@ export default function QuizzButton(props) {
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={props.onClick}>
-            <View style={{paddingTop: 8, paddingBottom: 8}}>
+            <View
+              style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'row'}}>
+              <Image
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginRight: 10,
+                  resizeMode: 'contain',
+                }}
+                source={require('../../../assets/pictures/answer-quizz.png')}
+              />
               <Text style={[Styles.tunnelButtonText]}>Répondre au quiz</Text>
             </View>
           </TouchableOpacity>

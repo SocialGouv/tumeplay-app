@@ -1,4 +1,4 @@
-import React, {useState, useEffect, forwardRef } from 'react';
+import React, {useState, useEffect, forwardRef} from 'react';
 import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -20,15 +20,13 @@ import UserService from '../services/User';
 
 import Tracking from '../services/Tracking';
 
-
-
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
 };
 export default function LandingScreen(props) {
   const [localThemes, setLocalThemes] = useState([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  
+
   const isMounted = useIsMounted();
 
   autoScrollToTop(props);
@@ -62,9 +60,8 @@ export default function LandingScreen(props) {
 
           if (token) {
             await UserService.setJWT(token);
-          }
-          else {
-		    _toggleErrorModal();
+          } else {
+            _toggleErrorModal();
           }
         }
       }
@@ -86,11 +83,11 @@ export default function LandingScreen(props) {
   function _onSelected_echangeProfessionnel() {
     props.navigation.navigate('ContentScreen');
   }
-  
+
   function _toggleErrorModal() {
     setShowErrorModal(!showErrorModal);
   }
-  
+
   const ForwardedErrorModal = forwardRef(() => (
     <ProductErrorModal
       showModal={showErrorModal}
@@ -109,7 +106,9 @@ export default function LandingScreen(props) {
         {/* Title and grid */}
         <View style={{flex: 0.75}}>
           <Text style={Styles.landingScreenTitle}>{item.title}</Text>
-          <TextWithSound style={Styles.landingScreenSubtitle} sound={"accueil-1.mp3"}>
+          <TextWithSound
+            style={Styles.landingScreenSubtitle}
+            sound={'accueil-1.mp3'}>
             Explore nos thématiques, découvre les questions réponses associées
             et réponds aux quiz pour recevoir des box gratuitement !
           </TextWithSound>

@@ -19,7 +19,7 @@ export default function TunnelDeliverySelect(props) {
   function _onContactClick() {
     props.navigation.navigate('StayInTouch');
   }
-  
+
   function _onBadgeListClick() {
     props.navigation.navigate('TunnelBadgeList');
   }

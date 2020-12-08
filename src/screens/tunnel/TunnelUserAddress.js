@@ -283,10 +283,9 @@ export default function TunnelUserAddress(props) {
                 const city = filtered[0].address.city
                   ? filtered[0].address.city
                   : filtered[0].address.town;
-                  
-                if( city == '' || city === undefined )  
-                {
-					return;
+
+                if (city == '' || city === undefined) {
+                  return;
                 }
                 localAdress['city'] = city;
                 localAdress['zipCode'] = localValue;
@@ -302,7 +301,7 @@ export default function TunnelUserAddress(props) {
 
   function _handleChange(name, inputValue) {
     const value = inputValue.trim();
-    
+
     if (name === 'zipCode') {
       if (AddressValidator.validateZipCode(value)) {
         setInvalidZipCode(false);

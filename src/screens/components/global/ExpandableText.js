@@ -13,7 +13,12 @@ import PropTypes from 'prop-types';
 
 import TextLink from './TextLink';
 import useIsMounted from '../../../hooks/isMounted';
+import Tracking from '../../../services/Tracking';
+
 import Colors from '../../../styles/Color';
+
+import ReactHowler from 'react-howler';
+import CustomTouchableOpacity from './CustomTouchableOpacity';
 
 ExpandableText.propTypes = {
   isExpanded: PropTypes.bool,
@@ -27,6 +32,7 @@ ExpandableText.propTypes = {
   textStyle: PropTypes.object,
   readMoreLink: PropTypes.string,
   onReadMore: PropTypes.func,
+  sound: PropTypes.string,
 };
 
 export default function ExpandableText(props) {
@@ -35,6 +41,32 @@ export default function ExpandableText(props) {
   const [showAllText, setShowAllText] = useState(props.isExpanded);
   const isMounted = useIsMounted();
   const _text = useRef();
+
+  const [play, setPlay] = useState(false);
+
+  const soundPicture = require('../../../assets/pictures/sound.png');
+
+  function onPlayStart() {}
+
+  function onPlayStop() {
+    console.log('Stop asked : ' + play);
+
+    setPlay(false);
+  }
+
+  async function togglePlay(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!play) {
+      console.log('Asking top force stop.');
+      await window.Howler.stop();
+    }
+
+    setTimeout(function() {
+      setPlay(!play);
+    }, 200);
+  }
 
   useEffect(() => {
     async function nextFrameAsync() {
@@ -208,6 +240,32 @@ export default function ExpandableText(props) {
           }}
           style={[cardStyle.text, {...props.textStyle}]}
         />
+        {props.sound && (
+          <CustomTouchableOpacity
+            onPress={e => {
+              togglePlay(e);
+              return false;
+            }}
+            style={{position: 'absolute', right: 15, top: 20}}>
+            <Image
+              style={{
+                marginLeft: 10,
+                width: 23,
+                height: 23,
+                resizeMode: 'contain',
+              }}
+              source={soundPicture}
+            />
+          </CustomTouchableOpacity>
+        )}
+        {props.sound && (
+          <ReactHowler
+            src={props.sound.uri}
+            onEnd={onPlayStop}
+            onStop={onPlayStop}
+            playing={play}
+          />
+        )}
         {_maybeRenderReadMore()}
       </View>
     </View>

@@ -83,6 +83,7 @@ export default function ContentCard(props) {
           readMoreLink={content.link}
           lessPicture={'minus-orange.png'}
           morePicture={'plus-orange.png'}
+          sound={content.sound}
           onReadMore={() => {
             Tracking.knowMoreTriggered('contenu', content.id);
           }}

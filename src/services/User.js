@@ -152,7 +152,7 @@ const User = {
   },
 
   /**
-   * @param latestBadgeIDWon
+   * @param {number} badgeId
    */
   setlatestBadgeIDWon: async latestBadgeIDWon => {
     let localUser = User.localUser;
@@ -404,9 +404,9 @@ const User = {
   computeHmac: async () => {
     if (User.localUser) {
       const localData = {
-		  tokens: User.localUser.availableTokens,
-		  uniqueId: User.localUser.uniqueId,
-		  latestBadge: User.localUser.latestBadgeIDWon
+        tokens: User.localUser.availableTokens,
+        uniqueId: User.localUser.uniqueId,
+        latestBadge: User.localUser.latestBadgeIDWon,
       };
       return CryptoJS.MD5(JSON.stringify(localData)).toString();
     }

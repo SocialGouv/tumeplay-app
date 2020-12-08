@@ -13,6 +13,7 @@ const AddressValidator = {
     '79',
     '86',
     '87',
+    '97',
   ],
   zipCodeTest: /^[0-9]{5}$/,
   zipCodePartTest: /^[0-9]{2}$/,

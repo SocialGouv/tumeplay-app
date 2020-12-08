@@ -37,10 +37,9 @@ export default function CustomTextInput(props) {
 
   function onChangeText(value) {
     let parsed = value;
-    
-    if( parsed.trim() == '' )
-    {
-		parsed = parsed.trim();
+
+    if (parsed.trim() == '') {
+      parsed = parsed.trim();
     }
 
     if (props.filterNumbers) {
@@ -66,13 +65,13 @@ export default function CustomTextInput(props) {
 
   return (
     <View style={[TunnelUserAdressStyle.inputWrapper, {position: 'relative'}]}>
-      { typeof props.isRequired !== "undefined" && !props.isRequired && (
-      	<Text style={Styles.labelText}>{props.inputLabel}</Text>
+      {typeof props.isRequired !== 'undefined' && !props.isRequired && (
+        <Text style={Styles.labelText}>{props.inputLabel}</Text>
       )}
-      { ( typeof props.isRequired === "undefined" || props.isRequired ) && (
-      	<Text style={Styles.labelText}>{props.inputLabel} *</Text>
+      {(typeof props.isRequired === 'undefined' || props.isRequired) && (
+        <Text style={Styles.labelText}>{props.inputLabel} *</Text>
       )}
-      
+
       <TextInput
         placeholder={props.inputPlaceholder}
         style={[

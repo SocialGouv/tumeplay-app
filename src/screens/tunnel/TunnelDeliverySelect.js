@@ -64,6 +64,7 @@ export default function TunnelDeliverySelect(props) {
         </Text>
       </View>
       <View style={{flex: 0.4, marginTop: 30}}>
+      	{/*
         <TouchableOpacity
           style={{
             flex: 1,
@@ -79,6 +80,7 @@ export default function TunnelDeliverySelect(props) {
             <Text style={Styles.tunnelButtonText}>A domicile</Text>
           </View>
         </TouchableOpacity>
+        */}
         <TouchableOpacity
           style={{
             flex: 1,
@@ -92,7 +94,7 @@ export default function TunnelDeliverySelect(props) {
           }}
           onPress={() => _onDone('pickup')}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>En point relais</Text>
+            <Text style={Styles.tunnelButtonText}>En point référent</Text>
           </View>
         </TouchableOpacity>
         <Splitter />

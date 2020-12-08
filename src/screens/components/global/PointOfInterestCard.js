@@ -128,26 +128,28 @@ export default function PointOfInterestCard(props) {
             </Text>
           </View>
         </View>
-
-        <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
-          <View>
-            <Image
-              style={TunnelCartSummaryStyle.pictureAndTextPicture}
-              source={require('../../../assets/pictures/picto-phone.png')}
-            />
-          </View>
-          <View>
-            <Text
-              style={[
-                TunnelCartSummaryStyle.subTitle,
-                TunnelCartSummaryStyle.emailAdress,
-                textStyle,
-              ]}>
-              01 23 45 67 89 00
-            </Text>
-          </View>
-        </View>
-
+        { item.phoneNumber != '' && ( 
+	        <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
+	          <View>
+	            <Image
+	              style={TunnelCartSummaryStyle.pictureAndTextPicture}
+	              source={require('../../../assets/pictures/picto-phone.png')}
+	            />
+	          </View>
+	          
+	          <View>
+	            <Text
+	              style={[
+	                TunnelCartSummaryStyle.subTitle,
+	                TunnelCartSummaryStyle.emailAdress,
+	                textStyle,
+	              ]}>
+	              { item.phoneNumber }
+	            </Text>
+	          </View>
+	          
+	        </View>
+        )}
         <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
           <TouchableOpacity
             onPress={displayTimeTable}

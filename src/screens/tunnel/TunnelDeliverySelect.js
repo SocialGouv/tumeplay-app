@@ -97,7 +97,9 @@ export default function TunnelDeliverySelect(props) {
             <Text style={Styles.tunnelButtonText}>En point référent</Text>
           </View>
         </TouchableOpacity>
+        
         <Splitter />
+        {/*
         <Text
           style={{
             color: '#FFFFFF',
@@ -124,6 +126,7 @@ export default function TunnelDeliverySelect(props) {
           </TouchableOpacity>
           .
         </Text>
+        */}
         <Text
           style={{
             color: '#FFFFFF',

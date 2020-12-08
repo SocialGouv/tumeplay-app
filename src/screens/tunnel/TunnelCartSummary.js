@@ -201,9 +201,11 @@ export default function TunnelCartSummary(props) {
         </View>
       </View>
 
+      {/*
       <Splitter />
-
+	  */}
       <View style={{flex: 0.15}}>
+      	{/*
         <Text style={[TunnelCartSummaryStyle.subTitle, {marginBottom: 8}]}>
           Nous t&apos;enverrons un mail pour t&apos;informer de
           l&apos;expédition de ta commande à :
@@ -222,6 +224,7 @@ export default function TunnelCartSummary(props) {
             {userAdress.emailAdress}
           </Text>
         </View>
+        */}
         {deliveryType == 'home' && (
           <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
             <Image

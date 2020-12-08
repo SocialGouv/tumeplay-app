@@ -20,6 +20,7 @@ import useIsMounted from '../../hooks/isMounted';
 import AddressValidator from '../../services/AddressValidator';
 import MailValidator from '../../services/MailValidator';
 import RemoteApi from '../../services/RemoteApi';
+import UserService from '../../services/User';
 
 const zipCodeTest = /^[0-9]{5}$/;
 export const phoneTest = /^0[0-9]{9}$/;
@@ -97,6 +98,18 @@ export default function TunnelUserAddress(props) {
         adressMore: userAdress.adressMore,
         zipCode: userAdress.zipCode,
         city: userAdress.city,
+      };
+
+      setLocalAdress(newAdress);
+    }
+    else
+    {
+	  
+      const newAdress = {
+        firstName: "",
+        lastName: "",
+        emailAdress: UserService.localUser.uniqueId + "@tumeplay.com",
+        emailAdressConfirmation: UserService.localUser.uniqueId + "@tumeplay.com",
       };
 
       setLocalAdress(newAdress);
@@ -349,7 +362,13 @@ export default function TunnelUserAddress(props) {
         isValid={localValid.lastName}
         currentValue={localAdress.lastName}
         name="lastName"
-      />
+      />                           
+      
+      
+                                   
+      {deliveryType === 'home' && (
+        <View>
+      
       <CustomTextInput
         inputLabel="Adresse e-mail"
         inputPlaceholder="Ton adresse e-mail"
@@ -359,7 +378,7 @@ export default function TunnelUserAddress(props) {
         currentValue={localAdress.emailAdress}
         name="emailAdress"
       />
-
+      
       <CustomTextInput
         inputLabel="Confirmation adresse e-mail"
         inputPlaceholder="Confirme ton adresse e-mail"
@@ -370,8 +389,7 @@ export default function TunnelUserAddress(props) {
         currentValue={localAdress.emailAdressConfirmation}
         name="emailAdressConfirmation"
       />
-
-      {deliveryType === 'home' && (
+                                   
         <CustomTextInput
           inputLabel="Numéro de téléphone"
           inputPlaceholder="Ton numéro de téléphone"
@@ -382,10 +400,7 @@ export default function TunnelUserAddress(props) {
           name="phoneNumber"
           filterNumbers={true}
         />
-      )}
-
-      {deliveryType === 'home' && (
-        <View>
+      
           <CustomTextInput
             inputLabel="Adresse"
             inputPlaceholder="Ton adresse"

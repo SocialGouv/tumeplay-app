@@ -203,9 +203,11 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         return DefaultThemes;
       } else {
-        const themes = await RemoteApi.fetch(ThemesEndpoint);
-
-        return await RemoteApi.mapPictures(themes);
+        let themes = await RemoteApi.fetch(ThemesEndpoint);
+        
+        themes = await RemoteApi.mapPictures(themes);
+        themes = await RemoteApi.mapSounds(themes);
+        return themes;
       }
     } catch (e) {
       throw Error(e);

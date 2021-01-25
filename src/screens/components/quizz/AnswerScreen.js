@@ -157,6 +157,8 @@ export default function AnswerScreen(props) {
             purpleMode={true}
             lessPicture={'minus-purple.png'}
             morePicture={'plus-purple.png'}
+            sound={_currentQuestion.answerSound}
+            soundStyle={{bottom: 10, left: 5, right: 'auto', top: 'auto'}}
             onReadMore={() => {
               Tracking.knowMoreTriggered('question', content.id);
             }}

@@ -8,6 +8,7 @@ import UserService from '../services/User';
 import Tracking from '../services/Tracking';
 import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
+import TextWithSound from './components/global/TextWithSound';
 import AnswerButton from './components/quizz/AnswerButton';
 import QuizService from '../services/Quiz';
 import RemoteApi from '../services/RemoteApi';
@@ -142,7 +143,8 @@ export default function QuizzScreen(props) {
             alignSelf: 'center',
             height: '20%',
           }}>
-          <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
+          <TextWithSound sound={_currentQuestion.questionSound} style={Styles.questionText}>{_currentQuestion.question}</TextWithSound>
+          
         </View>
 
         <View style={{paddingBottom: 50, height: '52%'}}>

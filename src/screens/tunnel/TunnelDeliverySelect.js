@@ -59,8 +59,7 @@ export default function TunnelDeliverySelect(props) {
       <View style={{flex: 0.4}}>
         <Text style={Styles.tunnelTitle}>Choisis le mode de livraison</Text>
         <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
-          Nous ferons de notre mieux pour te livrer au plus vite ! Nos box sont
-          100% discrètes ;)
+          Choisis le référent chez qui tu souhaites retirer ta box. Le référent est là pour t’écouter et répondre à tes questions. Il te proposera un petit entretien la première fois que tu iras le voir. Pas de panique, 100% confidentialité, 0% stress !
         </Text>
       </View>
       <View style={{flex: 0.4, marginTop: 30}}>
@@ -94,7 +93,7 @@ export default function TunnelDeliverySelect(props) {
           }}
           onPress={() => _onDone('pickup')}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>En point référent</Text>
+            <Text style={Styles.tunnelButtonText}>Chez un référent</Text>
           </View>
         </TouchableOpacity>
         
@@ -126,7 +125,7 @@ export default function TunnelDeliverySelect(props) {
           </TouchableOpacity>
           .
         </Text>
-        */}
+        
         <Text
           style={{
             color: '#FFFFFF',
@@ -149,6 +148,7 @@ export default function TunnelDeliverySelect(props) {
           </TouchableOpacity>
           .
         </Text>
+        */}
       </View>
     </View>
   );

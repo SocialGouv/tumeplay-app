@@ -6,15 +6,16 @@ import CustomTouchableOpacity from './CustomTouchableOpacity';
 
 TextWithSound.propTypes = {
   sound: PropTypes.string,
+  useLocal: PropTypes.bool,
   children: PropTypes.object,
   style: PropTypes.object,
 };
 export default function TextWithSound(props) {
   const [play, setPlay] = useState(false);
-  const targetSound = props.sound
-    ? require('../../../assets/sounds/' + props.sound)
-    : false;
+  
   const soundPicture = require('../../../assets/pictures/sound.png');
+  
+  const targetSound = props.sound ? ( props.useLocal ? require('../../../assets/sounds/' + props.sound) : props.sound.uri ) : false;
 
   function onPlayStart() {}
 

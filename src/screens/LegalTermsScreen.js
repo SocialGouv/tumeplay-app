@@ -53,14 +53,14 @@ export default function LegalTermsScreen(props) {
 
         <Text style={contentStyle.subTitle}>Éditeur de la plateforme</Text>
         <Text style={contentStyle.text}>
-          La Plateforme est éditée par la Fabrique des Ministères sociaux situé
+          La Plateforme est éditée par la Fabrique des Ministères sociaux située
           : Tour Mirabeau 39-43 Quai André Citroën 75015 PARIS Tél : 01 40 56 60
           00
         </Text>
 
         <Text style={contentStyle.subTitle}>Directeur de la publication</Text>
         <Text style={contentStyle.text}>
-          Jérôme Salmon - Directeur général de la Santé
+          Jérôme Salomon - Directeur général de la Santé
         </Text>
 
         <Text style={contentStyle.subTitle}>Hébergement de la plateforme</Text>

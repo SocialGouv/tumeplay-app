@@ -245,12 +245,14 @@ export default function ContentScreen(props) {
    * @param {number} value
    */
   async function _onSelectedMoreThan25Years() {
+    Tracking.above25();
     await setAndToggleMoreThan25Years(true);
   }
   /**
    * @param {number} value
    */
   async function _onSelectedLessThan25Years() {
+    Tracking.under25();
     await setAndToggleMoreThan25Years(false);
   }
 

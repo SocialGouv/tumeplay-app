@@ -33,6 +33,7 @@ ExpandableText.propTypes = {
   readMoreLink: PropTypes.string,
   onReadMore: PropTypes.func,
   sound: PropTypes.string,
+  soundStyle: PropTypes.object,
 };
 
 export default function ExpandableText(props) {
@@ -246,7 +247,7 @@ export default function ExpandableText(props) {
               togglePlay(e);
               return false;
             }}
-            style={{position: 'absolute', right: 15, top: 20}}>
+            style={[{position: 'absolute', right: 15, top: 20}, {...props.soundStyle}]}>
             <Image
               style={{
                 marginLeft: 10,

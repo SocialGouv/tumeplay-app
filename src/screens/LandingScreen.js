@@ -77,6 +77,7 @@ export default function LandingScreen(props) {
   }
 
   function _onSelected_lieuxUtiles() {
+    Tracking.lieuxUtilesClicked();
     props.navigation.navigate('ContentScreen', {selectedTheme: localThemes[3]});
   }
 

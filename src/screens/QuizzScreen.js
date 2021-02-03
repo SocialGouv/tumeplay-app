@@ -58,7 +58,7 @@ export default function QuizzScreen(props) {
 
     const currentQuestion = questions[currentIndex];
 
-    Tracking.questionAnswered(currentQuestion.id, questionTimer);
+    Tracking.questionAnswered(currentQuestion.question, questionTimer);
 
     const localAnswer = {
       questionId: currentQuestion.id,
@@ -71,7 +71,12 @@ export default function QuizzScreen(props) {
     QuizService.moveQuestion(currentQuestion, isRightAnswer);
 
     setIsRightAnswer(isRightAnswer);
-
+    
+    if( isRightAnswer )
+    {
+        Tracking.questionRightAnswered(currentQuestion.question);
+    }
+    
     const _tokenAmount = QuizService.getTokenAmount(
       currentQuestion,
       currentQuestion.answers[key].id,

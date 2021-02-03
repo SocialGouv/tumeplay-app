@@ -142,7 +142,7 @@ export default function ProductModal(props) {
               paddingRight: 15,
             }}>
             <Text style={cardStyle.title}>{productBox.title}</Text>
-            <Text style={cardStyle.text}>{productBox.description}</Text>
+            <Text style={cardStyle.text}>{productBox.shortDescription}</Text>
           </View>
 
           {productBox && productBox.products.length > 0 && (

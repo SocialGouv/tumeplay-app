@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import Tracking from '../services/Tracking';
 
 CustomFooter.propTypes = {
   containerStyle: PropTypes.object,
@@ -10,6 +11,7 @@ CustomFooter.propTypes = {
 export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
   function _contactMail() {
+    Tracking.contactClicked();
     props.navigation.navigate('Contact');
   }
 

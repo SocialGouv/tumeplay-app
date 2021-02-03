@@ -69,12 +69,11 @@ export default function MoreThan25YearsScreen(props) {
           padding: 15,
         }}>
         <Text style={textStyle}>
-          Actuellement la commande de box est disponible en Seine-et-Marne et en
-          Nouvelle-Aquitaine.
+          Actuellement la commande de box est disponible sur la commune de Saint Laurent du Maroni.
         </Text>
         <Text style={textStyle}>――――</Text>
         <Text style={textStyle}>
-          Pour être informé·e de la sortie de l&apos;app&apos; dans ta région,
+          Pour être informé·e de la disponibilité des box dans ta ville,
           laisse nous ton adresse mail{' '}
           <TouchableOpacity onPress={props.onContactClick}>
             <Text

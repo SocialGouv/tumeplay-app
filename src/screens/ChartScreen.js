@@ -74,7 +74,7 @@ export default function ChartScreen(props) {
           </TextLink>
           {'\n'}
           {'\n'}
-          Il est porté par 3 Agences régionales de santé (ARS) pilotes :{'\n'}
+          Elle est portée par 3 Agences régionales de santé (ARS) pilotes :{'\n'}
           <UnorderedListRow>ARS Guyane</UnorderedListRow>
           {'\n'}
           <UnorderedListRow>ARS Ile-de-France</UnorderedListRow>
@@ -99,16 +99,14 @@ export default function ChartScreen(props) {
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Les données relatives aux réponses appoertées aux différents quiz
+            Les données relatives aux réponses apportées aux différents quiz
             sont anonymisées. Elles sont stockées le temps de la session
-            directement sur l&apos;apparail de l&apos;utilisateur.
+            directement sur l&apos;appareil de l&apos;utilisateur.
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Les utilisateurs pour commander l&apos;une des boites proposées -
-            qui contiennent différents outils de prévention - sont amenés à
-            donner des informations relatives à leur adresse et coordonnées. Ces
-            données ne sont pas stockées avec les informations relatives à votre
+            Lors de la commande d’une boîte, qui contient différents outils de prévention, les utilisateurs sont amenés à fournir des informations relatives à leur adresse et à leurs coordonnées.
+            Ces données ne sont pas stockées avec les informations relatives à votre
             téléphone.
           </UnorderedListRow>
           {'\n'}

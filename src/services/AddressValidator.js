@@ -1,6 +1,5 @@
 const AddressValidator = {
   allowedZipCodes: [
-    '77',
     '16',
     '17',
     '19',
@@ -10,9 +9,15 @@ const AddressValidator = {
     '40',
     '47',
     '64',
+    '75',
+    '77',
     '79',
     '86',
     '87',
+    '91',
+    '93',
+    '94',
+    '95',         
   ],
   zipCodeTest: /^[0-9]{5}$/,
   zipCodePartTest: /^[0-9]{2}$/,

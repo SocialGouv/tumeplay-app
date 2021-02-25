@@ -111,6 +111,38 @@ export default function TunnelCartSummary(props) {
       userAdress: userAdress,
     });
   }
+  
+  function renderTimeTable(item) {
+    var _return = [];
+    var i = 0;
+
+    for (const timetable in item.horaires) {
+      const dayTable = item.horaires[timetable];
+      let time = dayTable.am;
+      if (dayTable.pm) {
+        time = time + ' ' + dayTable.pm;
+      }
+      i = i + 1;
+
+      _return.push(
+        <Text key={i} style={{
+		    lineHeight: 15,
+		    fontSize: 12,
+		    color: '#FFFFFF',
+		    fontFamily: 'Chivo-Regular',
+		    textTransform: 'capitalize'
+		  }}>
+          {timetable} : {time}
+        </Text>,
+      );
+    }
+
+    return (
+      <View style={{ paddingLeft: 0, paddingTop: 12, paddingBottom: 12,}}>
+      	{_return}
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={[Styles.flexOne, TunnelCartSummaryStyle.container]}>
@@ -160,11 +192,16 @@ export default function TunnelCartSummary(props) {
 
       <Splitter />
 
-      <View style={{flex: 0.2}}>
+      <View style={{flex: 0.5}}>
         <View style={{flex: 0.2}}>
-          <Text style={TunnelCartSummaryStyle.title}>Adresse de livraison</Text>
+          {deliveryType == 'pickup' && (
+          	<Text style={TunnelCartSummaryStyle.title}>Viens retirer ta box chez</Text>
+          )}
+          {deliveryType == 'home' && (
+          	<Text style={TunnelCartSummaryStyle.title}>Adresse de livraison</Text>
+          )}
         </View>
-        <View style={TunnelCartSummaryStyle.pictureAndTextWrapper}>
+        <View style={[TunnelCartSummaryStyle.pictureAndTextWrapper, { maxHeight: "auto"}]}>
           <View>
             <Image
               style={TunnelCartSummaryStyle.pictureAndTextPicture}
@@ -172,13 +209,15 @@ export default function TunnelCartSummary(props) {
             />
           </View>
           <View>
-            <Text
-              style={[
-                TunnelCartSummaryStyle.subTitle,
-                TunnelCartSummaryStyle.emailAdress,
-              ]}>
-              {userAdress.firstName} {userAdress.lastName}
-            </Text>
+            {deliveryType == 'home' && (
+	            <Text
+	              style={[
+	                TunnelCartSummaryStyle.subTitle,
+	                TunnelCartSummaryStyle.emailAdress,
+	              ]}>
+	              {userAdress.firstName} {userAdress.lastName}
+	            </Text>
+            )}
             {deliveryType == 'home' && (
               <Text style={[TunnelCartSummaryStyle.subTitle]}>
                 {userAdress.adress}
@@ -187,15 +226,24 @@ export default function TunnelCartSummary(props) {
               </Text>
             )}
             {deliveryType == 'pickup' && (
-              <Text
-                style={[TunnelCartSummaryStyle.subTitle, {paddingBottom: 50}]}>
-                {selectedPickup.name}
-                {'\n'}
-                {selectedPickup.street}
-                {'\n'}
-                {selectedPickup.zipCode} {selectedPickup.city}
-                {'\n'}
-              </Text>
+              <View style={{paddingBottom: 0}}>
+	              <Text style={[TunnelCartSummaryStyle.subTitle, TunnelCartSummaryStyle.emailAdress]}>
+	                {selectedPickup.name}
+	                {'\n'}
+	              </Text>
+	              <Text style={[TunnelCartSummaryStyle.subTitle]}>
+	                { selectedPickup.phoneNumber != "" && ( 
+                		<Text>{selectedPickup.phoneNumber}
+                		{'\n'}</Text>
+	                )}
+	                {renderTimeTable(selectedPickup)}
+	                {'\n'}
+	                {selectedPickup.street}
+	                {'\n'}
+	                {selectedPickup.zipCode} {selectedPickup.city}
+	                {'\n'}
+	              </Text>
+              </View>
             )}
           </View>
         </View>

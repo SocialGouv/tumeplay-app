@@ -152,7 +152,7 @@ export default function TunnelUserAddress(props) {
 
     if (localAdress.lastName === '') {
       checkedIsValid.lastName = defaultValue;
-      isValid = false;
+      //isValid = false;
     }
 
     if (localAdress.emailAdress === '') {
@@ -218,6 +218,16 @@ export default function TunnelUserAddress(props) {
         }
       }
     }
+    else
+    {
+		if (localAdress.phoneNumber !== '') {
+	       if (!phoneTest.test(localAdress.phoneNumber)) {
+	        checkedIsValid.phoneNumber = CustomTextInput.fieldStatus.INVALID;
+	        checkedIsValid.phoneNumberWrongFormat = true;
+	          isValid = false;
+	      }
+	    }
+    }
     setLocalValid(checkedIsValid);
     setMainValidFlag(isValid);
     return isValid;
@@ -245,6 +255,17 @@ export default function TunnelUserAddress(props) {
       return;
     }
 
+    const _isAllowedFromUser = await UserService.isOrderAllowed();
+    
+    console.log("ALLOWED : " + _isAllowedFromUser );
+    
+    if( !_isAllowedFromUser )
+    {
+		setDisallowOrder(true);
+		
+		return;
+    }
+    
     setDisallowOrder(false);
 
     if (deliveryType === 'home') {
@@ -353,41 +374,67 @@ export default function TunnelUserAddress(props) {
         currentValue={localAdress.firstName}
         name="firstName"
       />
-      <CustomTextInput
-        inputLabel="Nom"
-        inputPlaceholder="Ton Nom"
-        onChangeText={val => _handleChange('lastName', val)}
-        isValid={localValid.lastName}
-        currentValue={localAdress.lastName}
-        name="lastName"
-      />                           
       
       
-                                   
+        <CustomTextInput
+          inputLabel="Numéro de téléphone"
+          inputPlaceholder="Ton numéro de téléphone"
+          onChangeText={val => _handleChange('phoneNumber', val)}
+          isValid={localValid.phoneNumber}
+          currentValue={localAdress.phoneNumber}
+          phoneNumberWrongFormat={localValid.phoneNumberWrongFormat}
+          name="phoneNumber"
+          filterNumbers={true}
+          isRequired={false}
+        />
+        <View style={[TunnelUserAdressStyle.requiredFieldsWrapper, {marginTop: 10}]}>
+	      <View style={{flex: 1}}>
+	        <Text
+	          style={[
+	            Styles.placeholderText,
+	            {fontSize: 13, color: '#C80352', fontFamily: 'Chivo-Regular'},
+	          ]}>
+	          Le numéro de téléphone renseigné sera uniquement utilisé pour te contacter si tu n&apos;as pas retiré ta box dans les 7 jours qui suivent ta commande ou pour te proposer de participer à une enquête sur le dispositif.
+	        </Text>
+	      </View>
+	    </View>
+                                           
+      
+      
       {deliveryType === 'home' && (
         <View>
-      
-      <CustomTextInput
-        inputLabel="Adresse e-mail"
-        inputPlaceholder="Ton adresse e-mail"
-        onChangeText={val => _handleChange('emailAdress', val)}
-        isValid={localValid.emailAdress}
-        emailAdressWrongFormat={localValid.emailAdressWrongFormat}
-        currentValue={localAdress.emailAdress}
-        name="emailAdress"
-      />
-      
-      <CustomTextInput
-        inputLabel="Confirmation adresse e-mail"
-        inputPlaceholder="Confirme ton adresse e-mail"
-        onChangeText={val => _handleChange('emailAdressConfirmation', val)}
-        isValid={localValid.emailAdressConfirmation}
-        emailAdressWrongFormat={localValid.emailAdressConfirmationWrongFormat}
-        emailAdressMismatch={localValid.emailAdressMismatch}
-        currentValue={localAdress.emailAdressConfirmation}
-        name="emailAdressConfirmation"
-      />
+	      <CustomTextInput
+	        inputLabel="Nom"
+	        inputPlaceholder="Ton Nom"
+	        onChangeText={val => _handleChange('lastName', val)}
+	        isValid={localValid.lastName}
+	        currentValue={localAdress.lastName}
+	        name="lastName"
+	      />                           
+	      
+	      
                                    
+          <CustomTextInput
+	        inputLabel="Adresse e-mail"
+	        inputPlaceholder="Ton adresse e-mail"
+	        onChangeText={val => _handleChange('emailAdress', val)}
+	        isValid={localValid.emailAdress}
+	        emailAdressWrongFormat={localValid.emailAdressWrongFormat}
+	        currentValue={localAdress.emailAdress}
+	        name="emailAdress"
+	      />
+	      
+	      <CustomTextInput
+	        inputLabel="Confirmation adresse e-mail"
+	        inputPlaceholder="Confirme ton adresse e-mail"
+	        onChangeText={val => _handleChange('emailAdressConfirmation', val)}
+	        isValid={localValid.emailAdressConfirmation}
+	        emailAdressWrongFormat={localValid.emailAdressConfirmationWrongFormat}
+	        emailAdressMismatch={localValid.emailAdressMismatch}
+	        currentValue={localAdress.emailAdressConfirmation}
+	        name="emailAdressConfirmation"
+	      /> 
+	      
         <CustomTextInput
           inputLabel="Numéro de téléphone"
           inputPlaceholder="Ton numéro de téléphone"
@@ -398,7 +445,7 @@ export default function TunnelUserAddress(props) {
           name="phoneNumber"
           filterNumbers={true}
         />
-      
+                                           
           <CustomTextInput
             inputLabel="Adresse"
             inputPlaceholder="Ton adresse"

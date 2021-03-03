@@ -20,6 +20,7 @@ import useIsMounted from '../../hooks/isMounted';
 import AddressValidator from '../../services/AddressValidator';
 import MailValidator from '../../services/MailValidator';
 import RemoteApi from '../../services/RemoteApi';
+import UserService from '../../services/User';
 
 const zipCodeTest = /^[0-9]{5}$/;
 export const phoneTest = /^0[0-9]{9}$/;
@@ -234,6 +235,17 @@ export default function TunnelUserAddress(props) {
       return;
     }
 
+    const _isAllowedFromUser = await UserService.isOrderAllowed();
+    
+    console.log("ALLOWED : " + _isAllowedFromUser );
+    
+    if( !_isAllowedFromUser )
+    {
+		setDisallowOrder(true);
+		
+		return;
+    }
+    
     setDisallowOrder(false);
 
     if (deliveryType === 'home') {

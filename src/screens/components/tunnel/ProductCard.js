@@ -113,22 +113,6 @@ export default function ProductCard(props) {
           <Text style={cardStyle.readMore}>Plus d&apos;infos</Text>
         </View>
       </CustomTouchableOpacity>
-      {!productBox.available && (
-        <View style={cardStyle.notAvailableWrapper}>
-          <View style={cardStyle.notAvailableTextWrapper}>
-            <Text style={[Styles.finishText, {color: '#FFFFFF'}]}>
-              <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
-                Bientôt !
-              </UnderlineText>
-            </Text>
-          </View>
-          <View style={cardStyle.notAvailableTextWrapper}>
-            <Text style={cardStyle.notAvailableText}>
-              Commande de cette box non disponible pour l&apos;instant.
-            </Text>
-          </View>
-        </View>
-      )}
     </View>
   );
 }

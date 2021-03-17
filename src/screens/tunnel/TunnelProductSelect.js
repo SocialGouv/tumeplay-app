@@ -72,6 +72,7 @@ export default function TunnelProductSelect(props) {
 
   const ForwardedBoxModal = forwardRef(() => (
     <ProductModal
+      navigation={props.navigation}
       onOrder={_onOrder}
       showModal={showModal}
       item={selectedItem}

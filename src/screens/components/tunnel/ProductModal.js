@@ -21,6 +21,7 @@ import Colors from '../../../styles/Color';
 import ModalStyle from '../../../styles/components/Modal';
 
 ProductModal.propTypes = {
+  navigation: PropTypes.object,
   item: PropTypes.object,
   onOrder: PropTypes.func,
   showModal: PropTypes.bool,
@@ -107,8 +108,22 @@ export default function ProductModal(props) {
     setTotalProducts(_total);
   }, [selectedItems]);
 
+  function stayInTouch() {
+    props.onClose();
+    props.navigation.navigate('StayInTouch', {
+		outOfStock: true		
+    });
+  }
+  
   function onOrder() {
-    props.onOrder(selectedItems);
+    if(props.item.available )
+    {
+      props.onOrder(selectedItems);
+	}
+	else
+	{
+	  stayInTouch();
+	}
   }
 
   function onSelectChange(selectedItems) {

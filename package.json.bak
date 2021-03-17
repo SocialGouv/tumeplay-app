@@ -15,8 +15,6 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@react-native-community/async-storage": "^1.10.3",
-    "@react-native-community/cli": "^4.13.1",
-    "@react-native-community/cli-platform-ios": "^4.13.0",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/native": "^3.6.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
@@ -25,7 +23,6 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "detect-browser": "^4.8.0",
     "modal-react-native-web": "^0.2.0",
-    "node-libs-react-native": "^1.2.1",
     "node-open-geocoder": "^4.0.1",
     "react": "16.9.0",
     "react-dom": "^16.12.0",
@@ -79,17 +76,7 @@
     "extends": "react-app"
   },
   "jest": {
-    "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-clone-referenced-element|react-native-device-info|react-navigation|@react-navigation)"
-    ],
-    "setupFiles": [
-      "./node_modules/react-native-gesture-handler/jestSetup.js",
-      "./test.setup.js"
-    ]
-  },
-  "globals": {
-    "window": {}
+    "preset": "react-native"
   },
   "dependency": {
     "assets": [

@@ -327,7 +327,7 @@ var Styles = {
     position: 'absolute',
     bottom: 15,
     opacity: 0.2,
-    pointerEvents: 'none',
+    //pointerEvents: 'none',
   },
   bottomButtonText: {
     backgroundColor: 'transparent',

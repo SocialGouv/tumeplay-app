@@ -34,7 +34,7 @@ export default function StayInTouchScreen(props) {
     emailAdress: -1,
     zipCode: -1,
   };
-  const outOfStock = props.navigation.state.params.outOfStock;
+  const outOfStock = ( props.navigation.state.params && props.navigation.state.params.outOfStock );
   const [invalidZipCode, setInvalidZipCode] = useState(false);
   const [localAdress, setLocalAdress] = useState(defaultUserAdress);
   const [localValid, setLocalValid] = useState({});

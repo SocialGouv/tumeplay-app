@@ -226,7 +226,7 @@ var Styles = {
     flex: 1,
     marginTop: 30,
     backgroundColor: '#ffffff8f',
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   textCommImg: {
     color: Colors.main,
@@ -248,7 +248,7 @@ var Styles = {
     flex: 1,
     marginTop: 30,
     backgroundColor: '#ffffff8f',
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   contentPicture: {
     flex: 1,
@@ -327,7 +327,7 @@ var Styles = {
     position: 'absolute',
     bottom: 15,
     opacity: 0.2,
-    //pointerEvents: 'none',
+    // pointerEvents: 'none',
   },
   bottomButtonText: {
     backgroundColor: 'transparent',
@@ -402,7 +402,7 @@ var Styles = {
     marginTop: 2,
   },
   labelText: {
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: Colors.labelColor,
     fontFamily: Colors.textFont,
     fontSize: 16,
@@ -419,7 +419,7 @@ var Styles = {
     fontSize: 16,
   },
   placeholderText: {
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: '#B7B7B7',
     fontFamily: Colors.textFont,
     fontSize: 16,
@@ -442,7 +442,7 @@ var Styles = {
     color: '#FFFFFF',
     fontFamily: Colors.textFont,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   landingBottomButtonNext: {
     textDecorationLine: 'underline',

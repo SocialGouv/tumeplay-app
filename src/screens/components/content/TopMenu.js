@@ -55,10 +55,10 @@ export default function TopMenu(props) {
         }
       };
 
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+      // window.addEventListener('scroll', handleScroll);
+      // return () => {
+      //   window.removeEventListener('scroll', handleScroll);
+      // };
     }
   }, [isMounted]);
 

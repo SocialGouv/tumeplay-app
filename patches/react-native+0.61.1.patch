@@ -1,0 +1,120 @@
+diff --git a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m b/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
+index 01aa75f..b4ad10d 100644
+--- a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
++++ b/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
+@@ -269,6 +269,8 @@ static NSUInteger RCTDeviceFreeMemory() {
+   if (_currentFrame) {
+     layer.contentsScale = self.animatedImageScale;
+     layer.contents = (__bridge id)_currentFrame.CGImage;
++  } else {
++    [super displayLayer:layer];
+   }
+ }
+   
+diff --git a/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m b/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
+index 6057a48..d99e8a6 100644
+--- a/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
++++ b/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
+@@ -581,38 +581,42 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
+ 
+   // These keyboard types (all are number pads) don't have a "Done" button by default,
+   // so we create an `inputAccessoryView` with this button for them.
+-  BOOL shouldHaveInputAccesoryView =
+-    (
+-      keyboardType == UIKeyboardTypeNumberPad ||
+-      keyboardType == UIKeyboardTypePhonePad ||
+-      keyboardType == UIKeyboardTypeDecimalPad ||
+-      keyboardType == UIKeyboardTypeASCIICapableNumberPad
+-    ) &&
+-    textInputView.returnKeyType == UIReturnKeyDone;
+-
+-  if (_hasInputAccesoryView == shouldHaveInputAccesoryView) {
+-    return;
+-  }
++    if (@available(iOS 10.0, *)) {
++        BOOL shouldHaveInputAccesoryView =
++        (
++         keyboardType == UIKeyboardTypeNumberPad ||
++         keyboardType == UIKeyboardTypePhonePad ||
++         keyboardType == UIKeyboardTypeDecimalPad ||
++         keyboardType == UIKeyboardTypeASCIICapableNumberPad
++         ) &&
++        textInputView.returnKeyType == UIReturnKeyDone;
++        
++        if (_hasInputAccesoryView == shouldHaveInputAccesoryView) {
++            return;
++        }
+         
+-  _hasInputAccesoryView = shouldHaveInputAccesoryView;
+-
+-  if (shouldHaveInputAccesoryView) {
+-    UIToolbar *toolbarView = [[UIToolbar alloc] init];
+-    [toolbarView sizeToFit];
+-    UIBarButtonItem *flexibleSpace =
+-      [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+-                                                    target:nil
+-                                                    action:nil];
+-    UIBarButtonItem *doneButton =
+-      [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+-                                                    target:self
+-                                                    action:@selector(handleInputAccessoryDoneButton)];
+-    toolbarView.items = @[flexibleSpace, doneButton];
+-    textInputView.inputAccessoryView = toolbarView;
+-  }
+-  else {
+-    textInputView.inputAccessoryView = nil;
+-  }
++        _hasInputAccesoryView = shouldHaveInputAccesoryView;
++        
++        if (shouldHaveInputAccesoryView) {
++            UIToolbar *toolbarView = [[UIToolbar alloc] init];
++            [toolbarView sizeToFit];
++            UIBarButtonItem *flexibleSpace =
++            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
++                                                          target:nil
++                                                          action:nil];
++            UIBarButtonItem *doneButton =
++            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
++                                                          target:self
++                                                          action:@selector(handleInputAccessoryDoneButton)];
++            toolbarView.items = @[flexibleSpace, doneButton];
++            textInputView.inputAccessoryView = toolbarView;
++        }
++        else {
++            textInputView.inputAccessoryView = nil;
++        }
++    } else {
++        // Fallback on earlier versions
++    }
+   [self reloadInputViewsIfNecessary];
+   #endif /* !TARGET_OS_TV */
+ }
+diff --git a/node_modules/react-native/ReactCommon/cxxreact/JSDeltaBundleClient.cpp b/node_modules/react-native/ReactCommon/cxxreact/JSDeltaBundleClient.cpp
+index 0c48785..4c0d31c 100644
+--- a/node_modules/react-native/ReactCommon/cxxreact/JSDeltaBundleClient.cpp
++++ b/node_modules/react-native/ReactCommon/cxxreact/JSDeltaBundleClient.cpp
+@@ -27,7 +27,7 @@ namespace {
+ } // namespace
+ 
+ void JSDeltaBundleClient::patchModules(const folly::dynamic *modules) {
+-  for (const folly::dynamic pair : *modules) {
++    for (const folly::dynamic &pair : *modules) {
+     auto id = pair[0].getInt();
+     auto module = pair[1];
+     modules_[id] = std::move(module.getString());
+@@ -52,7 +52,7 @@ void JSDeltaBundleClient::patch(const folly::dynamic& delta) {
+   } else {
+     const folly::dynamic *deleted = delta.get_ptr("deleted");
+     if (deleted != nullptr) {
+-      for (const folly::dynamic id : *deleted) {
++        for (const folly::dynamic &id : *deleted) {
+         modules_.erase(id.getInt());
+       }
+     }
+diff --git a/node_modules/react-native/scripts/.packager.env b/node_modules/react-native/scripts/.packager.env
+new file mode 100644
+index 0000000..361f5fb
+--- /dev/null
++++ b/node_modules/react-native/scripts/.packager.env
+@@ -0,0 +1 @@
++export RCT_METRO_PORT=8081

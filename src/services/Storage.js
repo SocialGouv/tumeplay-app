@@ -4,7 +4,6 @@ const Storage = {
   get: async key => {
     try {
       const localValue = await AsyncStorage.getItem(key);
-
       return localValue;
     } catch (e) {
       throw Error(e);

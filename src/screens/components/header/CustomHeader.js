@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import CustomHeaderLeft from './CustomHeaderLeft';
 import CustomHeaderRight from './CustomHeaderRight';
+import { SafeAreaView } from 'react-navigation';
 
 CustomHeader.propTypes = {
   navigation: PropTypes.object,
@@ -48,7 +49,7 @@ export default function CustomHeader(props) {
   }
 
   return (
-    <View style={wrapperStyle}>
+    <SafeAreaView tyle={wrapperStyle}>
       <View style={headerStyle}>
         <CustomHeaderLeft
           navigation={props.navigation}
@@ -56,6 +57,6 @@ export default function CustomHeader(props) {
         />
         <CustomHeaderRight navigation={props.navigation} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

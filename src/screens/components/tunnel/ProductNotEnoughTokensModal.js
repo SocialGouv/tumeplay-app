@@ -62,7 +62,7 @@ export default function ProductNotEnoughTokensModal(props) {
               <Text style={customModal.modalTitle}>Presque !</Text>
               <Text style={customModal.text}>
                 Pour accéder à la commande de box gratuite, il faut avoir au
-                minimum <Text style={{fontWeight: 'bold'}}>1000 points</Text>.
+                minimum <Text style={{fontWeight: '800'}}>1000 points</Text>.
                 {'\n'}Réponds à d&apos;autres quiz pour augmenter ton score.
               </Text>
             </View>

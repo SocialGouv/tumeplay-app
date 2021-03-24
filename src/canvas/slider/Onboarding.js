@@ -92,7 +92,7 @@ export default function Onboarding(props) {
 
   return (
     <View style={{flex: 1, backgroundColor: '#000000' }}>
-      <View style={[onboardStyle.headerWrapper, { flex: 0.1 }]}>
+      <View style={[onboardStyle.headerWrapper, {flex: 0.1}]}>
         <Image
           source={require('../../assets/pictures/boarding-logo.png')}
           style={onboardStyle.headerLogo}

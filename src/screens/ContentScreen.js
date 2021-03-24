@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {ScrollView, SafeAreaView, View} from 'react-native';
+import {ScrollView, SafeAreaView, View, Platform} from 'react-native';
 import {EventRegister} from 'react-native-event-listeners';
 
 import Modal from 'react-native-modal';
@@ -32,7 +32,7 @@ ContentScreen.propTypes = {
 };
 
 export default function ContentScreen(props) {
-  Modal.setAppElement('body'); // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+  // Modal.setAppElement('body'); // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 
   const [isQuizzModalVisible, setIsQuizzModalVisible] = useState(false);
   const [isAge25ModalVisible, setIsAge25ModalVisible] = useState(false);
@@ -80,11 +80,12 @@ export default function ContentScreen(props) {
           setActiveOpacity(0.5);
         }, 150);
       };
-
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+      if(Platform.OS === 'web') {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }
     }
   }, [isMounted]);
 
@@ -276,7 +277,7 @@ export default function ContentScreen(props) {
   }
 
   return (
-    <SafeAreaView style={[Styles.safeAreaView, {}]}>
+    <SafeAreaView style={Styles.safeAreaView}>
       <TopMenu
         navigation={props.navigation}
         selectedTheme={selectedTheme}

@@ -359,7 +359,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 tester pleins de choses
               </Text>
@@ -371,7 +371,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 je ne connaissais pas
               </Text>
@@ -385,7 +385,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 apprends beaucoup
               </Text>{' '}
@@ -397,7 +397,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 géniaux
               </Text>

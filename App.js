@@ -6,18 +6,21 @@
  * @flow
  */
 
-import {createAppContainer} from 'react-navigation'; //@TODO : Check package lint error
+import { createAppContainer } from 'react-navigation'; //@TODO : Check package lint error
 import React, {useState} from 'react';
 import {View, Text, Image, Dimensions} from 'react-native';
 
 import AppStack from './src/routes/routes';
-import AppSlider from './src/canvas/slider/AppSlider';
+// There is no file named AppSlider in /src/canvas/slider/
+import AppSlider from './src/canvas/slider/Onboarding';
 import Styles from './src/styles/Styles';
 
 const AppContainer = createAppContainer(AppStack);
 
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
+  //added to avoid passing null props
+  const [slides, setSlides] = useState([]);
 
   function _renderItem({item}) {
     if (screenWidth <= 320) {

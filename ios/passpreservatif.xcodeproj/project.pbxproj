@@ -213,7 +213,7 @@
 				F6978111FDF0DA49AAAFA636 /* Pods */,
 				5E4D42E0BA5C41CD84986792 /* Resources */,
 			);
-			indentWidth = 2;
+			indentWidth = 0;
 			sourceTree = "<group>";
 			tabWidth = 2;
 			usesTabs = 0;

@@ -61,6 +61,9 @@ export default function TunnelDeliverySelect(props) {
         <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
           Choisis le référent chez qui tu souhaites retirer ta box. Le référent est là pour t’écouter et répondre à tes questions. Il te proposera un petit entretien la première fois que tu iras le voir. Pas de panique, 100% confidentialité, 0% stress !
         </Text>
+        <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
+          Les référents en milieu scolaire sont uniquement accessibles aux élèves de ces établissements.
+        </Text>
       </View>
       <View style={{flex: 0.4, marginTop: 30}}>
       	{/*

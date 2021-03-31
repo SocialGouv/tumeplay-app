@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
 import {ScrollView, SafeAreaView, View, Platform} from 'react-native';
 import {EventRegister} from 'react-native-event-listeners';
 
@@ -54,6 +54,7 @@ export default function ContentScreen(props) {
   const [resetQuizzQuestions, setResetQuizzQuestions] = useState(false);
   const [activeOpacity, setActiveOpacity] = useState(0.5);
   const isMounted = useIsMounted();
+  const isIOS = useState(Platform.OS === 'ios');
 
   const opacityTimer = useRef(null);
   autoScrollToTop(props);
@@ -80,7 +81,7 @@ export default function ContentScreen(props) {
           setActiveOpacity(0.5);
         }, 150);
       };
-      if(Platform.OS === 'web') {
+      if (Platform.OS === 'web') {
         window.addEventListener('scroll', handleScroll);
         return () => {
           window.removeEventListener('scroll', handleScroll);
@@ -98,48 +99,48 @@ export default function ContentScreen(props) {
     willBlurSubscription.remove();
   });
 
+  const _fetchContents = useCallback(async () => {
+    const _contents = await RemoteApi.fetchContents(selectedTheme);
+    if (isMounted.current) {
+      setFullContents(_contents);
+      _filterContent(1);
+    }
+  }, [_filterContent, selectedTheme, isMounted]);
+
+  const _fetchQuestions = useCallback(async () => {
+    const _allQuestions = await RemoteApi.fetchQuestions();
+    if (isMounted.current) {
+      // Ok, so here we have 10 filtered questions after this call
+      await QuizService.setQuestions(_allQuestions);
+
+      const _filteredQuestions = await QuizService.getQuestions(selectedTheme);
+
+      //  console.log('Filtered : ', _filteredQuestions);
+
+      setLocalQuestions(_filteredQuestions);
+    }
+  }, [isMounted, selectedTheme]);
+
   useEffect(() => {
-    async function _fetchContents() {
-      const _contents = await RemoteApi.fetchContents(selectedTheme);
-      if (isMounted.current) {
-        setFullContents(_contents);
-        _filterContent(1);
-      }
-    }
-
-    async function _fetchQuestions() {
-      const _allQuestions = await RemoteApi.fetchQuestions();
-      if (isMounted.current) {
-        // Ok, so here we have 10 filtered questions after this call
-        await QuizService.setQuestions(_allQuestions);
-
-        const _filteredQuestions = await QuizService.getQuestions(
-          selectedTheme,
-        );
-
-        //  console.log('Filtered : ', _filteredQuestions);
-
-        setLocalQuestions(_filteredQuestions);
-      }
-    }
-
     _fetchContents();
     _fetchQuestions();
-  }, [isMounted, selectedTheme]);
+  }, [
+    _fetchContents,
+    _fetchQuestions,
+    _filterContent,
+    isMounted,
+    selectedTheme,
+  ]);
 
   // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
   // So we clear it up, and then filter using a very small timer.
   // Sooooo @TODO : Fix this mess.
   useEffect(() => {
     setLocalContents([]);
-
-    setTimeout(() => {
-      var _filtered = fullContents.filter(
-        content => content.category === currentCategory,
-      );
-
-      setLocalContents(_filtered);
-    }, 1);
+    var _filtered = fullContents.filter(
+      content => content.category === currentCategory,
+    );
+    setLocalContents(_filtered);
   }, [currentCategory, fullContents]);
 
   /*useEffect(() => {
@@ -212,10 +213,13 @@ export default function ContentScreen(props) {
     setIsResultModalVisible(!isResultModalVisible);
   }
 
-  function _filterContent(selectedCategory, categoryText) {
-    Tracking.categorySelected(selectedTheme, categoryText);
-    setCurrentCategory(selectedCategory);
-  }
+  const _filterContent = useCallback(
+    (selectedCategory, categoryText) => {
+      Tracking.categorySelected(selectedTheme, categoryText);
+      setCurrentCategory(selectedCategory);
+    },
+    [selectedTheme],
+  );
 
   function _onFinishedQuizz() {
     quizTimer = Math.floor(Date.now() / 1000) - quizTimer;
@@ -276,7 +280,7 @@ export default function ContentScreen(props) {
     props.navigation.navigate('StayInTouch');
   }
 
-  return (
+  return isIOS ? (
     <SafeAreaView style={Styles.safeAreaView}>
       <TopMenu
         navigation={props.navigation}
@@ -381,10 +385,120 @@ export default function ContentScreen(props) {
       </Modal>
 
       {/* Fix staying button on web */}
-      {selectedTheme &&
+      {!!selectedTheme &&
         !selectedTheme.isSpecial &&
         isQuizzButtonVisible &&
         !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
     </SafeAreaView>
+  ) : (
+    <ScrollView style={{flex: 1}}>
+      <TopMenu
+        navigation={props.navigation}
+        selectedTheme={selectedTheme}
+        onPress={_filterContent}
+      />
+
+      <View style={[Styles.safeAreaViewInner, {flex: 1, paddingTop: 40}]}>
+        <ScrollView style={{flex: 0.8}}>
+          <ContentCards
+            activeOpacity={activeOpacity}
+            style={{flex: 0.8}}
+            localContents={localContents}
+          />
+
+          <ContactButton />
+
+          <CustomFooter
+            style={{flex: 0.1}}
+            navigation={props.navigation}
+            containerStyle={{paddingLeft: 0, paddingRight: 0}}
+          />
+        </ScrollView>
+      </View>
+
+      <Modal
+        visible={isQuizzModalVisible}
+        isVisible={isQuizzModalVisible}
+        style={ModalStyle.modal}
+        animationType="fade"
+        backdropOpacity={0}
+        transparent={true}>
+        {/* Because backdrop is not available for web, just a little trick ... */}
+        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.innerModal}>
+          <ModalCloseButton onClose={_toggleQuizzModal} />
+
+          <QuizzScreen
+            resetQuestions={resetQuizzQuestions}
+            onFinishedQuizz={_onFinishedQuizz}
+            questions={localQuestions}
+          />
+        </View>
+      </Modal>
+
+      {/* Modal for asking user if age > 25 */}
+      <Modal
+        visible={isAge25ModalVisible}
+        isVisible={isAge25ModalVisible}
+        style={ModalStyle.modal}
+        animationType="fade"
+        backdropOpacity={0}
+        transparent={true}>
+        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.innerModal}>
+          <ModalCloseButton onClose={_toggleMoreThan25YearsModal} />
+
+          <MoreThan25YearsScreen
+            moreThan25={_onSelectedMoreThan25Years}
+            lessThan25={_onSelectedLessThan25Years}
+            onContactClick={_onContactClick}
+          />
+        </View>
+      </Modal>
+
+      <Modal
+        visible={isResultModalVisible}
+        isVisible={isResultModalVisible}
+        style={ModalStyle.modal}
+        animationType="fade"
+        transparent={true}>
+        {/* Because backdrop is not available for web, just a little trick ... */}
+        <View style={ModalStyle.backdrop}></View>
+        <View style={ModalStyle.innerModal}>
+          <ModalCloseButton onClose={_toggleResultModal} />
+
+          <QuizzFinishScreen
+            onRetry={_onRetry}
+            availableTokens={availableTokens}
+            onOrder={_onOrder}
+          />
+        </View>
+      </Modal>
+
+      <Modal
+        visible={isBadgeModalVisible}
+        isVisible={isBadgeModalVisible}
+        style={ModalStyle.modal}
+        animationType="fade"
+        transparent={true}>
+        {/* Because backdrop is not available for web, just a little trick ... */}
+        <View style={ModalStyle.backdrop} />
+        <View style={ModalStyle.innerModal}>
+          <ModalCloseButton onClose={_toggleBadgeModal} />
+
+          <BadgeFinishScreen
+            badgeInfoDetails={badgeInfoDetails}
+            availableTokens={availableTokens}
+            onRetry={_onRetry}
+          />
+        </View>
+      </Modal>
+
+      {/* Fix staying button on web */}
+      {!!selectedTheme &&
+        !selectedTheme.isSpecial &&
+        isQuizzButtonVisible &&
+        !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
+    </ScrollView>
   );
 }

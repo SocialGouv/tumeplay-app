@@ -16,15 +16,15 @@ export default function ContentCard(props) {
   const [image, setImage] = useState({});
   const [isExpanded, setIsExpanded] = useState(false);
 
-
   useEffect(() => {
-    console.log(props.item.picture, 'INIT')
-    setImage(props.item.picture)
+    setImage(props.item.picture);
   }, [])
 
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,
+      width: "auto",
+      height: "auto",
       flexDirection: 'row',
       backgroundColor: '#FFFFFF',
       borderRadius: 7,

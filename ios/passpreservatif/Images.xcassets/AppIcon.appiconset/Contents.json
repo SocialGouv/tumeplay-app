@@ -26,7 +26,7 @@
       "size" : "40x40"
     },
     {
-      "filename" : "AppIcon.png",
+      "filename" : "LOGO.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
@@ -42,7 +42,7 @@
       "size" : "60x60"
     },
     {
-      "filename" : "Logo-brian.png",
+      "filename" : "LOGO 1024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

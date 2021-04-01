@@ -6,6 +6,9 @@ import Colors from '../styles/Color';
 import autoScrollToTop from '../hooks/autoScrollToTop';
 import UnorderedListRow from './components/global/UnorderedListRow';
 import TextLink from './components/global/TextLink';
+import Table from './components/global/Table';
+import TableCell from './components/global/TableCell';
+import TableRow from './components/global/TableRow';
 
 export default function ChartScreen(props) {
   autoScrollToTop(props);
@@ -52,6 +55,7 @@ export default function ChartScreen(props) {
       flex: 1,
     },
   };
+   
   return (
     <View
       style={{
@@ -74,7 +78,7 @@ export default function ChartScreen(props) {
           </TextLink>
           {'\n'}
           {'\n'}
-          Il est porté par 3 Agences régionales de santé (ARS) pilotes :{'\n'}
+          Elle est portée par 3 Agences régionales de santé (ARS) pilotes :{'\n'}
           <UnorderedListRow>ARS Guyane</UnorderedListRow>
           {'\n'}
           <UnorderedListRow>ARS Ile-de-France</UnorderedListRow>
@@ -84,7 +88,7 @@ export default function ChartScreen(props) {
           {'\n'}
           La plateforme est réalisée par la{' '}
           <TextLink targetUrl={'https://incubateur.social.gouv.fr/'}>
-            Fabrique des Ministères sociaux
+            Fabrique numérique des Ministères sociaux
           </TextLink>
           .
         </Text>
@@ -94,31 +98,28 @@ export default function ChartScreen(props) {
         </Text>
         <Text style={contentStyle.text}>
           <UnorderedListRow>
-            L&apos;application TumePlay enregistre les seules informations à
+            TumePlay enregistre les informations à
             caractère personnel indispensables à ses fonctionnalités.
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Les données relatives aux réponses appoertées aux différents quiz
+            Les données relatives aux réponses apportées aux différents quiz
             sont anonymisées. Elles sont stockées le temps de la session
-            directement sur l&apos;apparail de l&apos;utilisateur.
+            directement sur l&apos;appareil de l&apos;utilisateur.
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Les utilisateurs pour commander l&apos;une des boites proposées -
-            qui contiennent différents outils de prévention - sont amenés à
-            donner des informations relatives à leur adresse et coordonnées. Ces
-            données ne sont pas stockées avec les informations relatives à votre
-            téléphone.
+            Les Utilisateurs pour commander l’une des boites proposées – qui contiennent différents outils de prévention – sont amenés à donner des informations relatives à leur adresse et coordonnées. 
+            Ces données ne sont pas stockées avec les informations relatives à votre téléphone.
           </UnorderedListRow>
           {'\n'}
           {'\n'}
           Nous nous engageons à ne jamais céder ces informations à des tiers.
           {'\n'}
           {'\n'}
-          Vous avez un droit d’accès, de rectification et de suppression de vos
-          données. Pour l&apos;exercer, faites-nous parvenir une demande en
-          précisant la date et l’heure précise de la requête - ces éléments sont
+          Vous avez un droit d&apos;accès, de rectification et de suppression de vos
+          données. Pour les exercer, faites-nous parvenir une demande en
+          précisant la date et l&apos;heure précise de la requête - ces éléments sont
           indispensables pour nous permettre de retrouver votre recherche - par
           voie électronique à l&apos;adresse suivante :{' '}
           <TextLink
@@ -126,129 +127,145 @@ export default function ChartScreen(props) {
             contact.tumeplay@fabrique.social.gouv.fr
           </TextLink>{' '}
           ou par voie postale :{'\n'}
-          Direction des systèmes d’information Ministère des affaires sociales
-          et de la santé 39-43 Quai André Citroën 75015 PARIS
+          Direction du Numérique des ministères sociaux{'\n'}
+          39-43 Quai André Citroën{"\n"}
+          75015 PARIS
         </Text>
 
         <Text style={contentStyle.subTitle}>
-          Utilisation de témoins de connexion (« cookies »)
+          Finalité
         </Text>
         <Text style={contentStyle.text}>
-          Lors de la consultation de la plateforme, des témoins de connexion,
-          dits « cookies », sont déposés sur votre ordinateur, votre mobile ou
-          votre tablette.{'\n'}
-          {'\n'}
-          Ces cookies permettent d&apos;établir des mesures statistiques de
-          fréquentation et d&apos;utilisation du site pouvant être utilisées à
-          des fins de suivi et d&apos;amélioration du service :{'\n'}
+          L&apos;outil numérique peut collecter des données à caractère personnelles, pour les finalités suivantes : 
           <UnorderedListRow>
-            Les données collectées ne sont pas recoupées avec d’autres
-            traitements.
+          	Améliorer les connaissances des jeunes ;
           </UnorderedListRow>
           {'\n'}
           <UnorderedListRow>
-            Le cookie déposé sert uniquement à la production de statistiques
-            anonymes.
+            Encourager des comportements responsables.	
           </UnorderedListRow>
-          {'\n'}
-          <UnorderedListRow>
-            Le cookie ne permet pas de suivre la navigation de l’internaute sur
-            d’autres sites.
-          </UnorderedListRow>
-          {'\n'}
-          {'\n'}À tout moment, vous pouvez refuser l’utilisation des cookies et
-          désactiver le dépôt sur votre ordinateur en utilisant la fonction
-          dédiée de votre navigateur (fonction disponible notamment sur
-          Microsoft Internet Explorer 11, Google Chrome, Mozilla Firefox, Apple
-          Safari et Opera).
         </Text>
-
-        <Text style={contentStyle.smallTitle}>À savoir</Text>
+        
+        <Text style={contentStyle.subTitle}>
+          Durée de conservation
+        </Text>
         <Text style={contentStyle.text}>
-          La mesure d&apos;audience (nombre de visites, pages consultées) est
-          réalisée par un outil libre intitulé{' '}
-          <TextLink targetUrl={'https://matomo.org/'}>Matomo</TextLink>{' '}
-          spécifiquement paramétré, respectant les conditions d&apos;exemption
-          du consentement de l&apos;internaute définies par la{' '}
-          <TextLink
-            targetUrl={
-              'https://www.cnil.fr/fr/solutions-pour-la-mesure-daudienc'
-            }>
-            recommandation « Cookies »
-          </TextLink>{' '}
-          de la Commission nationale informatique et libertés (CNIL). Cela
-          signifie, notamment, que ces cookies ne servent qu&apos;à la
-          production de statistiques anonymes et ne permettent pas de suivre la
-          navigation de l&apos;internaute sur d&apos;autres sites.{'\n'}
+          Les données sont conservées pendant le délai d&apos;envoi du produit commandé.
+        </Text>
+        
+        <Text style={contentStyle.subTitle}>
+          Sous-traitants
+        </Text>
+        <Text style={contentStyle.text}>
+          Certaines des données sont envoyées à des sous-traitants pour réaliser certaines missions. 
+          Le responsable de traitement s&apos;est assuré de la mise en œuvre par ses sous-traitants de 
+          garanties adéquates et du respect de conditions strictes de confidentialité, d&apos;usage et de protection des données.
           {'\n'}
-          Vous pouvez tout de même désactiver cet outil :{' '}
-          <TextLink
-            targetUrl={
-              'https://matomo.fabrique.social.gouv.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=&fontSize=&fontFamily='
-            }>
-            Désactiver Matomo
-          </TextLink>
           {'\n'}
-          {'\n'}À tout moment, vous pouvez refuser l’utilisation des cookies et
-          désactiver le dépôt sur votre ordinateur en utilisant la fonction
-          dédiée de votre navigateur (fonction disponible notamment sur
-          Microsoft Internet Explorer 11, Google Chrome, Mozilla Firefox, Apple
-          Safari et Opera).{'\n'}
-          {'\n'}
-          Pour aller plus loin, vous pouvez consulter les fiches proposées par
-          la Commission Nationale de l&apos;Informatique et des Libertés (CNIL)
-          :{'\n'}
+          <Table>
+          	<TableRow>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Partenaire</Text>
+          		</TableCell>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Pays{'\n'}destinataire</Text>
+          		</TableCell>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Traitement réalisé</Text>
+          		</TableCell>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Garanties</Text>
+          		</TableCell>
+          	</TableRow>
+          	<TableRow>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Microsoft Azure</Text>
+          		</TableCell>
+          		<TableCell>
+          			<Text style={contentStyle.text}>France</Text>
+          		</TableCell>
+          		<TableCell>
+          			<Text style={contentStyle.text}>Hébergement</Text>
+          		</TableCell>
+          		<TableCell>
+          			<TextLink
+		              targetUrl={
+		                'https://privacy.microsoft.com/fr-fr/privacystatement'
+		              }>
+		              Privacy Microsoft
+		            </TextLink>
+          		</TableCell>
+          	</TableRow>
+          </Table>
+        </Text>            
+   
+        <Text style={contentStyle.subTitle}>
+          Cookies
+        </Text>
+        <Text style={contentStyle.text}>
+          Un cookie est un fichier déposé sur votre terminal lors de la visite d&apos;un site. Il a pour but de collecter des 
+          informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette).
+          {'\n'}{'\n'}
+  		  Le site dépose des cookies de mesure d&apos;audience (nombre de visites, pages consultées), respectant les conditions d&apos;exemption du 
+  		  consentement de l&apos;internaute définies par la recommandation « Cookies » de la Commission nationale informatique et libertés (CNIL).
+  		  Cela signifie, notamment, que ces cookies ne servent qu&apos;à la production de statistiques anonymes et ne permettent 
+  		  pas de suivre la navigation de l&apos;internaute sur d&apos;autres sites.
+  		  {'\n'}{'\n'}
+		  Il convient d&apos;indiquer que :
+		  {'\n'}
+		  <UnorderedListRow>
+		    Les données collectées ne sont pas recoupées avec d&apos;autres traitements
+		  </UnorderedListRow>
+		  {'\n'}
+		  <UnorderedListRow>
+		    Les cookies ne permettent pas de suivre la navigation de l&apos;internaute sur d&apos;autres sites.
+		  </UnorderedListRow>
+		  {'\n'}{'\n'}
+		  En application de l&apos;article 5(3) de la directive 2002/58/CE modifiée concernant le traitement 
+		  des données à caractère personnel et la protection de la vie privée dans le secteur des communications 
+		  électroniques, transposée à l&apos;article 82 de la loi n°78-17 du 6 janvier 1978 relative à l&apos;informatique, aux fichiers et aux libertés, 
+		  les traceurs ou cookies suivent deux régimes distincts.
+		  {'\n'}{'\n'} 
+		  Les cookies strictement nécessaires au service ou ayant pour finalité exclusive de faciliter 
+		  la communication par voie électronique sont dispensés de consentement préalable au titre de 
+		  l’article 82 de la loi n°78-17 du 6 janvier 1978.
+		  {'\n'}{'\n'} 
+		  Les cookies n’étant pas strictement nécessaires au service ou n’ayant pas pour finalité exclusive
+		  de faciliter la communication par voie électronique doivent être consenti par l’utilisateur.
+		  {'\n'}{'\n'}
+		  Ce consentement de la personne concernée pour une ou plusieurs finalités spécifiques constitue une base légale 
+		  au sens du RGPD et doit être entendu au sens de l&apos;article 6-a du Règlement (UE) 2016/679 du Parlement européen 
+		  et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l&apos;égard du traitement des données 
+		  à caractère personnel et à la libre circulation de ces données.
+        </Text>
+            
+        <Text style={contentStyle.subTitle}>Modifier les réglages</Text>
+        <Text style={contentStyle.text}>
+          À tout moment, vous pouvez refuser l’utilisation des cookies et désactiver le dépôt 
+          sur votre ordinateur en utilisant la fonction dédiée de votre navigateur (fonction 
+          disponible notamment sur Microsoft Internet Explorer 11, Google Chrome, Mozilla Firefox, Apple Safari et Opera).
+        </Text>
+        <Text style={contentStyle.text}>
+          Pour aller plus loin, vous pouvez consulter les fiches proposées par la Commission Nationale de l&apos;Informatique et des Libertés (CNIL) :
+          {'\n'} 
           <UnorderedListRow>
-            <TextLink
+		  	<TextLink
               targetUrl={
                 'https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi'
               }>
               Cookies & traceurs : que dit la loi ?
             </TextLink>
-          </UnorderedListRow>
-          {'\n'}
-          <UnorderedListRow>
-            <TextLink
+		  </UnorderedListRow>
+		  {'\n'}
+		  <UnorderedListRow>
+		    <TextLink
               targetUrl={
                 'https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser'
               }>
               Cookies : les outils pour les maîtriser
             </TextLink>
-          </UnorderedListRow>
-          {'\n'}
-        </Text>
-
-        <Text style={contentStyle.subTitle}>Accessibilité</Text>
-        <Text style={contentStyle.smallTitle}>
-          Signaler un dysfonctionnement
-        </Text>
-        <Text style={contentStyle.text}>
-          Si vous rencontrez un défaut d’accessibilité vous empêchant d’accéder
-          à un contenu ou une fonctionnalité du site, merci de nous en faire
-          part. Si vous n’obtenez pas de réponse rapide de notre part, vous êtes
-          en droit de faire parvenir vos doléances ou une demande de saisine au
-          Défenseur des droits.
-        </Text>
-        <Text style={contentStyle.smallTitle}>En savoir plus</Text>
-        <Text style={contentStyle.text}>
-          Pour en savoir plus sur la politique d’accessibilité numérique de
-          l’État :{' '}
-          <TextLink
-            targetUrl={
-              'https://references.modernisation.gouv.fr/accessibilite-numerique'
-            }>
-            Politique d&apos;accessibilité
-          </TextLink>
-        </Text>
-        <Text style={contentStyle.smallTitle}>Sécurité</Text>
-        <Text style={contentStyle.text}>
-          Le site est protégé par un certificat électronique, matérialisé pour
-          la grande majorité des navigateurs par un cadenas. Cette protection
-          participe à la confidentialité des échanges.{'\n'}
-          En aucun cas les services associés à la plateforme ne seront à
-          l’origine d’envoi de courriels pour demander la saisie d’informations
-          personnelles.
-        </Text>
+		  </UnorderedListRow> 
+        </Text>               
       </ScrollView>
     </View>
   );

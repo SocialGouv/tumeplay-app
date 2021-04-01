@@ -53,21 +53,35 @@ export default function LegalTermsScreen(props) {
 
         <Text style={contentStyle.subTitle}>Éditeur de la plateforme</Text>
         <Text style={contentStyle.text}>
-          La Plateforme est éditée par la Fabrique des Ministères sociaux situé
-          : Tour Mirabeau 39-43 Quai André Citroën 75015 PARIS Tél : 01 40 56 60
-          00
+          La Plateforme est éditée par :{"\n"}{"\n"}
+          Fabrique des Ministères sociaux{"\n"}
+          Tour Mirabeau{"\n"}
+          39-43 Quai André Citroën{"\n"}
+          75015 PARIS{"\n"}
         </Text>
 
         <Text style={contentStyle.subTitle}>Directeur de la publication</Text>
         <Text style={contentStyle.text}>
-          Jérôme Salmon - Directeur général de la Santé
+          Monsieur Jérôme SALOMON - Directeur général de la Santé
         </Text>
 
         <Text style={contentStyle.subTitle}>Hébergement de la plateforme</Text>
         <Text style={contentStyle.text}>
-          Ce site est hébergé par Microsoft Azure France (région France centre)
-          : Microsoft France 37 Quai du Président Roosevelt 92130
+          Cette plateforme est hébergé par{"\n"}{"\n"}
+          Microsoft France{"\n"}
+          37 Quai du Président Roosevelt 92130{"\n"}
           ISSY-LES-MOULINEAUX
+        </Text>
+        
+        <Text style={contentStyle.subTitle}>Accessibilité</Text>
+        <Text style={contentStyle.text}>
+          La conformité aux normes d&apos;accessibilité numérique est un objectif ultérieur mais nous tâchons de rendre la plateforme accessible à toutes et à tous.
+        </Text>
+        
+        <Text style={contentStyle.subTitle}>Signaler un dysfonctionnement</Text>
+        <Text style={contentStyle.text}>
+          Si vous rencontrez un défaut d&apos;accessibilité vous empêchant d’accéder à un contenu ou une fonctionnalité de la plateforme, merci de nous en faire part.{"\n"}
+		  Si vous n&apos;obtenez pas de réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou une demande de saisine au Défenseur des droits.
         </Text>
       </ScrollView>
     </View>

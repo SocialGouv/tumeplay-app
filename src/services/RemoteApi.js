@@ -11,7 +11,7 @@ import DefaultBadges from '../models/defaults/Badges';
 const BaseRemote = 'https://tumeplay-api.fabrique.social.gouv.fr/';
 const BaseRemoteApi = BaseRemote + 'api/';
 
-const ZoneSuffix = '';
+const ZoneSuffix = '?zone=metropole';
 const QuizzEndpoint = BaseRemoteApi + 'quizzs';
 const BoardingEndpoint = BaseRemoteApi + 'contents';
 const ContentsEndpoint = BaseRemoteApi + 'contents';

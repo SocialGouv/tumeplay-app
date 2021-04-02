@@ -282,31 +282,19 @@ export default function TunnelUserAddress(props) {
     const localValue = zipCode.replace(/[^0-9]/g, '');
 
     if (!isNaN(localValue)) {
-      if (localAdress['zipCode'] !== zipCode && zipCodeTest.test(localValue)) {
-        openGeocoder()
-          .geocode(localValue)
-          .end((err, res) => {
-            if (res.length >= 1) {
-              const filtered = res.filter(
-                place => place.address.country_code === 'fr',
-              );
+      if (localAdress['zipCode'] !== zipCode && zipCodeTest.test(localValue)) 
+      {
+        const _foundCity = await AddressValidator.validateZipCodeLocality(localValue);
+        
+        if( _foundCity )
+        {
+            localAdress['city'] = _foundCity.city;
+            localAdress['zipCode'] = localValue;
 
-              if (filtered.length > 0) {
-                const city = filtered[0].address.city
-                  ? filtered[0].address.city
-                  : filtered[0].address.town;
-
-                if (city == '' || city === undefined) {
-                  return;
-                }
-                localAdress['city'] = city;
-                localAdress['zipCode'] = localValue;
-
-                setLocalAdress(localAdress);
-                _validateFields(CustomTextInput.fieldStatus.NEUTRAL);
-              }
-            }
-          });
+            setLocalAdress(localAdress);
+            _validateFields(CustomTextInput.fieldStatus.NEUTRAL);
+        }
+        
       }
     }
   }

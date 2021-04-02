@@ -43,5 +43,22 @@ const AddressValidator = {
 
     return false;
   },
+  
+  validateZipCodeLocality: async(zipCode) => {
+    try {
+      const response = await fetch("https://api-adresse.data.gouv.fr/search/?q=" + zipCode + "&format=json&postcode=" + zipCode + "&limit=50&type=municipality");
+      const jsonParsed = await response.json();
+      let   _return    = false;
+      
+      if( jsonParsed && jsonParsed.features && jsonParsed.features.length > 0 )
+      {
+          _return = { city : jsonParsed.features[0].properties.name };
+      }
+      
+      return _return;
+    } catch (e) {
+      throw Error(e);
+    }
+  }
 };
 export default AddressValidator;

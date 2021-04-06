@@ -48,7 +48,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>The data are required in order to perform delivery of the boxes ordered</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Abel-Regular.ttf</string>

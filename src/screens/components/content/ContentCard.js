@@ -23,8 +23,8 @@ export default function ContentCard(props) {
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,
-      width: "auto",
-      height: "auto",
+      width: 'auto',
+      height: 'auto',
       flexDirection: 'row',
       backgroundColor: '#FFFFFF',
       borderRadius: 7,

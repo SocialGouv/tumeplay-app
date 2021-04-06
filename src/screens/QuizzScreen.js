@@ -144,28 +144,31 @@ export default function QuizzScreen(props) {
           }}>
           <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
         </View>
-
         <View style={{paddingBottom: 50, height: '52%'}}>
           <View style={{flex: 1, flexDirection: 'column'}}>
-            {!displayAnswer && _currentQuestion.answers.length <= 2 && (
+            {!displayAnswer && _currentQuestion.answers.length <= 2 ? (
               <View style={Styles.flexOne}></View>
+            ) : (
+              <View />
             )}
             {!displayAnswer && _renderAnswersButtons(_currentQuestion.answers)}
-            {!displayAnswer && _currentQuestion.answers.length <= 2 && (
+            {!displayAnswer && _currentQuestion.answers.length <= 2 ? (
               <View style={Styles.flexOne}></View>
+            ) : (
+              <View />
             )}
-
-            {displayAnswer && (
+            {displayAnswer ? (
               <AnswerScreen
                 isRightAnswer={isRightAnswer}
                 question={_currentQuestion}
                 lastTokenAmount={lastTokenAmount}
                 setFeedback={setFeedback}
               />
+            ) : (
+              <View />
             )}
           </View>
         </View>
-
         <View
           style={[
             {textAlign: 'center', paddingBottom: 10},
@@ -173,8 +176,7 @@ export default function QuizzScreen(props) {
               ? {}
               : {position: 'absolute', bottom: 5, width: '100%'},
           ]}>
-          {displayAnswer && <NextButton onPress={_nextQuestion} />}
-
+          {displayAnswer ? <NextButton onPress={_nextQuestion} /> : null}
           <Text
             style={{
               marginTop: 0,
@@ -182,7 +184,7 @@ export default function QuizzScreen(props) {
               color: '#FFFFFF',
               fontSize: 18,
             }}>
-            {currentIndex + 1} / {total}
+            {currentIndex + 1} <Text> / </Text> {total}
           </Text>
         </View>
       </ScrollView>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import CustomHeaderLeft from './CustomHeaderLeft';
 import CustomHeaderRight from './CustomHeaderRight';
-import {SafeAreaView} from 'react-navigation';
+import {SafeAreaView} from 'react-native';
 
 CustomHeader.propTypes = {
   navigation: PropTypes.object,

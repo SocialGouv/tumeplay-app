@@ -148,16 +148,12 @@ export default function ContentScreen(props) {
   }, [isAge25, isBadgeModalVisible, isResultModalVisible, needResultModal]);
 
   async function _openInitialModal() {
-    console.warn("openInitialModal")
     const _isAge25 = await UserService.getIsMoreThan25YearsOld();
-    console.warn(_isAge25)
     setIsAge25(_isAge25 || null);
 
     if (_isAge25 === null || _isAge25 === undefined) {
-      console.warn("ageisUndefined")
       _toggleMoreThan25YearsModal();
     } else {
-      console.warn("launchQuizzModal")
       Tracking.quizStarted();
 
       quizTimer = Math.floor(Date.now() / 1000);

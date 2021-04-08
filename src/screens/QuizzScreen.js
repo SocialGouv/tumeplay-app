@@ -141,7 +141,7 @@ export default function QuizzScreen(props) {
             marginTop: 30,
             marginBottom: 20,
             alignSelf: 'center',
-            height: '23%',
+            height: '30%',
           }}>
           <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
         </View>

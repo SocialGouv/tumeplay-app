@@ -3,10 +3,10 @@ import {
   Text,
   TextInput,
   View,
-  Picker,
   TouchableOpacity,
   Image,
 } from 'react-native';
+import {Picker} from '@react-native-community/picker';
 import PropTypes from 'prop-types';
 
 import RemoteApi from '../services/RemoteApi';
@@ -102,7 +102,6 @@ export default function AddCommentScreen(props) {
       <View style={{marginTop: 20, marginBottom: 20}}>
         <Text style={[Styles.landingScreenSubtitle, {marginLeft: 0}]}>
           {description}
-          <br />
           Merci !
         </Text>
       </View>

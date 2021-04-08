@@ -72,7 +72,7 @@ export default function CommentLikesView(props) {
           style={likeStyle.addCommentPicture}
           source={require('../../../assets/pictures/comment.png')}
         />
-        <Text style={likeStyle.addComment}>Donner son avis</Text>
+        <Text style={likeStyle.addComment}>{'Donner son avis'}</Text>
       </TouchableOpacity>
       <View
         style={{

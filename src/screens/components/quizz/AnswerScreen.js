@@ -91,7 +91,7 @@ export default function AnswerScreen(props) {
 
   return (
     <View style={{flex: 6, flexGrow: 1}}>
-      {_rightAnswer !== '' && (
+      {_rightAnswer !== '' ? (
         <View style={[Styles.rightAnswerButton, localStyle]}>
           <View style={[QuizzAnswerStyle.pictureAndTextWrapper]}>
             <View style={{flex: 0.2, maxWidth: 50, justifyContent: 'center'}}>
@@ -140,6 +140,8 @@ export default function AnswerScreen(props) {
             </View>
           </View>
         </View>
+      ) : (
+        <View />
       )}
       <View style={[QuizzAnswerStyle.explanationWrapper, {flexGrow: 1}]}>
         <TouchableOpacity

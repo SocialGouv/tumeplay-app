@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Platform,
 } from 'react-native';
 import useIsMounted from '../../../hooks/isMounted';
 import TopMenuPortal from './Portal';
@@ -125,11 +126,13 @@ export default function TopMenu(props) {
 
   return (
     <View>
-      <View style={{flex: 0.65, maxHeight: 40, paddingLeft: 15}}>
-        <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
-      </View>
+      {Platform.OS === 'web' ? (
+        <View style={{flex: 0.65, maxHeight: 40, paddingLeft: 15}}>
+          <Text style={Styles.tunnelTitle}>{selectedTheme.value}</Text>
+        </View>
+      ) : null}
 
-      {isMenuVisible && (
+      {isMenuVisible ? (
         <TopMenuPortal portalClass={'top-menu-portal'}>
           <View
             style={{
@@ -140,7 +143,7 @@ export default function TopMenu(props) {
               flex: 0.2,
               height: 80,
             }}>
-            {!selectedTheme.isSpecial && (
+            {!selectedTheme.isSpecial ? (
               <View
                 style={[
                   forceRender
@@ -184,19 +187,19 @@ export default function TopMenu(props) {
                   {_menuButtons}
                 </ScrollView>
 
-                {showMore && (
+                {showMore ? (
                   <View style={Styles.moreWrapper}>
                     <Image
                       source={require('../../../assets/pictures/menu.show-more.png')}
                       style={Styles.morePicture}
                     />
                   </View>
-                )}
+                ) : null}
               </View>
-            )}
+            ) : null}
           </View>
         </TopMenuPortal>
-      )}
+      ) : null}
     </View>
   );
 }

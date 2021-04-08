@@ -24,7 +24,7 @@ export default class Portal extends Component {
       this.setState(
         {el: document.createElement('div'), target: document.body},
         () => {
-          this.state.el.className = this.props.portalClass; //'web-quizz-button';
+          this.state.el.className = this.props.portalClass;
           this.state.target.appendChild(this.state.el);
         },
       );

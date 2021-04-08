@@ -37,7 +37,9 @@ export default function TextLink(props) {
 
   return (
     <TouchableOpacity style={{flexWrap: 'wrap'}} onPress={_openTarget}>
-      <Text style={{textDecorationLine: 'underline'}}>{props.children}</Text>
+      <View>
+        <Text style={{textDecorationLine: 'underline'}}>{props.children}</Text>
+      </View>
     </TouchableOpacity>
   );
 }

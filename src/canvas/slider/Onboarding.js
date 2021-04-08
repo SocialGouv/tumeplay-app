@@ -91,7 +91,7 @@ export default function Onboarding(props) {
   });
 
   return (
-    <View style={{flex: 1, backgroundColor: '#000000' }}>
+    <View style={{flex: 1, backgroundColor: '#000000'}}>
       <View style={[onboardStyle.headerWrapper, {flex: 0.1}]}>
         <Image
           source={require('../../assets/pictures/boarding-logo.png')}
@@ -134,8 +134,8 @@ export default function Onboarding(props) {
         style={{flex: 0.1, backgroundColor: Colors.backgroundColor}}>
         {_localSlides}
       </Swiper>
-      <View style={{ flex: 0.2 }}>
-        <TouchableOpacity style={{ flex: 0.6 }} onPress={props.onDone}>
+      <View style={{flex: 0.2}}>
+        <TouchableOpacity style={{flex: 0.6}} onPress={props.onDone}>
           <View style={[Styles.bottomButton]}>
             <Text style={[Styles.bottomButtonText]}>Commencer</Text>
           </View>

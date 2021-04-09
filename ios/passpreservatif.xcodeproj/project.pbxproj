@@ -695,14 +695,14 @@
 			baseConfigurationReference = F141A882CF271B8FF3CD1C08 /* Pods-passpreservatif.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = passpreservatif/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -720,13 +720,13 @@
 			baseConfigurationReference = 93A3D654782263839B85F060 /* Pods-passpreservatif.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = passpreservatif/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

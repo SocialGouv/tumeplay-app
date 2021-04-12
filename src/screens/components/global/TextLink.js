@@ -33,13 +33,15 @@ export default function TextLink(props) {
         </View>
       </TouchableWithoutFeedback>
     );
+  } else {
+    return (
+      <TouchableOpacity style={{flexWrap: 'wrap'}} onPress={_openTarget}>
+        <View>
+          <Text style={{textDecorationLine: 'underline'}}>
+            {props.children}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
   }
-
-  return (
-    <TouchableOpacity style={{flexWrap: 'wrap'}} onPress={_openTarget}>
-      <View>
-        <Text style={{textDecorationLine: 'underline'}}>{props.children}</Text>
-      </View>
-    </TouchableOpacity>
-  );
 }

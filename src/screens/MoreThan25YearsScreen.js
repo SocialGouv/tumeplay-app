@@ -80,16 +80,14 @@ export default function MoreThan25YearsScreen(props) {
             {
               "Pour être informé·e de la sortie de l'app dans ta région, laisse nous ton adresse mail"
             }
-            <TouchableOpacity onPress={props.onContactClick}>
-              <View>
-                <Text
-                  style={{
-                    textDecorationLine: 'underline',
-                  }}>
-                  {'ici'}
-                </Text>
-              </View>
-            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={props.onContactClick}>
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                }}>
+                {'ici'}
+              </Text>
+            </TouchableOpacity> */}
             {'.'}
           </Text>
         </View>

@@ -23,11 +23,11 @@ var Styles = {
     paddingBottom: 0,
   },
   explanationTextWrapper: {
-    flex: 1.5,
+    flex: 1,
     fontSize: 16,
   },
   nextButtonWrapper: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 30,

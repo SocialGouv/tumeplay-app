@@ -49,7 +49,7 @@ export default function CustomHeader(props) {
   }
 
   return Platform.OS === 'ios' ? (
-    <SafeAreaView tyle={wrapperStyle}>
+    <SafeAreaView style={wrapperStyle}>
       <View style={headerStyle}>
         <CustomHeaderLeft
           navigation={props.navigation}

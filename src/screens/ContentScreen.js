@@ -151,16 +151,16 @@ export default function ContentScreen(props) {
     const _isAge25 = await UserService.getIsMoreThan25YearsOld();
     setIsAge25(_isAge25 || null);
 
-    // if (_isAge25 === null || _isAge25 === undefined) {
-    //   _toggleMoreThan25YearsModal();
-    // } else {
+    if (_isAge25 === null || _isAge25 === undefined) {
+      _toggleMoreThan25YearsModal();
+    } else {
       Tracking.quizStarted();
 
       quizTimer = Math.floor(Date.now() / 1000);
 
       await _shuffleQuestions();
       _toggleQuizzModal();
-    // }
+    }
   }
 
   async function _shuffleQuestions() {

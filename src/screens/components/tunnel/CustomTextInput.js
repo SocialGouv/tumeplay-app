@@ -65,12 +65,12 @@ export default function CustomTextInput(props) {
 
   return (
     <View style={[TunnelUserAdressStyle.inputWrapper, {position: 'relative'}]}>
-      {typeof props.isRequired !== 'undefined' && !props.isRequired && (
+      {typeof props.isRequired !== 'undefined' && !props.isRequired ? (
         <Text style={Styles.labelText}>{props.inputLabel}</Text>
-      )}
-      {(typeof props.isRequired === 'undefined' || props.isRequired) && (
+      ) : null}
+      {(typeof props.isRequired === 'undefined' || props.isRequired) ? (
         <Text style={Styles.labelText}>{props.inputLabel} *</Text>
-      )}
+      ) : null}
 
       <TextInput
         placeholder={props.inputPlaceholder}
@@ -86,7 +86,7 @@ export default function CustomTextInput(props) {
         onChangeText={onChangeText}
         defaultValue={props.currentValue}
       />
-      {props.displayResetButton && (
+      {props.displayResetButton ? (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -113,8 +113,8 @@ export default function CustomTextInput(props) {
             source={require('../../../assets/pictures/answer.wrong.png')}
           />
         </TouchableOpacity>
-      )}
-      {props.emailAdressWrongFormat && (
+      ) : null }
+      {props.emailAdressWrongFormat ? (
         <Text
           style={[
             Styles.placeholderText,
@@ -122,8 +122,8 @@ export default function CustomTextInput(props) {
           ]}>
           Le format du mail est incorrect
         </Text>
-      )}
-      {props.emailAdressMismatch && (
+      ) : null}
+      {props.emailAdressMismatch ? (
         <Text
           style={[
             Styles.placeholderText,
@@ -132,8 +132,8 @@ export default function CustomTextInput(props) {
           Les addresses e-mails indiquées ne correspondent pas.{' '}
           {props.emailAdressMismatch}
         </Text>
-      )}
-      {props.phoneNumberWrongFormat && (
+      ) : null}
+      {props.phoneNumberWrongFormat ? (
         <Text
           style={[
             Styles.placeholderText,
@@ -141,7 +141,7 @@ export default function CustomTextInput(props) {
           ]}>
           Le format du numéro de téléphone est incorrect
         </Text>
-      )}
+      ) : null}
     </View>
   );
 }

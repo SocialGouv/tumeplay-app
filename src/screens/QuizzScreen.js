@@ -139,13 +139,13 @@ export default function QuizzScreen(props) {
             paddingRight: 10,
             paddingTop: 10,
             marginTop: 30,
-            marginBottom: 20,
+            marginBottom: 15,
             alignSelf: 'center',
             height: '30%',
           }}>
           <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
         </View>
-        <View style={{paddingBottom: 50, height: '52%'}}>
+        <View style={{paddingBottom: 45, height: '52%'}}>
           <View style={{flex: 1, flexDirection: 'column'}}>
             {!displayAnswer && _currentQuestion.answers.length <= 2 ? (
               <View style={Styles.flexOne}></View>
@@ -175,7 +175,7 @@ export default function QuizzScreen(props) {
             {textAlign: 'center', marginTop: 5, paddingBottom: 10},
             displayAnswer
               ? {}
-              : {position: 'relative', bottom: 5, width: '100%'},
+              : {position: 'relative', bottom: 15, width: '100%'},
           ]}>
           {displayAnswer ? <NextButton onPress={_nextQuestion} /> : null}
           <Text

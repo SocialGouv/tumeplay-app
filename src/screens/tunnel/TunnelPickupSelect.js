@@ -19,6 +19,7 @@ import Backlink from '../components/tunnel/Backlink';
 import OpenStreetMap from '../components/global/OpenStreetMap';
 import PointOfInterestCard from '../components/global/PointOfInterestCard';
 import CustomTextInput from '../components/tunnel/CustomTextInput';
+import TextWithSound from '../components/global/TextWithSound';
 import AddressValidator from '../../services/AddressValidator';
 import TunnelUserAdressStyle from '../../styles/components/TunnelUserAdress';
 
@@ -30,8 +31,8 @@ TunnelPickupSelect.propTypes = {
 export default function TunnelPickupSelect(props) {
   const defaultPosition = {
     coords: {
-      latitude: 48.8465464,
-      longitude: 2.2797058999999997,
+      latitude: 5.491,
+      longitude: -54.02886,
     },
     delta: {
       latitude: 0.009,
@@ -261,7 +262,13 @@ export default function TunnelPickupSelect(props) {
       <Backlink step={2} onPress={_goBack} />
 
       <View style={{flex: 0.15, paddingTop: 15}}>
-        <Text style={Styles.tunnelTitle}>Choisis le lieu de livraison</Text>
+        <TextWithSound
+            style={Styles.tunnelTitle}
+            sound={'Accueil_1.MP3'}
+            useLocal={true}
+        >
+          Choisis le lieu de retrait
+        </TextWithSound>
       </View>
 
       <View
@@ -326,7 +333,7 @@ export default function TunnelPickupSelect(props) {
         <TouchableOpacity
           style={[
             Styles.bottomButton,
-            {position: 'absolute', bottom: 10, borderRadius: 25},
+            {position: 'absolute', bottom: 30, borderRadius: 25},
           ]}
           onPress={_onDone}>
           <View style={{paddingTop: 8, paddingBottom: 8}}>

@@ -152,7 +152,7 @@ export default function QuizzScreen(props) {
           
         </View>
 
-        <View style={{paddingBottom: 50, height: '52%'}}>
+        <View style={{marginTop: 40, paddingBottom: 50, height: '52%'}}>
           <View style={{flex: 1, flexDirection: 'column'}}>
             {!displayAnswer && _currentQuestion.answers.length <= 2 && (
               <View style={Styles.flexOne}></View>

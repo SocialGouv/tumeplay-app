@@ -5,6 +5,7 @@ import Colors from '../../styles/Color';
 import Styles from '../../styles/Styles';
 import Backlink from '../components/tunnel/Backlink';
 import Splitter from '../components/tunnel/Splitter';
+import TextWithSound from '../components/global/TextWithSound';
 
 TunnelDeliverySelect.propTypes = {
   navigation: PropTypes.object,
@@ -57,7 +58,13 @@ export default function TunnelDeliverySelect(props) {
       <Backlink step={1} onPress={_goBack} />
 
       <View style={{flex: 0.4}}>
-        <Text style={Styles.tunnelTitle}>Choisis le mode de livraison</Text>
+        <TextWithSound
+            style={Styles.tunnelTitle}
+            sound={'Accueil_1.MP3'}
+            useLocal={true}
+        >
+          Choisis le mode de retrait
+        </TextWithSound>
         <Text style={{color: '#FFFFFF', fontSize: 16, marginTop: 15}}>
           Choisis le référent chez qui tu souhaites retirer ta box. Le référent est là pour t’écouter et répondre à tes questions. Il te proposera un petit entretien la première fois que tu iras le voir. Pas de panique, 100% confidentialité, 0% stress !
         </Text>

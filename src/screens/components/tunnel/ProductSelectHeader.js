@@ -33,7 +33,7 @@ export default function ProductSelectHeader() {
         <UnderlineText borderMargin={-4} textStyle={Styles.text}>
           Super
         </UnderlineText>{' '}
-        ! Tu as {availableTokens} points, choisis une de nos quatre boxs pour en
+        Tu as {availableTokens} points, choisis une de nos quatre boxs pour en
         apprendre plus et passer à l&apos;action en toute sécurité !
       </Text>
       <Image
@@ -41,9 +41,11 @@ export default function ProductSelectHeader() {
         source={require('../../../assets/pictures/tunnel-congrats.png')}
       />
       <View style={TunnelProductSelectStyle.topLogoCounterWrapper}>
-        <Text style={TunnelProductSelectStyle.topLogoCounter}>
-          {availableTokens}
-        </Text>
+        <View style={TunnelProductSelectStyle.textWrapper}>
+          <Text style={TunnelProductSelectStyle.topLogoCounter}>
+            {availableTokens}
+          </Text>
+        </View>
       </View>
     </View>
   );

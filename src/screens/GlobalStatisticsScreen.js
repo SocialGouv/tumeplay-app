@@ -73,9 +73,10 @@ export default function GlobalStatisticsScreen(props) {
       height: 30,
     },
     instagram: {
-      width: 70,
-      height: 70,
-      textAlign: 'center',
+      width: 40,
+      height: 40,
+      justifyContent: 'center',
+      alignSelf: 'center',
     },
   };
 

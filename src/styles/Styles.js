@@ -18,6 +18,7 @@ var Styles = {
     fontFamily: Colors.appTitleFont,
     fontSize: 30,
     lineHeight: 34,
+    marginTop: 10,
     marginBottom: 0,
     paddingBottom: 0,
     flex: 2,

@@ -69,9 +69,11 @@ export default function BadgeListHeader() {
                   />
                 ) : null}
                 <View style={TunnelBadgeListStyle.topLogoCounterWrapper}>
-                  <Text style={TunnelBadgeListStyle.topLogoCounter}>
-                    {item.title}
-                  </Text>
+                  <View style={TunnelBadgeListStyle.textContainer}>
+                    <Text style={TunnelBadgeListStyle.topLogoCounter}>
+                      {item.title}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>

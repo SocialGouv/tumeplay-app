@@ -119,21 +119,21 @@ export default function QuizzFinishScreen(props) {
             justifyContent: 'center',
           }}>
           <Text style={Styles.finishText}>
-            {hasEnoughTokens && (
+            {hasEnoughTokens ? (
               <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
                 Bravo !
               </UnderlineText>
-            )}
-            {!hasEnoughTokens && (
+            ) : null}
+            {!hasEnoughTokens ?(
               <UnderlineText borderColor={'#F1732E'} borderMargin={-15}>
                 Presque !
               </UnderlineText>
-            )}
+            ) : null}
           </Text>
         </View>
       </View>
       <View style={{flex: 0.15, paddingLeft: 15, paddingRight: 15}}>
-        {hasEnoughTokens && (
+        {hasEnoughTokens ? (
           <Text
             style={{
               textAlign: 'center',
@@ -143,8 +143,10 @@ export default function QuizzFinishScreen(props) {
             }}>
             Tu as gagné assez de points pour recevoir ta box gratuitement !
           </Text>
+        ) : (
+          <View />
         )}
-        {!hasEnoughTokens && (
+        {!hasEnoughTokens ? (
           <Text
             style={{
               textAlign: 'center',
@@ -155,6 +157,8 @@ export default function QuizzFinishScreen(props) {
             Il te manque encore {missingTokens} points pour pouvoir recevoir ta
             box gratuitement.
           </Text>
+        ) : (
+          <View />
         )}
       </View>
 
@@ -177,19 +181,23 @@ export default function QuizzFinishScreen(props) {
 
       <View
         style={{position: 'absolute', width: '100%', bottom: 25, zIndex: 1}}>
-        {hasEnoughTokens && (
+        {hasEnoughTokens ? (
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={props.onOrder}>
             <Text style={Styles.bottomCommText}>Commander</Text>
           </TouchableOpacity>
+        ) : (
+          <View />
         )}
-        {!hasEnoughTokens && (
+        {!hasEnoughTokens ? (
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={props.onRetry}>
             <Text style={Styles.bottomCommText}>Recommencer</Text>
           </TouchableOpacity>
+        ) : (
+          <View />
         )}
       </View>
     </View>

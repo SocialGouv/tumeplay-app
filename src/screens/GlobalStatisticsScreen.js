@@ -73,9 +73,10 @@ export default function GlobalStatisticsScreen(props) {
       height: 30,
     },
     instagram: {
-      width: 70,
-      height: 70,
-      textAlign: 'center',
+      width: 40,
+      height: 40,
+      justifyContent: 'center',
+      alignSelf: 'center',
     },
   };
 
@@ -359,7 +360,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 tester pleins de choses
               </Text>
@@ -371,7 +372,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 je ne connaissais pas
               </Text>
@@ -385,7 +386,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 apprends beaucoup
               </Text>{' '}
@@ -397,7 +398,7 @@ export default function GlobalStatisticsScreen(props) {
                 style={[
                   Styles.labelText,
                   contentStyle.testimony,
-                  {fontWeight: 'bold', padding: 0},
+                  {fontWeight: '800', padding: 0},
                 ]}>
                 géniaux
               </Text>

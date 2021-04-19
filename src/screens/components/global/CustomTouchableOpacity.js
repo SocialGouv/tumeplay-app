@@ -16,10 +16,10 @@ export default function CustomTouchableOpacity(props) {
         ? {
             // When scrolling the document body, the touchables might be triggered
             // see  https://github.com/necolas/react-native-web/issues/1219
-            onClick: props.onPress,
+            onClick: onPress,
           }
         : {
-            onPress: props.onPress,
+            onPress: onPress,
           })}
     />
   );

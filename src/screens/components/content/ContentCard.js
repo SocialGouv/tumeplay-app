@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -13,11 +13,18 @@ ContentCard.propTypes = {
 
 export default function ContentCard(props) {
   const [content, setContent] = useState(props.item);
+  const [image, setImage] = useState({});
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    setImage(props.item.picture);
+  }, [])
 
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,
+      width: 'auto',
+      height: 'auto',
       flexDirection: 'row',
       backgroundColor: '#FFFFFF',
       borderRadius: 7,
@@ -75,7 +82,7 @@ export default function ContentCard(props) {
           setIsExpanded(!isExpanded);
         }}
         activeOpacity={props.activeOpacity}>
-        <Image source={content.picture} style={cardStyle.picture} />
+        <Image source={{uri: image.uri}} style={cardStyle.picture} />
 
         <ExpandableText
           content={content}
@@ -83,7 +90,7 @@ export default function ContentCard(props) {
           readMoreLink={content.link}
           lessPicture={'minus-orange.png'}
           morePicture={'plus-orange.png'}
-          sound={content.sound}
+          // sound={content.sound} commented due to warning message cannot be boolean needs to be string
           onReadMore={() => {
             Tracking.knowMoreTriggered('contenu', content.id);
           }}

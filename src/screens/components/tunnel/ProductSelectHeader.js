@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, SafeAreaView} from 'react-native';
 
 import Styles from '../../../styles/Styles';
 import TunnelProductSelectStyle from '../../../styles/components/TunnelProductSelect';
@@ -27,24 +27,33 @@ export default function ProductSelectHeader() {
   }, [isMounted]);
 
   return (
-    <View>
+    <SafeAreaView>
       <Text style={Styles.appTitle}>Commande ta box gratuitement !</Text>
-      <Text style={[Styles.text, Styles.textLeft, {fontSize: 18}]}>
-        <UnderlineText borderMargin={-4} textStyle={Styles.text}>
-          Super
-        </UnderlineText>{' '}
-        ! Tu as {availableTokens} points, choisis une de nos quatre boxs pour en
-        apprendre plus et passer à l&apos;action en toute sécurité !
-      </Text>
+      <View>
+        <Text
+          style={[
+            Styles.text,
+            Styles.textLeft,
+            {fontSize: 18, flex: 1},
+          ]}>
+          <UnderlineText borderMargin={-4} textStyle={Styles.text}>
+            Super
+          </UnderlineText>{' '}
+          Tu as {availableTokens} points, choisis une de nos quatre boxs pour en
+          apprendre plus et passer à l&apos;action en toute sécurité !
+        </Text>
+      </View>
       <Image
         style={TunnelProductSelectStyle.topLogoPicture}
         source={require('../../../assets/pictures/tunnel-congrats.png')}
       />
       <View style={TunnelProductSelectStyle.topLogoCounterWrapper}>
-        <Text style={TunnelProductSelectStyle.topLogoCounter}>
-          {availableTokens}
-        </Text>
+        <View style={TunnelProductSelectStyle.textWrapper}>
+          <Text style={TunnelProductSelectStyle.topLogoCounter}>
+            {availableTokens}
+          </Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

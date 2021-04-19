@@ -23,14 +23,14 @@ var Styles = {
     paddingBottom: 0,
   },
   explanationTextWrapper: {
-    flex: 1.5,
+    flex: 1,
     fontSize: 16,
   },
   nextButtonWrapper: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 2,
+    paddingTop: 30,
     paddingBottom: 2,
     maxHeight: 55,
     marginBottom: 20,

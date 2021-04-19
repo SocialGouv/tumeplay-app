@@ -8,16 +8,18 @@
 
 import {createAppContainer} from 'react-navigation'; //@TODO : Check package lint error
 import React, {useState} from 'react';
-import {View, Text, Image, Dimensions} from 'react-native';
+import {View, Text, Image} from 'react-native';
 
 import AppStack from './src/routes/routes';
-import AppSlider from './src/canvas/slider/AppSlider';
+// There is no file named AppSlider in /src/canvas/slider/
+import AppSlider from './src/canvas/slider/Onboarding';
 import Styles from './src/styles/Styles';
 
 const AppContainer = createAppContainer(AppStack);
 
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
+  const [slides, setSlides] = useState([]);
 
   function _renderItem({item}) {
     if (screenWidth <= 320) {
@@ -85,43 +87,3 @@ export default function App() {
     );
   }
 }
-
-/*
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-          	<View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle} >Welcome to PassPréservatif</Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
-*/

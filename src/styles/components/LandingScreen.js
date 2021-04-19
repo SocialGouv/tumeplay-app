@@ -18,8 +18,10 @@ var Styles = {
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
     height: pictureHeight,
+    width: 130,
     maxHeight: 300,
     minHeight: 130,
+    minWidth: 130,
     flex: 1,
   },
   gridItemTextContainer: {

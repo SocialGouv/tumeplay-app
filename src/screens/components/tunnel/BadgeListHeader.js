@@ -42,7 +42,6 @@ export default function BadgeListHeader() {
         data={badgeList}
         style={{paddingLeft: 15, paddingRight: 15, width: '100%'}}
         renderItem={({item}) => {
-          // That's a really dirty way; but strangely the only one working.
           const localStyle =
             currentIndex % 2 === 0 ? {marginRight: 7} : {marginLeft: 7};
           currentIndex = currentIndex + 1;
@@ -50,27 +49,31 @@ export default function BadgeListHeader() {
           return (
             <View style={[LandingStyle.gridContainer, localStyle]}>
               <View style={LandingStyle.gridItemButton}>
-                {availableTokens <= item.tokenRequired && (
+                {availableTokens <= item.tokenRequired ? (
                   <View style={{position: 'relative', zIndex: 1}}>
                     <Image
                       style={TunnelBadgeListStyle.topLogoPicture}
                       source={item.pictureOff}
                     />
-                    <Text style={TunnelBadgeListStyle.topLogoText}>
-                      Badge débloqué{'\n'}dans {neededTokens} points
-                    </Text>
+                    {/* <Text style={TunnelBadgeListStyle.topLogoText}>
+                      {'Badge débloqué'}
+                      {'\n'}
+                      {'dans'} {neededTokens} {'points'}
+                    </Text> */}
                   </View>
-                )}
-                {availableTokens > item.tokenRequired && (
+                ) : null}
+                {availableTokens > item.tokenRequired ? (
                   <Image
                     style={TunnelBadgeListStyle.topLogoPicture}
                     source={item.picture}
                   />
-                )}
+                ) : null}
                 <View style={TunnelBadgeListStyle.topLogoCounterWrapper}>
-                  <Text style={TunnelBadgeListStyle.topLogoCounter}>
-                    {item.title}
-                  </Text>
+                  <View style={TunnelBadgeListStyle.textContainer}>
+                    <Text style={TunnelBadgeListStyle.topLogoCounter}>
+                      {item.title}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -84,11 +87,10 @@ export default function BadgeListHeader() {
   return (
     <View>
       <Text style={Styles.appTitle}>
-        Suis ta progression et collectionne des badges
+        {"Suis ta progression et collectionne des badges"}
       </Text>
       <Text style={[Styles.text, Styles.textLeft, {fontSize: 18}]}>
-        Super ! Grace aux points que tu as gagné en répondant aux quiz, tu
-        obtiens des badges !
+        {"Super ! Grace aux points que tu as gagné en répondant aux quiz, tu obtiens des badges !"}
       </Text>
       <View style={TunnelBadgeListStyle.topLogoCounterWrapper}>
         <BadgeGrid />

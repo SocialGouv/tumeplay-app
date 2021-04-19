@@ -135,6 +135,7 @@ export default function CustomHeaderRight(props) {
     setShowNotEnoughModal(!showNotEnoughModal);
   }
 
+  // eslint-disable-next-line react/display-name
   const ForwardedNotEnoughModal = forwardRef(() => (
     <ProductNotEnoughTokensModal
       showModal={showNotEnoughModal}

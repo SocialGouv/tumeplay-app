@@ -353,6 +353,7 @@ export default function TunnelUserAddress(props) {
         isValid={localValid.firstName}
         currentValue={localAdress.firstName}
         name="firstName"
+        style={{color: 'black'}}
       />
       <CustomTextInput
         inputLabel="Nom"
@@ -361,6 +362,7 @@ export default function TunnelUserAddress(props) {
         isValid={localValid.lastName}
         currentValue={localAdress.lastName}
         name="lastName"
+        style={{color: 'black'}}
       />
       <CustomTextInput
         inputLabel="Adresse e-mail"
@@ -370,6 +372,7 @@ export default function TunnelUserAddress(props) {
         emailAdressWrongFormat={localValid.emailAdressWrongFormat}
         currentValue={localAdress.emailAdress}
         name="emailAdress"
+        style={{color: 'black'}}
       />
 
       <CustomTextInput
@@ -381,9 +384,10 @@ export default function TunnelUserAddress(props) {
         emailAdressMismatch={localValid.emailAdressMismatch}
         currentValue={localAdress.emailAdressConfirmation}
         name="emailAdressConfirmation"
+        style={{color: 'black'}}
       />
 
-      {deliveryType === 'home' && (
+      {deliveryType === 'home' ? (
         <CustomTextInput
           inputLabel="Numéro de téléphone"
           inputPlaceholder="Ton numéro de téléphone"
@@ -392,11 +396,12 @@ export default function TunnelUserAddress(props) {
           currentValue={localAdress.phoneNumber}
           phoneNumberWrongFormat={localValid.phoneNumberWrongFormat}
           name="phoneNumber"
+          style={{color: 'black'}}
           filterNumbers={true}
         />
-      )}
+      ) : null}
 
-      {deliveryType === 'home' && (
+      {deliveryType === 'home' ? (
         <View>
           <CustomTextInput
             inputLabel="Adresse"
@@ -432,8 +437,8 @@ export default function TunnelUserAddress(props) {
             name="city"
           />
         </View>
-      )}
-      {deliveryType === 'home' && invalidAddress && (
+      ) : null}
+      {deliveryType === 'home' && invalidAddress ? (
         <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
           <View style={{flex: 1}}>
             <Text
@@ -446,8 +451,8 @@ export default function TunnelUserAddress(props) {
             </Text>
           </View>
         </View>
-      )}
-      {deliveryType === 'home' && invalidZipCode && (
+      ) : null}
+      {deliveryType === 'home' && invalidZipCode ? (
         <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
           <View style={{flex: 1}}>
             <Text
@@ -459,8 +464,8 @@ export default function TunnelUserAddress(props) {
             </Text>
           </View>
         </View>
-      )}
-      {disallowOrder && (
+      ) : null}
+      {disallowOrder ? (
         <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
           <View style={{flex: 1}}>
             <Text
@@ -473,7 +478,7 @@ export default function TunnelUserAddress(props) {
             </Text>
           </View>
         </View>
-      )}
+      ) : null}
       <View style={TunnelUserAdressStyle.requiredFieldsWrapper}>
         <View style={{flex: 1}}>
           <Text

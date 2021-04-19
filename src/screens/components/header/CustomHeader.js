@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import CustomHeaderLeft from './CustomHeaderLeft';
 import CustomHeaderRight from './CustomHeaderRight';
+import {SafeAreaView} from 'react-native';
 
 CustomHeader.propTypes = {
   navigation: PropTypes.object,
@@ -15,8 +16,8 @@ export default function CustomHeader(props) {
   const wrapperStyle = {
     backgroundColor: '#000000',
     flex: 1,
-    height: 55,
-    maxHeight: 55,
+    height: 100,
+    maxHeight: 150,
     paddingBottom: 10,
   };
   let headerStyle = {
@@ -47,8 +48,8 @@ export default function CustomHeader(props) {
     };
   }
 
-  return (
-    <View style={wrapperStyle}>
+  return Platform.OS === 'ios' ? (
+    <SafeAreaView style={wrapperStyle}>
       <View style={headerStyle}>
         <CustomHeaderLeft
           navigation={props.navigation}
@@ -56,6 +57,14 @@ export default function CustomHeader(props) {
         />
         <CustomHeaderRight navigation={props.navigation} />
       </View>
+    </SafeAreaView>
+  ) : (
+    <View style={headerStyle}>
+      <CustomHeaderLeft
+        navigation={props.navigation}
+        withBack={props.withBack}
+      />
+      <CustomHeaderRight navigation={props.navigation} />
     </View>
   );
 }

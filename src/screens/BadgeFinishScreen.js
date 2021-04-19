@@ -108,14 +108,13 @@ export default function BadgeFinishScreen(props) {
         style={{
           textAlign: 'center',
           fontSize: 16,
+          fontWeight: 'bold',
           color: Colors.mainButton,
           fontFamily: Colors.titleCard,
         }}>
-        <b>
-          {props.badgeInfoDetails && props.badgeInfoDetails.nextBadge
-            ? `*Prochain badge: ${props.badgeInfoDetails.nextBadge.title}`
-            : ''}
-        </b>
+        {props.badgeInfoDetails && props.badgeInfoDetails.nextBadge
+          ? `*Prochain badge: ${props.badgeInfoDetails.nextBadge.title}`
+          : ''}
       </Text>
     ),
 

@@ -50,11 +50,12 @@ export default function QuizzButton(props) {
           setLocalBottom(_localBottom);
         }
       };
-
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+      if (Platform.OS === 'web') {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }
     }
   }, [isMounted]);
 

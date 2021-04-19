@@ -57,7 +57,7 @@ export default function ContactUsScreen(props) {
           soutien!) à nous envoyer ? Écris-nous à{' '}
           <TextLink
             targetUrl={'mailto:contact.tumeplay@fabrique.social.gouv.fr'}>
-            contact.tumeplay@fabrique.social.gouv.fr
+            {'contact.tumeplay@fabrique.social.gouv.fr'}
           </TextLink>{' '}
           !
         </Text>

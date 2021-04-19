@@ -1,5 +1,5 @@
 const THEME_4 = {
-  appTitleFont: 'CarterOne-Regular',
+  appTitleFont: 'Carter One',
   textFont: 'Chivo-Regular',
   textFontBold: 'Chivo-Bold',
 

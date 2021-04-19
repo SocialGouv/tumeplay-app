@@ -114,7 +114,7 @@ const AppStack = createStackNavigator(
       header: <CustomHeader navigation={navigation} />,
       headerTintColor: Colors.backgroundColor,
       headerTitleStyle: {
-        fontWeight: 'bold',
+        fontWeight: '800',
       },
     }),
   },

@@ -10,7 +10,7 @@
     "nativeLint": "eslint .",
     "webStart": "EXTEND_ESLINT=true react-app-rewired start",
     "build": "react-app-rewired build",
-    "postinstall": "sed -i.bak 's/module.exports = /export default /g' node_modules/react-native-device-info/src/web/index.js && sed -i.bak 's/module.exports=/export default /g' node_modules/react-native-device-info/lib/module/web/index.js && rm node_modules/react-native-device-info/src/web/index.js.bak"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.7.6",
@@ -18,6 +18,7 @@
     "@react-native-community/cli": "^4.13.1",
     "@react-native-community/cli-platform-ios": "^4.13.0",
     "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-community/picker": "^1.8.1",
     "@react-navigation/native": "^3.6.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@sentry/browser": "^5.12.1",
@@ -27,6 +28,7 @@
     "modal-react-native-web": "^0.2.0",
     "node-libs-react-native": "^1.2.1",
     "node-open-geocoder": "^4.0.1",
+    "patch-package": "^6.4.7",
     "react": "16.9.0",
     "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",

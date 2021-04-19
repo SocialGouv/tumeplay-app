@@ -128,11 +128,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.passpreservatif"
-        minSdkVersion rootProject.ext.minSdkVersion
+        applicationId 'pass.preservatif'
+        minSdkVersion minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName '1.01'
+        signingConfig signingConfigs.debug
     }
     splits {
         abi {
@@ -149,6 +150,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('/Users/bridolceridolce/keystores/keystore.jks')
+            storePassword 'android'
+            keyAlias 'release'
+            keyPassword 'android'
+        }
     }
     buildTypes {
         debug {
@@ -157,7 +164,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -179,8 +186,6 @@ android {
 }
 
 dependencies {
-    implementation project(':@react-native-community_async-storage')
-    implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

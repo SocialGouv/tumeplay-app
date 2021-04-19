@@ -137,44 +137,47 @@ export default function QuizzScreen(props) {
           style={{
             paddingLeft: 10,
             paddingRight: 10,
-            marginTop: 50,
-            marginBottom: 40,
+            paddingTop: 10,
+            marginTop: 30,
+            marginBottom: 15,
             alignSelf: 'center',
-            height: '20%',
+            height: '30%',
           }}>
           <Text style={Styles.questionText}>{_currentQuestion.question}</Text>
         </View>
-
-        <View style={{paddingBottom: 50, height: '52%'}}>
+        <View style={{paddingBottom: 45, height: '52%'}}>
           <View style={{flex: 1, flexDirection: 'column'}}>
-            {!displayAnswer && _currentQuestion.answers.length <= 2 && (
+            {!displayAnswer && _currentQuestion.answers.length <= 2 ? (
               <View style={Styles.flexOne}></View>
+            ) : (
+              <View />
             )}
             {!displayAnswer && _renderAnswersButtons(_currentQuestion.answers)}
-            {!displayAnswer && _currentQuestion.answers.length <= 2 && (
+            {!displayAnswer && _currentQuestion.answers.length <= 2 ? (
               <View style={Styles.flexOne}></View>
+            ) : (
+              <View />
             )}
-
-            {displayAnswer && (
+            {displayAnswer ? (
               <AnswerScreen
                 isRightAnswer={isRightAnswer}
                 question={_currentQuestion}
                 lastTokenAmount={lastTokenAmount}
                 setFeedback={setFeedback}
               />
+            ) : (
+              <View />
             )}
           </View>
         </View>
-
         <View
           style={[
-            {textAlign: 'center', paddingBottom: 10},
+            {textAlign: 'center', marginTop: 5, paddingBottom: 10},
             displayAnswer
               ? {}
-              : {position: 'absolute', bottom: 5, width: '100%'},
+              : {position: 'relative', bottom: 15, width: '100%'},
           ]}>
-          {displayAnswer && <NextButton onPress={_nextQuestion} />}
-
+          {displayAnswer ? <NextButton onPress={_nextQuestion} /> : null}
           <Text
             style={{
               marginTop: 0,
@@ -182,7 +185,7 @@ export default function QuizzScreen(props) {
               color: '#FFFFFF',
               fontSize: 18,
             }}>
-            {currentIndex + 1} / {total}
+            {currentIndex + 1} <Text> / </Text> {total}
           </Text>
         </View>
       </ScrollView>

@@ -11,7 +11,14 @@ TextWithSound.propTypes = {
 };
 export default function TextWithSound(props) {
   const [play, setPlay] = useState(false);
+  //Init to false to prevent error message since no folder sounds in assets
+  
   const targetSound = false;
+  
+  // props.sound
+  //   ? require('../../../assets/sounds/' + props.sound)
+  //   : false;
+
   const soundPicture = require('../../../assets/pictures/sound.png');
 
   function onPlayStart() {}

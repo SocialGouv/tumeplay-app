@@ -40,11 +40,10 @@ export default function MoreThan25YearsScreen(props) {
         }}
         source={require('../assets/age.jpg')}
       />
-
       <View style={{flex: 0.25}} />
       <View style={{flex: 0.1, paddingLeft: 35, paddingRight: 35}}>
         <Text style={[Styles.finishText, {color: 'white'}]}>
-          Quel âge as-tu?
+          {'Quel âge as-tu ?'}
         </Text>
       </View>
 
@@ -52,12 +51,12 @@ export default function MoreThan25YearsScreen(props) {
         <TouchableOpacity
           style={[Styles.bottomButton, {borderRadius: 25, maxHeight: 35}]}
           onPress={props.lessThan25}>
-          <Text style={Styles.bottomCommText}>- de 25 ans</Text>
+          <Text style={Styles.bottomCommText}> {'- de 25 ans'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[Styles.bottomButton, {borderRadius: 25, maxHeight: 35}]}
           onPress={props.moreThan25}>
-          <Text style={Styles.bottomCommText}>+ de 25 ans</Text>
+          <Text style={Styles.bottomCommText}> {'+ de 25 ans'}</Text>
         </TouchableOpacity>
       </View>
       <View
@@ -69,23 +68,29 @@ export default function MoreThan25YearsScreen(props) {
           padding: 15,
         }}>
         <Text style={textStyle}>
-          Actuellement la commande de box est disponible en Seine-et-Marne et en
-          Nouvelle-Aquitaine.
+          {
+            'Actuellement la commande de box est disponible en Seine-et-Marne et en Nouvelle-Aquitaine.'
+          }
         </Text>
-        <Text style={textStyle}>――――</Text>
-        <Text style={textStyle}>
-          Pour être informé·e de la sortie de l&apos;app&apos; dans ta région,
-          laisse nous ton adresse mail{' '}
-          <TouchableOpacity onPress={props.onContactClick}>
-            <Text
-              style={{
-                textDecorationLine: 'underline',
-              }}>
-              ici
-            </Text>
-          </TouchableOpacity>
-          .
-        </Text>
+        <View>
+          <Text style={textStyle}>{'――――'}</Text>
+        </View>
+        <View>
+          <Text style={textStyle}>
+            {
+              "Pour être informé·e de la sortie de l'app dans ta région, laisse nous ton adresse mail"
+            }
+            {/* <TouchableOpacity onPress={props.onContactClick}>
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                }}>
+                {'ici'}
+              </Text>
+            </TouchableOpacity> */}
+            {'.'}
+          </Text>
+        </View>
       </View>
     </View>
   );

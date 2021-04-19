@@ -13,7 +13,7 @@ export default function UnderlineText(props) {
   const borderMargin = props.borderMargin ? props.borderMargin : -3;
   return (
     <View>
-      <Text style={[{position: 'relative', zIndex: 2}, {...props.textStyle}]}>
+      <Text style={[{position: 'relative'}, {...props.textStyle}]}>
         {props.children}
       </Text>
       <View

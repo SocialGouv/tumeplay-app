@@ -34,6 +34,7 @@ export default function TunnelProductSelect(props) {
   useEffect(() => {
     async function _fetchBoxs() {
       const _boxs = await RemoteApi.fetchBoxsData();
+      console.log(_boxs)
 
       if (isMounted.current) {
         setLocalBoxs(_boxs.boxs);
@@ -112,7 +113,7 @@ export default function TunnelProductSelect(props) {
   return (
     <SafeAreaView style={Styles.safeAreaView}>
       <View style={[Styles.safeAreaViewInner, {flex: 1}]}>
-        <ScrollView style={{flex: 0.9}}>
+        <ScrollView style={{flex: 1}}>
           <ProductSelectHeader />
 
           {_renderBoxsCards()}

@@ -10,7 +10,7 @@ ModalCloseButton.propTypes = {
 export default function ModalCloseButton(props) {
   return (
     <TouchableOpacity
-      style={{position: 'absolute', right: 10, top: 10, zIndex: 10}}
+      style={{position: 'absolute', right: 10, top: 25, zIndex: 10}}
       onPress={props.onClose}>
       <Image
         style={{width: 25, height: 25, resizeMode: 'contain'}}

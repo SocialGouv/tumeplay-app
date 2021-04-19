@@ -81,11 +81,10 @@ var Styles = {
   tunnelButton: {
     flex: 1,
     width: '100%',
+    height: 200,
     backgroundColor: Colors.mainButton,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 10,
     borderRadius: 20,
     alignSelf: 'center',
   },

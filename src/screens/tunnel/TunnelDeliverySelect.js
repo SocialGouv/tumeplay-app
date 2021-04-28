@@ -19,7 +19,7 @@ export default function TunnelDeliverySelect(props) {
   function _onContactClick() {
     props.navigation.navigate('StayInTouch');
   }
-  
+
   function _onBadgeListClick() {
     props.navigation.navigate('TunnelBadgeList');
   }
@@ -79,6 +79,23 @@ export default function TunnelDeliverySelect(props) {
             <Text style={Styles.tunnelButtonText}>A domicile</Text>
           </View>
         </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            height: 60,
+            maxHeight: 60,
+            paddingTop: 2,
+            paddingBottom: 2,
+            width: '50%',
+            alignSelf: 'center',
+          }}
+          onPress={() => _onDone('pickup')}>
+          <View style={Styles.tunnelButton}>
+            <Text style={Styles.tunnelButtonText}>En point relais</Text>
+          </View>
+        </TouchableOpacity>
+        
         <TouchableOpacity
           style={{
             flex: 1,
@@ -90,12 +107,14 @@ export default function TunnelDeliverySelect(props) {
             width: '50%',
             alignSelf: 'center',
           }}
-          onPress={() => _onDone('pickup')}>
+          onPress={() => _onDone('referent')}>
           <View style={Styles.tunnelButton}>
-            <Text style={Styles.tunnelButtonText}>En point relais</Text>
+            <Text style={Styles.tunnelButtonText}>Chez un référent</Text>
           </View>
         </TouchableOpacity>
+        
         <Splitter />
+         
         <Text
           style={{
             color: '#FFFFFF',
@@ -122,6 +141,7 @@ export default function TunnelDeliverySelect(props) {
           </TouchableOpacity>
           .
         </Text>
+        
         <Text
           style={{
             color: '#FFFFFF',
@@ -144,6 +164,7 @@ export default function TunnelDeliverySelect(props) {
           </TouchableOpacity>
           .
         </Text>
+        
       </View>
     </View>
   );

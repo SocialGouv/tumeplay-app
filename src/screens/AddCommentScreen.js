@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Text, TextInput, View, Picker, TouchableOpacity, Image} from 'react-native';
+import {
+  Text,
+  TextInput,
+  View,
+  Picker,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 import RemoteApi from '../services/RemoteApi';
@@ -19,7 +26,7 @@ export default function AddCommentScreen(props) {
   const [content, setContent] = useState('');
   const [canComment, setCanComment] = useState(true);
   const isMounted = useIsMounted();
-  
+
   const description =
     "Tu trouves que la question n'est pas claire ? Ou bien la réponse n'est pas compréhensible ? Alors tu peux nous l'indiquer ici pour que nous la modifions.";
   /*const _menuComments = [
@@ -29,33 +36,32 @@ export default function AddCommentScreen(props) {
   ];*/
 
   useEffect(() => {
-  	async function _fetchChoices() {
+    async function _fetchChoices() {
       if (isMounted.current) {
         const rawChoices = await RemoteApi.fetchFeedbackTypes();
-		
-		const choices = rawChoices.map( item => {
-			return {
-				id: item.id,
-				text: item.title,
-			}
-		});
+
+        const choices = rawChoices.map(item => {
+          return {
+            id: item.id,
+            text: item.title,
+          };
+        });
         if (isMounted.current) {
           setMenuChoices(choices);
           setSelectedId(choices[0].id);
         }
       }
     }
-  	                           
-  	_fetchChoices();
+
+    _fetchChoices();
   }, [isMounted]);
 
   function _chooseTypeComment(text, key) {
     setSelectedValue(text);
     setSelectedId(key);
-  	
-  	setCanComment(false);
-  	setContent('');
 
+    setCanComment(false);
+    setContent('');
   }
   function handleChange(event) {
     setContent(event.target.value);
@@ -126,7 +132,7 @@ export default function AddCommentScreen(props) {
             backgroundColor: '#FFFFFF',
             borderColor: '#D13E72',
             outline: 'none',
-            textAlignVertical: 'top'
+            textAlignVertical: 'top',
           }}
           value={content}
           onChange={handleChange}

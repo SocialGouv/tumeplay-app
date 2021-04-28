@@ -85,6 +85,7 @@ export default function TunnelPickupSelect(props) {
       const rawPickupPoints = await RemoteApi.fetchPickupPoints(
         currentPosition.coords.latitude,
         currentPosition.coords.longitude,
+        deliveryType
       );
       const pickupPoints = rawPickupPoints.map(function(item) {
         item.isSelected = false;
@@ -326,7 +327,7 @@ export default function TunnelPickupSelect(props) {
         <TouchableOpacity
           style={[
             Styles.bottomButton,
-            {position: 'absolute', bottom: 10, borderRadius: 25},
+            {position: 'absolute', bottom: 30, borderRadius: 25},
           ]}
           onPress={_onDone}>
           <View style={{paddingTop: 8, paddingBottom: 8}}>

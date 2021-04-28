@@ -14,7 +14,8 @@ StayInTouchConfirmScreen.propTypes = {
 
 export default function StayInTouchConfirmScreen(props) {
   function _onDone() {
-    props.navigation.navigate('LandingScreen');
+    const _target = props.navigation.state.params.outOfStock ? 'TunnelProductSelect' : 'LandingScreen';
+    props.navigation.navigate(_target);
   }
 
   return (

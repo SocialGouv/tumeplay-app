@@ -19,15 +19,13 @@ import UserService from '../services/User';
 
 import Tracking from '../services/Tracking';
 
-
-
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
 };
 export default function LandingScreen(props) {
   const [localThemes, setLocalThemes] = useState([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  
+
   const isMounted = useIsMounted();
 
   autoScrollToTop(props);
@@ -79,17 +77,18 @@ export default function LandingScreen(props) {
   }
 
   function _onSelected_lieuxUtiles() {
+    Tracking.lieuxUtilesClicked();
     props.navigation.navigate('ContentScreen', {selectedTheme: localThemes[3]});
   }
 
   function _onSelected_echangeProfessionnel() {
     props.navigation.navigate('ContentScreen');
   }
-  
+
   function _toggleErrorModal() {
     setShowErrorModal(!showErrorModal);
   }
-  
+
   const ForwardedErrorModal = forwardRef(() => (
     <ProductErrorModal
       showModal={showErrorModal}

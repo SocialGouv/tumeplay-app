@@ -302,6 +302,45 @@ const User = {
       throw Error(e);
     }
   },
+  setLastOrder: async () => {
+    let localUser = User.localUser;
+
+    if (!localUser) {
+      localUser = await User.load();
+    }
+
+    if (localUser) {
+      localUser.lastOrder = Date.now() / 1000;
+
+      await User.save();
+
+      return localUser;
+    }
+
+    return null;
+  },
+  isOrderAllowed: async () => {
+    try {
+    	let localUser = User.localUser;
+
+	    if (!localUser) {
+	      localUser = await User.load();
+	    }
+
+        if (localUser) {
+
+          if( localUser.lastOrder !== undefined )
+          {
+			  var _now = Date.now() / 1000;
+			  return ( ( _now - localUser.lastOrder ) > ( 86400 * 7 ));
+          }     
+        }            
+       
+      return true;
+    } catch (e) {
+      throw Error(e);
+    }
+  },
   getUniqueId: async () => {
     try {
       if (!User.localUser) {
@@ -404,9 +443,9 @@ const User = {
   computeHmac: async () => {
     if (User.localUser) {
       const localData = {
-		  tokens: User.localUser.availableTokens,
-		  uniqueId: User.localUser.uniqueId,
-		  latestBadge: User.localUser.latestBadgeIDWon
+        tokens: User.localUser.availableTokens,
+        uniqueId: User.localUser.uniqueId,
+        latestBadge: User.localUser.latestBadgeIDWon,
       };
       return CryptoJS.MD5(JSON.stringify(localData)).toString();
     }

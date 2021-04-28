@@ -1,6 +1,5 @@
 const AddressValidator = {
   allowedZipCodes: [
-    '77',
     '16',
     '17',
     '19',
@@ -10,9 +9,15 @@ const AddressValidator = {
     '40',
     '47',
     '64',
+    '75',
+    '77',
     '79',
     '86',
     '87',
+    '91',
+    '93',
+    '94',
+    '95',         
   ],
   zipCodeTest: /^[0-9]{5}$/,
   zipCodePartTest: /^[0-9]{2}$/,
@@ -38,5 +43,22 @@ const AddressValidator = {
 
     return false;
   },
+  
+  validateZipCodeLocality: async(zipCode) => {
+    try {
+      const response = await fetch("https://api-adresse.data.gouv.fr/search/?q=" + zipCode + "&format=json&postcode=" + zipCode + "&limit=50&type=municipality");
+      const jsonParsed = await response.json();
+      let   _return    = false;
+      
+      if( jsonParsed && jsonParsed.features && jsonParsed.features.length > 0 )
+      {
+          _return = { city : jsonParsed.features[0].properties.name };
+      }
+      
+      return _return;
+    } catch (e) {
+      throw Error(e);
+    }
+  }
 };
 export default AddressValidator;

@@ -195,13 +195,13 @@ const QuizService = {
 
     if (!questionHandled) {
       const improveIndex = QuizService.localJar[themeId].toImprove.indexOf(
-        questionId,
+        questionId
       );
 
       if (improveIndex >= 0) {
         if (isRightAnswer) {
           QuizService.localJar[themeId].done.push(questionId);
-          QuizService.localJar[themeId].todo.splice(improveIndex, 1);
+          QuizService.localJar[themeId].toImprove.splice(improveIndex, 1);
           questionHandled = true;
         }
       }

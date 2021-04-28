@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Image, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import Tracking from '../services/Tracking';
 
 CustomFooter.propTypes = {
   containerStyle: PropTypes.object,
@@ -10,6 +11,7 @@ CustomFooter.propTypes = {
 export default function CustomFooter(props) {
   // @TODO : Pass this in global configuration
   function _contactMail() {
+    Tracking.contactClicked();
     props.navigation.navigate('Contact');
   }
 
@@ -19,6 +21,10 @@ export default function CustomFooter(props) {
 
   function openChart() {
     props.navigation.navigate('Chart');
+  }
+
+  function openGlobalStatistics() {
+    props.navigation.navigate('GlobalStatistics');
   }
 
   const footerStyle = StyleSheet.create({
@@ -88,6 +94,14 @@ export default function CustomFooter(props) {
           <TouchableOpacity style={footerStyle.link} onPress={openChart}>
             <Text style={[footerStyle.text, footerStyle.textDecoration]}>
               Lire notre charte
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={footerStyle.link}
+            onPress={openGlobalStatistics}>
+            <Text style={[footerStyle.text, footerStyle.textDecoration]}>
+              Statistiques
             </Text>
           </TouchableOpacity>
         </View>

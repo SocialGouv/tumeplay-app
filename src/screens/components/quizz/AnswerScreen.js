@@ -65,11 +65,11 @@ export default function AnswerScreen(props) {
   } else {
     currentPicture = wrongAnswerPicture;
   }
-  
+
   function _toggleCommentModal() {
     setIsCommentModalVisible(!isCommentModalVisible);
   }
-  
+
   function _writeComment(comment, id) {
     //const idFeedback = id + 1;
     setChosenComment({
@@ -78,18 +78,17 @@ export default function AnswerScreen(props) {
     });
     props.setFeedback(isLiked, isDisliked, comment, id);
   }
-  
+
   function _setContentLiked(clickedItemId) {
-    
-    const liked     = ( clickedItemId != 0 && clickedItemId == 1 );
-    const disliked  = ( clickedItemId != 0 && clickedItemId == 2 );
-    
+    const liked = clickedItemId != 0 && clickedItemId == 1;
+    const disliked = clickedItemId != 0 && clickedItemId == 2;
+
     setIsLiked(liked);
     setIsDisliked(disliked);
-    
-    props.setFeedback(liked, disliked, chosenComment.comment, chosenComment.id);    
+
+    props.setFeedback(liked, disliked, chosenComment.comment, chosenComment.id);
   }
-  
+
   return (
     <View style={{flex: 6, flexGrow: 1}}>
       {_rightAnswer !== '' && (
@@ -148,7 +147,7 @@ export default function AnswerScreen(props) {
           onPress={() => {
             Tracking.knowMoreTriggered('question', content.id);
             setIsExpanded(!isExpanded);
-          }}>
+        }}>
           <ExpandableText
             containerStyle={{backgroundColor: '#FFFFFF', borderRadius: 7}}
             content={content}
@@ -162,10 +161,12 @@ export default function AnswerScreen(props) {
               Tracking.knowMoreTriggered('question', content.id);
             }}
           />
-          <CommentLikesView onPressComment={_toggleCommentModal} onPressLike={_setContentLiked}/>
-          
+          <CommentLikesView
+            onPressComment={_toggleCommentModal}
+            onPressLike={_setContentLiked}
+          />  
         </TouchableOpacity>
-
+        
         <Modal
           visible={isCommentModalVisible}
           isVisible={isCommentModalVisible}

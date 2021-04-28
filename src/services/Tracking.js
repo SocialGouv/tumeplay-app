@@ -14,6 +14,10 @@ const Tracking = {
   },
 
   quizEnded: timeNeeded => {
+    if( timeNeeded >= 3600 )
+    {
+        return;
+    }
     Tracking.trigger(['trackEvent', 'mobileApp', 'quiz', 'finished']);
     Tracking.trigger([
       'trackEvent',
@@ -33,24 +37,75 @@ const Tracking = {
       'trackEvent',
       'mobileApp',
       'catChosen',
-      theme.value,
-      category,
+      theme.value + ' - ' + category,
     ]);
   },
   knowMoreTriggered: (type, contentId) => {
     Tracking.trigger(['trackEvent', 'mobileApp', 'knowMore', type, contentId]);
   },
 
-  questionAnswered: (questionId, timeNeeded) => {
-    console.log(' Question :', questionId);
-    console.log(' TIME : ', timeNeeded);
+  questionAnswered: (questionTitle, timeNeeded) => {
+    if( timeNeeded >= 3600 )
+    {
+        return;
+    }
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      'questionAnswered',
+      questionTitle, 
+    ]);
+    
     Tracking.trigger([
       'trackEvent',
       'mobileApp',
       'questionDuration',
-      questionId,
+      questionTitle,           
       timeNeeded,
     ]);
   },
+  
+  questionRightAnswered: (questionTitle) => {
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      'questionRightAnswered',
+      questionTitle,   
+    ]);  
+  },
+  
+  under25: () => {
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      '-25 ans',
+    ]);  
+  },
+  
+  above25: () => {
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      '+25 ans',
+    ]);  
+  },
+  
+  contactClicked: () => {
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      'Contact',
+    ]);    
+  },
+  
+  lieuxUtilesClicked: () => {
+    Tracking.trigger([
+      'trackEvent',
+      'mobileApp',
+      'Lieux Utiles',
+    ]);    
+  },
+  
+  
 };
 export default Tracking;

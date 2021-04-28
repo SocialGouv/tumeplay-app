@@ -41,7 +41,7 @@ const RemoteApi = {
     return null;
   },
   fetch: async targetUrl => {
-    try {               
+    try {
       const response = await fetch(targetUrl + ZoneSuffix);
       const jsonParsed = await response.json();
 
@@ -113,6 +113,33 @@ const RemoteApi = {
       return item;
     });
   },
+  mapSounds: async objects => {
+    return objects.map((item, key) => {
+      if (item.sound) {
+        if (typeof item.sound === 'string') {
+          item.sound = {uri: BaseRemote + item.sound};
+        } else {
+          item.sound = {uri: BaseRemote + item.sound.path};
+        }
+      }
+      if (item.questionSound) {
+        if (typeof item.questionSound === 'string') {
+          item.questionSound = {uri: BaseRemote + item.questionSound};
+        } else {
+          item.questionSound = {uri: BaseRemote + item.questionSound.path};
+        }
+      }
+	  if (item.answerSound) {
+        if (typeof item.answerSound === 'string') {
+          item.answerSound = {uri: BaseRemote + item.answerSound};
+        } else {
+          item.answerSound = {uri: BaseRemote + item.answerSound.path};
+        }
+      }
+
+      return item;
+    });
+  },
   registerUser: async uniqId => {
     try {
       if (LOCAL_MODE) {
@@ -128,14 +155,14 @@ const RemoteApi = {
       return false;
     }
   },
-  fetchPickupPoints: async (latitude, longitude) => {
+  fetchPickupPoints: async (latitude, longitude, pickupType) => {
     try {
       if (LOCAL_MODE) {
         return DefaultProducts;
       } else {
-        const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
+        const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude + '/' + pickupType;
         const contents = await RemoteApi.fetch(endPoint);
-        return contents.slice(0, 20);
+        return contents ? contents.slice(0, 20) : [];
       }
     } catch (e) {
       throw Error(e);
@@ -164,9 +191,9 @@ const RemoteApi = {
   },
   fetchFeedbackTypes: async () => {
     try {
-        const feedbackTypes = await RemoteApi.fetch(FeedbackTypesEndpoint);
+      const feedbackTypes = await RemoteApi.fetch(FeedbackTypesEndpoint);
 
-        return feedbackTypes.types;
+      return feedbackTypes.types;
     } catch (e) {
       throw Error(e);
     }
@@ -176,9 +203,11 @@ const RemoteApi = {
       if (LOCAL_MODE) {
         return DefaultThemes;
       } else {
-        const themes = await RemoteApi.fetch(ThemesEndpoint);
-
-        return await RemoteApi.mapPictures(themes);
+        let themes = await RemoteApi.fetch(ThemesEndpoint);
+        
+        themes = await RemoteApi.mapPictures(themes);
+        themes = await RemoteApi.mapSounds(themes);
+        return themes;
       }
     } catch (e) {
       throw Error(e);
@@ -201,7 +230,7 @@ const RemoteApi = {
         );
 
         filtered = await RemoteApi.mapPictures(filtered);
-
+        filtered = await RemoteApi.mapSounds(filtered);
         return filtered;
       }
     } catch (e) {
@@ -219,8 +248,8 @@ const RemoteApi = {
         return questions;
       } else {
         const contents = await RemoteApi.fetch(QuizzEndpoint);
-        const mapped = await RemoteApi.mapPictures(contents);
-
+        let mapped = await RemoteApi.mapPictures(contents);
+        mapped = await RemoteApi.mapSounds(mapped);
         const sorted = {};
 
         mapped.forEach(item => {

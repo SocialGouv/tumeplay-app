@@ -6,20 +6,19 @@ import QuizzAnswerStyle from '../../../styles/components/QuizzAnswer';
 
 CommentLikesView.propTypes = {
   onPressLike: PropTypes.func,
-  onPressComment: PropTypes.func
+  onPressComment: PropTypes.func,
 };
 
 export default function CommentLikesView(props) {
   const [activeButton, setActiveButton] = useState(0);
-  
-  function onPress(activeItemId, activeItemText)
-  {
-      const activeItemKey = ( activeItemId == activeButton ) ? 0 : activeItemId; // trigger when already active clicked item
-      
-      setActiveButton(activeItemKey);
-      props.onPressLike(activeItemKey, activeItemText);
-  } 
-  
+
+  function onPress(activeItemId, activeItemText) {
+    const activeItemKey = activeItemId == activeButton ? 0 : activeItemId; // trigger when already active clicked item
+
+    setActiveButton(activeItemKey);
+    props.onPressLike(activeItemKey, activeItemText);
+  }
+
   const _likeIcons = [
     {
       id: 1,
@@ -36,7 +35,7 @@ export default function CommentLikesView(props) {
       srcActive: require('../../../assets/pictures/dislikeFull.png'),
     },
   ];
-               
+
   const likeButtons = _likeIcons.map((item, key) => {
     return (
       <TouchableOpacity
@@ -54,39 +53,40 @@ export default function CommentLikesView(props) {
       </TouchableOpacity>
     );
   });
-  
+
   return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: '#FFFFFF',
+        borderRadius: 7,
+        marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+      }}
+      onPress={() => {
+          props.onPressComment();
+        }}
+    >
+      <View
+        style={likeStyle.addCommentWrapper}
+        >
+        <Image
+          style={likeStyle.addCommentPicture}
+          source={require('../../../assets/pictures/comment.png')}
+        />
+        <Text style={likeStyle.addComment}>Donner son avis</Text>
+      </View>
       <View
         style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: 7,
-          marginTop: 10,
           flexDirection: 'row',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
-        <TouchableOpacity
-          style={likeStyle.addCommentWrapper}
-          onPress={() => {
-            props.onPressComment();
-          }}>
-          <Image
-            style={likeStyle.addCommentPicture}
-            source={require('../../../assets/pictures/comment.png')}
-          />
-          <Text style={likeStyle.addComment}>Donner son avis</Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          {likeButtons}
-        </View>
+        {likeButtons}
       </View>
+    </TouchableOpacity>
   );
 }
-
 
 const likeStyle = StyleSheet.create({
   addCommentWrapper: {

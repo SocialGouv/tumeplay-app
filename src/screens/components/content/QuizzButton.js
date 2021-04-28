@@ -67,12 +67,17 @@ export default function QuizzButton(props) {
           <TouchableOpacity
             style={[Styles.bottomButton, {borderRadius: 25}]}
             onPress={props.onClick}>
-            
-            <View style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'row'}}>
-	            <Image
-	                style={{width: 25, height: 25, marginRight: 10, resizeMode: 'contain'}}
-	                source={require('../../../assets/pictures/answer-quizz.png')}
-	            />
+            <View
+              style={{paddingTop: 8, paddingBottom: 8, flexDirection: 'row'}}>
+              <Image
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginRight: 10,
+                  resizeMode: 'contain',
+                }}
+                source={require('../../../assets/pictures/answer-quizz.png')}
+              />
               <Text style={[Styles.tunnelButtonText]}>Répondre au quiz</Text>
             </View>
           </TouchableOpacity>

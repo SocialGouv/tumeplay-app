@@ -72,6 +72,7 @@ export default function TunnelDeliverySelect(props) {
             width: '50%',
             height: 60,
             maxHeight: 60,
+            minHeight: 60,
             alignSelf: 'center',
           }}
           onPress={() => _onDone('home')}>
@@ -87,6 +88,7 @@ export default function TunnelDeliverySelect(props) {
             paddingTop: 2,
             paddingBottom: 2,
             marginBottom: 60,
+            minHeight: 60,
             width: '50%',
             alignSelf: 'center',
           }}

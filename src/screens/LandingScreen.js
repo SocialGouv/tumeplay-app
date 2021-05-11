@@ -19,6 +19,8 @@ import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 
 import Tracking from '../services/Tracking';
+import {GET_CONTENTS} from '../services/api/contents'
+import { useQuery } from '@apollo/client';
 
 LandingScreen.propTypes = {
   navigation: PropTypes.object,
@@ -28,6 +30,10 @@ export default function LandingScreen(props) {
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   const isMounted = useIsMounted();
+
+  //Intro to GRAPHQL connexion
+  const {data} = useQuery(GET_CONTENTS);
+  console.log(data);
 
   autoScrollToTop(props);
 

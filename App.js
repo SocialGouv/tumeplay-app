@@ -18,7 +18,6 @@ const AppContainer = createAppContainer(AppStack);
 export default function App() {
 
   const [showRealApp, setShowRealApp] = useState(false);
-  console.log('ROOT APPJS')
 
   function _renderItem({item}) {
     if (screenWidth <= 320) {

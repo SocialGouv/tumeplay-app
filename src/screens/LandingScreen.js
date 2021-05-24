@@ -94,7 +94,6 @@ export default function LandingScreen(props) {
     const {data, loading} = useQuery(GET_THEMES);
 
     if (!loading) {
-      console.log(data);
       return (
         <LandingThemeGrid
           onPress={_onSelectedTheme}

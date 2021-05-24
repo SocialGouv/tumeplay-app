@@ -61,6 +61,8 @@ export default function ContentScreen(props) {
   const opacityTimer = useRef(null);
   autoScrollToTop(props);
 
+  console.log(props.navigation.state.params)
+
   var quizTimer = false;
   // Listeners to fix QuizzButton display on web mode
   const willFocusSubscription = props.navigation.addListener(
@@ -100,12 +102,61 @@ export default function ContentScreen(props) {
     willBlurSubscription.remove();
   });
 
+  // useEffect(() => {
+  //   async function _fetchContents() {
+  //     const _contents = await RemoteApi.fetchContents(selectedTheme);
+  //     if (isMounted.current) {
+  //       setFullContents(_contents);
+  //       _filterContent(1);
+  //     }
+  //   }
+
+  //   async function _fetchQuestions() {
+  //     const _allQuestions = await RemoteApi.fetchQuestions();
+  //     if (isMounted.current) {
+  //       // Ok, so here we have 10 filtered questions after this call
+  //       await QuizService.setQuestions(_allQuestions);
+
+  //       const _filteredQuestions = await QuizService.getQuestions(
+  //         selectedTheme,
+  //       );
+
+  //       //  console.log('Filtered : ', _filteredQuestions);
+
+  //       setLocalQuestions(_filteredQuestions);
+  //     }
+  //   }
+  //   _fetchContents();
+  //   _fetchQuestions();
+  // }, [isMounted, selectedTheme]);
+
+  // // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
+  // // So we clear it up, and then filter using a very small timer.
+  // // Sooooo @TODO : Fix this mess.
+  // useEffect(() => {
+  //   setLocalContents([]);
+
+  //   setTimeout(() => {
+  //     var _filtered = fullContents.filter(
+  //       content => content.category === currentCategory,
+  //     );
+
+  //     setLocalContents(_filtered);
+  //   }, 1);
+  // }, [currentCategory, fullContents]);
+
+  // /*useEffect(() => {
+  //   setLocalQuestions(fullQuestions);
+  // }, [currentCategory, fullQuestions]); */
+
   const DisplayContentCards = () => {
-    const {data, loading} = useQuery(GET_CONTENTS);
+    console.log(selectedTheme)
+    const {data, loading} = useQuery(GET_CONTENTS, {
+      variables: {theme_id: selectedTheme.id},
+    });
 
     if (!loading) {
-      console.log(data.contents);
-
+      console.log(data)
       return (
         <ContentCards
           activeOpacity={activeOpacity}

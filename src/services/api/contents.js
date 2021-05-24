@@ -5,7 +5,9 @@ export const GET_CONTENTS = gql`
     contents {
       title
       text
-      comment
+      image {
+        url
+      }
     }
   }
 `;

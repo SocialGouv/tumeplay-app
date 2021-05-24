@@ -99,7 +99,6 @@ export default function ProductCard(props) {
         style={cardStyle.buttonWrapper}
         onPress={props.onPress}>
         <Image source={productBox.picture} style={cardStyle.picture} />
-
         <View style={cardStyle.textContainer}>
           <Text style={cardStyle.title}>{productBox.title}</Text>
           <Text style={cardStyle.text}>{productBox.description}</Text>

@@ -27,6 +27,9 @@ import useIsMounted from '../hooks/isMounted';
 import Styles from '../styles/Styles';
 import ModalStyle from '../styles/components/Modal';
 
+import {useQuery} from '@apollo/client';
+import {GET_CONTENTS} from '../services/api/contents';
+
 ContentScreen.propTypes = {
   navigation: PropTypes.object,
 };
@@ -97,53 +100,21 @@ export default function ContentScreen(props) {
     willBlurSubscription.remove();
   });
 
-  useEffect(() => {
-    async function _fetchContents() {
-      const _contents = await RemoteApi.fetchContents(selectedTheme);
-      if (isMounted.current) {
-        setFullContents(_contents);
-        _filterContent(1);
-      }
-    }
+  const DisplayContentCards = () => {
+    const {data, loading} = useQuery(GET_CONTENTS);
 
-    async function _fetchQuestions() {
-      const _allQuestions = await RemoteApi.fetchQuestions();
-      if (isMounted.current) {
-        // Ok, so here we have 10 filtered questions after this call
-        await QuizService.setQuestions(_allQuestions);
+    if (!loading) {
+      console.log(data.contents);
 
-        const _filteredQuestions = await QuizService.getQuestions(
-          selectedTheme,
-        );
-
-        //  console.log('Filtered : ', _filteredQuestions);
-
-        setLocalQuestions(_filteredQuestions);
-      }
-    }
-
-    _fetchContents();
-    _fetchQuestions();
-  }, [isMounted, selectedTheme]);
-
-  // @TODO : Something weird here, using hooks. React doesn't seems to see changes in first objects, so they're rendered as sames as before.
-  // So we clear it up, and then filter using a very small timer.
-  // Sooooo @TODO : Fix this mess.
-  useEffect(() => {
-    setLocalContents([]);
-
-    setTimeout(() => {
-      var _filtered = fullContents.filter(
-        content => content.category === currentCategory,
+      return (
+        <ContentCards
+          activeOpacity={activeOpacity}
+          style={{flex: 0.8}}
+          localContents={data.contents}
+        />
       );
-
-      setLocalContents(_filtered);
-    }, 1);
-  }, [currentCategory, fullContents]);
-
-  /*useEffect(() => {
-    setLocalQuestions(fullQuestions);
-  }, [currentCategory, fullQuestions]); */
+    }
+  };
 
   useEffect(() => {
     if (needResultModal) {
@@ -285,14 +256,8 @@ export default function ContentScreen(props) {
 
       <View style={[Styles.safeAreaViewInner, {flex: 1, paddingTop: 40}]}>
         <ScrollView style={{flex: 0.8}}>
-          <ContentCards
-            activeOpacity={activeOpacity}
-            style={{flex: 0.8}}
-            localContents={localContents}
-          />
-
+          {DisplayContentCards()}
           <ContactButton />
-
           <CustomFooter
             style={{flex: 0.1}}
             navigation={props.navigation}

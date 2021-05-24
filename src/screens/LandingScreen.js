@@ -31,10 +31,6 @@ export default function LandingScreen(props) {
 
   const isMounted = useIsMounted();
 
-  //Intro to GRAPHQL connexion
-  const {data} = useQuery(GET_THEMES);
-  console.log(data);
-
   autoScrollToTop(props);
 
   const item = {
@@ -62,7 +58,6 @@ export default function LandingScreen(props) {
         }
       }
     }
-
     _fetchUserOrRegister();
   }, [_toggleErrorModal, isMounted]);
 

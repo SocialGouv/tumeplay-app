@@ -9,14 +9,12 @@ const QuizService = {
     RIGHT: 100,
     NEUTRAL: 30,
   },
-  getTokenAmount(question, givenAnswer) {
+  getTokenAmount(isRight, isNeutral) {
     let tokenAmount = QuizService.answersPoints.WRONG;
 
-    if (givenAnswer === question.rightAnswer) {
+    if (isRight) {
       tokenAmount = QuizService.answersPoints.RIGHT;
-    }
-
-    if (givenAnswer === question.neutralAnswer) {
+    } else if (isNeutral) {
       tokenAmount = QuizService.answersPoints.NEUTRAL;
     }
 

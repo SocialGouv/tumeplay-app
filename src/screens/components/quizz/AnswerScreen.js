@@ -37,20 +37,15 @@ export default function AnswerScreen(props) {
 
   useEffect(() => {
     setContent({
-      text: _currentQuestion.explanation,
+      text: _currentQuestion.text_answer,
       numberOfLines: 3,
     });
-  }, [_currentQuestion.explanation, isMounted]);
+  }, [_currentQuestion.text_answer, isMounted]);
 
-  let _rightAnswer = _currentQuestion.answers.filter(
-    _rightAnswer => _rightAnswer.id === _currentQuestion.rightAnswer,
-  );
-
-  if (_rightAnswer === undefined || _rightAnswer.length === 0) {
-    _rightAnswer = '';
-  } else {
-    _rightAnswer = _rightAnswer[0].text;
-  }
+  const _rightAnswer =
+    _currentQuestion.reponses[
+      'response_' + _currentQuestion.responses.right_answer
+    ] || '';
 
   const rightAnswerPicture = require('../../../assets/pictures/answer.right.png');
   const wrongAnswerPicture = require('../../../assets/pictures/answer.wrong.png');

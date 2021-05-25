@@ -14,9 +14,6 @@ ContentCard.propTypes = {
 export default function ContentCard(props) {
   const [content, setContent] = useState(props.item);
   const [isExpanded, setIsExpanded] = useState(false);
-
-  console.log('content', content);
-
   const cardStyle = StyleSheet.create({
     container: {
       flex: 1,

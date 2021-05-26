@@ -14,7 +14,6 @@ import RemoteApi from '../services/RemoteApi';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
-  resetQuestions: PropTypes.bool,
   onFinishedQuizz: PropTypes.func,
 };
 
@@ -23,18 +22,20 @@ export default function QuizzScreen(props) {
   const [isRightAnswer, setIsRightAnswer] = useState(false);
   const [questions, setQuestions] = useState(props.questions);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(questions.length);
   const [lastTokenAmount, setLastTokenAmount] = useState(0);
   const [givenAnswers, setGivenAnswers] = useState([]);
   const [dataFeedback, setDataFeedback] = useState({});
 
-  const _currentQuestion = questions[currentIndex];
 
-  console.log(_currentQuestion);
+  const _currentQuestion = questions[currentIndex];
 
   var questionTimer = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
+    console.log(props.questions)
+    setQuestions(props.questions)
+    setTotal(props.questions.length)
     setCurrentIndex(0);
     setLastTokenAmount(0);
     setDisplayAnswer(false);
@@ -43,8 +44,7 @@ export default function QuizzScreen(props) {
 
   async function _addTokens(_tokenAmount) {
     const _newTokens = await UserService.addTokens(_tokenAmount);
-    const updateResultOfBadge = await UserService.updateToLatestBadge();
-    console.log('Updated result of badge:', updateResultOfBadge);
+    await UserService.updateToLatestBadge();
 
     EventRegister.emit('tokensAmountChanged', _newTokens);
   }

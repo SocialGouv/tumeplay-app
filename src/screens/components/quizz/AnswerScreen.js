@@ -43,7 +43,7 @@ export default function AnswerScreen(props) {
   }, [_currentQuestion.text_answer, isMounted]);
 
   const _rightAnswer =
-    _currentQuestion.reponses[
+    _currentQuestion.responses[
       'response_' + _currentQuestion.responses.right_answer
     ] || '';
 

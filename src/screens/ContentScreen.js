@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useMemo} from 'react';
 import {ScrollView, SafeAreaView, View} from 'react-native';
 import {EventRegister} from 'react-native-event-listeners';
 
@@ -19,7 +19,7 @@ import ModalCloseButton from './components/global/ModalCloseButton';
 import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 import Tracking from '../services/Tracking';
-import QuizService from '../services/Quiz';
+import QuizzService from '../services/Quiz';
 
 import autoScrollToTop from '../hooks/autoScrollToTop';
 import useIsMounted from '../hooks/isMounted';
@@ -54,9 +54,12 @@ export default function ContentScreen(props) {
   const [currentCategory, setCurrentCategory] = useState(false);
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
-  const [resetQuizzQuestions, setResetQuizzQuestions] = useState(false);
   const [activeOpacity, setActiveOpacity] = useState(0.5);
   const isMounted = useIsMounted();
+
+  const {data, loading} = useQuery(GET_QUESTIONS, {
+    variables: {theme_id: selectedTheme.id},
+  });
 
   const opacityTimer = useRef(null);
   autoScrollToTop(props);
@@ -151,33 +154,29 @@ export default function ContentScreen(props) {
 
       quizTimer = Math.floor(Date.now() / 1000);
 
-      await _shuffleQuestions();
+      _shuffleQuestions();
       _toggleQuizzModal();
     }
   }
 
-  const retrieveQuestions = () => {
-    const {data, loading} = useQuery(GET_QUESTIONS, {
-      variables: {theme_id: selectedTheme.id},
-    });
-    if (!loading) {
-      QuizService.setQuestions(data.questions);
-      return (
-        <QuizzScreen
-          resetQuestions={resetQuizzQuestions}
-          onFinishedQuizz={_onFinishedQuizz}
-          questions={data.questions}
-        />
-      );
+  useEffect(() => {
+    if (!loading && data) {
+      QuizzService.setQuestions(data.questions);
     }
+  }, [loading, data]);
+
+  const displayQuizzScreen = () => {
+    return (
+      <QuizzScreen
+        onFinishedQuizz={_onFinishedQuizz}
+        questions={localQuestions}
+      />
+    );
   };
 
-  async function _shuffleQuestions() {
-    const _filteredQuestions = await QuizService.getQuestions(selectedTheme);
-
-    setLocalQuestions(_filteredQuestions);
-
-    //setLocalQuestions(randomQuestions);
+  function _shuffleQuestions() {
+    const newQuestions = QuizzService.getQuestions();
+    setLocalQuestions(newQuestions);
   }
 
   function _toggleBadgeModal() {
@@ -203,7 +202,6 @@ export default function ContentScreen(props) {
     Tracking.quizEnded(quizTimer);
 
     _toggleQuizzModal();
-    setResetQuizzQuestions(!resetQuizzQuestions);
     setNeedResultModal(true);
   }
 
@@ -215,7 +213,6 @@ export default function ContentScreen(props) {
   function _onRetry(hideQuizzModal) {
     // Set to invisible, resetup and reopen quizz modal
     _shuffleQuestions();
-    setResetQuizzQuestions(!resetQuizzQuestions);
     setIsBadgeModalVisible(false);
     setIsResultModalVisible(false);
     if (hideQuizzModal) {
@@ -259,7 +256,6 @@ export default function ContentScreen(props) {
 
   return (
     <SafeAreaView style={[Styles.safeAreaView, {}]}>
-
       <View style={[Styles.safeAreaViewInner, {flex: 1, paddingTop: 40}]}>
         <ScrollView style={{flex: 0.8}}>
           {DisplayContentCards()}
@@ -283,7 +279,7 @@ export default function ContentScreen(props) {
         <View style={ModalStyle.backdrop}></View>
         <View style={ModalStyle.innerModal}>
           <ModalCloseButton onClose={_toggleQuizzModal} />
-          {retrieveQuestions()}
+          {displayQuizzScreen()}
         </View>
       </Modal>
 

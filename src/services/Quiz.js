@@ -43,15 +43,20 @@ const QuizzService = {
     QuizzService.currentQuestions = currentQuestions;
   },
   getQuestions: () => {
-    let selectedQuestions = [];
-    const undoneQuestions = QuizzService.currentQuestions.filter(
-      _ => !QuizzService.doneIds.includes(_.id),
-    );
+    let undoneQuestions = [];
+    if (QuizzService.doneIds.length > QuizzService.doneIds.length -1) {
+      undoneQuestions = QuizzService.currentQuestions
+    } else {
+      undoneQuestions = QuizzService.currentQuestions.filter(
+        _ => !QuizzService.doneIds.includes(_.id),
+      );
+    }
+    console.log("undoneQuestions", undoneQuestions)
     const questionIds = undoneQuestions.map(_ => _.id);
     const tmpToImproveIds = QuizzService.toImproveIds.filter(_ =>
       questionIds.includes(_),
     );
-    selectedQuestions = undoneQuestions.filter(
+    let selectedQuestions = undoneQuestions.filter(
       question => !tmpToImproveIds.includes(question.id),
     );
 

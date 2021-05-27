@@ -33,9 +33,8 @@ export default function QuizzScreen(props) {
   var questionTimer = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
-    console.log(props.questions)
-    setQuestions(props.questions)
-    setTotal(props.questions.length)
+    setQuestions(props.questions);
+    setTotal(props.questions.length);
     setCurrentIndex(0);
     setLastTokenAmount(0);
     setDisplayAnswer(false);

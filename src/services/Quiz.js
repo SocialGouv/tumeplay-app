@@ -1,4 +1,3 @@
-import QuizzButton from '../screens/components/content/QuizzButton';
 import Storage from './Storage';
 
 const QuizzService = {
@@ -72,6 +71,12 @@ const QuizzService = {
         selectedQuestions,
         tmpToImprove,
       );
+    }
+
+    if (selectedQuestions.length < 10) {
+      QuizzService.doneIds = QuizzService.doneIds.filter(id => {
+        !QuizzService.currentQuestions.includes(id);
+      });
     }
 
     return selectedQuestions;

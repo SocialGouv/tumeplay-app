@@ -51,7 +51,6 @@ const QuizzService = {
         _ => !QuizzService.doneIds.includes(_.id),
       );
     }
-    console.log("undoneQuestions", undoneQuestions)
     const questionIds = undoneQuestions.map(_ => _.id);
     const tmpToImproveIds = QuizzService.toImproveIds.filter(_ =>
       questionIds.includes(_),

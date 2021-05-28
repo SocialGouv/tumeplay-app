@@ -44,8 +44,8 @@ const QuizzService = {
   },
   getQuestions: () => {
     let undoneQuestions = [];
-    if (QuizzService.doneIds.length > QuizzService.doneIds.length -1) {
-      undoneQuestions = QuizzService.currentQuestions
+    if (QuizzService.doneIds.length > QuizzService.doneIds.length - 1) {
+      undoneQuestions = QuizzService.currentQuestions;
     } else {
       undoneQuestions = QuizzService.currentQuestions.filter(
         _ => !QuizzService.doneIds.includes(_.id),

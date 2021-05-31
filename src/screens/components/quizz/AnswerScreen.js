@@ -65,23 +65,25 @@ export default function AnswerScreen(props) {
     setIsCommentModalVisible(!isCommentModalVisible);
   }
 
-  function _writeComment(comment, id) {
-    //const idFeedback = id + 1;
-    setChosenComment({
-      comment: comment,
-      id: id,
-    });
-    props.setFeedback(isLiked, isDisliked, comment, id);
+  function _writeComment(title, comment) {
+    // setChosenComment({
+    //   title: title,
+    //   comment: comment,
+    // });
+    props.setFeedback(isLiked, isDisliked, title, comment);
   }
 
   function _setContentLiked(clickedItemId) {
     const liked = clickedItemId != 0 && clickedItemId == 1;
     const disliked = clickedItemId != 0 && clickedItemId == 2;
-
     setIsLiked(liked);
     setIsDisliked(disliked);
-
-    props.setFeedback(liked, disliked, chosenComment.comment, chosenComment.id);
+    props.setFeedback(
+      liked,
+      disliked,
+      chosenComment.comment,
+      chosenComment.questionId,
+    );
   }
 
   return (

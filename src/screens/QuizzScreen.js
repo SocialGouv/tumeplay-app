@@ -10,7 +10,7 @@ import AnswerScreen from './components/quizz/AnswerScreen';
 import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
 import QuizService from '../services/Quiz';
-import RemoteApi from '../services/RemoteApi';
+import FeedbacksAPI from '../services/api/feedbacks';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
@@ -26,7 +26,6 @@ export default function QuizzScreen(props) {
   const [lastTokenAmount, setLastTokenAmount] = useState(0);
   const [givenAnswers, setGivenAnswers] = useState([]);
   const [dataFeedback, setDataFeedback] = useState({});
-
 
   const _currentQuestion = questions[currentIndex];
 
@@ -94,9 +93,7 @@ export default function QuizzScreen(props) {
       questionContentId: _currentQuestion.id,
       ...dataFeedback,
     };
-
-    console.log(userFeedback);
-    await RemoteApi.sendFeedback(userFeedback);
+    FeedbacksAPI.sendFeedback(userFeedback);
   }
 
   const _displayAnswersButtons = question => {
@@ -121,12 +118,12 @@ export default function QuizzScreen(props) {
     );
   };
 
-  function setFeedback(isLiked, isDisliked, comment, id) {
+  function setFeedback(isLiked, isDisliked, title, comment) {
     setDataFeedback({
       isLiked: isLiked,
       isDisliked: isDisliked,
       comment: comment,
-      feedbackId: id,
+      title: title,
     });
   }
   if (_currentQuestion === undefined) {

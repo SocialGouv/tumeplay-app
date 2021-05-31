@@ -8,6 +8,7 @@ export const GET_THEMES = gql`
       image {
         url
       }
+      display_quiz
     }
   }
 `;

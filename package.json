@@ -17,6 +17,7 @@
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@react-native-community/async-storage": "^1.10.3",
     "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-community/picker": "^1.8.1",
     "@react-navigation/native": "^3.6.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@sentry/browser": "^5.12.1",

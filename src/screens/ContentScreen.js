@@ -13,10 +13,8 @@ import BadgeFinishScreen from './BadgeFinishScreen';
 import MoreThan25YearsScreen from './MoreThan25YearsScreen';
 import ContactButton from './components/global/ContactButton';
 import ContentCards from './components/content/ContentCards';
-import TopMenu from './components/content/TopMenu';
 import QuizzButton from './components/content/QuizzButton';
 import ModalCloseButton from './components/global/ModalCloseButton';
-import RemoteApi from '../services/RemoteApi';
 import UserService from '../services/User';
 import Tracking from '../services/Tracking';
 import QuizzService from '../services/Quiz';
@@ -49,9 +47,7 @@ export default function ContentScreen(props) {
   const [isQuizzButtonVisible, setIsQuizzButtonVisible] = useState(false);
   const [needResultModal, setNeedResultModal] = useState(false);
 
-  const [fullQuestions, setFullQuestions] = useState([]);
   const [localQuestions, setLocalQuestions] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState(false);
   const [selectedTheme] = useState(props.navigation.state.params.selectedTheme);
   const [availableTokens, setAvailableTokens] = useState(0);
   const [activeOpacity, setActiveOpacity] = useState(0.5);
@@ -341,10 +337,9 @@ export default function ContentScreen(props) {
       </Modal>
 
       {/* Fix staying button on web */}
-      {selectedTheme &&
-        !selectedTheme.isSpecial &&
-        isQuizzButtonVisible &&
-        !isQuizzModalVisible && <QuizzButton onClick={_openInitialModal} />}
+      {selectedTheme.display_quiz && (
+        <QuizzButton onClick={_openInitialModal} />
+      )}
     </SafeAreaView>
   );
 }

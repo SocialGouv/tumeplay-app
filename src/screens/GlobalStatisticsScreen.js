@@ -22,13 +22,13 @@ const GlobalStatisticsScreen = (props) => {
   const halfStar = require('../assets/pictures/half-star.png');
   const instagram = require('../assets/pictures/instagram.png');
 
-  const retrieveFollowers = async () => {
-    await fetch(instaCountLink).then(data => console.log(data.json()));
-  };
+  // const retrieveFollowers = async () => {
+  //   await fetch(instaCountLink).then(data => console.log(data.json()));
+  // };
 
-  useEffect(() => {
-    retrieveFollowers();
-  }, []);
+  // useEffect(() => {
+  //   retrieveFollowers();
+  // }, []);
 
   return (
     <View

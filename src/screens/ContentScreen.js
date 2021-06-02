@@ -140,14 +140,12 @@ export default function ContentScreen(props) {
     // console.log(`_isAge25: ${_isAge25}`);
 
     setIsAge25(_isAge25 || null);
-
     if (_isAge25 === null || _isAge25 === undefined) {
       // Step 2
       _toggleMoreThan25YearsModal();
     } else {
       // Step 3
       Tracking.quizStarted();
-
       quizTimer = Math.floor(Date.now() / 1000);
 
       _shuffleQuestions();
@@ -240,6 +238,7 @@ export default function ContentScreen(props) {
     _toggleMoreThan25YearsModal();
     _shuffleQuestions();
     _toggleQuizzModal();
+    Tracking.quizStarted();
   }
 
   function _onContactClick() {

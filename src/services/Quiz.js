@@ -58,7 +58,7 @@ const QuizzService = {
     let selectedQuestions = undoneQuestions.filter(
       question => !tmpToImproveIds.includes(question.id),
     );
-
+    console.log(selectedQuestions);
     selectedQuestions = QuizzService.shuffleArray(selectedQuestions);
     if (selectedQuestions.length >= 10 - tmpToImproveIds.length) {
       selectedQuestions = selectedQuestions.splice(
@@ -75,6 +75,10 @@ const QuizzService = {
         selectedQuestions,
         tmpToImprove,
       );
+      const quizSize = 10;
+      selectedQuestions = selectedQuestions.slice(0, quizSize).map(q => {
+        return q;
+      });
     }
 
     if (selectedQuestions.length < 10) {

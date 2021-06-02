@@ -66,10 +66,10 @@ export default function AnswerScreen(props) {
   }
 
   function _writeComment(title, comment) {
-    // setChosenComment({
-    //   title: title,
-    //   comment: comment,
-    // });
+    setChosenComment({
+      title: title,
+      comment: comment,
+    });
     props.setFeedback(isLiked, isDisliked, title, comment);
   }
 
@@ -81,8 +81,8 @@ export default function AnswerScreen(props) {
     props.setFeedback(
       liked,
       disliked,
+      chosenComment.title,
       chosenComment.comment,
-      chosenComment.questionId,
     );
   }
 

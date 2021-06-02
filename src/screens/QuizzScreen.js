@@ -83,7 +83,6 @@ export default function QuizzScreen(props) {
       props.onFinishedQuizz(givenAnswers);
     } else {
       questionTimer = Math.floor(Date.now() / 1000);
-
       setCurrentIndex(currentIndex + 1);
       setIsRightAnswer(false);
       setDisplayAnswer(!displayAnswer);
@@ -126,6 +125,8 @@ export default function QuizzScreen(props) {
       title: title,
     });
   }
+  console.log("dataFeedback", dataFeedback)
+  
   if (_currentQuestion === undefined) {
     return <View style={{backgroundColor: '#FFF'}} />;
   }

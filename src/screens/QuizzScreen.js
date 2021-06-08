@@ -11,6 +11,8 @@ import NextButton from './components/quizz/NextButton';
 import AnswerButton from './components/quizz/AnswerButton';
 import QuizService from '../services/Quiz';
 import FeedbacksAPI from '../services/api/feedbacks';
+import {useQuery} from '@apollo/client';
+import {GET_POINTS} from '../services/api/settings';
 
 QuizzScreen.propTypes = {
   questions: PropTypes.array,
@@ -45,6 +47,15 @@ export default function QuizzScreen(props) {
     await UserService.updateToLatestBadge();
 
     EventRegister.emit('tokensAmountChanged', _newTokens);
+  }
+
+  const {data, loading} = useQuery(GET_POINTS);
+  if (!loading) {
+    QuizService.setAnswersPoints(
+      data.parametre.nb_points_wrong_answer,
+      data.parametre.nb_points_right_answer,
+      data.parametre.nb_points_neutral_answer,
+    );
   }
 
   function _answerQuestion(key) {
@@ -117,16 +128,14 @@ export default function QuizzScreen(props) {
     );
   };
 
-  function setFeedback(isLiked, isDisliked, title, comment) {
+  function setFeedback(isLiked, title, comment) {
     setDataFeedback({
       isLiked: isLiked,
-      isDisliked: isDisliked,
       comment: comment,
       title: title,
     });
   }
-  console.log("dataFeedback", dataFeedback)
-  
+
   if (_currentQuestion === undefined) {
     return <View style={{backgroundColor: '#FFF'}} />;
   }

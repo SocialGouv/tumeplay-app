@@ -32,8 +32,7 @@ export default function AnswerScreen(props) {
   const [activeFilter, setActiveFilter] = useState(0);
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [chosenComment, setChosenComment] = useState({});
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
     setContent({
@@ -70,20 +69,19 @@ export default function AnswerScreen(props) {
       title: title,
       comment: comment,
     });
-    props.setFeedback(isLiked, isDisliked, title, comment);
+    props.setFeedback(isLiked, title, comment);
   }
 
   function _setContentLiked(clickedItemId) {
-    const liked = clickedItemId != 0 && clickedItemId == 1;
-    const disliked = clickedItemId != 0 && clickedItemId == 2;
-    setIsLiked(liked);
-    setIsDisliked(disliked);
-    props.setFeedback(
-      liked,
-      disliked,
-      chosenComment.title,
-      chosenComment.comment,
-    );
+    let like = 0
+    if (clickedItemId == 1) {
+      like = 1;
+      setIsLiked(like);
+    } else if (clickedItemId == 2) {
+      like = -1;
+      setIsLiked(like);
+    }
+    props.setFeedback(like, chosenComment.title, chosenComment.comment);
   }
 
   return (

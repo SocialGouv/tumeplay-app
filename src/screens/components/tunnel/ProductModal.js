@@ -111,19 +111,16 @@ export default function ProductModal(props) {
   function stayInTouch() {
     props.onClose();
     props.navigation.navigate('StayInTouch', {
-		outOfStock: true		
+      outOfStock: true,
     });
   }
-  
+
   function onOrder() {
-    if(props.item.available )
-    {
+    if (props.item.available) {
       props.onOrder(selectedItems);
-	}
-	else
-	{
-	  stayInTouch();
-	}
+    } else {
+      stayInTouch();
+    }
   }
 
   function onSelectChange(selectedItems) {

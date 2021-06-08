@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,9 @@ import {
 
 import Colors from '../styles/Color';
 import autoScrollToTop from '../hooks/autoScrollToTop';
-import TextLink from './components/global/TextLink';
 import Styles from '../styles/Styles';
 
-const GlobalStatisticsScreen = (props) => {
-
+const GlobalStatisticsScreen = props => {
   autoScrollToTop(props);
 
   const instaLink = 'https://www.instagram.com/tumeplay';
@@ -22,6 +20,16 @@ const GlobalStatisticsScreen = (props) => {
   const halfStar = require('../assets/pictures/half-star.png');
   const instagram = require('../assets/pictures/instagram.png');
 
+  const matomoLink =
+    'https://matomo.fabrique.social.gouv.fr/index.php?idSite=21&rec1';
+
+  // const getMatomoinfos = async () => {
+  //   await fetch(matomoLink).then(data =>
+  //     console.log(data.json()),
+  //   );
+  // };
+
+  //Instagram followers API Call
   // const retrieveFollowers = async () => {
   //   await fetch(instaCountLink).then(data => console.log(data.json()));
   // };
@@ -29,6 +37,10 @@ const GlobalStatisticsScreen = (props) => {
   // useEffect(() => {
   //   retrieveFollowers();
   // }, []);
+
+  // useEffect(() => {
+  //   getMatomoinfos();
+  // }, [getMatomoinfos]);
 
   return (
     <View

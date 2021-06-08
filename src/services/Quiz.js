@@ -1,4 +1,6 @@
 import Storage from './Storage';
+import {useQuery} from '@apollo/client';
+import {GET_POINTS} from './api/settings';
 
 const QuizzService = {
   storageKey: 'quizzUserData',
@@ -9,6 +11,11 @@ const QuizzService = {
     WRONG: 25,
     RIGHT: 100,
     NEUTRAL: 30,
+  },
+  setAnswersPoints: (wrong, right, neutral) => {
+    QuizzService.answersPoints.WRONG = wrong;
+    QuizzService.answersPoints.RIGHT = right;
+    QuizzService.answersPoints.NEUTRAL = neutral;
   },
   getTokenAmount(isRight, isNeutral) {
     let tokenAmount = QuizzService.answersPoints.WRONG;
@@ -58,7 +65,6 @@ const QuizzService = {
     let selectedQuestions = undoneQuestions.filter(
       question => !tmpToImproveIds.includes(question.id),
     );
-    console.log(selectedQuestions);
     selectedQuestions = QuizzService.shuffleArray(selectedQuestions);
     if (selectedQuestions.length >= 10 - tmpToImproveIds.length) {
       selectedQuestions = selectedQuestions.splice(
@@ -109,7 +115,6 @@ const QuizzService = {
     return array;
   },
 };
-
 QuizzService.retrieveUserData();
 
 export default QuizzService;

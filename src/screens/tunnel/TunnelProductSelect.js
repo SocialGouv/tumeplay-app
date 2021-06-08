@@ -55,6 +55,9 @@ export default function TunnelProductSelect(props) {
     }
   }
 
+  console.log(selectedItem)
+  console.log(localBoxs)
+
   function _toggleModal() {
     setShowModal(!showModal);
   }

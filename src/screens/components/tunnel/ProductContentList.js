@@ -50,7 +50,5 @@ export default function ProductContentList(props) {
   const _targetList =
     productBox.products.length > 0 ? productBox.products : customProducts;
 
-  console.log(_targetList)
-
   return _renderProductList(_targetList);
 }

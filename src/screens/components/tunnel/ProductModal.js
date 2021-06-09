@@ -32,7 +32,7 @@ ProductModal.propTypes = {
 export default function ProductModal(props) {
   const [productBox] = useState(props.item);
   const [showModal] = useState(props.showModal);
-  const [allProducts] = useState(props.allProducts);
+  const [allProducts] = useState(props.item.products);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalProducts, setTotalProducts] = useState([]);
 

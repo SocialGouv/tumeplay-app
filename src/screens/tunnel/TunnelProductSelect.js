@@ -16,6 +16,8 @@ import ProductSelectHeader from '../components/tunnel/ProductSelectHeader';
 
 import useIsMounted from '../../hooks/isMounted';
 import autoScrollToTop from '../../hooks/autoScrollToTop';
+import {useQuery} from '@apollo/client';
+import {GET_BOXES} from '../../services/api/boxes';
 
 TunnelProductSelect.propTypes = {
   navigation: PropTypes.object,
@@ -31,18 +33,13 @@ export default function TunnelProductSelect(props) {
 
   autoScrollToTop(props);
 
+  const {data, loading} = useQuery(GET_BOXES);
+
   useEffect(() => {
-    async function _fetchBoxs() {
-      const _boxs = await RemoteApi.fetchBoxsData();
-
-      if (isMounted.current) {
-        setLocalBoxs(_boxs.boxs);
-        setAllProducts(_boxs.products);
-      }
+    if (!loading && data) {
+      setLocalBoxs(data.boxes);
     }
-
-    _fetchBoxs();
-  }, [isMounted]);
+  }, [data, loading]);
 
   async function _onBoxClicked(selectedItem) {
     const _tokens = await UserService.getTokensAmount();
@@ -54,9 +51,6 @@ export default function TunnelProductSelect(props) {
       setShowNotEnoughModal(true);
     }
   }
-
-  console.log(selectedItem)
-  console.log(localBoxs)
 
   function _toggleModal() {
     setShowModal(!showModal);
@@ -79,7 +73,6 @@ export default function TunnelProductSelect(props) {
       onOrder={_onOrder}
       showModal={showModal}
       item={selectedItem}
-      allProducts={allProducts}
       onClose={_toggleModal}
     />
   ));

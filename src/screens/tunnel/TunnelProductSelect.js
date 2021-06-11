@@ -34,8 +34,9 @@ export default function TunnelProductSelect(props) {
   useEffect(() => {
     async function _fetchBoxs() {
       const _boxs = await RemoteApi.fetchBoxsData();
-
       if (isMounted.current) {
+        //making items to available = true for the order process
+        _boxs.boxs.map(item => (item.available = true));
         setLocalBoxs(_boxs.boxs);
         setAllProducts(_boxs.products);
       }

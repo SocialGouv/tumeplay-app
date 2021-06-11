@@ -60,7 +60,7 @@ export default function TunnelPickupSelect(props) {
   const [pickupPoints, setPickupPoints] = useState([]);
   const [mapLayout, setMapLayout] = useState({width: 250, height: 250});
   const [displayReset, setDisplayReset] = useState(false);
-  const [displayMap, setDisplayMap] = useState(true);
+  const [displayMap, setDisplayMap] = useState();
   const [invalidZipCode, setInvalidZipCode] = useState(false);
 
   const isMounted = useIsMounted();
@@ -71,10 +71,10 @@ export default function TunnelPickupSelect(props) {
         position => {
           setCurrentPosition(position);
 
-          console.log(position);
+          // console.log(position);
         },
         error => console.log('Error', JSON.stringify(error)),
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+        // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
       setDisplayMap(true);
     }
@@ -88,7 +88,6 @@ export default function TunnelPickupSelect(props) {
       );
       const pickupPoints = rawPickupPoints.map(function(item) {
         item.isSelected = false;
-
         return item;
       });
 
@@ -262,13 +261,6 @@ export default function TunnelPickupSelect(props) {
 
       <View style={{flex: 0.15, paddingTop: 15}}>
         <Text style={Styles.tunnelTitle}>Choisis le lieu de livraison</Text>
-      </View>
-
-      <View
-        style={{flex: 0.4, minHeight: 275, paddingTop: 0, marginTop: -15}}
-        onLayout={event => {
-          adjustMapLayout(event.nativeEvent.layout);
-        }}>
         <CustomTextInput
           inputLabel="Code postal"
           inputPlaceholder="Ton Code Postal"
@@ -278,7 +270,15 @@ export default function TunnelPickupSelect(props) {
           isValid={localValid.userZipCode}
           currentValue={localAdress.userZipCode}
           displayResetButton={displayReset}
+          style={Styles.tunnlInput}
         />
+      </View>
+
+      <View
+        style={{flex: 0.4, minHeight: 275, paddingTop: 0, marginTop: 15}}
+        onLayout={event => {
+          adjustMapLayout(event.nativeEvent.layout);
+        }}>
         {invalidZipCode && (
           <View
             style={[

@@ -29,6 +29,9 @@ var Styles = {
     marginBottom: 0,
     paddingBottom: 0,
   },
+  tunnlInput: {
+    marginBottom: 15,
+  },
   text: {
     color: Colors.secondaryText,
     fontFamily: Colors.textFont,

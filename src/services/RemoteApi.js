@@ -147,7 +147,6 @@ const RemoteApi = {
       } else {
         const endPoint = PickupEndpoint + '/' + latitude + '/' + longitude;
         const contents = await RemoteApi.fetch(endPoint);
-        console.log('contents', contents);
         const slicedContents = contents.slice(0, 20); 
         return slicedContents;
       }
@@ -273,7 +272,6 @@ const RemoteApi = {
       box: selectedItem.id,
       userAdress: userAdress,
     };
-    console.log(postData);
     let result = false;
 
     if (headers) {
@@ -299,11 +297,9 @@ const RemoteApi = {
       } else {
         const products = [];
         const headers = await RemoteApi.getAutorizationHeaders();
-        console.log(headers)
         selectedProducts.forEach(product => {
           products.push({id: product.item.id, qty: product.qty});
         });
-
         const postData = {
           box: selectedItem.id,
           products: products,
@@ -311,7 +307,6 @@ const RemoteApi = {
           deliveryMode: deliveryType,
           selectedPickup: selectedPickup,
         };
-        console.log('postData', postData);
         let result = false;
         if (headers) {
           result = await RemoteApi.protectedPost(

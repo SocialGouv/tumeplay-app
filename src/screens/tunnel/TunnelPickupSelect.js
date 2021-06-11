@@ -71,10 +71,9 @@ export default function TunnelPickupSelect(props) {
         position => {
           setCurrentPosition(position);
 
-          // console.log(position);
         },
         error => console.log('Error', JSON.stringify(error)),
-        // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
       setDisplayMap(true);
     }

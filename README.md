@@ -1,3 +1,8 @@
+
+🚛 Moved to https://github.com/SocialGouv/tumeplay
+
+---
+
 # TuMePlay - App
 
 TuMePlay - App is a sexual education application aimed at youth. The wole app is a ReactNative application designed to be a "write once, run everywhere" system : write code in ReactNative, generate PWA / iOS App / Android App.
